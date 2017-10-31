@@ -44,8 +44,23 @@ std::set<int> hullBruteForce ( std::vector< Point > const& points ) {
 	if ( num_points < 3 ) throw "bad number of points";
 
 	std::set<int> hull_indices;
-
-		
+	for(int i = 0; i < num_points - 1; ++i)
+	{
+		for(int j = 0; j < num_points; ++j)
+		{
+			auto cmpRes = get_location(
+                points[i].x,points[i].y,
+                points[i+1].x,points[i+1].y,
+                points[j].x, points[j].y);
+            
+			if((!cmpRes.first && cmpRes.second))
+			{
+				hull_indices.insert(i);
+				hull_indices.insert(i+1);
+			}
+		}
+	}
+	
 	return hull_indices;
 }
 
