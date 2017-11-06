@@ -37,6 +37,12 @@ std::pair<bool,bool> get_location(
 	return std::make_pair( (scal_prod<0), (scal_prod>0));
 }
 
+float cross_product(Point& a, points& b)
+{
+    return a.x * b.y - b.x * a.y;
+}
+
+
 //returns a set of indices of points that form convex hull
 std::set<int> hullBruteForce ( std::vector< Point > const& points ) {
 	int num_points = points.size();
@@ -64,12 +70,42 @@ std::set<int> hullBruteForce ( std::vector< Point > const& points ) {
 	return hull_indices;
 }
 
-std::vector<int> hullBruteForce2 ( std::vector< Point > const& points ) {
+std::vector<int> hullBruteForce2 ( std::vector< Point > const& points ) 
+{
 	int num_points = points.size();
 	if ( num_points < 3 ) throw "bad number of points";
 
+    // TODO: Sort points left to right
+    
 	std::vector<int> hull_indices;
-
-
+    hull_indices.resurve(points.length * 0.5f);
+    
+    hull_indicies.push_back(0);
+    hull_indicies.push_back(1);
+    int pointIndex = 2;
+    
+    while(true)
+    {
+        Points pointOfConsideration = points[pointIndex];
+        
+        Points vecToPointOfConsideration = pointOfConsideration - points[pointIndex];
+        
+        while(true)
+        {
+            float crossPastPoint = vecToPointConsideration, hull_indicies[hull_indicies.size() - 1];
+            if(crossPastPoint > 0.0f)
+            {
+                // node to correct of the vecToPointconsideration
+                // Add Index, increment point Index, continue
+            
+            }
+            else // goes the other way
+            {
+                // pop index
+                // continue
+            
+            }
+        }
+    }
 	return hull_indices;
 }
