@@ -176,7 +176,11 @@ void (*pTests[])() = {
     test2,test3,test4,test5,test6,test7,       //hullBruteForce
     test8,test9,test10,test11,test12,test13 }; //hullBruteForce2
 
-int main(int argc, char ** argv) try {
+int main(int argc, char ** argv) //try {
+{
+	test0();
+
+	/*
 	if (argc >1) {
 		int test = 0;
 		std::sscanf(argv[1],"%i",&test);
@@ -185,4 +189,7 @@ int main(int argc, char ** argv) try {
 	return 0;
 } catch( char const* str) {
 	std::cout << str << std::endl;
+	*/
+	int myInt;
+	std::cin >> myInt;
 }
