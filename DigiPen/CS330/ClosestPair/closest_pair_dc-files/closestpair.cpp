@@ -15,6 +15,12 @@ std::istream& operator>> (std::istream& os, Point & p) {
 	return os;
 }
 
+float distanceBetweenSq(const Point& p1, const Point& p2)
+{
+	Point vec(p1.x - p2.x, p1.y - p2.y);
+	return vec.x * vec.x + vec.y + vec.y
+}
+
 ////////////////////////////////////////////////////////////////////////////////
 float closestPair_aux ( .................... );
 
