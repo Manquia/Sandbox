@@ -4,26 +4,29 @@
 #include <cmath>
 #include <iostream>
 #include <utility>
-#include <cstdint>
 
 std::ostream& operator<< (std::ostream& os, Point const& p) {
 	os << "(" << p.x << " , " << p.y << ") ";
 	return os;
 }
-
 std::istream& operator>> (std::istream& os, Point & p) {
 	os >> p.x >> p.y;
 	return os;
 }
 
-float distanceBetweenSq(const Point& p1, const Point& p2)
-{
-	Point vec;
-	vec.x = p1.x - p2.x;
-	vec.y = p1.y - p2.y;
-	return (vec.x * vec.x) + (vec.y * vec.y);
-}
+// ---------------------------------------------- //
+// Forward Declarations
+// ---------------------------------------------- //
+typedef size_t offsetPtr;
 
+float distanceBetweenSq(const Point& p1, const Point& p2);
+float closestPairSq_Split(std::vector<Point>& points, const bool verticalDivide);
+float closestPairSq_Brute(std::vector<Point>const& points);
+float closestPairSq_Brute(std::vector<Point>::const_iterator begin, std::vector<Point>::const_iterator end);
+
+// ---------------------------------------------- //
+// Sorging Functors
+// ---------------------------------------------- //
 struct SortByX
 {
 	bool operator()(const Point& left, const Point& right)
@@ -39,11 +42,9 @@ struct SortByY
 	}
 };
 
-////////////////////////////////////////////////////////////////////////////////
-float closestPairSq_Split(std::vector<Point>& points, const bool verticalDivide);
-float closestPairSq_Brute(std::vector<Point>const& points);
-float closestPairSq_Brute(std::vector<Point>::const_iterator begin, std::vector<Point>::const_iterator end);
-
+// ---------------------------------------------- //
+// Main implimentation
+// ---------------------------------------------- //
 float closestPair ( std::vector< Point > const& points ) {
 	int size = points.size();
 
@@ -62,6 +63,10 @@ float closestPair ( std::vector< Point > const& points ) {
 	return std::sqrt(closestPairSq_Split(givenPoints, true));
 }
 
+
+// ---------------------------------------------- //
+// Helper Functions
+// ---------------------------------------------- //
 float closestPairSq_Brute(std::vector<Point> const& points)
 {
 	return closestPairSq_Brute(points.begin(), points.end());
@@ -79,7 +84,6 @@ float closestPairSq_Brute(std::vector<Point>::const_iterator begin, std::vector<
 	}
 	return minDist;
 }
-////////////////////////////////////////////////////////////////////////////////
 float closestPairSq_Split (std::vector<Point>& points, const bool verticalDivide)
 {
 	int pointCount = points.size();
@@ -95,18 +99,18 @@ float closestPairSq_Split (std::vector<Point>& points, const bool verticalDivide
 	}
 
 	float centerLineXY = 0.0f;
-	uintptr_t vectorOffset = 0;
+	offsetPtr vectorOffset = 0;
 	if (verticalDivide)
 	{
 		std::sort(points.begin(), points.end(), SortByX());
 		centerLineXY = points[(points.size() / 2) - 1].x;
-		vectorOffset = reinterpret_cast<uintptr_t>(&((Point*)0)->x);
+		vectorOffset = reinterpret_cast<offsetPtr>(&(static_cast<Point*>(0))->x);
 	}
 	else // horizontal
 	{
 		std::sort(points.begin(), points.end(), SortByY());
 		centerLineXY = points[(points.size() / 2) - 1].y;
-		vectorOffset = reinterpret_cast<uintptr_t>(&((Point*)0)->y);
+		vectorOffset = reinterpret_cast<offsetPtr>(&(static_cast<Point*>(0))->y);
 	}
 
 	// divide points
@@ -141,56 +145,14 @@ float closestPairSq_Split (std::vector<Point>& points, const bool verticalDivide
 		}
 	}
 
-	// brute force remaining
-	// @TODO, make this a bit faster maybe...?
+	// The algorithm given on the notes does this by only comparing y values which is a bit
+	// faster.
 	return std::min(distSq, closestPairSq_Brute(lowBound, highBound + 1));
 }
-
-
-
-
-/*
-
-	// Check points along axis of division
-	std::vector<Point>::const_iterator lowBound = points.begin();
-	std::vector<Point>::const_iterator highBound = points.begin();
-	{
-		float dist = std::sqrt(distSq);
-		if (verticalDivide)
-		{
-			for (std::vector<Point>::const_iterator it = points.begin(); it != points.end(); ++it)
-			{
-				if (std::abs(it->x - centerLineXY) <= dist) // inside section
-				{
-					highBound = it;
-				}
-				else
-				{
-					// reached other end
-					if (it < highBound)
-						break;
-
-					lowBound = it;
-				}
-			}
-		}
-		else // horizontal
-		{
-			for (std::vector<Point>::const_iterator it = points.begin(); it != points.end(); ++it)
-			{
-				if (std::abs(it->y - centerLineXY) <= dist) // inside section
-				{
-					highBound = it;
-				}
-				else
-				{
-					// reached other end
-					if (it < highBound)
-						break;
-
-					lowBound = it;
-				}
-			}
-		}
-	}
-*/
+float distanceBetweenSq(const Point& p1, const Point& p2)
+{
+	Point vec;
+	vec.x = p1.x - p2.x;
+	vec.y = p1.y - p2.y;
+	return (vec.x * vec.x) + (vec.y * vec.y);
+}
