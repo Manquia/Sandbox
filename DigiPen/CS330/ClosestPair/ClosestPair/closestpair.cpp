@@ -1,9 +1,15 @@
-#include "closestpair.h"
-#include <algorithm> // std::sort
-#include <limits>
-#include <cmath>
-#include <iostream>
-#include <utility>
+// ---------------------------------------------- //
+// Author: Micah Rust
+// Class: CS 330-f17
+// Assignment: 2 - Closest Pair
+// ---------------------------------------------- //
+
+#include "closestpair.h"// header
+#include <algorithm>	// std::sort
+#include <limits>		// std::numeric_limits<float>::max();
+#include <cmath>		//
+#include <iostream>		// << float, << string
+#include <utility>		//
 
 std::ostream& operator<< (std::ostream& os, Point const& p) {
 	os << "(" << p.x << " , " << p.y << ") ";
@@ -43,29 +49,23 @@ struct SortByY
 };
 
 // ---------------------------------------------- //
-// Main implimentation
+// User Interface
 // ---------------------------------------------- //
 float closestPair ( std::vector< Point > const& points ) {
 	int size = points.size();
 
-	// copy points so that we can sort and modify them
 	std::vector<Point> givenPoints = points;
 	
-	//std::cerr << "closestPair_Split " << size << " points:";
-	//for(int i=0;i<size;++i) { std::cerr << points[i] << " "; } std::cerr << std::endl;
-
-	//if (size < 1000)
-	//	return std::sqrt(closestPairSq_Brute(givenPoints));
-
 	if (size==0) throw "zero size subset";
 	if (size==1) return std::numeric_limits<float>::max();
 	
+	// Call recursive function
 	return std::sqrt(closestPairSq_Split(givenPoints, true));
 }
 
 
 // ---------------------------------------------- //
-// Helper Functions
+// Implimentation functions 
 // ---------------------------------------------- //
 float closestPairSq_Brute(std::vector<Point> const& points)
 {
@@ -86,6 +86,9 @@ float closestPairSq_Brute(std::vector<Point>::const_iterator begin, std::vector<
 }
 float closestPairSq_Split (std::vector<Point>& points, const bool verticalDivide)
 {
+#define vectorOffsetX reinterpret_cast<offsetPtr>(&(static_cast<Point*>(0))->x)
+#define vectorOffsetY reinterpret_cast<offsetPtr>(&(static_cast<Point*>(0))->y)
+
 	int pointCount = points.size();
 	float distSq = std::numeric_limits<float>::max();
 	
@@ -104,13 +107,13 @@ float closestPairSq_Split (std::vector<Point>& points, const bool verticalDivide
 	{
 		std::sort(points.begin(), points.end(), SortByX());
 		centerLineXY = points[(points.size() / 2) - 1].x;
-		vectorOffset = reinterpret_cast<offsetPtr>(&(static_cast<Point*>(0))->x);
+		vectorOffset = vectorOffsetX;
 	}
 	else // horizontal
 	{
 		std::sort(points.begin(), points.end(), SortByY());
 		centerLineXY = points[(points.size() / 2) - 1].y;
-		vectorOffset = reinterpret_cast<offsetPtr>(&(static_cast<Point*>(0))->y);
+		vectorOffset = vectorOffsetY;
 	}
 
 	// divide points
@@ -144,9 +147,6 @@ float closestPairSq_Split (std::vector<Point>& points, const bool verticalDivide
 			}
 		}
 	}
-
-	// The algorithm given on the notes does this by only comparing y values which is a bit
-	// faster.
 	return std::min(distSq, closestPairSq_Brute(lowBound, highBound + 1));
 }
 float distanceBetweenSq(const Point& p1, const Point& p2)
