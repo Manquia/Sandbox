@@ -120,9 +120,9 @@ float closestPairSq_Split (std::vector<Point>& points, const bool verticalDivide
 
 	// Check points along axis of division
 	std::vector<Point>::const_iterator lowBound = points.begin();
-	std::vector<Point>::const_iterator highBound = points.begin();
+	std::vector<Point>::const_iterator highBound = points.end() - 1;
 	{
-		float dist = std::sqrt(distSq) + 0.001f; // + epsilon
+		float dist = std::sqrt(distSq); // + epsilon
 		for (std::vector<Point>::const_iterator it = points.begin(); it != points.end(); ++it)
 		{
 			float pointPosXY = *reinterpret_cast<const float*>(reinterpret_cast<char const*> (&(*it)) + vectorOffset);
@@ -133,7 +133,7 @@ float closestPairSq_Split (std::vector<Point>& points, const bool verticalDivide
 			else
 			{
 				// reached other end
-				if (it > highBound)
+				if (it == highBound + 1)
 					break;
 
 				lowBound = it;
