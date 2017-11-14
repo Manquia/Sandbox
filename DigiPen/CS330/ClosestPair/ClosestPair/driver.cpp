@@ -112,11 +112,34 @@ void test14() {
 void (*pTests[])(void) = { test0,test1,test2,test3,test4,test5,test6,test7,test8,test9,test10,test11,test12,test13,test14 };
 
 int main( int argc, char ** argv) {
-    if (argc!=2) return 1;
-    else {
-        int test = 0;
-        std::sscanf(argv[1],"%i",&test);
-        pTests[ test ]();
-    }
+    
+	test0();
+	test1();
+	test2();
+	test3();
+	test4();
+	test5();
+	test6();
+	test7();
+	test8();
+	test9();
+	test10();
+	test11();
+
+	// too large for brute force
+	test12();
+	test13();
+	test14();
+
+	//if (argc!=2) return 1;
+    //else {
+    //    int test = 0;
+    //    std::sscanf(argv[1],"%i",&test);
+    //    pTests[ test ]();
+    //}
+
+
+	int myInt;
+	std::cin >> myInt;
     return 0;
 }
