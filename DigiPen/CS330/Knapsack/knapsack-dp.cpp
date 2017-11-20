@@ -36,7 +36,7 @@ std::vector<int> knapsackDP( std::vector<Item> const& items, int const& W )
 {
 	int num_items = items.size();
 
-	// Create table
+	// Initialize table
 	Table table(W + 1);
 	for (int i = 0; i <= W; ++i)
 	{
@@ -44,7 +44,6 @@ std::vector<int> knapsackDP( std::vector<Item> const& items, int const& W )
 		for (int j = 0; j <= num_items; ++j)
 			table[i].push_back(0);
 	}
-
 
 	// build the solution table
 	for (int weight = 1; weight <= W; ++weight)
@@ -97,22 +96,22 @@ std::vector<int> knapsackDP( std::vector<Item> const& items, int const& W )
 	//figure out which items are in the bag based on the table
 	std::vector<int> bag;
 
-
 	int weight = W;
 	int itemIndex = num_items;
 
-	while(table[weight][itemIndex - 1] > 0)
+	while(itemIndex > 0)
 	{
 		while (itemIndex > 1 && table[weight][itemIndex] == table[weight][itemIndex - 1])
 		{
 			--itemIndex;
 		}
 
-		bag.push_back(itemIndex -1);
-		weight -= items[itemIndex - 1].weight;
-	}
+		if(weight >= items[itemIndex - 1].weight)
+			bag.push_back(itemIndex -1);
 
-	
+		weight -= items[itemIndex - 1].weight;
+		--itemIndex;
+	}
 	
 	return bag;
 }
