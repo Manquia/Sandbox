@@ -131,7 +131,7 @@ void (*pTests[])() = {
 
 int main(int argc, char ** argv) {
 
-	test1();
+	test4();
 	
 	//try {
 	//	std::vector<Item> store;
