@@ -10,7 +10,7 @@ void read( char const* filename, MAP& map, int& TotalCity )
     map.clear();
     std::ifstream in( filename, std::ifstream::in );
     if( !in.is_open() ) {
-        std::cout << "problem reading " << filename << std::endl;
+        std::cout << "Error: Cannot open filepath: " << filename << std::endl;
         return;
     }
     in >> TotalCity;
@@ -24,7 +24,7 @@ void read( char const* filename, MAP& map, int& TotalCity )
     for( int i = 0; i < TotalCity; ++i ) {
         for( int j = i + 1; j < TotalCity; ++j ) {
             if( !in.good() ) {
-                std::cout << "problem reading " << filename << std::endl;
+                std::cout << "Error: Reading filepath " << filename << std::endl;
                 return;
             }
             in >> map[i][j];
@@ -89,10 +89,18 @@ void (*pTests[])() = {
 
 #include <cstdio> // sscanf
 int main(int argc, char ** argv) {
-    if ( argc == 2 ) {
-        int test = 0;
-        std::sscanf(argv[1],"%i",&test);
-        pTests[test]();
-    }
+    
+	test0();
+
+	int myInput;
+	std::cin >> myInput;
+	
+	//if ( argc == 2 ) {
+    //    int test = 0;
+    //    std::sscanf(argv[1],"%i",&test);
+    //    pTests[test]();
+    //}
+
+
     return 0;
 }
