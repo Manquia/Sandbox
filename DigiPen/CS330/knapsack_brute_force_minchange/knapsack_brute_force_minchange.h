@@ -7,12 +7,16 @@
 
 class GreyCode {
     private:
+		std::vector<int> codes;
+		size_t index;
 
     public:
         GreyCode( int s );
         // first subset is empty, this function tells what's next 2^n-1 subsets
         // ret value: is last, is add, positin
         std::pair< bool, std::pair< bool, int > > Next();
+
+		void PrintCode();
 };
 
 // brute-force knapsack

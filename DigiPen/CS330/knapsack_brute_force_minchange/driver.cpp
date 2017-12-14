@@ -92,7 +92,17 @@ void (*pTests[])() = {
 }; 
 
 
-int main(int argc, char ** argv) try {
+int main(int argc, char ** argv)
+{
+	test6();
+
+	int myInput;
+	std::cin >> myInput;
+	return 0;
+}
+
+/*
+try {
     if (argc == 2) {
 		int test = 0;
 		std::sscanf(argv[1],"%i",&test);
@@ -105,3 +115,4 @@ int main(int argc, char ** argv) try {
 } catch( char const* str) {
     std::cout << str << std::endl;
 }
+*/
