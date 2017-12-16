@@ -16,6 +16,8 @@ class PermJohnsonTrotter {
 		// returns the current permutation	
 		std::vector<int> const& Get() const;
 
+		size_t GetSwitches() const;
+
 	private:
 		// helper functions
 		int FindLargestMobileIndex();
@@ -24,5 +26,6 @@ class PermJohnsonTrotter {
 		// data
 		std::vector<int> data;
 		std::vector<int> direction;
+		size_t switchCount;
 };
 #endif // PERM_JOHNSON_TROTTER_H

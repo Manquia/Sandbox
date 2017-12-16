@@ -8,7 +8,7 @@
 
 // Initialize the number of elements to use in the Johnson Trotter algorithm
 PermJohnsonTrotter::PermJohnsonTrotter(int size)
-	:data(size), direction(size)
+	:data(size), direction(size), switchCount(0)
 {
 	// setup number seq
 	for (int i = 0; i < size; ++i)
@@ -22,13 +22,14 @@ PermJohnsonTrotter::PermJohnsonTrotter(int size)
 // Computes the next permutation of the given elements
 bool PermJohnsonTrotter::Next()
 {
+	switchCount = 0;
 	int index = FindLargestMobileIndex();
 	
 	if (index == -1) // no mobile index found
 		return false;
 	
 	// get neighbor index
-	int neighborIndex = index;
+	int neighborIndex = index;;
 	if (direction[index] > 0) neighborIndex += 1;
 	else neighborIndex -= 1;
 
@@ -43,6 +44,7 @@ bool PermJohnsonTrotter::Next()
 		if (abs(direction[i]) > abs(swappedValue))
 		{
 			direction[i] = -direction[i];
+			++switchCount;
 		}
 	}
 	return true;
@@ -100,4 +102,8 @@ bool PermJohnsonTrotter::IsMobile(int index)
 std::vector<int> const & PermJohnsonTrotter::Get() const
 {
 	return data;
+}
+size_t PermJohnsonTrotter::GetSwitches() const
+{
+	return switchCount;
 }
