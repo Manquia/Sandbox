@@ -39,7 +39,7 @@ public class Worm : FFComponent
     [Serializable]
     public class Movement
     {
-        public float movementSpeed;
+        public float moveSpeed;
 
         public float arcLength = 0.8f;
         public float arcLengthRandDelta = 0.1f;
@@ -99,9 +99,11 @@ public class Worm : FFComponent
 
         // Create body based on given properties
         CreateBody();
+
         // make and start the worm's logic sequence
+        int arcsToComplete = movement.arcsPerCycle * UnityEngine.Random.Range(0, movement.arcsPerCycleRandDelta);
         seq = action.Sequence();
-        seq.Call(StageMoveGround);
+        seq.Call(StageMoveGround, arcsToComplete);
 	}
 
     void Update()
@@ -177,17 +179,66 @@ public class Worm : FFComponent
     }
     #endregion
     
-
     #region sequenceStages
-    void StageMoveGround()
+
+    // Set the ArcsToComplete in movment before calling
+    void StageMoveGround(object int_arcsToComplete)
     {
-        // Do the Arc stuff for movement!!!
+        int arcsToComplete = (int)int_arcsToComplete;
+
+        // Movment Cycle ('*' == points on a path)
+        //  |0       |1       |2       |<--- Offset (i)
+        //  |0 1 2 3 |0 1 2 3 |0 1 2 3 |<--- Index
+        //  |*       |*       |*       |
+        //--|--*---*-|--*---*-|--*---*-|<--- "Ground"
+        //  |    *   |    *   |    *   |
+        //  |        |        |        |
+        // Add all of the needed arcs while moving on the ground
+
+        // copy over the last 4 points in reverse order
+        const int pointsAdded = 4;
+        // a set of pts that are described in the diagram above
+        var pts = new Vector3[pointsAdded * (arcsToComplete + 1)];
+        for(int i = 0; i < pointsAdded; ++i)
+        {
+            pts[i] = movePath.points[(movePath.points.Length - 1) - i];
+        }
+
+
+        const int raycastMask = 0;  // @TODO
+        const float dist = 0.0f;    // @TODO
+        // Ground Movement cycle
+        for (int i = 0; i < arcsToComplete; ++i)
+        {
+            int off = i * arcsToComplete;
+            // suggestd down = Normalize(v1_2 + v3_2)
+            Vector3 suggestedDown = Vector3.Normalize((pts[2+off] - pts[1+off]) + (pts[2+off] - pts[3+off]));
+            int raycastMask; //= 1;
+            float dist; //= movement.;
 
 
 
 
+            Vector3 pos;// = movePath.PositionAtPoint(movePath.points.Length - 1);
+            Vector3 dir; //= PathForwardVec();
+
+
+            // First We probe up out of the ground into the air
+            
+
+            // Add new points toPath
+        }
+
+        var pointsToAdd = new Vector3[pointsAdded * arcsToComplete];
+        pts.CopyTo(pointsToAdd, pointsAdded);
+        AddPointsToPath(pointsToAdd);
+
+        // calculate time till we reach end of path
+        float distToMove = movePath.PathLength - movePathDist;
+        float timeToCompleteMove = distToMove / movement.moveSpeed;
+        seq.Delay(timeToCompleteMove);
         seq.Sync();
-        seq.Call(StageMoveGround);
+        seq.Call(StagePeak);
     }
 
     void StagePeak()
@@ -207,8 +258,7 @@ public class Worm : FFComponent
 
 
     #endregion sequenceStages
-
-
+    
     #region helpers
     // Update's worm's body positions and rotation
     // @TODO @Polish possibly ignore the head + tailtip so that we can do special animation stuff.
@@ -310,6 +360,74 @@ public class Worm : FFComponent
 
         // Setup path
         movePath.SetupPointData();
+    }
+    
+    RaycastHit2D ProbeForCollider(Vector3 pos, Vector3 dir, float dist, int raycastMask, Vector3 suggestedDown, int recursionCount = 0)
+    {
+        RaycastHit2D hit;
+        hit = Physics2D.Raycast(pos, dir, dist, raycastMask);
+        
+        // give up, its probably not goint to happen
+        if (recursionCount > 5)
+        {
+            Debug.Assert(false, "Worm failed to find a Collider on probing, this probably means that there is either no geometry to find OR the mask is wrong");
+            return hit;
+        }
+
+        if (!hit) //  fail initial guess
+        {
+            var rotRight10 = Quaternion.AngleAxis(10.0f, Vector3.forward);
+            var rotLeft10 = Quaternion.AngleAxis(10.0f, Vector3.forward);
+
+            var rotRight = rotRight10;
+            var rotLeft = rotLeft10;
+
+            RaycastHit2D hitRight;
+            RaycastHit2D hitLeft;
+
+            // try with rotations in both directions
+            for (int i = 0; i< 8 && !hit; ++i)
+            {
+                var dirRight = rotRight * dir;
+                var dirLeft = rotLeft * dir;
+
+                hitRight = Physics2D.Raycast(pos, dirRight, dist, raycastMask);
+                hitLeft = Physics2D.Raycast(pos, dirLeft, dist, raycastMask);
+
+                if (hitRight && hitLeft) // got 2 hits
+                {
+                    // choose hit based on dot with "down"
+                    float dotRight = Vector3.Dot(suggestedDown, dirRight);
+                    float dotLeft = Vector3.Dot(suggestedDown, dirLeft);
+
+                    // choose whichever is more aligned with the suggested down
+                    hit = dotRight > dotLeft? hitRight : hitLeft;
+                }
+                else // 0 Or 1 hit
+                {
+                    hit = hitLeft? hitLeft : hitRight;
+                }
+
+                // move rotations 
+                rotRight = rotRight* rotRight10;
+                rotLeft = rotLeft* rotLeft10;
+            }
+        }
+        // try again with more distance
+        if (!hit)
+            return ProbeForCollider(pos, dir, dist * 2.0f, raycastMask, suggestedDown, recursionCount + 1);
+        else
+            return hit;
+    }
+
+    Vector3 PathForwardVec()
+    {
+        const float epsilon = 0.01f;
+
+        var pointAtEndOfPath = movePath.PositionAtPoint(movePath.points.Length - 1);
+        var pointNearEndOfPath = movePath.PointAlongPath(movePath.PathLength - epsilon);
+
+        return (pointAtEndOfPath - pointNearEndOfPath).normalized;
     }
     #endregion helpers
 }
