@@ -41,8 +41,8 @@ public class Worm : FFComponent
     {
         public float moveSpeed;
 
-        public float arcLength = 0.8f;
-        public float arcLengthRandDelta = 0.1f;
+        public float arcDist = 0.8f;
+        public float arcDistRandDelta = 0.1f;
 
         public float arcHeight = 0.9f;
         public float arcHeightRandDelta = 0.1f;
@@ -185,6 +185,7 @@ public class Worm : FFComponent
     void StageMoveGround(object int_arcsToComplete)
     {
         int arcsToComplete = (int)int_arcsToComplete;
+        const float epsilon = 0.01f;
 
         // Movment Cycle ('*' == points on a path)
         //  |0       |1       |2       |<--- Offset (i)
@@ -204,23 +205,77 @@ public class Worm : FFComponent
             pts[i] = movePath.points[(movePath.points.Length - 1) - i];
         }
 
-
-        const int raycastMask = 0;  // @TODO
-        const float dist = 0.0f;    // @TODO
+    
+        const int raycastMask = Physics2D.AllLayers;  // @TODO @SPEED
         // Ground Movement cycle
         for (int i = 0; i < arcsToComplete; ++i)
         {
             int off = i * arcsToComplete;
+            int nextOff = (i + 1) * arcsToComplete;
+
             // suggestd down = Normalize(v1_2 + v3_2)
             Vector3 suggestedDown = Vector3.Normalize((pts[2+off] - pts[1+off]) + (pts[2+off] - pts[3+off]));
-            int raycastMask; //= 1;
-            float dist; //= movement.;
+            
+            { // calculate p0
+                Vector3 v2_3 = pts[3 + off] - pts[2 + off];
+                Vector3 v2_3Norm = v2_3.normalized;
+                float arcDist = movement.arcDist + UnityEngine.Random.Range(0.0f, movement.arcDistRandDelta);
+                float arcHeight = movement.arcHeight + UnityEngine.Random.Range(0.0f, movement.arcHeightRandDelta);
+
+                Vector3 newP0 = pts[3 + off] + (v2_3Norm * arcDist);
+
+                Vector3 newP0Temp = newP0;
+                bool newP0Good = false;
+                for (int tryIndex = 0; tryIndex < 8; ++tryIndex) // try 4 times, then give up we aren't going above 
+                {
+                    var hit = Physics2D.OverlapCircle(newP0Temp, arcHeight, raycastMask);
+                    if (!hit)
+                    {
+                        newP0Good = true;
+                        newP0 = newP0Temp;
+                        break; // didn't hit anything, point is good
+                    }
+                    else // hit something, adjust position and try again
+                    {
+                        // @Stupid @Hack Unity Doesn't give us penetration data on overlapps and doesn't have ComputerPenetrations for 2D.
+                        // if we goto using Phsyics instead of 2D Phsyics this should use Phsyics.ComputePenetration instead of this hack.
+                        // Test Left and rigth by some degrees         -Micah Rust Jan 19 2018
+                        switch (tryIndex)
+                        {
+                            case 0: newP0Temp = pts[3 + off] + (Quaternion.AngleAxis(15.0f, Vector3.forward) * (newP0 - pts[3 + off])); break;
+                            case 1: newP0Temp = pts[3 + off] + (Quaternion.AngleAxis(-15.0f, Vector3.forward) * (newP0 - pts[3 + off])); break;
+                            case 2: newP0Temp = pts[3 + off] + (Quaternion.AngleAxis(40.0f, Vector3.forward) * (newP0 - pts[3 + off])); break;
+                            case 3: newP0Temp = pts[3 + off] + (Quaternion.AngleAxis(-40.0f, Vector3.forward) * (newP0 - pts[3 + off])); break;
+                            case 4: newP0Temp = pts[3 + off] + (Quaternion.AngleAxis(70.0f, Vector3.forward) * (newP0 - pts[3 + off])); break;
+                            case 5: newP0Temp = pts[3 + off] + (Quaternion.AngleAxis(-70.0f, Vector3.forward) * (newP0 - pts[3 + off])); break;
+                            case 6: newP0Temp = pts[3 + off] + (Quaternion.AngleAxis(85.0f, Vector3.forward) * (newP0 - pts[3 + off])); break;
+                            case 7: newP0Temp = pts[3 + off] + (Quaternion.AngleAxis(-85.0f, Vector3.forward) * (newP0 - pts[3 + off])); break;
+                        }
+                    }
+                }
+
+                // @TODO
+                if (newP0Good)
+                {
+                    // Mark path Points as open to the air for shooting
+                }
+                else
+                {
+                    // Mark the path point as closed to the air
+                }
+
+                // Save value to pts output
+                pts[0 + nextOff] = newP0;
+            } // end calculate p0
+
+            {// calculate p1
 
 
+                //Vector3 probe0_3 = ProbeForCollider(pts[3+off] + (v2_3Norm *arcDist),
 
+            }// end calcule p0
 
-            Vector3 pos;// = movePath.PositionAtPoint(movePath.points.Length - 1);
-            Vector3 dir; //= PathForwardVec();
+  
 
 
             // First We probe up out of the ground into the air
@@ -259,6 +314,7 @@ public class Worm : FFComponent
 
     #endregion sequenceStages
     
+
     #region helpers
     // Update's worm's body positions and rotation
     // @TODO @Polish possibly ignore the head + tailtip so that we can do special animation stuff.
@@ -419,6 +475,7 @@ public class Worm : FFComponent
         else
             return hit;
     }
+    
 
     Vector3 PathForwardVec()
     {
