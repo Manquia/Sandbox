@@ -27,6 +27,7 @@ public class Worm : FFComponent
         // if not active, will goto the next wall
         public bool active = true;
         public float time = 0.5f;
+        public int coilCount = 1;
         
         public enum AttackType
         {
@@ -74,19 +75,27 @@ public class Worm : FFComponent
     public Coiling coiling;
     public Spitting spitting;
 
+    public Transform player;
+
     #endregion Properties
 
     #region data
 
+    // movement stuff
     FFPath movePath;
     public float movePathDist;
 
+    // coiling stuff
+    int coilCounter;
+
+    // Sequnce stuff
     FFAction.ActionSequence seq;
 
     // Body stuff
     Transform bodyRoot;
     List<Transform> bodyParts = new List<Transform>();
     Transform head;
+    
 
     #endregion
 
@@ -94,6 +103,8 @@ public class Worm : FFComponent
     // Use this for initialization
     void Start ()
     {
+        player = GameObject.Find("Player").transform;
+        coilCounter = coiling.coilCount;
         // Get Path
         movePath = transform.Find("MovePath").GetComponent<FFPath>();
 
@@ -351,20 +362,70 @@ public class Worm : FFComponent
         seq.Call(StagePeak);
     }
 
+    public AnimationCurve tempPeakColorCurve;
+    public AnimationCurve tempPeakMoveCurve;
     void StagePeak()
     {
+        // Do animation stuff here...
+        // @TODO Add attacking here?
 
+        // Placeholder anim @Replace probably
+        Vector3 endOfPathWorld = movePath.PositionAtPoint(movePath.points.Length - 1);
+        Vector3 vecToPlayerWorld = player.position - endOfPathWorld;
+        Vector3 vecToPlayerLocal = movePath.transform.InverseTransformVector(vecToPlayerWorld);
+        Vector3 vecRightOfPath = (Quaternion.AngleAxis(90.0f, Vector3.forward) * vecToPlayerLocal).normalized;
+
+        var headColor = new FFRef<Color>(() => bodyParts[0].GetComponent<SpriteRenderer>().color, (v) => bodyParts[0].GetComponent<SpriteRenderer>().color = v);
+        var endPathPt = new FFRef<Vector3>(() => movePath.points[movePath.points.Length - 1], (v) => { movePath.points[movePath.points.Length - 1] = v; movePath.SetupPointData(); });
+
+        seq.Property(headColor, Color.black, tempPeakColorCurve, 1.5f);
+        seq.Property(endPathPt, endPathPt + vecRightOfPath, tempPeakMoveCurve, 1.5f);
+
+        seq.Sync();
+        seq.Call(StageMoveAir);
     }
-
+    
     void StageMoveAir()
     {
+        // Attack player @TODO remove type from coiling class above
+        const float dist = 9999.0f;
+        const int raycastMask = -1; // @SPEED, @POLISH, @BUG (hts the player)
+        Vector3 endOfPathWorld = movePath.PositionAtPoint(movePath.points.Length - 1);
+        Vector3 vecToPlayerWorld = player.position - endOfPathWorld;
 
+        var hit = Physics2D.Raycast(endOfPathWorld, vecToPlayerWorld, dist, raycastMask);
+
+        if(hit)
+        {
+            Vector3 endpoint = hit.point;
+
+            if (coiling.active && coilCounter > 0)
+            {
+                --coilCounter;
+                // Add all points for coiling
+                AddCoilAtPos(endOfPathWorld + (0.75f * vecToPlayerWorld));
+
+                // sync then move air toward the player again without coiling this time
+                seq.Sync();
+                seq.Call(StageMoveAir);
+                return; // comes back here later after delay which is added in AddCoilPos
+            }
+            else // end StageMoveAir
+            {
+                // Adds all of the points to move back into the snaking motion
+                InitGroundMoveSeq(hit);
+            }
+        }
+        else
+        {
+            Debug.Assert(false, "Worm raycasted but found nothing this should never happen. Fix the level (to be enclosing) of script or maybe something else like it escaped...");
+        }
+
+
+        // Let this toggle back for next time if we have coiling active
+        coilCounter = coiling.coilCount;
     }
-
-    void StageCoil()
-    {
-
-    }
+    
 
 
     #endregion sequenceStages
@@ -531,7 +592,16 @@ public class Worm : FFComponent
         else
             return hit;
     }
-    
+
+    void InitGroundMoveSeq(RaycastHit2D hit)
+    {
+
+    }
+
+    void AddCoilAtPos(Vector3 pos)
+    {
+
+    }
 
     Vector3 PathForwardVec()
     {
