@@ -101,7 +101,7 @@ public class Worm : FFComponent
         CreateBody();
 
         // make and start the worm's logic sequence
-        int arcsToComplete = movement.arcsPerCycle * UnityEngine.Random.Range(0, movement.arcsPerCycleRandDelta);
+        int arcsToComplete = movement.arcsPerCycle + UnityEngine.Random.Range(0, movement.arcsPerCycleRandDelta);
         seq = action.Sequence();
         seq.Call(StageMoveGround, arcsToComplete);
 	}
@@ -112,7 +112,7 @@ public class Worm : FFComponent
         UpdateDestroyTraversedPoints();
 
         // @TEMP
-        movePathDist += Time.deltaTime * 3.0f;
+        movePathDist += Time.deltaTime * movement.moveSpeed;
 
         if (Input.GetMouseButtonDown(0))
         {
@@ -202,31 +202,33 @@ public class Worm : FFComponent
         var pts = new Vector3[pointsAdded * (arcsToComplete + 1)];
         for(int i = 0; i < pointsAdded; ++i)
         {
-            pts[i] = movePath.points[(movePath.points.Length - 1) - i];
+            pts[i] = movePath.PositionAtPoint(movePath.points.Length - pointsAdded + i);
         }
 
     
         const int raycastMask = Physics2D.AllLayers;  // @TODO @SPEED
+
+        float arcDist = movement.arcDist + UnityEngine.Random.Range(0.0f, movement.arcDistRandDelta);
+        float arcHeight = movement.arcHeight + UnityEngine.Random.Range(0.0f, movement.arcHeightRandDelta);
+
         // Ground Movement cycle
         for (int i = 0; i < arcsToComplete; ++i)
         {
-            int off = i * arcsToComplete;
-            int nextOff = (i + 1) * arcsToComplete;
+            int off = i * pointsAdded;
+            int nextOff = (i + 1) * pointsAdded;
 
             // suggestd down = Normalize(v1_2 + v3_2)
             Vector3 suggestedDown = Vector3.Normalize((pts[2+off] - pts[1+off]) + (pts[2+off] - pts[3+off]));
             
-            { // calculate p0
+            { // P0, look for open area above ground
                 Vector3 v2_3 = pts[3 + off] - pts[2 + off];
                 Vector3 v2_3Norm = v2_3.normalized;
-                float arcDist = movement.arcDist + UnityEngine.Random.Range(0.0f, movement.arcDistRandDelta);
-                float arcHeight = movement.arcHeight + UnityEngine.Random.Range(0.0f, movement.arcHeightRandDelta);
 
                 Vector3 newP0 = pts[3 + off] + (v2_3Norm * arcDist);
 
                 Vector3 newP0Temp = newP0;
                 bool newP0Good = false;
-                for (int tryIndex = 0; tryIndex < 8; ++tryIndex) // try 4 times, then give up we aren't going above 
+                for (int tryIndex = 0; tryIndex < 8; ++tryIndex) // try a few times, then give up we aren't going above ground on this run.
                 {
                     var hit = Physics2D.OverlapCircle(newP0Temp, arcHeight, raycastMask);
                     if (!hit)
@@ -250,6 +252,8 @@ public class Worm : FFComponent
                             case 5: newP0Temp = pts[3 + off] + (Quaternion.AngleAxis(-70.0f, Vector3.forward) * (newP0 - pts[3 + off])); break;
                             case 6: newP0Temp = pts[3 + off] + (Quaternion.AngleAxis(85.0f, Vector3.forward) * (newP0 - pts[3 + off])); break;
                             case 7: newP0Temp = pts[3 + off] + (Quaternion.AngleAxis(-85.0f, Vector3.forward) * (newP0 - pts[3 + off])); break;
+
+                            default: Debug.Assert(false, "THIS SHOULDN'T EVER HAPPEN"); break;
                         }
                     }
                 }
@@ -266,31 +270,82 @@ public class Worm : FFComponent
 
                 // Save value to pts output
                 pts[0 + nextOff] = newP0;
-            } // end calculate p0
+            }// end calculate p0
 
-            {// calculate p1
+            {// P1, Probe to ground form P0
+                Vector3 vecCurDir = pts[3 + off] - pts[0+nextOff];
+                Vector3 vecPastDir = pts[1+off] - pts[0+off];
+                Vector3 vecForward = pts[3+off] - pts[1+off];
+                Vector3 vecTowardGrond = vecPastDir.normalized + vecCurDir.normalized + vecForward.normalized * 2.0f;
+                var hit = ProbeForCollider(pts[0 + nextOff], vecTowardGrond, arcDist, raycastMask, suggestedDown);
 
-
-                //Vector3 probe0_3 = ProbeForCollider(pts[3+off] + (v2_3Norm *arcDist),
-
-            }// end calcule p0
-
-  
-
-
-            // First We probe up out of the ground into the air
+                if (hit)
+                {
+                    pts[1 + nextOff] = hit.point;
+                }
+                else // just add the point and see if we recover later
+                {
+                    pts[1 + nextOff] = pts[2 + off] + vecTowardGrond;
+                }
+            }// end calculate p1
             
+            {// P2 -  Go into ground by arc length
 
-            // Add new points toPath
+                Vector3 vecBackDown    = pts[3 + off] - pts[0 + nextOff];
+                Vector3 vecForwardDown = pts[1 + nextOff] - pts[0 + nextOff];
+                Vector3 vecToGrond = vecForwardDown.normalized + vecBackDown.normalized;
+
+                Vector3 forward = -vecBackDown + vecForwardDown;
+                pts[2 + nextOff] = pts[1 + nextOff] + (forward + vecToGrond).normalized * arcDist;
+            }// end calculate p2
+            
+            // P3 - Raycast forward, if that fails, then probe back to P2 from ending of raycast
+            {
+                Vector3 vecAlongGroundNorm = (pts[3 + off] - pts[1 + off]).normalized;
+                RaycastHit2D rayHit = Physics2D.Raycast(pts[0 + nextOff], vecAlongGroundNorm, arcDist * 2.5f, raycastMask);
+
+                if(rayHit) // we hit something we are good to place point
+                {
+                    pts[3 + nextOff] = rayHit.point;
+                }
+                else // raycast failed, probe back toP2
+                {
+                    Vector3 probePos = pts[0 + nextOff] + (vecAlongGroundNorm * arcDist * 3.0f);
+                    Vector3 proveVec = pts[2 + nextOff] - probePos;
+                    var probeHit = ProbeForCollider(probePos, proveVec, proveVec.magnitude, raycastMask, suggestedDown);
+
+                    if (probeHit)
+                    {
+                        pts[3 + nextOff] = probeHit.point;
+                    }
+                    else
+                    {
+                        Debug.Assert(false, "previous point was p2 was bad");
+                    }
+                }
+            }
         }
 
         var pointsToAdd = new Vector3[pointsAdded * arcsToComplete];
-        pts.CopyTo(pointsToAdd, pointsAdded);
+        for(int i = 0; i < pointsAdded * arcsToComplete; ++i)
+        {
+            pointsToAdd[i] = movePath.transform.InverseTransformPoint(pts[i + pointsAdded]);
+        }
+
         AddPointsToPath(pointsToAdd);
 
         // calculate time till we reach end of path
         float distToMove = movePath.PathLength - movePathDist;
         float timeToCompleteMove = distToMove / movement.moveSpeed;
+
+        // @Idea @Polish
+        // simplify stage? nodes which are very close together and are in close sequence get pruned...
+
+        // @Idea @Polish
+        // Make path go in and out of the screen when it goes underground
+
+        // @Idea @Polsih
+        // Make worm scale 
         seq.Delay(timeToCompleteMove);
         seq.Sync();
         seq.Call(StagePeak);
@@ -426,7 +481,8 @@ public class Worm : FFComponent
         // give up, its probably not goint to happen
         if (recursionCount > 5)
         {
-            Debug.Assert(false, "Worm failed to find a Collider on probing, this probably means that there is either no geometry to find OR the mask is wrong");
+            string message = "Probe failed at dist " + dist + " with suggestedDown " + suggestedDown;
+            Debug.Assert(false, message);
             return hit;
         }
 
