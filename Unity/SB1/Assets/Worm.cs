@@ -27,7 +27,16 @@ public class Worm : FFComponent
         // if not active, will goto the next wall
         public bool active = true;
         public float time = 0.5f;
-        public int coilCount = 1;
+        
+        public float coilRadius = 2.5f;
+        public float coilRadiusRandDelta = 0.5f;
+        public float coilMinRadius = 0.5f;
+
+        public int coilCount = 2;
+        public int coilCountRandDelta = 1;
+
+        public int coilRings = 1;
+        public int coilRingsRandDelta = 1;
         
         public enum AttackType
         {
@@ -104,7 +113,6 @@ public class Worm : FFComponent
     void Start ()
     {
         player = GameObject.Find("Player").transform;
-        coilCounter = coiling.coilCount;
         // Get Path
         movePath = transform.Find("MovePath").GetComponent<FFPath>();
 
@@ -381,13 +389,21 @@ public class Worm : FFComponent
         seq.Property(headColor, Color.black, tempPeakColorCurve, 1.5f);
         seq.Property(endPathPt, endPathPt + vecRightOfPath, tempPeakMoveCurve, 1.5f);
 
+
+        coilCounter = coiling.coilCount + UnityEngine.Random.Range(0, coiling.coilCountRandDelta);
         seq.Sync();
         seq.Call(StageMoveAir);
     }
-    
+
+    // SHould set coilCounter before entering, cannot 
+    // change to parameter since we need to calculate each coil between 
+    // attack to the player... so the data needs to be held on the Worm Componenet
     void StageMoveAir()
     {
+        //@Polish, Change Speed when in air stage?
+
         // Attack player @TODO remove type from coiling class above
+        const float epsilon = 0.1f;
         const float dist = 9999.0f;
         const int raycastMask = -1; // @SPEED, @POLISH, @BUG (hts the player)
         Vector3 endOfPathWorld = movePath.PositionAtPoint(movePath.points.Length - 1);
@@ -403,9 +419,17 @@ public class Worm : FFComponent
             {
                 --coilCounter;
                 // Add all points for coiling
-                AddCoilAtPos(endOfPathWorld + (0.75f * vecToPlayerWorld));
+                AddCoilAtPos(endOfPathWorld + vecToPlayerWorld);
 
                 // sync then move air toward the player again without coiling this time
+                float distOfn_1 = movePath.LengthAlongPathToPoint(movePath.points.Length - 1);
+                float distOfn_2 = movePath.LengthAlongPathToPoint(movePath.points.Length - 2);
+                float distOfEndSegment = distOfn_1 - distOfn_2;
+
+                float distToTravel = (movePath.PathLength - movePathDist) - distOfEndSegment;
+                float timeToCompleteCoil = distToTravel / movement.moveSpeed;
+
+                seq.Delay(timeToCompleteCoil);
                 seq.Sync();
                 seq.Call(StageMoveAir);
                 return; // comes back here later after delay which is added in AddCoilPos
@@ -420,10 +444,6 @@ public class Worm : FFComponent
         {
             Debug.Assert(false, "Worm raycasted but found nothing this should never happen. Fix the level (to be enclosing) of script or maybe something else like it escaped...");
         }
-
-
-        // Let this toggle back for next time if we have coiling active
-        coilCounter = coiling.coilCount;
     }
     
 
@@ -600,7 +620,37 @@ public class Worm : FFComponent
 
     void AddCoilAtPos(Vector3 pos)
     {
+        float coilRadiusDelta =  Mathf.Max(0.0f, coiling.coilRadius - coiling.coilMinRadius) + UnityEngine.Random.Range(0.0f, coiling.coilRadiusRandDelta);
+        int coilRingCount = coiling.coilRings + UnityEngine.Random.Range(0, coiling.coilRingsRandDelta);
 
+        const float epsilon = 0.001f;
+        int pointCount = coilRingCount * 7;
+        var pts = new Vector3[pointCount];
+        var zWorld = pos.z;
+
+        float maxF = (Mathf.PI / 7.0f) * pointCount + epsilon;
+
+        { // calculate coil points
+            Vector3 pt = Vector3.zero;
+            float f = 0.0f;
+            int i = 0;
+            while (i < pointCount)
+            { 
+                var xLocal = Mathf.Cos(f) * (coiling.coilMinRadius + coilRadiusDelta * (1 - (f/maxF)));
+                var yLocal = Mathf.Sin(f) * (coiling.coilMinRadius + coilRadiusDelta * (1 - (f/maxF)));
+
+                pts[i].Set(pos.x + xLocal, pos.y + yLocal, pos.z);
+
+                ++i;
+                f += Mathf.PI / 7.0f;
+            }
+        }
+
+        // make points local to path
+        for(int i = 0; i < pts.Length; ++i)
+            pts[i] = movePath.transform.InverseTransformPoint(pts[i]);
+
+        AddPointsToPath(pts);
     }
 
     Vector3 PathForwardVec()

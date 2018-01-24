@@ -1433,7 +1433,7 @@ MonoBehaviour:
     head: {fileID: 492602564}
     tailTip: {fileID: 2136241663}
   movement:
-    moveSpeed: 3
+    moveSpeed: 5
     arcDist: 0.7
     arcDistRandDelta: 0.3
     arcHeight: 0.4
@@ -1443,7 +1443,13 @@ MonoBehaviour:
   coiling:
     active: 1
     time: 0.5
-    coilCount: 1
+    coilRadius: 0.2
+    coilRadiusRandDelta: 0.1
+    coilMinRadius: 0.15
+    coilCount: 5
+    coilCountRandDelta: 4
+    coilRings: 3
+    coilRingsRandDelta: 6
     type: 0
   spitting:
     activeOnPeakRidge: 0
@@ -2214,7 +2220,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1620230998}
   m_LocalRotation: {x: -0, y: -0, z: 1, w: 0}
-  m_LocalPosition: {x: 1.53, y: 2.59, z: -1}
+  m_LocalPosition: {x: -5.49, y: 2.56, z: -1}
   m_LocalScale: {x: 3.5598545, y: 3.5598536, z: 3.5598536}
   m_Children: []
   m_Father: {fileID: 0}
