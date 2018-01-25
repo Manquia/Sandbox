@@ -37,13 +37,10 @@ public class Worm : FFComponent
 
         public int coilRings = 1;
         public int coilRingsRandDelta = 1;
-        
-        public enum AttackType
-        {
-            Targeted,
-            Random,
-        }
-        public AttackType type;
+
+        public AnimationCurve toAirMoveCurve;
+        public AnimationCurve toGroundMoveCurve;
+        public AnimationCurve coilMoveCurve;
     }
 
     [Serializable]
@@ -92,7 +89,19 @@ public class Worm : FFComponent
 
     // movement stuff
     FFPath movePath;
-    public float movePathDist;
+    public float movePathDist = 0.0f;
+    public int movePathIndex = 0;
+
+    class MovementCurve
+    {
+        public int offset;
+        public int startIndex;
+        public int endIndex;
+        public float lostDist;
+        public AnimationCurve curve;
+    }
+    List<MovementCurve> movementCurves = new List<MovementCurve>();
+
 
     // coiling stuff
     int coilCounter;
@@ -127,25 +136,69 @@ public class Worm : FFComponent
 
     void Update()
     {
-        UpdateBodyPosition();
         UpdateDestroyTraversedPoints();
 
-        // @TEMP
-        movePathDist += Time.deltaTime * movement.moveSpeed;
-
-        if (Input.GetMouseButtonDown(0))
+        // Get Speed Mulitplier
+        float speed = movement.moveSpeed * Time.deltaTime;
+        for (int i = 0; i < movementCurves.Count; ++i)
         {
-            //GameObject.Find("Main Camera").GetComponent<Camera>().ScreenToWorldPoint(Input.mousePosition);
-            var pt1 = new Vector3(UnityEngine.Random.Range(-5.0f, 5.0f), UnityEngine.Random.Range(-5.0f, 5.0f), 0.0f);
-            var pt2 = new Vector3(UnityEngine.Random.Range(-5.0f, 5.0f), UnityEngine.Random.Range(-5.0f, 5.0f), 0.0f);
+            int startIndex = movementCurves[i].startIndex;
+            int endIndex = movementCurves[i].endIndex;
+            int offset = movementCurves[i].offset;
 
-            var addedPoints = new Vector3[2];
-            addedPoints[0] = pt1;
-            addedPoints[1] = pt2;
+            // the path hasn't been made yet for this move curve
+            int maxIndex = movePath.linearDistanceAlongPath.Length - 1;
+            if (endIndex + offset > maxIndex ||
+                startIndex + offset > maxIndex)
+            {
+                continue;
+            }
 
-            AddPointsToPath(addedPoints);
+            float mu;
+            {// calculate mu (normalized distance along the movement Curve)
 
+                float distToEndOfSegment = movePath.LengthAlongPathToPoint(offset + endIndex);
+
+                // points will be removed from the segment so we must add the lost to the remaining to get the
+                float distToStartOfSegment;
+                if (offset + startIndex < 0)
+                {
+                    distToStartOfSegment = 0.0f; // start is at 0 when we are counting lost distance
+                    distToEndOfSegment += movementCurves[i].lostDist; // end dist is gets all lost distance added to it
+                }
+                else
+                {
+                    distToStartOfSegment = movePath.LengthAlongPathToPoint(offset + startIndex);
+                }
+
+                // Move Curve is no longer affecting us
+                if (distToEndOfSegment < movePathDist)
+                    continue;
+
+                // @SPEED, this can probably be made into a break because we don't add curves to apply to the past. Only things moveing forward
+                // Have not reached MovementCurve
+                if (distToStartOfSegment > movePathDist)
+                    continue;
+
+                float distOfSegment =
+                    distToEndOfSegment -
+                    distToStartOfSegment;
+                float distAlongSegment = distOfSegment - (distToEndOfSegment - movePathDist);
+
+                mu = distAlongSegment / distOfSegment;
+            } // end calculate mu
+            
+            AnimationCurve moveCurve = movementCurves[i].curve;
+            float speedScale = moveCurve.Evaluate(mu * moveCurve.TimeToComplete());
+            
+            speed *= speedScale;
         }
+
+        // Update Body parts's pos and rot
+        UpdateBodyParts();
+
+        // Move Worm along path
+        movePathDist += speed;
     }
 
     #endregion UnityEvents
@@ -418,6 +471,11 @@ public class Worm : FFComponent
             if (coiling.active && coilCounter > 0)
             {
                 --coilCounter;
+
+                // Add movement Curve for flying out to coil
+                int lastPointOfPath = movePath.points.Length - 1;
+                AddMovementCurve(coiling.toAirMoveCurve, lastPointOfPath, lastPointOfPath+1);
+
                 // Add all points for coiling
                 AddCoilAtPos(endOfPathWorld + vecToPlayerWorld);
 
@@ -429,6 +487,9 @@ public class Worm : FFComponent
                 float distToTravel = (movePath.PathLength - movePathDist) - distOfEndSegment;
                 float timeToCompleteCoil = distToTravel / movement.moveSpeed;
 
+                // @TODO @HOT @IMPORTANT
+                // Change To happens when 2nd to last pt is reached Event. The delay is variable
+                // because of the Movment Curves.
                 seq.Delay(timeToCompleteCoil);
                 seq.Sync();
                 seq.Call(StageMoveAir);
@@ -436,8 +497,14 @@ public class Worm : FFComponent
             }
             else // end StageMoveAir
             {
+                // Add movement Curve for flying out to ground
+                int lastPointOfPath = movePath.points.Length - 1;
+                AddMovementCurve(coiling.toAirMoveCurve, lastPointOfPath, lastPointOfPath + 1);
+
                 // Adds all of the points to move back into the snaking motion
                 InitGroundMoveSeq(hit);
+                // @TODO, this should either call out to StageMoveGround OR InitGrandMoveSeq should do that
+                // after seting up the needed points...
             }
         }
         else
@@ -445,16 +512,31 @@ public class Worm : FFComponent
             Debug.Assert(false, "Worm raycasted but found nothing this should never happen. Fix the level (to be enclosing) of script or maybe something else like it escaped...");
         }
     }
-    
+
 
 
     #endregion sequenceStages
-    
+
 
     #region helpers
+
+
+    void AddMovementCurve(AnimationCurve curve, int startIndex, int endIndex)
+    {
+        MovementCurve mc = new MovementCurve
+        {
+            curve = curve,
+            startIndex = startIndex,
+            endIndex = endIndex,
+            offset = 0
+        };
+
+        movementCurves.Add(mc);
+    }
+
     // Update's worm's body positions and rotation
     // @TODO @Polish possibly ignore the head + tailtip so that we can do special animation stuff.
-    void UpdateBodyPosition()
+    void UpdateBodyParts()
     {
         Vector3 tailOffset      = Vector3.forward * 0.2f;
         Vector3 headOffset      = Vector3.forward * 0.1f;
@@ -511,10 +593,33 @@ public class Worm : FFComponent
         // destroy point, if any possible
         if(pointsToDestroy > 0)
         {
+            const float epsilon = 0.001f;
             int newPointCount = movePath.points.Length - pointsToDestroy;
             var oldPoints = movePath.points;
             float distanceLost = movePath.LengthAlongPathToPoint(pointsToDestroy);
             movePath.points = new Vector3[newPointCount];
+
+            // Update offsets of movementCurves and record any lost distance
+            for(int i = 0; i < movementCurves.Count; ++i)
+            {
+                movementCurves[i].offset -= pointsToDestroy;
+
+                // has distance been lost?
+                if (movementCurves[i].startIndex + movementCurves[i].offset < 0)
+                {
+                    movementCurves[i].lostDist += movePath.linearDistanceAlongPath[pointsToDestroy];
+                }
+
+                // Move curve is no longer important, remove it b/c we
+                // will never use it again
+                if (movementCurves[i].endIndex + movementCurves[i].offset < 0)
+                {
+                    movementCurves.RemoveAt(i);
+                    --i;
+                }
+                
+
+            }
 
             // @SPEED Make these standard copies
             for (int i = 0; i < newPointCount; ++i)
@@ -613,9 +718,11 @@ public class Worm : FFComponent
             return hit;
     }
 
+
+    // @TODO, @HOT, @IMPORTANT
     void InitGroundMoveSeq(RaycastHit2D hit)
     {
-
+        
     }
 
     void AddCoilAtPos(Vector3 pos)
@@ -629,7 +736,7 @@ public class Worm : FFComponent
         var zWorld = pos.z;
 
         float maxF = (Mathf.PI / 7.0f) * pointCount + epsilon;
-
+        
         { // calculate coil points
             Vector3 pt = Vector3.zero;
             float f = 0.0f;
@@ -644,7 +751,12 @@ public class Worm : FFComponent
                 ++i;
                 f += Mathf.PI / 7.0f;
             }
+
         }
+
+        // Coil Movement Curves
+        int firstIndexOfCoil = movePath.points.Length;
+        AddMovementCurve(coiling.coilMoveCurve, firstIndexOfCoil, firstIndexOfCoil + pointCount);
 
         // make points local to path
         for(int i = 0; i < pts.Length; ++i)
