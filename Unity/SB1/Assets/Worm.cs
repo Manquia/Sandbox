@@ -65,7 +65,6 @@ public class Worm : FFComponent
         public GameObject tailSegment;
         [Range(0.02f, 5.0f)]
         public float tailSegmentSize;
-        [Range(2.5f, 15.0f)]
         public float tailLength;
 
         public GameObject fin;
@@ -926,16 +925,35 @@ public class Worm : FFComponent
             float maxF = (Mathf.PI / 7.0f) * pointCount + epsilon;
             float fRadius = maxF - epsilon;
 
-            // setup first point
-            var xLocalFirst = Mathf.Cos(fAngle) * (coiling.coilMinRadius + coilRadiusDelta * (fRadius / maxF));
-            var yLocalFirst = Mathf.Sin(fAngle) * (coiling.coilMinRadius + coilRadiusDelta * (fRadius / maxF));
-            pts[0].Set(pos.x + xLocalFirst, pos.y + yLocalFirst, pos.z);
+            // calculations for first point
+            {
+                var xLocalFirst = Mathf.Cos(fAngle) * (coiling.coilMinRadius + coilRadiusDelta * (fRadius / maxF));
+                var yLocalFirst = Mathf.Sin(fAngle) * (coiling.coilMinRadius + coilRadiusDelta * (fRadius / maxF));
 
-            int i = 1;
+                // Set center to be offset by the radius so that the coil starts pos
+                pos.Set(pos.x - xLocalFirst, pos.y - yLocalFirst, pos.z);
+
+                // set first points
+                pts[0].Set(pos.x + xLocalFirst, pos.y + yLocalFirst, pos.z);
+                pts[1].Set(pos.x + xLocalFirst, pos.y + yLocalFirst, pos.z);
+
+                // Set fAngle and fRadius to be at position of 2nd point on the sprile (3rd actual pt)
+                fAngle += degreeDelta;
+                fRadius += radiusDelta;
+            }
+
+            int i = 2;
             while (i < pointCount)
-            { 
-                var xLocal = Mathf.Cos(fAngle) * (coiling.coilMinRadius + coilRadiusDelta * (fRadius / maxF));
-                var yLocal = Mathf.Sin(fAngle) * (coiling.coilMinRadius + coilRadiusDelta * (fRadius / maxF));
+            {
+                float mu = fRadius / maxF;
+
+                var xLocal = Mathf.Cos(fAngle) * (
+                    coiling.coilMinRadius +
+                    coilRadiusDelta * mu);
+
+                var yLocal = Mathf.Sin(fAngle) * (
+                    coiling.coilMinRadius +
+                    coilRadiusDelta * mu);
 
                 pts[i].Set(pos.x + xLocal, pos.y + yLocal, pos.z);
 
@@ -959,9 +977,6 @@ public class Worm : FFComponent
         // make points local to path
         for(int i = 0; i < pts.Length; ++i)
             pts[i] = movePath.transform.InverseTransformPoint(pts[i]);
-        
-        // @Idea @Polish
-        // Add slight noise to points on coil to make it feel more natural
 
         AddPointsToPath(pts);
     }
