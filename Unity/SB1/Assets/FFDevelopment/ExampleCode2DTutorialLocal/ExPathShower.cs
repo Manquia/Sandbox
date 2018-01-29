@@ -43,7 +43,8 @@ public class ExPathShower : MonoBehaviour {
 
                 // TESTED: T + R + S
                 Gizmos.color = Color.yellow; // next point (half yellow)
-                Vector3 nextPoint = path.NextPoint(distAlongPath);
+                int outputIndex = 0;
+                Vector3 nextPoint = path.NextPoint(distAlongPath, out outputIndex);
                 Gizmos.DrawLine(transform.position, transform.position + (Vector3.Normalize(nextPoint - transform.position) * (Vector3.Magnitude(nextPoint - transform.position) - 0.4f)));
 
                 // TESTED: T + R + S

@@ -784,7 +784,7 @@ public class FFPath : MonoBehaviour
     /// <summary>
     /// returns the next point in the Path
     /// </summary>
-    public Vector3 NextPoint(float distanceAlongPath)
+    public Vector3 NextPoint(float distanceAlongPath, out int indexNextPoint)
     {
         float distmod = distanceAlongPath % PathLength;
         float distNegEqualZero = (distmod + PathLength) % PathLength;
@@ -830,10 +830,12 @@ public class FFPath : MonoBehaviour
 
                 middle = (first + last) / 2;
             }
-            return pos + (transform.rotation * FFMatrix3X3.ScaleBy(points[i % points.Length], transform.lossyScale));
+            indexNextPoint = i % points.Length;
+            return transform.TransformPoint(points[indexNextPoint]);
         }
 
         Debug.LogError("Error, Path failed to setup");
+        indexNextPoint = -1;
         return new FFVector3(0, 0, 0);
     }
     

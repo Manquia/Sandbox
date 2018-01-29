@@ -26,7 +26,6 @@ public class Worm : FFComponent
     {
         // if not active, will goto the next wall
         public bool active = true;
-        public float time = 0.5f;
         
         public float coilRadius = 2.5f;
         public float coilRadiusRandDelta = 0.5f;
@@ -56,6 +55,8 @@ public class Worm : FFComponent
 
         public int arcsPerCycle = 3;
         public int arcsPerCycleRandDelta = 2;
+
+        public AnimationCurve moveCycleCurve;
     }
 
     [Serializable]
@@ -85,6 +86,53 @@ public class Worm : FFComponent
 
     #endregion Properties
 
+    // These are pased to base work object
+    #region PathEvents
+
+    public struct Events
+    {
+
+
+    // Trigger next StageAir Or ground attack
+    public struct NearingEndOfCoil
+    {
+        public bool endStageMoveAir;
+    }
+    // Trigger Peak Player
+    public struct NearingPeakAtPlayer
+    {
+    }
+
+
+    // Sound Effects, screen shake
+    public struct BreakOutOfGround
+    {
+    }
+    // Sound Effects, screen shake
+    public struct BreakIntoGround
+    {
+    }
+    // Attacking with projectiles
+    public struct GroundMovementPeak
+    {
+    }
+
+
+    public struct StartCoiling
+    {
+    }
+    public struct EndCoiling
+    {
+    }
+
+    // Attacking with projectiles
+    public struct PeakAtPlayer
+    {
+    }
+    }
+
+
+    #endregion
     #region data
 
     // movement stuff
@@ -103,6 +151,14 @@ public class Worm : FFComponent
     List<MovementCurve> movementCurves = new List<MovementCurve>();
 
 
+    class PointEventDisbatcher
+    {
+        public int offset;
+        public int index;
+        public Action dispatcher;
+    }
+    List<PointEventDisbatcher> pointEvents = new List<PointEventDisbatcher>();
+
     // coiling stuff
     int coilCounter;
 
@@ -114,7 +170,6 @@ public class Worm : FFComponent
     List<Transform> bodyParts = new List<Transform>();
     Transform head;
     
-
     #endregion
 
     #region UnityEvents
@@ -136,7 +191,7 @@ public class Worm : FFComponent
 
     void Update()
     {
-        UpdateDestroyTraversedPoints();
+        const float epsilon = 0.001f;
 
         // Get Speed Mulitplier
         float speed = movement.moveSpeed * Time.deltaTime;
@@ -192,13 +247,35 @@ public class Worm : FFComponent
             float speedScale = moveCurve.Evaluate(mu * moveCurve.TimeToComplete());
             
             speed *= speedScale;
+        }// end get speed multiplier
+
+        // Move Worm along path
+        movePathDist = Mathf.Clamp(movePathDist + speed, 0.0f, movePath.PathLength - epsilon);
+        
+        // destroy any points we went past
+        UpdateDestroyTraversedPoints();
+
+        // Send out points events
+        int indexOfNext;
+        Vector3 nextPt = movePath.NextPoint(movePathDist, out indexOfNext);
+        int indexOfPrev = indexOfNext - 1;
+        for (int i = 0; i < pointEvents.Count; ++i)
+        {
+            int eventIndex = pointEvents[i].index;
+            int eventOffset = pointEvents[i].offset;
+            int curIndex = eventIndex + eventOffset;
+
+            if (curIndex <= indexOfNext)
+            {
+                pointEvents[i].dispatcher();
+                pointEvents.RemoveAt(i);
+                --i;
+                continue;
+            }
         }
 
         // Update Body parts's pos and rot
         UpdateBodyParts();
-
-        // Move Worm along path
-        movePathDist += speed;
     }
 
     #endregion UnityEvents
@@ -218,7 +295,10 @@ public class Worm : FFComponent
             finDensityAccumulator += body.finDensity;
 
             if (finDensityAccumulator > 1.0f)
+            {
+                finDensityAccumulator -= 1.0f;
                 bodyParts.Add(CreateTail(true));
+            }
             else
                 bodyParts.Add(CreateTail(false));
         }
@@ -250,8 +330,8 @@ public class Worm : FFComponent
         return tailTip;
     }
     #endregion
-    
-    #region sequenceStages
+
+    #region SequenceStages
 
     // Set the ArcsToComplete in movment before calling
     void StageMoveGround(object int_arcsToComplete)
@@ -272,12 +352,11 @@ public class Worm : FFComponent
         const int pointsAdded = 4;
         // a set of pts that are described in the diagram above
         var pts = new Vector3[pointsAdded * (arcsToComplete + 1)];
-        for(int i = 0; i < pointsAdded; ++i)
+        for (int i = 0; i < pointsAdded; ++i)
         {
             pts[i] = movePath.PositionAtPoint(movePath.points.Length - pointsAdded + i);
         }
-
-    
+        
         const int raycastMask = Physics2D.AllLayers;  // @TODO @SPEED
 
         float arcDist = movement.arcDist + UnityEngine.Random.Range(0.0f, movement.arcDistRandDelta);
@@ -288,10 +367,11 @@ public class Worm : FFComponent
         {
             int off = i * pointsAdded;
             int nextOff = (i + 1) * pointsAdded;
+            int pathOffset = nextOff + movePath.points.Length;
 
             // suggestd down = Normalize(v1_2 + v3_2)
-            Vector3 suggestedDown = Vector3.Normalize((pts[2+off] - pts[1+off]) + (pts[2+off] - pts[3+off]));
-            
+            Vector3 suggestedDown = Vector3.Normalize((pts[2 + off] - pts[1 + off]) + (pts[2 + off] - pts[3 + off]));
+
             { // P0, look for open area above ground
                 Vector3 v2_3 = pts[3 + off] - pts[2 + off];
                 Vector3 v2_3Norm = v2_3.normalized;
@@ -340,14 +420,18 @@ public class Worm : FFComponent
                     // Mark the path point as closed to the air
                 }
 
+                Events.GroundMovementPeak gmp;
+                AddPointEvent(gmp, 0 + pathOffset);
+
+
                 // Save value to pts output
                 pts[0 + nextOff] = newP0;
             }// end calculate p0
 
             {// P1, Probe to ground form P0
-                Vector3 vecCurDir = pts[3 + off] - pts[0+nextOff];
-                Vector3 vecPastDir = pts[1+off] - pts[0+off];
-                Vector3 vecForward = pts[3+off] - pts[1+off];
+                Vector3 vecCurDir = pts[3 + off] - pts[0 + nextOff];
+                Vector3 vecPastDir = pts[1 + off] - pts[0 + off];
+                Vector3 vecForward = pts[3 + off] - pts[1 + off];
                 Vector3 vecTowardGrond = vecPastDir.normalized + vecCurDir.normalized + vecForward.normalized * 2.0f;
                 var hit = ProbeForCollider(pts[0 + nextOff], vecTowardGrond, arcDist, raycastMask, suggestedDown);
 
@@ -359,24 +443,30 @@ public class Worm : FFComponent
                 {
                     pts[1 + nextOff] = pts[2 + off] + vecTowardGrond;
                 }
+
+                Events.BreakIntoGround big;
+                AddPointEvent(big, 1 + pathOffset);
+
             }// end calculate p1
-            
+
             {// P2 -  Go into ground by arc length
 
-                Vector3 vecBackDown    = pts[3 + off] - pts[0 + nextOff];
+                Vector3 vecBackDown = pts[3 + off] - pts[0 + nextOff];
                 Vector3 vecForwardDown = pts[1 + nextOff] - pts[0 + nextOff];
                 Vector3 vecToGrond = vecForwardDown.normalized + vecBackDown.normalized;
 
                 Vector3 forward = -vecBackDown + vecForwardDown;
                 pts[2 + nextOff] = pts[1 + nextOff] + (forward + vecToGrond).normalized * arcDist;
+
+
             }// end calculate p2
-            
+
             // P3 - Raycast forward, if that fails, then probe back to P2 from ending of raycast
             {
                 Vector3 vecAlongGroundNorm = (pts[3 + off] - pts[1 + off]).normalized;
                 RaycastHit2D rayHit = Physics2D.Raycast(pts[0 + nextOff], vecAlongGroundNorm, arcDist * 2.5f, raycastMask);
 
-                if(rayHit) // we hit something we are good to place point
+                if (rayHit) // we hit something we are good to place point
                 {
                     pts[3 + nextOff] = rayHit.point;
                 }
@@ -395,32 +485,44 @@ public class Worm : FFComponent
                         Debug.Assert(false, "previous point was p2 was bad");
                     }
                 }
+
+                Events.BreakOutOfGround bog;
+                AddPointEvent(bog, 3 + pathOffset);
             }
+
+            AddMovementCurve(movement.moveCycleCurve, pathOffset + 0, pathOffset + 3);
         }
 
         var pointsToAdd = new Vector3[pointsAdded * arcsToComplete];
-        for(int i = 0; i < pointsAdded * arcsToComplete; ++i)
-        {
-            pointsToAdd[i] = movePath.transform.InverseTransformPoint(pts[i + pointsAdded]);
-        }
+        var movePathTrans = movePath.transform;
+        for (int i = 0; i < pointsAdded * arcsToComplete; ++i)
+            pointsToAdd[i] = movePathTrans.InverseTransformPoint(pts[i + pointsAdded]);
 
         AddPointsToPath(pointsToAdd);
 
-        // calculate time till we reach end of path
-        float distToMove = movePath.PathLength - movePathDist;
-        float timeToCompleteMove = distToMove / movement.moveSpeed;
+        // Add point events
+        {
+            Events.NearingPeakAtPlayer npap;
+            Events.PeakAtPlayer pap;
+            AddPointEvent(npap, movePath.points.Length - 3);
+            AddPointEvent(pap, movePath.points.Length - 1);
+        }
 
         // @Idea @Polish
-        // simplify stage? nodes which are very close together and are in close sequence get pruned...
+        // nodes which are very close together and are in close sequence get pruned...
 
         // @Idea @Polish
         // Make path go in and out of the screen when it goes underground
 
         // @Idea @Polsih
         // Make worm scale 
-        seq.Delay(timeToCompleteMove);
-        seq.Sync();
-        seq.Call(StagePeak);
+        
+        FFMessageBoard<Events.PeakAtPlayer>.Connect(OnPeakAtPlayer, gameObject);
+    }
+    void OnPeakAtPlayer(Events.PeakAtPlayer npap)
+    {
+        FFMessageBoard<Events.PeakAtPlayer>.Disconnect(OnPeakAtPlayer, gameObject);
+        StagePeak();
     }
 
     public AnimationCurve tempPeakColorCurve;
@@ -461,66 +563,66 @@ public class Worm : FFComponent
         const int raycastMask = -1; // @SPEED, @POLISH, @BUG (hts the player)
         Vector3 endOfPathWorld = movePath.PositionAtPoint(movePath.points.Length - 1);
         Vector3 vecToPlayerWorld = player.position - endOfPathWorld;
+        
+
+        if (coiling.active && coilCounter > 0)
+        {
+            --coilCounter;
+
+            // Add movement Curve for flying out to coil
+            int lastPointOfPath = movePath.points.Length - 1;
+            AddMovementCurve(coiling.toAirMoveCurve, lastPointOfPath, lastPointOfPath+1);
+
+            // Add all points for coiling
+            AddCoilAtPos(endOfPathWorld + vecToPlayerWorld);
+
+            // add PointEvent for coil
+            Events.NearingEndOfCoil neoc;
+            neoc.endStageMoveAir = coilCounter <= 0;
+            AddPointEvent(neoc, movePath.points.Length-3);
+
+            // sync then move air toward the player again without coiling this time
+            float distOfn_1 = movePath.LengthAlongPathToPoint(movePath.points.Length - 1);
+            float distOfn_2 = movePath.LengthAlongPathToPoint(movePath.points.Length - 2);
+            float distOfEndSegment = distOfn_1 - distOfn_2;
+
+            float distToTravel = (movePath.PathLength - movePathDist) - distOfEndSegment;
+            float timeToCompleteCoil = distToTravel / movement.moveSpeed;
+
+            FFMessageBoard<Events.NearingEndOfCoil>.Connect(OnNearingEndOfCoil, gameObject);
+            return; // comes back here through the event connection
+        }
 
         var hit = Physics2D.Raycast(endOfPathWorld, vecToPlayerWorld, dist, raycastMask);
-
-        if(hit)
+        if (hit)
         {
             Vector3 endpoint = hit.point;
+            // Add movement Curve for flying out to ground
+            int lastPointOfPath = movePath.points.Length - 1;
+            AddMovementCurve(coiling.toAirMoveCurve, lastPointOfPath, lastPointOfPath + 1);
 
-            if (coiling.active && coilCounter > 0)
-            {
-                --coilCounter;
+            // Adds all of the points to move back into the snaking motion on the ground
+            InitGroundMoveSeq(hit);
 
-                // Add movement Curve for flying out to coil
-                int lastPointOfPath = movePath.points.Length - 1;
-                AddMovementCurve(coiling.toAirMoveCurve, lastPointOfPath, lastPointOfPath+1);
+            int arcCycles = movement.arcsPerCycle + UnityEngine.Random.Range(0, movement.arcsPerCycleRandDelta);
 
-                // Add all points for coiling
-                AddCoilAtPos(endOfPathWorld + vecToPlayerWorld);
-
-                // sync then move air toward the player again without coiling this time
-                float distOfn_1 = movePath.LengthAlongPathToPoint(movePath.points.Length - 1);
-                float distOfn_2 = movePath.LengthAlongPathToPoint(movePath.points.Length - 2);
-                float distOfEndSegment = distOfn_1 - distOfn_2;
-
-                float distToTravel = (movePath.PathLength - movePathDist) - distOfEndSegment;
-                float timeToCompleteCoil = distToTravel / movement.moveSpeed;
-
-                // @TODO @HOT @IMPORTANT
-                // Change To happens when 2nd to last pt is reached Event. The delay is variable
-                // because of the Movment Curves.
-                seq.Delay(timeToCompleteCoil);
-                seq.Sync();
-                seq.Call(StageMoveAir);
-                return; // comes back here later after delay which is added in AddCoilPos
-            }
-            else // end StageMoveAir
-            {
-                // Add movement Curve for flying out to ground
-                int lastPointOfPath = movePath.points.Length - 1;
-                AddMovementCurve(coiling.toAirMoveCurve, lastPointOfPath, lastPointOfPath + 1);
-
-                // Adds all of the points to move back into the snaking motion
-                InitGroundMoveSeq(hit);
-                // @TODO, this should either call out to StageMoveGround OR InitGrandMoveSeq should do that
-                // after seting up the needed points...
-            }
-        }
-        else
-        {
-            Debug.Assert(false, "Worm raycasted but found nothing this should never happen. Fix the level (to be enclosing) of script or maybe something else like it escaped...");
+            // We just did a good number of raycasts, wait a bit to calculate the next part of the path OR
+            // Change To happens when 2nd to last pt is reached Event. The delay is variable
+            // because of the Movment Curves.
+            seq.Delay(0.2f); 
+            seq.Sync();
+            seq.Call(StageMoveGround, arcCycles);
         }
     }
-
-
+    private void OnNearingEndOfCoil(Events.NearingEndOfCoil e)
+    {
+        FFMessageBoard<Events.NearingEndOfCoil>.Disconnect(OnNearingEndOfCoil, gameObject);
+        StageMoveAir();
+    }
 
     #endregion sequenceStages
 
-
     #region helpers
-
-
     void AddMovementCurve(AnimationCurve curve, int startIndex, int endIndex)
     {
         MovementCurve mc = new MovementCurve
@@ -534,6 +636,17 @@ public class Worm : FFComponent
         movementCurves.Add(mc);
     }
 
+    void AddPointEvent<EventType>(EventType e, int pointsIndex)
+    {
+        PointEventDisbatcher ped = new PointEventDisbatcher()
+        {
+            dispatcher = () => FFMessageBoard<EventType>.SendToLocal(e, gameObject),
+            index = pointsIndex,
+            offset = 0
+        };
+
+        pointEvents.Add(ped);
+    }
     // Update's worm's body positions and rotation
     // @TODO @Polish possibly ignore the head + tailtip so that we can do special animation stuff.
     void UpdateBodyParts()
@@ -541,18 +654,15 @@ public class Worm : FFComponent
         Vector3 tailOffset      = Vector3.forward * 0.2f;
         Vector3 headOffset      = Vector3.forward * 0.1f;
         Vector3 tailTipOffset   = Vector3.forward * 0.1f;
-        float eplison = 0.1f;
-
-        // clamp dist along path to prevent looping
-        movePathDist = Mathf.Clamp(movePathDist, 0.0f, movePath.PathLength - eplison);
+        float epsilon = 0.1f;
 
         // place body onto path
         {
             float dist = movePathDist;
             int bodyPartIndex = bodyParts.Count - 1;
-            Vector3 lastBodyPartPos = movePath.PointAlongPath(dist + eplison);
+            Vector3 lastBodyPartPos = movePath.PointAlongPath(dist + epsilon);
 
-            while (dist > body.tailSegmentSize + eplison &&
+            while (dist > body.tailSegmentSize + epsilon &&
                    bodyPartIndex > 0)
             {
                 Vector3 bodyPartPos = movePath.PointAlongPath(dist);
@@ -617,11 +727,15 @@ public class Worm : FFComponent
                     movementCurves.RemoveAt(i);
                     --i;
                 }
-                
-
             }
 
-            // @SPEED Make these standard copies
+            // Update offsets of Point events
+            for(int i = 0; i < pointEvents.Count; ++i)
+            {
+                pointEvents[i].offset -= pointsToDestroy;
+            }
+
+            // copy over old points into new points array
             for (int i = 0; i < newPointCount; ++i)
             {
                 movePath.points[i] = oldPoints[i + pointsToDestroy];
@@ -717,12 +831,70 @@ public class Worm : FFComponent
         else
             return hit;
     }
-
-
-    // @TODO, @HOT, @IMPORTANT
+    
     void InitGroundMoveSeq(RaycastHit2D hit)
     {
+        Vector3[] pts = new Vector3[4];
+        // This function creates cycle 0 from a raycast hit
+        // Movment Cycle ('*' == points on a path)
+        //  |0       |1       |2       |<--- Offset (i)
+        //  |0 1 2 3 |0 1 2 3 |0 1 2 3 |<--- Index
+        //  |*       |*       |*       |
+        //--|--*---*-|--*---*-|--*---*-|<--- "Ground"
+        //  |    *   |    *   |    *   |
+        //  |        |        |        |
+        // Add all of the needed arcs while moving on the ground
+
+        Vector3 up = hit.normal;
+        const float sqrt_2 = 1.41421356f;
+        int raycastMask = Physics2D.AllLayers;  // @TODO @SPEED
+        bool goesRight = UnityEngine.Random.value > 0.5f;
+        var rot90Forward = Quaternion.AngleAxis(goesRight ? 90.0f : -90.0f, Vector3.forward);
+        float arcDist = movement.arcDist + UnityEngine.Random.Range(0.0f, movement.arcDistRandDelta);
+
         
+        Vector3 forward = rot90Forward * hit.normal;
+        Vector3 diagonalIntoGround = (forward + -up).normalized;
+
+
+        pts[1] = hit.point;
+        pts[0] = pts[1] + (-diagonalIntoGround * arcDist);
+        pts[2] = pts[1] + (diagonalIntoGround * arcDist);
+        pts[3] = pts[1] + (forward * arcDist * sqrt_2);
+
+        // ensure pts3 is on the ground
+        {
+            //raycast from 0 to 3
+            var ray0_3 = Physics2D.Raycast(pts[0], pts[3] - pts[0], arcDist * sqrt_2 * 0.25f, raycastMask);
+
+            if(ray0_3)
+            {
+                pts[3] = ray0_3.point;
+            }
+            else // failed, do probe from pts3 to pts2
+            {
+                var probe3_2 = ProbeForCollider(pts[3], pts[2] - pts[3], arcDist * 2.0f,raycastMask, -up);
+
+                if(probe3_2) // probe succeeded
+                {
+                    pts[3] = probe3_2.point;
+                }
+            }
+        }
+
+        // point Events
+        {
+            int eventsOffset = movePath.points.Length;
+            //AddPointEvent(new GroundMovementPeak(), 0 + eventsOffset); // doesn't happen on init
+            AddPointEvent(new Events.BreakIntoGround(),    1 + eventsOffset);
+            AddPointEvent(new Events.BreakOutOfGround(),   3 + eventsOffset);
+        }
+
+        var movePathTrans = movePath.transform;
+        for (int i = 0; i < pts.Length; ++i)
+            pts[i] = movePathTrans.InverseTransformPoint(pts[i]);
+
+        AddPointsToPath(pts);
     }
 
     void AddCoilAtPos(Vector3 pos)
@@ -731,29 +903,55 @@ public class Worm : FFComponent
         int coilRingCount = coiling.coilRings + UnityEngine.Random.Range(0, coiling.coilRingsRandDelta);
 
         const float epsilon = 0.001f;
-        int pointCount = coilRingCount * 7;
+        int pointCount = coilRingCount * 7 + 1;
         var pts = new Vector3[pointCount];
-        var zWorld = pos.z;
-
-        float maxF = (Mathf.PI / 7.0f) * pointCount + epsilon;
         
-        { // calculate coil points
-            Vector3 pt = Vector3.zero;
-            float f = 0.0f;
-            int i = 0;
+        Vector3 vecToCoil = pos - movePath.PositionAtPoint(movePath.points.Length - 1);
+        Vector3 vecToCoilNorm = Vector3.Normalize(vecToCoil);
+
+        // calculate coil points
+        {
+            bool clockwise = UnityEngine.Random.value > 0.5f;
+            // @TODO, @POLISH, @MAYBE
+            // Have the worm be able to coil inward and outward?
+            //bool inwardCoil = UnityEngine.Random.value > 0.5f;
+
+            float degreeDelta = (Mathf.PI / 7.0f) * (clockwise ? -1.0f : 1.0f);
+            float radiusDelta = -(Mathf.PI / 7.0f);
+
+            // to make sooth transition from the worm't current position
+            float startOffset = Mathf.Atan2(vecToCoilNorm.y, vecToCoilNorm.x) - ((clockwise ? -1.0f : 1.0f) * 90.0f * Mathf.Deg2Rad);
+            float fAngle = startOffset;
+
+            float maxF = (Mathf.PI / 7.0f) * pointCount + epsilon;
+            float fRadius = maxF - epsilon;
+
+            // setup first point
+            var xLocalFirst = Mathf.Cos(fAngle) * (coiling.coilMinRadius + coilRadiusDelta * (fRadius / maxF));
+            var yLocalFirst = Mathf.Sin(fAngle) * (coiling.coilMinRadius + coilRadiusDelta * (fRadius / maxF));
+            pts[0].Set(pos.x + xLocalFirst, pos.y + yLocalFirst, pos.z);
+
+            int i = 1;
             while (i < pointCount)
             { 
-                var xLocal = Mathf.Cos(f) * (coiling.coilMinRadius + coilRadiusDelta * (1 - (f/maxF)));
-                var yLocal = Mathf.Sin(f) * (coiling.coilMinRadius + coilRadiusDelta * (1 - (f/maxF)));
+                var xLocal = Mathf.Cos(fAngle) * (coiling.coilMinRadius + coilRadiusDelta * (fRadius / maxF));
+                var yLocal = Mathf.Sin(fAngle) * (coiling.coilMinRadius + coilRadiusDelta * (fRadius / maxF));
 
                 pts[i].Set(pos.x + xLocal, pos.y + yLocal, pos.z);
 
                 ++i;
-                f += Mathf.PI / 7.0f;
+                fAngle += degreeDelta;
+                fRadius += radiusDelta;
             }
 
+            // setup last point
+            //fAngle -= degreeDelta;
+            //fRadius -= radiusDelta;
+            //var xLocalLast = Mathf.Cos(fAngle) * (coiling.coilMinRadius + coilRadiusDelta * (fRadius / maxF));
+            //var yLocalLast = Mathf.Sin(fAngle) * (coiling.coilMinRadius + coilRadiusDelta * (fRadius / maxF));
+            //pts[pts.Length-1].Set(pos.x + xLocalLast, pos.y + yLocalLast, pos.z);
         }
-
+        
         // Coil Movement Curves
         int firstIndexOfCoil = movePath.points.Length;
         AddMovementCurve(coiling.coilMoveCurve, firstIndexOfCoil, firstIndexOfCoil + pointCount);
@@ -761,6 +959,9 @@ public class Worm : FFComponent
         // make points local to path
         for(int i = 0; i < pts.Length; ++i)
             pts[i] = movePath.transform.InverseTransformPoint(pts[i]);
+        
+        // @Idea @Polish
+        // Add slight noise to points on coil to make it feel more natural
 
         AddPointsToPath(pts);
     }
