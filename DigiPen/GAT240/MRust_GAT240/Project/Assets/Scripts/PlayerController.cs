@@ -38,9 +38,14 @@ public class PlayerController : MonoBehaviour
         rigid = GetComponent<Rigidbody>();
         UpdatePlayerControllerData();
         active = true;
+        CaptureMouse(true);
         
 	}
-    
+    private void OnDestroy()
+    {
+        CaptureMouse(false);
+    }
+
     // Update is called once per frame
     void FixedUpdate ()
     {

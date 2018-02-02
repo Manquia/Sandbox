@@ -39,21 +39,23 @@ public class UICommands : MonoBehaviour
         }
     }
 
-    public void LoadStartupLevel()
-    {
-        SceneManager.LoadScene(StartupLevelName);
-    }
-
+    public void LoadLevel1(){ SceneManager.LoadScene("HW1"); }
+    public void LoadLevel2(){ SceneManager.LoadScene("HW2"); }
+    public void LoadLevel3(){ SceneManager.LoadScene("HW3"); }
+    public void LoadLevel4(){ SceneManager.LoadScene("HW4"); }
+    public void LoadLevel5(){ SceneManager.LoadScene("HW5"); }
+    public void LoadLevel6(){ SceneManager.LoadScene("HW6"); }
+    public void LoadLevel7(){ SceneManager.LoadScene("HW7"); }
+    
+    
     public void LoadCredits()
     {
         SceneManager.LoadScene(CreditsLevelName);
     }
-
     public void LoadMenu()
     {
         SceneManager.LoadScene(MenuLevelName);
     }
-
     public void QuitGame()
     {
 #if UNITY_EDITOR
