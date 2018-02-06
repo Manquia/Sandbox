@@ -21,7 +21,14 @@ public class Door : MonoBehaviour
     State doorState = State.Close;
     public bool hasCar = false;
     public bool isPicked = false;
-    
+
+    private void Start()
+    {
+
+        var resultImage = transform.Find("ResultImage").GetComponent<UnityEngine.UI.Image>();
+        resultImage.gameObject.SetActive(false);
+    }
+
     public void PlaceCar()
     {
         hasCar = true;
@@ -33,11 +40,13 @@ public class Door : MonoBehaviour
 
         if (hasCar)
         {
+            resultImage.gameObject.SetActive(true);
             resultImage.sprite = CarSprite;
         }
         else
         {
             resultImage.sprite = NoCarSprite;
+            resultImage.gameObject.SetActive(false);
         }
 
         // open door

@@ -75,10 +75,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ad01183c4ee0eaf40aaa9fa857c42671, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ClosedSprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
-  OpenSprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
+  ClosedSprite: {fileID: 21300000, guid: c30ef1d0e9d10b94f8fe8f9869ab518f, type: 3}
+  OpenSprite: {fileID: 21300000, guid: f0267de911258d34b97416a439668324, type: 3}
   CarSprite: {fileID: 21300000, guid: 9f9cc251ba308cb418b74569ae15cb82, type: 3}
-  NoCarSprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
+  NoCarSprite: {fileID: 0}
+  hasCar: 0
+  isPicked: 0
 --- !u!114 &114390033981421158
 MonoBehaviour:
   m_ObjectHideFlags: 1

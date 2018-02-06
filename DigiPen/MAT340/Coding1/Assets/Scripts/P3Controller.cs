@@ -86,19 +86,19 @@ public class P3Controller : MonoBehaviour
             }
             else
             {
-                loopsToSimulate = Mathf.Clamp(loopsToSimulate, 1, 1000);
+                loopsToSimulate = Mathf.Clamp(loopsToSimulate, 1, 5000);
                 inputLoopCount.text = loopsToSimulate.ToString();
 
             }
         }
     }
 
-
     public class SimDoor
     {
         public bool hasCar = false;
         public bool picked = false;
     }
+
     bool RunSimulation()
     {
         // Place cars randomly

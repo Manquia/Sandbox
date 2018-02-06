@@ -22,21 +22,14 @@ public class P1Controller : MonoBehaviour
 
         // input data
         {
-            bool failedInput = false;
-            failedInput |= !int.TryParse(inputTrialCount.text, out trialCount);
-            failedInput |= !int.TryParse(inputCouponCount.text, out couponCount);
-            if (failedInput) return;
+            int.TryParse(inputTrialCount.text, out trialCount);
+            int.TryParse(inputCouponCount.text, out couponCount);
 
-            if(trialCount > 1000)
-            {
-                inputTrialCount.text = "1000";
-                trialCount = 1000;
-            }
-            if(couponCount > 2500)
-            {
-                inputCouponCount.text = "2500";
-                couponCount = 2500;
-            }
+            trialCount = Mathf.Clamp(trialCount, 1, 5000);
+            inputTrialCount.text = trialCount.ToString();
+            
+            couponCount = Mathf.Clamp(couponCount, 1, 2500);
+            inputCouponCount.text = couponCount.ToString();
         }
 
         RunP1();
@@ -67,6 +60,6 @@ public class P1Controller : MonoBehaviour
     {
         // Get average
         double averageCouponsCollected = (double)couponsCollected / (double)trialCount;
-        outputText.text = averageCouponsCollected.ToString("{0.00}");
+        outputText.text = averageCouponsCollected.ToString("0.0000");
     }
 }
