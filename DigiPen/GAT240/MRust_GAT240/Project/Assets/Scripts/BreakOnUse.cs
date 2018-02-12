@@ -1,38 +1,42 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(Collider))]
-public class Breakable : MonoBehaviour {
+public class BreakOnUse : MonoBehaviour {
+
+    public bool singleUse = true;
+    bool used = false;
 
     public GameObject droppedObjPrefab;
     public GameObject brokenObjPrefab;
 
     // effects should clean themself up!
     public GameObject[] breakEffects;
+    
 
 	// Use this for initialization
 	void Start ()
     {
-		
-	}
-	
-	// Update is called once per frame
-	void Update ()
+        FFMessageBoard<PlayerInteract.Use>.Connect(OnUse, gameObject);
+    }
+    private void OnDestroy()
     {
-		
-	}
-
-
-    private void OnTriggerEnter(Collider other)
-    {
-        if(other.name == "Player")
-        {
-            gameObject.SetActive(false);
-            SpawnBrokenVersion();
-        }
+        FFMessageBoard<PlayerInteract.Use>.Disconnect(OnUse, gameObject);
     }
 
+    private void OnUse(PlayerInteract.Use e)
+    {
+        if (singleUse && used)
+            return;
+
+        if (singleUse)
+            used = true;
+
+        gameObject.SetActive(false);
+        SpawnBrokenVersion();
+    }
+    
     void SpawnBrokenVersion()
     {
         // Create broken version, then parent old version to
