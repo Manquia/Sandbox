@@ -6,6 +6,7 @@ public class AnimateOnUse : MonoBehaviour {
 
     public bool singleUse = true;
     bool used = false;
+    public AudioClip animateSound;
     void Start()
     {
         FFMessageBoard<PlayerInteract.Use>.Connect(OnUse, gameObject);
@@ -29,6 +30,7 @@ public class AnimateOnUse : MonoBehaviour {
 
     public void Animate()
     {
+        GetComponent<AudioSource>().PlayOneShot(animateSound);
         GetComponent<Animation>().Play();
     }
 }

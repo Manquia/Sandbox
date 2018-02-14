@@ -660,6 +660,7 @@ MonoBehaviour:
     type: 2}
   brokenObjPrefab: {fileID: 1331954862298788, guid: 2ff13978299e90145926719caaeabc2e,
     type: 2}
+  breakSound: {fileID: 8300000, guid: 4eab2adf157b80a4b8cb05ba7d45c4d6, type: 3}
   breakEffects:
   - {fileID: 1107930538880640, guid: 3ffe372e099319e438f7a76849514c4d, type: 2}
 --- !u!114 &114748289378591928

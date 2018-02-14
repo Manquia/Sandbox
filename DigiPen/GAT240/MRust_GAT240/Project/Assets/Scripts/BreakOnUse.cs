@@ -10,6 +10,7 @@ public class BreakOnUse : MonoBehaviour {
 
     public GameObject droppedObjPrefab;
     public GameObject brokenObjPrefab;
+    public AudioClip breakSound;
 
     // effects should clean themself up!
     public GameObject[] breakEffects;
@@ -31,9 +32,16 @@ public class BreakOnUse : MonoBehaviour {
             return;
 
         if (singleUse)
+        {
             used = true;
 
-        gameObject.SetActive(false);
+            foreach (Transform child in transform)
+            {
+                child.gameObject.SetActive(false);
+            }
+        }
+
+        GetComponent<AudioSource>().PlayOneShot(breakSound);
         SpawnBrokenVersion();
     }
     

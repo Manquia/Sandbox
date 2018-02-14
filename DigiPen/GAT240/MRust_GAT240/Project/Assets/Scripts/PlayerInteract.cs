@@ -96,6 +96,6 @@ public class PlayerInteract : MonoBehaviour
             interactorCamera.transform.position,
             interactionRadius,
             interactorCamera.transform.forward,
-            out hit);
+            out hit, maxInteractDistance);
     }
 }
