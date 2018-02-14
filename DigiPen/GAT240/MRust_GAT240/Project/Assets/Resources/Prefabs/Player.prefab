@@ -20,7 +20,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4000011409708560}
   - component: {fileID: 135000014007744626}
-  - component: {fileID: 114374352888819234}
   m_Layer: 0
   m_Name: PlayerUseSphere
   m_TagString: Untagged
@@ -55,7 +54,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4000014101862084}
   - component: {fileID: 212000013117833614}
-  - component: {fileID: 114000012111380908}
   m_Layer: 0
   m_Name: Cursor
   m_TagString: Untagged
@@ -133,8 +131,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1000013558513908}
-  m_LocalRotation: {x: -0, y: 0.8871666, z: -0, w: -0.4614493}
-  m_LocalPosition: {x: 16.25178, y: 0.74, z: -4.7591224}
+  m_LocalRotation: {x: -0, y: 0.9313279, z: -0, w: -0.3641819}
+  m_LocalPosition: {x: 16.24, y: 0.99, z: -4.86}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4000010541526640}
@@ -142,7 +140,7 @@ Transform:
   - {fileID: 4408828784646212}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 234.961, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 222.715, z: 0}
 --- !u!4 &4000014101862084
 Transform:
   m_ObjectHideFlags: 1
@@ -268,17 +266,6 @@ AudioListener:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1000012287552534}
   m_Enabled: 1
---- !u!114 &114000012111380908
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1000012538668968}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9662a571897fd4741889215b3eaa14f7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &114284124168611162
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -290,27 +277,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb8179dde7772994d88de0560a5013af, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxInteractDistance: 10
+  maxInteractDistance: 2
   interactionRadius: 0.5
   interactorCamera: {fileID: 20000013735620030}
   interactedObject: {fileID: 0}
   prevInteractedObject: {fileID: 0}
---- !u!114 &114374352888819234
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1000010676281346}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 17cada033e64a974985913270986960e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  BusySprite: {fileID: 0}
-  IdleSprite: {fileID: 0}
-  GrabSprite: {fileID: 0}
-  TooHeavySprite: {fileID: 0}
-  FlipSprite: {fileID: 0}
 --- !u!114 &114920188295014552
 MonoBehaviour:
   m_ObjectHideFlags: 1
