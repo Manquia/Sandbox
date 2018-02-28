@@ -38,6 +38,7 @@ GameObject:
   - component: {fileID: 20000013735620030}
   - component: {fileID: 124000012281141300}
   - component: {fileID: 81000014228451448}
+  - component: {fileID: 114732894499540192}
   m_Layer: 0
   m_Name: Camera
   m_TagString: MainCamera
@@ -71,8 +72,8 @@ GameObject:
   - component: {fileID: 4000011725226242}
   - component: {fileID: 136000013713313638}
   - component: {fileID: 54000012368192278}
-  - component: {fileID: 114920188295014552}
   - component: {fileID: 114284124168611162}
+  - component: {fileID: 114317609191911982}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -282,7 +283,7 @@ MonoBehaviour:
   interactorCamera: {fileID: 20000013735620030}
   interactedObject: {fileID: 0}
   prevInteractedObject: {fileID: 0}
---- !u!114 &114920188295014552
+--- !u!114 &114317609191911982
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -290,16 +291,67 @@ MonoBehaviour:
   m_GameObject: {fileID: 1000013558513908}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5d419469bbe8a5745ba574f9ca0844de, type: 3}
+  m_Script: {fileID: 11500000, guid: 3c70c8f1ca2a36a489d9b9450f4e531d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  active: 1
-  m_movementSpeed: 28
-  m_jumpSpeed: 6
-  m_sprintMultiplier: 0.35
-  m_maxMoveSpeed: 6.5
-  m_movementDecay: 0.25
-  m_mouseSensitivity: 3
+  cameraController: {fileID: 0}
+  dynAudioPlayer: {fileID: 0}
+  ikSnap: {fileID: 0}
+  myBody: {fileID: 0}
+  OnRope:
+    rope: {fileID: 0}
+    pumpSpeed: 0.003
+    pumpAcceleration: 0.5
+    pumpResetSpeed: 0.05
+    climbSpeed: 0.5
+    rotateSpeed: 20
+    leanSpeed: 0.9
+    distUpRope: 0
+    distPumpUp: 0
+    maxPumpUpDist: 0.1
+    maxPumpDownDist: 0
+    leftHandOffsetOnRope: 0
+    rightHandOffsetOnRope: 0
+    leftFootOffsetOnRope: 0
+    rightFootOffsetOnRope: 0
+    leftHandOffset: {x: 0, y: 0, z: 0}
+    rightHandOffset: {x: 0, y: 0, z: 0}
+    leftFootOffset: {x: 0, y: 0, z: 0}
+    rightFootOffset: {x: 0, y: 0, z: 0}
+    leftHandRot: {x: 0, y: 0, z: 0}
+    rightHandRot: {x: 0, y: 0, z: 0}
+    leftFootRot: {x: 0, y: 0, z: 0}
+    rightFootRot: {x: 0, y: 0, z: 0}
+    angleOnRope: 0
+    distFromRope: 0
+    rotationYaw: 0
+    rotationPitch: 0
+    onRopeAngularVelocity: 0
+  OnGround:
+    moveForce: 100
+    jumpForce: 1000
+    friction: 0.1
+    maxSlopeAngle: 55
+  OnJump:
+    moveForce: 25
+    revJumpVel: 1
+    friction: 0.1
+    state: 8
+--- !u!114 &114732894499540192
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1000012287552534}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: edc695e868651f94995a5a5ec2cf3fa3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lookSensitivity: {x: 10, y: 10}
+  maxPitchUpAngle: 80
+  maxPitchDownAngle: 70
+  maxTurnAngle: 75
 --- !u!124 &124000012281141300
 Behaviour:
   m_ObjectHideFlags: 1
