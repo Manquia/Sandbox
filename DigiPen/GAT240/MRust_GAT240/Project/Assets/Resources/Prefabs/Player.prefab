@@ -38,7 +38,6 @@ GameObject:
   - component: {fileID: 20000013735620030}
   - component: {fileID: 124000012281141300}
   - component: {fileID: 81000014228451448}
-  - component: {fileID: 114732894499540192}
   m_Layer: 0
   m_Name: Camera
   m_TagString: MainCamera
@@ -74,6 +73,7 @@ GameObject:
   - component: {fileID: 54000012368192278}
   - component: {fileID: 114284124168611162}
   - component: {fileID: 114317609191911982}
+  - component: {fileID: 114520777241598596}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -106,7 +106,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1000012287552534}
   m_LocalRotation: {x: -0.026545124, y: -0, z: -0.000000021886075, w: 0.9996476}
-  m_LocalPosition: {x: -0.0000041045714, y: 0.62337005, z: 0.00913872}
+  m_LocalPosition: {x: 0, y: 0.652, z: -0.035}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4000014101862084}
@@ -294,10 +294,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c70c8f1ca2a36a489d9b9450f4e531d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cameraController: {fileID: 0}
+  cameraController: {fileID: 114520777241598596}
   dynAudioPlayer: {fileID: 0}
   ikSnap: {fileID: 0}
-  myBody: {fileID: 0}
   OnRope:
     rope: {fileID: 0}
     pumpSpeed: 0.003
@@ -329,26 +328,31 @@ MonoBehaviour:
     onRopeAngularVelocity: 0
   OnGround:
     moveForce: 100
-    jumpForce: 1000
-    friction: 0.1
+    redirectForce: 1
+    maxSpeed: 5
+    jumpForce: 4500
+    friction: 0.2
     maxSlopeAngle: 55
-  OnJump:
-    moveForce: 25
-    revJumpVel: 1
-    friction: 0.1
-    state: 8
---- !u!114 &114732894499540192
+    groundTouchHeight: 0.05
+  OnAir:
+    moveForce: 70
+    redirectForce: 1
+    maxSpeed: 5.5
+    revJumpVel: 0.2
+    friction: 0.05
+    state: 0
+--- !u!114 &114520777241598596
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1000012287552534}
+  m_GameObject: {fileID: 1000013558513908}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: edc695e868651f94995a5a5ec2cf3fa3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lookSensitivity: {x: 10, y: 10}
+  lookSensitivity: {x: 100, y: 100}
   maxPitchUpAngle: 80
   maxPitchDownAngle: 70
   maxTurnAngle: 75
@@ -377,7 +381,7 @@ CapsuleCollider:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1000013558513908}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 6dcb21633bccfe344ba57e25f43347be, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
   m_Radius: 0.5

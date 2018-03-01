@@ -3,12 +3,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Player : MonoBehaviour {
+public class Player : MonoBehaviour
+{
+    // TODO
+    // [f] Snap to ground over small ledges
+    // [b] Jump seems to be triggering mulitiple times
+    // [f] sound on jumping
+    // [f] sound on walking
+    // [f] sound on landing
 
     public CameraController cameraController;
     public DynamicAudioPlayer dynAudioPlayer;
     public IK_Snap ikSnap;
-    public Rigidbody myBody;
+    internal Rigidbody myBody;
+    internal CapsuleCollider myCol; 
 
     private FFRef<Vector3> velocityRef;
     private FFRef<Vector3> GetVelocityRef()
@@ -75,31 +83,33 @@ public class Player : MonoBehaviour {
     public class GroundMovement
     {
         public float moveForce = 100.0f;
+        public float redirectForce = 3.25f;
+        public float maxSpeed = 2.5f;
         public float jumpForce = 1000.0f;
         public float friction = 0.1f;
         public float maxSlopeAngle = 55.0f;
-
-        public struct Details
+        public float groundTouchHeight = 0.2f;
+        public class Details
         {
-            public bool grounded_2;
-            public bool grounded_1;
-            public bool grounded;
-
-            public bool touchGround_2;
-            public bool touchGround_1;
-            public bool touchGround;
+            public Annal<bool> groundTouches = new Annal<bool>(16, false);
+            public Annal<bool> jumping = new Annal<bool>(16, false);
         }
-        public Details details;
+        public Details details = new Details();
+        internal Vector3 up;
     }
     public GroundMovement OnGround;
 
     [System.Serializable]
-    public class JumpMovement
+    public class AirMOvement
     {
         public float moveForce = 25.0f;
+        public float redirectForce = 3.25f;
+        public float maxSpeed = 2.5f;
         public float revJumpVel = 1.0f;
         public float friction = 0.1f;
-        public State state= State.GoingDown;
+        public State state = State.GoingDown;
+
+        // @TODO Set these flags, Currently doesn nothing
         [Flags]
         public enum State
         {
@@ -111,11 +121,16 @@ public class Player : MonoBehaviour {
             Grounded = 16,
         }
     }
-    public JumpMovement OnJump;
+    public AirMOvement OnAir;
 
     bool grounded
     {
-        get { return OnGround.details.touchGround; }
+        // if touched ground this frame by any touches
+        get { return OnGround.details.groundTouches.Contains((v) => v); }
+    }
+    bool jumping
+    {
+        get { return OnGround.details.jumping; }
     }
 
     // @TODO make this into an annal
@@ -127,6 +142,7 @@ public class Player : MonoBehaviour {
     private void Awake()
     {
         myBody = GetComponent<Rigidbody>();
+        myCol = GetComponent<CapsuleCollider>();
     }
     void Start ()
     {
@@ -147,75 +163,37 @@ public class Player : MonoBehaviour {
             DestroyOnRope();
     }
 
+
+#region Collisions
     private void OnCollisionEnter(Collision collision)
     {
-        HandleCollision(collision);
+    }
+    private void OnCollisionStay(Collision collision)
+    {
     }
     private void OnCollisionExit(Collision collision)
     {
-        HandleCollision(collision);
     }
-    private void HandleCollision(Collision col)
-    {
-        var contactPoints = col.contacts;
-        Vector3 aveNormal = Vector3.zero;
-        foreach (var pt in contactPoints)
-        {
-            aveNormal += pt.normal;
-        }
+    #endregion Collisions
 
-        float normalDotUp = Vector3.Dot(aveNormal.normalized, Vector3.up);
-        Debug.Log("Dot " + normalDotUp);
-
-
-        // Shift history @TODO replace with ANNAL type
-        OnGround.details.grounded_2 = OnGround.details.grounded_1;
-        OnGround.details.grounded_1 = OnGround.details.grounded;
-        OnGround.details.touchGround_2 = OnGround.details.touchGround_1;
-        OnGround.details.touchGround_1 = OnGround.details.touchGround;
-
-        // Ground not too steep to be considered ground
-        if (normalDotUp <= OnGround.maxSlopeAngle)
-        {
-            OnGround.details.touchGround = true;
-            OnGround.details.grounded = true;
-        }
-        else
-        {
-            OnGround.details.grounded = false;
-        }
-
-
-        // @TODO Make this detect the start of a fall
-        // OR use raycasts to detect. Raycasts is probbly easier
-        // fell?
-        //if (OnGround.details.touchGround == false &&
-        //    OnGround.details.grounded == false &&
-        //    OnGround.details.grounded_1 == true)
-        //{
-        //
-        //}
-
-    }
-
-
+#region Update
     // Called right before physics, use this for dynamic Player actions
     void FixedUpdate()
     {
-        OnGround.details.touchGround = false;
-
-        UpdateInput();
-
-
-        UpdateMoveGround(up, down, left, right, space, dt);
+        if (grounded)
+            UpdateMoveGround(dt);
+        else
+            UpdateMoveAir(dt);
+        
+        OnGround.details.groundTouches.Wash(false);
     }
-    
-
     // Called right after physics, before rendering. Use for Kinimatic player actions
-    void Update ()
+    void Update()
     {
         UpdateInput();
 
+        UpdateGroundRaycast();
+        UpdateJumpState();
         // @TODO have this work through an event or something
         //if (OnRope.rope != null)
         //    SetupOnRope();
@@ -225,56 +203,182 @@ public class Player : MonoBehaviour {
         // UpdateRope(up, down, left, right, space, modifier, dt);
     }
 
+    private void UpdateJumpState()
+    {
+        // grounded && !jumping && spacePressed -> jumping = true
+        // grounded && jumping -> jumping = false
+        
+        if (grounded && OnGround.details.jumping)
+            OnGround.details.jumping.Record(false);
+    }
+
+    void UpdateGroundRaycast()
+    {
+        const float epsilon = 0.01f;
+        var mask = LayerMask.GetMask("Solid");
+        RaycastHit hit;
+
+        // Get ground normal
+        {
+            GroundRaycastPattern(mask);
+        }
+
+        // record hit ground
+        {
+            Vector3 rayOrigin = transform.position;
+            float radius = myCol.radius;
+            float distance = (myCol.height * 0.5f) - radius + OnGround.groundTouchHeight;
+            Debug.DrawLine(rayOrigin, rayOrigin + Vector3.down * (distance + radius), Color.blue);
+            if (Physics.SphereCast(rayOrigin, radius, Vector3.down, out hit, distance, mask))
+            {
+                float angleFromUp = Vector3.Angle(-hit.normal.normalized, -Vector3.up);
+                
+                // Ground not too steep to be considered ground
+                if (angleFromUp <= OnGround.maxSlopeAngle)
+                {
+                    OnGround.details.groundTouches.Record(true);
+                }
+            }
+        }  
+    }
+    
+    
+
     // @CLEAN UP
-    bool up;
-    bool down;
-    bool left;
-    bool right;
-    bool space;
+    Vector3 moveDir;
+    Vector3 moveDirRel;
+    // history of last 15 freams
+    Annal<bool> space = new Annal<bool>(15, false);
     bool modifier;
     float dt;
     void UpdateInput()
     {
-        up = Input.GetKey(KeyCode.W);
-        down = Input.GetKey(KeyCode.S);
-        left = Input.GetKey(KeyCode.A);
-        right = Input.GetKey(KeyCode.D);
-        space = Input.GetKey(KeyCode.Space);
+        moveDir.x = 0.0f;//Input.GetAxis("Horizontal");
+        moveDir.y = 0.0f;
+        moveDir.z = 0.0f;//Input.GetAxis("Vertical");
+
+        moveDir.x += Input.GetKey(KeyCode.D) ? 1.0f : 0.0f;
+        moveDir.x += Input.GetKey(KeyCode.A) ? -1.0f : 0.0f;
+        moveDir.z += Input.GetKey(KeyCode.W) ? 1.0f : 0.0f;
+        moveDir.z += Input.GetKey(KeyCode.S) ? -1.0f : 0.0f;
+
+        moveDirRel = transform.rotation * moveDir;
+
+        space.Record(Input.GetKeyDown(KeyCode.Space));
         modifier = Input.GetKey(KeyCode.LeftShift);
         dt = Time.deltaTime;
     }
 
 
-    void UpdateMoveGround(bool up, bool down, bool left, bool right, bool space, float dt)
+    void UpdateMoveGround(float dt)
     {
-        // movement in the Z axis
-        if (up) myBody.AddForce(transform.forward * OnGround.moveForce);
-        else if (down) myBody.AddForce(-transform.forward * OnGround.moveForce);
+        var rotOfPlane = Quaternion.FromToRotation(OnGround.up, Vector3.up);
+        var revRotOfPlane = Quaternion.FromToRotation(Vector3.up, OnGround.up);
 
-        // movement in the X axis
-        if (right) myBody.AddForce(transform.right * OnGround.moveForce);
-        else if (left) myBody.AddForce(-transform.right * OnGround.moveForce);
-
-        // movement in the Y axis (jump)
-        if (grounded && space)
+        // movement in the Y axis (jump), Grounded && space in the last few frames?
+        if (grounded && space.Contains((v) => v))
         {
-            OnGround.details.grounded = false;
+            SnapToGround(maxDistToFloor);
+            OnGround.details.jumping.Record(true);
+            OnGround.details.groundTouches.Wash(false);
+
+            
+            var relVel = rotOfPlane * myBody.velocity;
+            var relVelXY = new Vector3(relVel.x, 0.0f, relVel.z);
+            myBody.velocity = revRotOfPlane * relVelXY;
+
             myBody.AddForce(transform.up * OnGround.jumpForce);
         }
-        
-        // Rotate based on mouse look
-        if(cameraController.lookVec.x != 0)
+
+        // apply friction
         {
-            float lookVec = cameraController.lookVec.x;
-            float turnAmount = lookVec * cameraController.lookSensitivity.x;
-            var rotation = Quaternion.AngleAxis(Mathf.Rad2Deg * turnAmount, Vector3.up);
+            myBody.velocity = myBody.velocity - (myBody.velocity * OnGround.friction * dt);
+        }
+
+
+        // apply move force to rigid body
+        float redirectForce = CalcRedirectForceMultiplier(OnGround.redirectForce);
+        ApplyMoveForce(OnGround.moveForce * redirectForce, dt, OnGround.up);
+        
+        // Clamp Velocity along horizontal plane
+        {
+            var maxSpeed = OnGround.maxSpeed;
+            var relVel = rotOfPlane * myBody.velocity;
+            var relVelXY = new Vector3(relVel.x, 0.0f, relVel.z);
+            var relVelXYNorm = relVelXY.normalized;
+            float horzontalSpeed = relVelXY.magnitude;
+
+            float newSpeed = maxSpeed; // Mathf.Lerp(horzontalSpeed, maxSpeed, 0.8f * dt);
+            if(horzontalSpeed > maxSpeed)
+            {
+                Vector3 newVel = new Vector3(relVelXYNorm.x * newSpeed, relVel.y, relVelXYNorm.z * newSpeed);
+                myBody.velocity = revRotOfPlane * newVel;
+            }
+        }
+
+        // Rotate based on mouse look
+        if (cameraController.lookVec.x != 0)
+        {
+            float turnAmount = cameraController.lookVec.x;
+            var rotation = Quaternion.AngleAxis(turnAmount, Vector3.up);
             transform.localRotation = transform.localRotation * rotation;
         }
     }
-    void UpdateMoveJump(bool up, bool down, bool left, bool right, bool space, float dt)
+    void UpdateMoveAir(float dt)
     {
 
+        // apply move force to rigid body
+        float redirectForce =  CalcRedirectForceMultiplier(OnAir.redirectForce);
+        ApplyMoveForce(OnAir.moveForce * redirectForce, dt, Vector3.up);
+
+        // Clamp Velocity along horizontal plane
+        {
+            var maxSpeed = OnAir.maxSpeed;
+            var velXZ = new Vector3(myBody.velocity.x, 0.0f, myBody.velocity.z);
+            var velXZNorm = velXZ.normalized;
+            float horzontalSpeed = velXZ.magnitude;
+            
+            if(horzontalSpeed > maxSpeed)
+            {
+                float newSpeed = maxSpeed; // Mathf.Lerp(horzontalSpeed, maxSpeed, 0.9f * dt);
+                myBody.velocity = new Vector3(velXZNorm.x * newSpeed, myBody.velocity.y, velXZNorm.z * newSpeed);
+            }
+        }
+
+        // apply friction
+        {
+            myBody.velocity = myBody.velocity - (myBody.velocity * OnAir.friction * dt);
+        }
+
+        //@TODO JumpStop
+        // Stopped pressing jump && still moving upward
+        if (!space && myBody.velocity.y > 0.0f)
+        {
+            Vector3 revJumpVel = OnAir.revJumpVel * myBody.velocity.y * -Vector3.up;
+            myBody.velocity = myBody.velocity + revJumpVel;
+        }
+
+        // @Placeholder @DoubleJump/AirJump @Idea
+        // movement in the Y axis (jump)
+        //if (grounded && space)
+        //{
+        //    OnGround.details.groundTouches.Wash(false);
+        //    myBody.AddForce(transform.up * OnGround.jumpForce);
+        //}
+
+        // Rotate based on mouse look
+        if (cameraController.lookVec.x != 0)
+        {
+            float turnAmount = cameraController.lookVec.x;
+            var rotation = Quaternion.AngleAxis(turnAmount, Vector3.up);
+            transform.localRotation = transform.localRotation * rotation;
+        }
+        
     }
+
+    
+
+    // @TODO make this work with Vec2 for directional move input
     void UpdateRopeActions(bool up, bool down, bool left, bool right, bool space, bool modifier, float dt)
     {
         float pumpAmount = OnRope.pumpSpeed * dt;
@@ -354,6 +458,156 @@ public class Player : MonoBehaviour {
         }
 
     }
+    private void OnRopeChange(RopeChange e)
+    {
+        UpdateRope(e.dt);
+    }
+    void UpdateRope(float dt)
+    {
+        var rope = OnRope.rope;
+        var ropePath = rope.GetPath();
+        var ropeLength = ropePath.PathLength;
+        var ropeVecNorm = rope.RopeVecNorm();
+
+        var distOnPath = Mathf.Clamp(ropeLength - (OnRope.distUpRope), 0.0f, ropeLength);
+        //var velocity = rope.VelocityAtLength(OnRope.distUpRope);
+
+        // update Character Position
+        var AngleFromDown = Quaternion.FromToRotation(Vector3.down, ropeVecNorm);
+        var angularRotationOnRope = Quaternion.AngleAxis(OnRope.angleOnRope, ropeVecNorm) * AngleFromDown;
+        var positionOnRope = ropePath.PointAlongPath(distOnPath);
+
+        // @ TODO: Add charater offset!
+        transform.position = positionOnRope +                                   // Position on rope
+            (angularRotationOnRope * -Vector3.forward * OnRope.distFromRope) +  // set offset out from rope based on rotation
+            (ropeVecNorm * -OnRope.distPumpUp);                                  // vertical offset from pumping
+
+        var vecForward = positionOnRope - transform.position;
+
+
+        //Debug.DrawLine(positionOnRope, transform.position, Color.yellow);
+        var forwardRot = Quaternion.LookRotation(vecForward, -ropeVecNorm);
+        transform.rotation = forwardRot;
+        var characterRot = forwardRot * Quaternion.AngleAxis(OnRope.rotationPitch, transform.right) * Quaternion.AngleAxis(OnRope.rotationYaw, transform.forward);
+        transform.rotation = characterRot;
+
+        // update Snapping IK
+        {
+            ikSnap.rightHandPos = ropePath.PointAlongPath(distOnPath - OnRope.rightHandOffsetOnRope) + (angularRotationOnRope * OnRope.rightHandOffset);
+            ikSnap.leftHandPos = ropePath.PointAlongPath(distOnPath - OnRope.leftHandOffsetOnRope) + (angularRotationOnRope * OnRope.leftHandOffset);
+            ikSnap.rightFootPos = ropePath.PointAlongPath(distOnPath - OnRope.rightFootOffsetOnRope) + (angularRotationOnRope * OnRope.rightFootOffset);
+            ikSnap.leftFootPos = ropePath.PointAlongPath(distOnPath - OnRope.leftFootOffsetOnRope) + (angularRotationOnRope * OnRope.leftFootOffset);
+
+            ikSnap.rightHandRot = angularRotationOnRope * Quaternion.Euler(OnRope.rightHandRot);
+            ikSnap.leftHandRot = angularRotationOnRope * Quaternion.Euler(OnRope.leftHandRot);
+            ikSnap.rightFootRot = angularRotationOnRope * Quaternion.Euler(OnRope.rightFootRot);
+            ikSnap.leftFootRot = angularRotationOnRope * Quaternion.Euler(OnRope.leftFootRot);
+        }
+    }
+
+    #endregion
+
+    #region helpers
+    
+    float distToFloor
+    {
+        get { return myCol.height * 0.5f; }
+    }
+    float maxDistToFloor
+    {
+        get { return distToFloor + OnGround.groundTouchHeight; }
+    }
+
+    void ApplyMoveForce(float magnitude, float dt, Vector3 upVec)
+    {
+        // used to counter dt so that inspector values are kinda simular for move/jump
+        const float fps = 60.0f;
+        // forceRot so that we can easily climb hills
+        var forceRot = Quaternion.FromToRotation(Vector3.up, upVec.normalized);
+        var velocity = myBody.velocity;
+
+        if (moveDirRel != Vector3.zero)
+        {
+            // apply movement
+            myBody.AddForce(forceRot * moveDirRel * magnitude * fps * dt, ForceMode.Acceleration);
+        }
+        else if (velocity != Vector3.zero) // no given movement direction, and have a velocity
+        {
+            // apply slowing movement
+            if (!jumping && velocity.y > 0.0f) // when not jumping and going up
+                myBody.velocity = Vector3.Lerp(velocity, new Vector3(0.0f, 0.0f, 0.0f), 0.9f);
+            else
+                myBody.velocity = Vector3.Lerp(velocity, new Vector3(0.0f, velocity.y, 0.0f), 0.9f);
+
+        }
+    }
+    float CalcRedirectForceMultiplier(float redirectForceMultiplier)
+    {
+        // force multiplier for when going in a new direction (Improves responsivness)
+        var redirectForce = 1.0f;
+        if (myBody.velocity != Vector3.zero && moveDir != Vector3.zero)
+        {
+            float velDotDir = Vector3.Dot(myBody.velocity.normalized, moveDirRel.normalized);
+            float normRedirectForce = Mathf.Abs((velDotDir - 1.0f) * 0.5f);
+            redirectForce = 1.0f + normRedirectForce * redirectForceMultiplier;
+        }
+        return redirectForce;
+    }
+    
+    void GroundRaycastPattern(int mask)
+    {
+        RaycastHit hit;
+        Vector3 rayOrigin = transform.position;
+        Vector3 rayOffset;
+        float raycastDist = maxDistToFloor;
+
+        // center raycast down
+        if (RaycastGroundCheck(rayOrigin, mask, out hit, raycastDist) == false)
+        {
+            const int layersOfRaycast = 3;
+            const int ringDensity = 6;
+            float degreeOffset = 360.0f / ringDensity;
+            Quaternion originRot = Quaternion.AngleAxis(degreeOffset, Vector3.up);
+            Vector3 forward = transform.forward;
+            for (int i = 0; i < layersOfRaycast; ++i)
+            {
+                float distFromOrigin = ((float)(i + 1) / (float)layersOfRaycast) * myCol.radius;
+                rayOffset = distFromOrigin * forward;
+                for (int j = 0; j < ringDensity; ++j)
+                {
+                    rayOffset = originRot * rayOffset;
+                    if (RaycastGroundCheck(rayOrigin + rayOffset, mask, out hit, raycastDist))
+                        return;
+                }
+            }
+        }
+    }
+    bool RaycastGroundCheck(Vector3 raycastOrigin, int mask, out RaycastHit hit, float dist)
+    {
+        Debug.DrawRay(raycastOrigin, Vector3.down, Color.yellow);
+        if (Physics.Raycast(raycastOrigin, Vector3.down, out hit, dist, mask))
+        {
+            float angleFromUp = Vector3.Angle(-hit.normal.normalized, -Vector3.up);
+
+            // Ground not too steep to be considered ground
+            if (angleFromUp <= OnGround.maxSlopeAngle)
+            {
+                // Set up normal
+                OnGround.up = hit.normal.normalized;
+            }
+            return true;
+        }
+        return false;
+    }
+    void SnapToGround(float maxSnapDist)
+    {
+        int mask = LayerMask.GetMask("Solid");
+        RaycastHit hit;
+        if(RaycastGroundCheck(transform.position,mask, out hit, maxSnapDist))
+        {
+            transform.position = hit.point + Vector3.up * distToFloor;
+        }
+    }
 
     void RopeClimb(float amountUp)
     {
@@ -387,56 +641,8 @@ public class Player : MonoBehaviour {
         //Debug.DrawLine(transform.position, transform.position + amountVec * 20.0f, Color.grey);
     }
 
+#endregion  
     
-
-    private void OnRopeChange(RopeChange e)
-    {
-        UpdateRope(e.dt);
-    }
-    void UpdateRope(float dt)
-    {
-        var rope = OnRope.rope;
-        var ropePath = rope.GetPath();
-        var ropeLength = ropePath.PathLength;
-        var ropeVecNorm = rope.RopeVecNorm();
-
-        var distOnPath = Mathf.Clamp(ropeLength - (OnRope.distUpRope), 0.0f, ropeLength);
-        //var velocity = rope.VelocityAtLength(OnRope.distUpRope);
-
-        // update Character Position
-        var AngleFromDown = Quaternion.FromToRotation(Vector3.down, ropeVecNorm);
-        var angularRotationOnRope = Quaternion.AngleAxis(OnRope.angleOnRope, ropeVecNorm) * AngleFromDown;
-        var positionOnRope = ropePath.PointAlongPath(distOnPath);
-
-        // @ TODO: Add charater offset!
-        transform.position = positionOnRope +                                   // Position on rope
-            (angularRotationOnRope * -Vector3.forward * OnRope.distFromRope) +  // set offset out from rope based on rotation
-            (ropeVecNorm * -OnRope.distPumpUp);                                  // vertical offset from pumping
-        
-        var vecForward = positionOnRope - transform.position;
-        
-
-        //Debug.DrawLine(positionOnRope, transform.position, Color.yellow);
-        var forwardRot = Quaternion.LookRotation(vecForward, -ropeVecNorm);
-        transform.rotation = forwardRot;
-        var characterRot = forwardRot * Quaternion.AngleAxis(OnRope.rotationPitch, transform.right) * Quaternion.AngleAxis(OnRope.rotationYaw, transform.forward);
-        transform.rotation = characterRot;
-
-        // update Snapping IK
-        {
-            ikSnap.rightHandPos = ropePath.PointAlongPath(distOnPath - OnRope.rightHandOffsetOnRope) + (angularRotationOnRope * OnRope.rightHandOffset);
-            ikSnap.leftHandPos = ropePath.PointAlongPath(distOnPath - OnRope.leftHandOffsetOnRope) + (angularRotationOnRope * OnRope.leftHandOffset);
-            ikSnap.rightFootPos = ropePath.PointAlongPath(distOnPath - OnRope.rightFootOffsetOnRope) + (angularRotationOnRope * OnRope.rightFootOffset);
-            ikSnap.leftFootPos = ropePath.PointAlongPath(distOnPath - OnRope.leftFootOffsetOnRope) + (angularRotationOnRope * OnRope.leftFootOffset);
-            
-            ikSnap.rightHandRot = angularRotationOnRope * Quaternion.Euler(OnRope.rightHandRot);
-            ikSnap.leftHandRot =  angularRotationOnRope * Quaternion.Euler(OnRope.leftHandRot) ;
-            ikSnap.rightFootRot = angularRotationOnRope * Quaternion.Euler(OnRope.rightFootRot);
-            ikSnap.leftFootRot =  angularRotationOnRope * Quaternion.Euler(OnRope.leftFootRot) ;
-        }
-    }
-
-
     void SetupOnRope()
     {
         SetVelocityRef(new FFRef<Vector3>(

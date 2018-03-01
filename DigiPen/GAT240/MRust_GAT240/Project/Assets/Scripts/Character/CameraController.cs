@@ -54,10 +54,10 @@ public class CameraController : MonoBehaviour {
     private float cameraPitch = 0.0f;
     private void UpdateRotation()
     {
-        lookVec.x = lookSensitivity.x * Input.GetAxis("Mouse X");
-        lookVec.y = lookSensitivity.y * Input.GetAxis("Mouse Y");
+        lookVec.x = lookSensitivity.x * Input.GetAxis("Mouse X") * Time.deltaTime;
+        lookVec.y = lookSensitivity.y * Input.GetAxis("Mouse Y") * Time.deltaTime;
 
-        // @TODO @CLEANUP @ROPE
+        // @TODO @CLEANUP @ROPE @LookBox/Bounds?
         //if(lookVec.x != 0.0f)
         //{ // rotate player relative to mouse movement
         //    // Limit rotation
