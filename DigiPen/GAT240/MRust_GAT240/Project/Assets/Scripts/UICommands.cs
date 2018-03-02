@@ -17,7 +17,8 @@ public class UICommands : MonoBehaviour
 
     void Start()
     {
-
+        // Always make the mouse visible on (UICommands should be in a menu level)
+        CaptureMouse(false);
     }
 
     private void Update()
@@ -64,7 +65,20 @@ public class UICommands : MonoBehaviour
         Application.Quit();
 #endif
     }
-    
+
+    public void CaptureMouse(bool capture)
+    {
+        if (capture)
+        {
+            Cursor.visible = false;
+            Cursor.lockState = CursorLockMode.Locked;
+        }
+        else
+        {
+            Cursor.visible = true;
+            Cursor.lockState = CursorLockMode.None;
+        }
+    }
 
 
 

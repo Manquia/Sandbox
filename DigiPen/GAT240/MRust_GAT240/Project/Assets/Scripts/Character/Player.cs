@@ -95,7 +95,9 @@ public class Player : MonoBehaviour
             public Annal<bool> jumping = new Annal<bool>(16, false);
         }
         public Details details = new Details();
+        public float climbRadius = 0.45f;
         internal Vector3 up;
+        
     }
     public GroundMovement OnGround;
 
@@ -126,7 +128,10 @@ public class Player : MonoBehaviour
     bool grounded
     {
         // if touched ground this frame by any touches
-        get { return OnGround.details.groundTouches.Contains((v) => v); }
+        get
+        {
+            return OnGround.details.groundTouches.Contains((v) => v);
+        }
     }
     bool jumping
     {
@@ -214,32 +219,9 @@ public class Player : MonoBehaviour
 
     void UpdateGroundRaycast()
     {
-        const float epsilon = 0.01f;
         var mask = LayerMask.GetMask("Solid");
-        RaycastHit hit;
-
-        // Get ground normal
-        {
-            GroundRaycastPattern(mask);
-        }
-
-        // record hit ground
-        {
-            Vector3 rayOrigin = transform.position;
-            float radius = myCol.radius;
-            float distance = (myCol.height * 0.5f) - radius + OnGround.groundTouchHeight;
-            Debug.DrawLine(rayOrigin, rayOrigin + Vector3.down * (distance + radius), Color.blue);
-            if (Physics.SphereCast(rayOrigin, radius, Vector3.down, out hit, distance, mask))
-            {
-                float angleFromUp = Vector3.Angle(-hit.normal.normalized, -Vector3.up);
-                
-                // Ground not too steep to be considered ground
-                if (angleFromUp <= OnGround.maxSlopeAngle)
-                {
-                    OnGround.details.groundTouches.Record(true);
-                }
-            }
-        }  
+        
+        GroundRaycastPattern(mask);
     }
     
     
@@ -569,12 +551,18 @@ public class Player : MonoBehaviour
             float degreeOffset = 360.0f / ringDensity;
             Quaternion originRot = Quaternion.AngleAxis(degreeOffset, Vector3.up);
             Vector3 forward = transform.forward;
+            float radius = myCol.radius;
             for (int i = 0; i < layersOfRaycast; ++i)
             {
-                float distFromOrigin = ((float)(i + 1) / (float)layersOfRaycast) * myCol.radius;
+                float distFromOrigin = ((float)(i + 1) / (float)layersOfRaycast) * (radius + OnGround.climbRadius);
                 rayOffset = distFromOrigin * forward;
                 for (int j = 0; j < ringDensity; ++j)
                 {
+                    // @TODO impliment climbing stuff
+                    if(distFromOrigin > radius)
+                    {
+                        // DO STUFF HERE THIS INDICATES CLIMBING onto a ledge!!!
+                    }
                     rayOffset = originRot * rayOffset;
                     if (RaycastGroundCheck(rayOrigin + rayOffset, mask, out hit, raycastDist))
                         return;
@@ -594,8 +582,9 @@ public class Player : MonoBehaviour
             {
                 // Set up normal
                 OnGround.up = hit.normal.normalized;
+                OnGround.details.groundTouches.Record(true);
+                return true;
             }
-            return true;
         }
         return false;
     }
