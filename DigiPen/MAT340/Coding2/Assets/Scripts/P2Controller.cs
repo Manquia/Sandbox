@@ -4,26 +4,13 @@ using UnityEngine;
 
 public class P2Controller : MonoBehaviour
 {
-    public GameObject DoorPrefab;
-    Transform doorsRoot;
+    public UnityEngine.UI.InputField inputConsecutiveHeads;
+    public UnityEngine.UI.InputField inputTrialCount;
 
+    public UnityEngine.UI.Text outputText;
 
-    public int doorsToCreate = 3;
-    public int carsToCreate = 1;
-    public UnityEngine.UI.InputField inputDoorCount;
-    public UnityEngine.UI.InputField inputCarCount;
-
-    public UnityEngine.UI.Text instructionText;
-    public UnityEngine.UI.Button actionButton;
-    public UnityEngine.UI.Text actionButtonText;
-
-    public enum State
-    {
-        Start,
-        RevealOrSwap,
-        Finish
-    }
-    public State state;
+    int consecutiveHeads;
+    int trialCount;
 
 	// Use this for initialization
 	void Start ()
@@ -31,147 +18,71 @@ public class P2Controller : MonoBehaviour
 		
 	}
 
-    public void ProgressP2ControllerState()
+    public void RunP2()
     {
-        switch (state)
-        {
-            case State.Start:
-                RevealOneDoor();
-                state = State.RevealOrSwap;
-                break;
-            case State.RevealOrSwap:
-                state = State.Finish;
-                break;
-            case State.Finish:
-                break;
-        }
-    }
-    public void FinalizeChoice()
-    {
-        foreach (Transform door in doorsRoot)
-        {
-            var doorComp = door.GetComponent<Door>();
-            doorComp.RevealDoor();
-        }
-        // goto finished
-        ProgressP2ControllerState();
-    }
-    void RevealOneDoor()
-    {
-        List<Door> doorsToChooseFrom = new List<Door>();
+        GetInput();
 
-        foreach(Transform door in doorsRoot)
+
+        // flip all the coins
+        long[] tries = new long[trialCount];
+
+        for (int tryIndex = 0; tryIndex < trialCount; ++tryIndex)
         {
-            var doorComp = door.GetComponent<Door>();
-            if (doorComp.hasCar == false &&
-                doorComp.isPicked == false)
+            for (long heads = 0; heads < consecutiveHeads; ++heads)
             {
-                doorsToChooseFrom.Add(doorComp);
+                ++tries[tryIndex];
+                bool isHeads = Random.value > 0.5f;
+
+                if (!isHeads)
+                    heads = -1; // -1 negates the ++ above
             }
         }
 
-        int doorToRevealIndex = UnityEngine.Random.Range(0, doorsToChooseFrom.Count);
-        doorsToChooseFrom[doorToRevealIndex].RevealDoor();
-    }
-
-    // Update is called once per frame
-    void Update ()
-    {
-        switch (state)
+        // get average!!
+        long totalTries = 0;
+        for(int i = 0; i < trialCount; ++i)
         {
-            case State.Start:
-                instructionText.text = "Click on a door to pick it";
-                actionButton.gameObject.SetActive(false);
-                break;
-            case State.RevealOrSwap:
-                instructionText.text = "Change selection?";
-                actionButton.gameObject.SetActive(true);
-                actionButtonText.text = "Finalize Choice";
-                break;
-            case State.Finish:
-                actionButton.gameObject.SetActive(false);
-                instructionText.text = "Thanks for playing";
-                break;
+            totalTries += tries[i];
         }
-    }
 
-
-    public void PlayOrRestart()
-    {
-        state = State.Start;
-        GetInput();
-        CreateDoors();
+        double averageTries = (double)totalTries / (double)trialCount;
+        outputText.text = averageTries.ToString("0.#####");
 
 
     }
-
 
     void GetInput()
     {
-        if(inputDoorCount != null)
+        if (inputConsecutiveHeads != null)
         {
-            bool outputGood = int.TryParse(inputDoorCount.text, out doorsToCreate);
+            bool outputGood = int.TryParse(inputConsecutiveHeads.text, out consecutiveHeads);
             if (outputGood == false)
-                doorsToCreate = 3;
-        }
-
-        if(inputCarCount != null)
-        {
-            bool outputGood = int.TryParse(inputCarCount.text, out carsToCreate);
-            if (outputGood == false)
-                carsToCreate = 1;
-        }
-    }
-
-    void CreateDoors()
-    {
-        // find Or Create DoorsRoot
-        if (doorsRoot != null) Destroy(doorsRoot.gameObject); // destroy any old doors
-        doorsRoot = transform.Find("DoorsRoot");
-        if(doorsRoot != null) Destroy(doorsRoot.gameObject); // destroy any old doors
-        doorsRoot = new GameObject("DoorsRoot").transform;
-        doorsRoot.SetParent(transform, false);
-        doorsRoot.localPosition = Vector3.zero;
-
-        // Place cars randomly
-        HashSet<int> doorsWithCars = new HashSet<int>();
-        for(int i = 0; i < carsToCreate; ++i)
-        {
-            // every door has a car
-            if (carsToCreate == doorsWithCars.Count)
-                break;
-
-            int randDoorIndex = UnityEngine.Random.Range(0, doorsToCreate);
-            if (doorsWithCars.Contains(randDoorIndex) == false)
-                doorsWithCars.Add(randDoorIndex);
+            {
+                inputConsecutiveHeads.text = "5";
+                consecutiveHeads = 5;
+            }
             else
-                --i; //  try again
+            {
+                consecutiveHeads = Mathf.Clamp(consecutiveHeads, 1, 5000);
+                inputConsecutiveHeads.text = consecutiveHeads.ToString();
+            }
         }
-        
-        // Calculate widths the door's placements
-        var spaceForDoor = new Vector3(500.0f, 125.0f, 0.0f);
-        float distBetweenDoors = spaceForDoor.x / (doorsToCreate - 1);
-        float widthOffset = spaceForDoor.x / 2.0f;
 
-        // Create new doors
-        List<Door> doors = new List<Door>();
-        for (int i = 0; i < doorsToCreate; ++i)
+        if (inputTrialCount != null)
         {
-            var newDoor = Instantiate(DoorPrefab);
-            Transform newDoorTrans = newDoor.transform;
-
-            newDoorTrans.SetParent(doorsRoot, false);
-            newDoorTrans.localPosition = new Vector3(
-                i * distBetweenDoors - (widthOffset), 0.0f, 0.0f);
-
-            doors.Add(newDoor.GetComponent<Door>());
-            
-            // Listen to events?
+            bool outputGood = int.TryParse(inputTrialCount.text, out trialCount);
+            if (outputGood == false)
+            {
+                trialCount = Mathf.Clamp(trialCount, 1, 50000);
+                inputTrialCount.text = inputTrialCount.ToString();
+            }
+            else
+            {
+                trialCount = Mathf.Clamp(trialCount, 1, 50000);
+                inputTrialCount.text = trialCount.ToString();
+            }
         }
 
-        foreach (var doorIndex in doorsWithCars)
-            doors[doorIndex].PlaceCar();
     }
-
-
+    
 }

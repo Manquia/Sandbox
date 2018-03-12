@@ -5,106 +5,81 @@ using System;
 
 public class P4Controller : MonoBehaviour
 {
-    public int a = 10;
-    public int b = 15;
-    public float p = 0.5f;
-    public int loopsToSimulate = 100;
-
-    public UnityEngine.UI.InputField inputLoopCount;
-    public UnityEngine.UI.InputField InputA;
-    public UnityEngine.UI.InputField InputB;
-    public UnityEngine.UI.InputField InputP;
-
-
-    public UnityEngine.UI.Text outputWinCounter;
-    public UnityEngine.UI.Text outputWinChance;
     
+    public UnityEngine.UI.InputField inputdimensions;
+    public UnityEngine.UI.InputField inputNumSteps;
+    public UnityEngine.UI.InputField InputTrialCount;
 
-    public void Simulate()
+    
+    public UnityEngine.UI.Text outputText;
+
+
+    int dimensions;
+    int numSteps;
+    int trialCount;
+
+    public void RunP4()
     {
         GetInput();
 
-        int winCounter = 0;
-        for(int i = 0; i < loopsToSimulate; ++i)
+        float[] distances = new float[trialCount];
+        
+        // run trials and record distances
+        for (int trialIndex = 0; trialIndex < trialCount; ++trialIndex)
         {
-            bool result = RunSimulation();
-            if (result)
-                ++winCounter;
+            int[] dim = new int[dimensions];
+
+            for(int step = 0; step < numSteps; ++step)
+            {
+                int selectedDim = UnityEngine.Random.Range(0, dimensions);
+                int selectedDir = UnityEngine.Random.Range(0, 2) == 1 ? -1 : 1;
+
+                dim[selectedDim] += selectedDir;
+            }
+
+            for (int dimIndex = 0; dimIndex < dim.Length; ++dimIndex)
+            {
+                distances[trialIndex] += dim[dimIndex] * dim[dimIndex];
+            }
         }
 
-        double winChance = (double)winCounter / (double)loopsToSimulate;
 
-        outputWinChance.text = winChance.ToString("0.00000");
-        outputWinCounter.text = winCounter.ToString();
+        // get ave distance
+        double aveDistance = 0.0;
+        for (int distIndex = 0; distIndex < distances.Length; ++distIndex)
+        {
+            aveDistance += Mathf.Sqrt(distances[distIndex]);
+        }
+        aveDistance /= distances.Length;
+
+        // show result
+        outputText.text = aveDistance.ToString();
     }
 
 
     void GetInput()
     {
-        if (InputA != null)
+        if (inputdimensions != null)
         {
-            int.TryParse(InputA.text, out a);
-            a = Mathf.Clamp(a, 1, 100000);
-            InputA.text = a.ToString();
+            int.TryParse(inputdimensions.text, out dimensions);
+            dimensions = Mathf.Clamp(dimensions, 1, 1024);
+            inputdimensions.text = dimensions.ToString();
         }
 
-        if (InputB != null)
+        if (inputNumSteps != null)
         {
-            int.TryParse(InputB.text, out b);
-            b = Mathf.Clamp(b, a + 1, 100000);
-            InputB.text = b.ToString();
+            int.TryParse(inputNumSteps.text, out numSteps);
+            numSteps = Mathf.Clamp(numSteps, 100, 25000);
+            inputNumSteps.text = numSteps.ToString();
         }
 
-        if (InputP != null)
+        if (InputTrialCount != null)
         {
-            float.TryParse(InputP.text, out p);
-            p = Mathf.Clamp(p, 0.000000f, 1.0f);
-            InputP.text = p.ToString();
-        }
-
-        if (inputLoopCount != null)
-        {
-            bool outputGood = int.TryParse(inputLoopCount.text, out loopsToSimulate);
-            if (outputGood == false)
-            {
-                inputLoopCount.text = "100";
-                loopsToSimulate = 100;
-            }
-            else
-            {
-                loopsToSimulate = Mathf.Clamp(loopsToSimulate, 1, 10000);
-                inputLoopCount.text = loopsToSimulate.ToString();
-
-            }
+            int.TryParse(InputTrialCount.text, out trialCount);
+            trialCount = Mathf.Clamp(trialCount, 2500, 25000);
+            InputTrialCount.text = trialCount.ToString();
         }
     }
     
-    //
-    // true -> reached  b
-    // false -> reached 0
-    //
-    bool RunSimulation()
-    {
-        int curAmount = a;
-        int goalAmount = b;
-        float probability = p;
-
-        while(curAmount > 0 && curAmount < goalAmount)
-        {
-            float roll = UnityEngine.Random.value;
-            
-            if(roll < probability) // win
-            {
-                ++curAmount;
-            }
-            else // lose
-            {
-                --curAmount;
-            }
-        }
-
-        return curAmount == goalAmount;
-    }
-
 
 }
