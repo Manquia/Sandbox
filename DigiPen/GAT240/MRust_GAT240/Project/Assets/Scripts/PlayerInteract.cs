@@ -45,9 +45,10 @@ public class PlayerInteract : MonoBehaviour
         if(LookRaycast(out hit))
         {
             // clicked on object
-            if (Input.GetMouseButton(0))
+            if (Input.GetMouseButtonDown(0))
             {
                 Use u = new Use();
+                u.playerCamera = transform;
                 FFMessageBoard<Use>.SendToLocalToAllConnected(u, hit.transform.gameObject);
             }
 
