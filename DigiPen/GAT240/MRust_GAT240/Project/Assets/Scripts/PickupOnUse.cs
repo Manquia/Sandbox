@@ -39,27 +39,24 @@ public class PickupOnUse : FFComponent {
     private void Pickup(PlayerInteract.Use e)
     {
         // Play effects
-        if(GetComponent<AudioSource>() != null) GetComponent<AudioSource>().PlayOneShot(pickupSound);
-        if(GetComponent<Animation>() != null) GetComponent<Animation>().Play();
+        if(GetComponent<AudioSource>() != null && pickupSound != null) GetComponent<AudioSource>().PlayOneShot(pickupSound);
 
         // Send out event to player
         PickupEvent pe;
         pe.name = gameObject.name;
         FFMessageBoard<PickupEvent>.SendToLocalToAllConnected(pe, e.playerCamera.gameObject);
 
-        // Destroy self, @TODO pickup Animation
-        DestroyAfterDelay(pickupSound.length);
-    }
-
-
-
-    void DestroyAfterDelay(float delay)
-    {
+        // Destroy self, @TODO Fancy pickup Animation?
         var seq = action.Sequence();
-        seq.Delay(delay);
+        float pickupTime = Mathf.Max(1.0f, pickupSound != null ? pickupSound.length : 1.0f);
+
+        seq.Property(ffposition, e.playerCamera.position, FFEase.E_SmoothStart, pickupTime);
+        seq.Delay(pickupSound != null ? pickupSound.length : 1.0f);
         seq.Sync();
         seq.Call(DestroySelf);
     }
+
+    
     void DestroySelf()
     {
         Destroy(gameObject);

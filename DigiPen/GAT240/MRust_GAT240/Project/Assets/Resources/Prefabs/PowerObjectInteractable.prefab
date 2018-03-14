@@ -59,6 +59,7 @@ GameObject:
   - component: {fileID: 135525207295205972}
   - component: {fileID: 111066558256462916}
   - component: {fileID: 82196019060595082}
+  - component: {fileID: 114425850222546484}
   m_Layer: 0
   m_Name: PowerObjectInteractable
   m_TagString: Untagged
@@ -1228,6 +1229,21 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
+--- !u!114 &114425850222546484
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1404251347148416}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b4b591ac3be890341b685e250b2b44dc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  singleUse: 1
+  ObjectName: PowerObject
+  objectCount: 1
+  objectCountVarience: 0
 --- !u!114 &114475081472321958
 MonoBehaviour:
   m_ObjectHideFlags: 1

@@ -47,9 +47,7 @@ public class PlayerInteract : MonoBehaviour
             // clicked on object
             if (Input.GetMouseButtonDown(0))
             {
-                Use u = new Use();
-                u.playerCamera = transform;
-                FFMessageBoard<Use>.SendToLocalToAllConnected(u, hit.transform.gameObject);
+                SendUse(hit.transform.gameObject);
             }
 
             // looking at new object
@@ -61,34 +59,56 @@ public class PlayerInteract : MonoBehaviour
                 // looking away from prev object
                 if(prevInteractedObject != null)
                 {
-                    LookingAway lookAway = new LookingAway();
-                    lookAway.playerCamera = interactorCamera.transform;
-                    FFMessageBoard<LookingAway>.SendToLocalToAllConnected(lookAway, prevInteractedObject.gameObject);
+                    SendLookAway(prevInteractedObject.gameObject);
                 }
 
-                LookingAt lookAt = new LookingAt();
-                lookAt.playerCamera = interactorCamera.transform;
-                FFMessageBoard<LookingAt>.SendToLocalToAllConnected(lookAt, hit.transform.gameObject);
-                
+                if(interactedObject != null)
+                {
+                    SendLookAt(interactedObject.gameObject);
+                }
             }
 
-            Looking looking = new Looking();
-            looking.playerCamera = interactorCamera.transform;
-            FFMessageBoard<Looking>.SendToLocalToAllConnected(looking, hit.transform.gameObject);
+            SendLooking(interactedObject.gameObject);
         }
         else
         {
             // looking away
             if(interactedObject != null)
             {
-                LookingAway lookAway = new LookingAway();
-                lookAway.playerCamera = interactorCamera.transform;
-                FFMessageBoard<LookingAway>.SendToLocalToAllConnected(lookAway, interactedObject.gameObject);
+                SendLookAway(interactedObject.gameObject);
             }
 
             prevInteractedObject = interactedObject;
             interactedObject = null;
         }
+    }
+    void SendLookAt(GameObject go)
+    {
+        Debug.Log("PlayerInteract.SendLookAt");
+        LookingAt lookAt = new LookingAt();
+        lookAt.playerCamera = interactorCamera.transform;
+        FFMessageBoard<LookingAt>.SendToLocalToAllConnected(lookAt, go);
+    }
+    void SendLookAway(GameObject go)
+    {
+        Debug.Log("PlayerInteract.SendLookAway");
+        LookingAway lookAway = new LookingAway();
+        lookAway.playerCamera = interactorCamera.transform;
+        FFMessageBoard<LookingAway>.SendToLocalToAllConnected(lookAway, go);
+    }
+    void SendLooking(GameObject go)
+    {
+        Debug.Log("PlayerInteract.SendLooking");
+        Looking looking = new Looking();
+        looking.playerCamera = interactorCamera.transform;
+        FFMessageBoard<Looking>.SendToLocalToAllConnected(looking, go);
+    }
+    void SendUse(GameObject go)
+    {
+        Debug.Log("PlayerInteract.SendUse");
+        Use u = new Use();
+        u.playerCamera = transform;
+        FFMessageBoard<Use>.SendToLocalToAllConnected(u, go);
     }
 
     bool LookRaycast(out RaycastHit hit)

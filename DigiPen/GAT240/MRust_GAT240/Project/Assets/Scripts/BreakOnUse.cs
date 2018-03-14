@@ -41,6 +41,11 @@ public class BreakOnUse : MonoBehaviour {
             }
         }
 
+        // make it so that this object won't get hit by anything
+        gameObject.layer = 0;
+        if (GetComponent<Collider>() != null) Destroy(GetComponent<Collider>());
+
+        // play audio source
         GetComponent<AudioSource>().PlayOneShot(breakSound);
         SpawnBrokenVersion();
     }
