@@ -46,6 +46,6 @@ public class GrantItemOnUse : MonoBehaviour {
         GiveObject giveObject;
         giveObject.ObjectName = ObjectName;
         giveObject.objectCount = objectCount + Random.Range(-objectCountVarience, objectCountVarience);
-        FFMessageBoard<GiveObject>.SendToLocalToAllConnected(giveObject, e.playerCamera.gameObject);
+        FFMessageBoard<GiveObject>.SendToLocalToAllConnected(giveObject, e.actor.gameObject);
     }
 }

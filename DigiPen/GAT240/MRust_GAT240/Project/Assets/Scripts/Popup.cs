@@ -19,6 +19,7 @@ public class Popup : MonoBehaviour
     public Transform popupRoot;
     public bool singleUse;
     bool used = false;
+    bool needsKey = false;
 
 	// Use this for initialization
 	void Start ()
@@ -55,6 +56,13 @@ public class Popup : MonoBehaviour
             popupRoot.gameObject.SetActive(false);
         }
 
+        if (needsKey && e.actor.GetComponent<Inventory>().hasKey == false)
+        {
+            popupRoot.gameObject.SetActive(false);
+            return;
+        }
+
+
         popupRoot.gameObject.SetActive(true);
     }
     private void OnLookAway(PlayerInteract.LookingAway e)
@@ -74,7 +82,7 @@ public class Popup : MonoBehaviour
         }
 
         // look at camera
-        var vecToPlayerCamera = e.playerCamera.position - popupRoot.position;
+        var vecToPlayerCamera = e.actor.position - popupRoot.position;
         transform.forward = -vecToPlayerCamera;
     }
 

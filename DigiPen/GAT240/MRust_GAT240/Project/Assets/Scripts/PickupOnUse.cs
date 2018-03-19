@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+
 public struct PickupEvent
 {
     public string name;
@@ -44,13 +45,13 @@ public class PickupOnUse : FFComponent {
         // Send out event to player
         PickupEvent pe;
         pe.name = gameObject.name;
-        FFMessageBoard<PickupEvent>.SendToLocalToAllConnected(pe, e.playerCamera.gameObject);
+        FFMessageBoard<PickupEvent>.SendToLocalToAllConnected(pe, e.actor.gameObject);
 
         // Destroy self, @TODO Fancy pickup Animation?
         var seq = action.Sequence();
         float pickupTime = Mathf.Max(1.0f, pickupSound != null ? pickupSound.length : 1.0f);
 
-        seq.Property(ffposition, e.playerCamera.position, FFEase.E_SmoothStart, pickupTime);
+        seq.Property(ffposition, e.actor.position, FFEase.E_SmoothStart, pickupTime);
         seq.Delay(pickupSound != null ? pickupSound.length : 1.0f);
         seq.Sync();
         seq.Call(DestroySelf);

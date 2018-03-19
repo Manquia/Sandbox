@@ -41,6 +41,6 @@ public class GrantCoinsOnUse : MonoBehaviour {
         // Send out event to player
         GiveCoins gc;
         gc.coinCount = coinCount + Random.Range(-coinCountVarience, coinCountVarience);
-        FFMessageBoard<GiveCoins>.SendToLocalToAllConnected(gc, e.playerCamera.gameObject);
+        FFMessageBoard<GiveCoins>.SendToLocalToAllConnected(gc, e.actor.gameObject);
     }
 }

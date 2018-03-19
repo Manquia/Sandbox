@@ -7,21 +7,13 @@ using UnityEngine;
 
 public class UIController : MonoBehaviour {
 
-
+    public Transform playerRoot;
     public UnityEngine.UI.Text coinText;
     public Transform KeyObject;
     public Transform PowerObject;
 
-    // @TODO put this elsewhere
-    [System.Serializable]
-    public class Inventory
-    {
-        public int coinCount = 0;
-
-        public bool hasKey = false;
-        public bool hasPowerObject = false;
-    }
-    public Inventory inventory = new Inventory();
+    
+    public Inventory inventory;
 
 	// Use this for initialization
 	void Start ()

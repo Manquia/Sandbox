@@ -7,6 +7,9 @@ public class AnimateOnUse : MonoBehaviour {
     public bool singleUse = true;
     bool used = false;
     public AudioClip animateSound;
+
+    public bool needsKey = false;
+
     void Start()
     {
         FFMessageBoard<PlayerInteract.Use>.Connect(OnUse, gameObject);
@@ -20,6 +23,10 @@ public class AnimateOnUse : MonoBehaviour {
     {
         if (singleUse && used)
             return;
+
+        if (needsKey && e.actor.GetComponent<Inventory>().hasKey == false)
+            return;
+            
 
         if (singleUse)
             used = true;

@@ -7,19 +7,19 @@ public class PlayerInteract : MonoBehaviour
 
     public struct LookingAt
     {
-        public Transform playerCamera;
+        public Transform actor;
     }
     public struct Looking
     {
-        public Transform playerCamera;
+        public Transform actor;
     }
     public struct Use
     {
-        public Transform playerCamera;
+        public Transform actor;
     }
     public struct LookingAway
     {
-        public Transform playerCamera;
+        public Transform actor;
 
     }
 
@@ -84,30 +84,30 @@ public class PlayerInteract : MonoBehaviour
     }
     void SendLookAt(GameObject go)
     {
-        Debug.Log("PlayerInteract.SendLookAt");
+        //Debug.Log("PlayerInteract.SendLookAt");
         LookingAt lookAt = new LookingAt();
-        lookAt.playerCamera = interactorCamera.transform;
+        lookAt.actor = interactorCamera.transform;
         FFMessageBoard<LookingAt>.SendToLocalToAllConnected(lookAt, go);
     }
     void SendLookAway(GameObject go)
     {
-        Debug.Log("PlayerInteract.SendLookAway");
+        //Debug.Log("PlayerInteract.SendLookAway");
         LookingAway lookAway = new LookingAway();
-        lookAway.playerCamera = interactorCamera.transform;
+        lookAway.actor = interactorCamera.transform;
         FFMessageBoard<LookingAway>.SendToLocalToAllConnected(lookAway, go);
     }
     void SendLooking(GameObject go)
     {
-        Debug.Log("PlayerInteract.SendLooking");
+        //Debug.Log("PlayerInteract.SendLooking");
         Looking looking = new Looking();
-        looking.playerCamera = interactorCamera.transform;
+        looking.actor = interactorCamera.transform;
         FFMessageBoard<Looking>.SendToLocalToAllConnected(looking, go);
     }
     void SendUse(GameObject go)
     {
-        Debug.Log("PlayerInteract.SendUse");
+        //Debug.Log("PlayerInteract.SendUse");
         Use u = new Use();
-        u.playerCamera = transform;
+        u.actor = transform;
         FFMessageBoard<Use>.SendToLocalToAllConnected(u, go);
     }
 
