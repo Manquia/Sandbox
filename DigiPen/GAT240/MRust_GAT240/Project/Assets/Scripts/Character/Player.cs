@@ -159,8 +159,11 @@ public class Player : MonoBehaviour
                     () => GetVelocityRef().Getter().magnitude,
                     (v) => { }));
         }
-        
-        
+
+        // make sure stuff is on, We have it off from the
+        // start of the level
+        GetComponent<CameraController>().enabled = true;
+        transform.Find("Camera").gameObject.SetActive(true);
     }
     void OnDestroy()
     {
