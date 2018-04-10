@@ -2,8 +2,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
-public class Player : MonoBehaviour
+public class Player : FFComponent
 {
     // TODO
     // [f] Snap to ground over small ledges
@@ -15,6 +16,11 @@ public class Player : MonoBehaviour
     public CameraController cameraController;
     public DynamicAudioPlayer dynAudioPlayer;
     public IK_Snap ikSnap;
+
+    public SpriteRenderer fadeScreenMaskSprite;
+    public UnityEngine.UI.Image fadeScreenMaskImage;
+    public float fadeTime = 1.5f; 
+
     internal Rigidbody myBody;
     internal CapsuleCollider myCol; 
 
@@ -101,6 +107,8 @@ public class Player : MonoBehaviour
     }
     public GroundMovement OnGround;
 
+
+    FFAction.ActionSequence fadeScreenSeq;
     [System.Serializable]
     public class AirMOvement
     {
@@ -151,6 +159,7 @@ public class Player : MonoBehaviour
     }
     void Start ()
     {
+
         // Set referece to 0 for initialization
         SetVelocityRef(new FFVar<Vector3>(Vector3.zero));
         if (dynAudioPlayer != null)
@@ -164,6 +173,45 @@ public class Player : MonoBehaviour
         // start of the level
         GetComponent<CameraController>().enabled = true;
         transform.Find("Camera").gameObject.SetActive(true);
+
+        // Fade Screen
+        {
+            // init
+            fadeScreenSeq = action.Sequence();
+            fadeScreenSeq.affectedByTimeScale = false;
+            FadeOutScreenMask();
+        }
+    }
+    void FadeOutScreenMask()
+    {
+        fadeScreenSeq.ClearSequence();
+        fadeScreenMaskSprite.gameObject.SetActive(true);
+        fadeScreenMaskImage.gameObject.SetActive(true);
+        
+        fadeScreenSeq.Property(new FFRef<Color>(() => fadeScreenMaskSprite.color, (v) => fadeScreenMaskSprite.color = v), fadeScreenMaskSprite.color.MakeClear(), FFEase.E_Continuous, fadeTime);
+        fadeScreenSeq.Property(new FFRef<Color>(() => fadeScreenMaskImage.color, (v) => fadeScreenMaskImage.color = v), fadeScreenMaskImage.color.MakeClear(), FFEase.E_Continuous, fadeTime);
+
+        fadeScreenSeq.Sync();
+        fadeScreenSeq.Call(DisableGameObject, fadeScreenMaskSprite.gameObject);
+        fadeScreenSeq.Call(DisableGameObject, fadeScreenMaskImage.gameObject);
+    }
+    void FadeInScreenMask()
+    {
+        fadeScreenSeq.ClearSequence();
+        fadeScreenMaskSprite.gameObject.SetActive(true);
+        fadeScreenMaskImage.gameObject.SetActive(true);
+        
+        fadeScreenSeq.Property(new FFRef<Color>(() => fadeScreenMaskSprite.color, (v) => fadeScreenMaskSprite.color = v), fadeScreenMaskSprite.color.MakeOpaque(), FFEase.E_Continuous, fadeTime);
+        fadeScreenSeq.Property(new FFRef<Color>(() => fadeScreenMaskImage.color, (v) => fadeScreenMaskImage.color = v), fadeScreenMaskImage.color.MakeOpaque(), FFEase.E_Continuous, fadeTime);
+        
+        fadeScreenSeq.Sync();
+    }
+
+    // @Cleanup, @Move?
+    public void LoadMainMenu()
+    {
+        FadeInScreenMask();
+        fadeScreenSeq.Call(LoadLevelOfName, "Menu");
     }
     void OnDestroy()
     {
@@ -633,8 +681,23 @@ public class Player : MonoBehaviour
         //Debug.DrawLine(transform.position, transform.position + amountVec * 20.0f, Color.grey);
     }
 
-#endregion  
-    
+
+
+    void DisableGameObject(object gameObject_obj)
+    {
+        ((GameObject)gameObject_obj).SetActive(false);
+    }
+    void EnableGameObject(object gameObject_obj)
+    {
+        ((GameObject)gameObject_obj).SetActive(true);
+    }
+    void LoadLevelOfName(object string_LevelName)
+    {
+        Time.timeScale = 1.0f;
+        SceneManager.LoadScene((string)string_LevelName);
+    }
+    #endregion
+
     void SetupOnRope()
     {
         SetVelocityRef(new FFRef<Vector3>(

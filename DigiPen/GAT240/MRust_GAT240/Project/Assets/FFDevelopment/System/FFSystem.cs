@@ -25,24 +25,6 @@ using FFNetEvents;
 
 namespace FFLocalEvents
 {
-    public struct UpdateEvent
-    {
-        public float dt;
-        public double time;
-    }
-
-    public struct LateUpdateEvent
-    {
-        public float dt;
-        public double time;
-    }
-
-    public struct FixedUpdateEvent
-    {
-        public float dt;
-        public float fixedDt;
-        public double time;
-    }
 
     public struct TimeChangeEvent
     {
@@ -50,13 +32,14 @@ namespace FFLocalEvents
     }
 }
 
-public class FFSystem : MonoBehaviour {
+public class FFSystem : MonoBehaviour
+{
 
     #region Monobehaviour Singleton
     private static FFSystem singleton = null;
     public static void GetReady()
     {
-        if(singleton == null)
+        if (singleton == null)
         {
             FFPrivate.FFMessageSystem.GetReady();
             GameObject newFFSystem;
@@ -121,9 +104,13 @@ public class FFSystem : MonoBehaviour {
         //get { return FFClient.clientTime; }
         get { return timeCounter; }
     }
+    public static float dt
+    {
+        get { return Time.unscaledDeltaTime; }
+    }
     public static double clientWatchTime
     {
-        get 
+        get
         {
             if (singleton == null) return 0;
             else return (double)(singleton._clientWatch.ElapsedMilliseconds) / 1000.0;
@@ -187,34 +174,17 @@ public class FFSystem : MonoBehaviour {
     {
         ExecuteMessages();
 
-        FFLocalEvents.UpdateEvent e;
-        e.dt = Time.deltaTime;
-        e.time = FFSystem.time;
-        FFMessage<FFLocalEvents.UpdateEvent>.SendToLocal(e);
-    }
 
-    static float timeCounter = 0.0f;
-    void FixedUpdate()
+        timeCounter += Time.unscaledDeltaTime;
+    }
+    static double timeCounter = 0.0f;
+    private void FixedUpdate()
     {
         ExecuteMessages();
-
-        timeCounter += Time.fixedDeltaTime;
-
-        FFLocalEvents.FixedUpdateEvent e;
-        e.dt = Time.fixedDeltaTime;
-        e.time = FFSystem.time;
-        e.fixedDt = Time.fixedDeltaTime;
-        FFMessage<FFLocalEvents.FixedUpdateEvent>.SendToLocal(e);
     }
-
     void LateUpdate()
     {
         ExecuteMessages();
-
-        FFLocalEvents.LateUpdateEvent e;
-        e.dt = Time.deltaTime;
-        e.time = FFSystem.time;
-        FFMessage<FFLocalEvents.LateUpdateEvent>.SendToLocal(e);
     }
 
     void ExecuteMessages()
@@ -222,13 +192,13 @@ public class FFSystem : MonoBehaviour {
         while (singleton.recievedMessages.Count > 0)
         {
             FFBasePacket message = singleton.recievedMessages.Dequeue();
-            FFPrivate.FFMessageSystem.SendPacketToLocal(message);   
+            FFPrivate.FFMessageSystem.SendPacketToLocal(message);
         }
     }
     #endregion
 
     #region Networking
-    
+
     //private Queue<GameObjectPreFabPair> _gameObjectsToRegisterToServer = new Queue<GameObjectPreFabPair>(16);
 
     // Shared GameObjectData values
@@ -321,7 +291,7 @@ public class FFSystem : MonoBehaviour {
     {
         // Net Object
         GameObjectData data;
-        if(singleton._localIdToGameObjectData.TryGetValue(go.GetInstanceID(), out data))
+        if (singleton._localIdToGameObjectData.TryGetValue(go.GetInstanceID(), out data))
         {
             //var clientId = FFClient.clientId;
             //// We own the object
@@ -444,7 +414,7 @@ public class FFSystem : MonoBehaviour {
     #endregion
 
     #region FFSystemData
-    
+
     /// <summary>
     /// Removes Local Data go, DOES NOT destroy object
     /// </summary>
@@ -456,13 +426,13 @@ public class FFSystem : MonoBehaviour {
         if (singleton._localIdToGameObjectData.TryGetValue(id, out goData_C0))
         {
             GameObjectData goData_C1;
-            if(singleton._netIdToGameObjectData.TryGetValue(goData_C0.gameObjectNetId, out goData_C1))
+            if (singleton._netIdToGameObjectData.TryGetValue(goData_C0.gameObjectNetId, out goData_C1))
             {
                 if (goData_C0.Equals(goData_C1) == false) // should be the same
                     Debug.LogError("ERROR, GameObjectData is messed up!");
 
 
-                if(destroyGameObject)
+                if (destroyGameObject)
                 {
                     // if we own the object or are the server, we can destroy
                     // it accross all other clients
@@ -477,14 +447,14 @@ public class FFSystem : MonoBehaviour {
                     //    FFMessage<NetObjectDestroyedEvent>.SendToNet(e, true);
                     //}
                 }
-                
+
                 singleton._netIdToGameObjectData.Remove(goData_C1.gameObjectNetId);
                 singleton._localIdToGameObjectData.Remove(goData_C1.gameObjectInstanceId);
             }
 
         }
 
-        if(destroyGameObject)
+        if (destroyGameObject)
             GameObject.Destroy(go);
     }
     /// <summary>
