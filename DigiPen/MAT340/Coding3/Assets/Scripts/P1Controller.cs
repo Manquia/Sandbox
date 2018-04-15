@@ -95,7 +95,7 @@ public class P1Controller : MonoBehaviour
         // points Outside Circle
         text += "Points Outside Circle: " + ptsOutsideCircle + "\n";
         // Percent Inside Circle
-        text += "Percent Inside Circle: " + (100.0 * ((double) ptsInCircle / (double)(ptsInCircle + ptsOutsideCircle))).ToString("#.##") + "\n";
+        text += "Percent Inside Circle: " + (100.0 * ((double) ptsInCircle / (double)(ptsInCircle + ptsOutsideCircle))).ToString("#.##") + "%\n";
         // PI Estimation
         text += "PI estimation: " + (4.0 *((double)ptsInCircle / (double)(ptsOutsideCircle + ptsInCircle))).ToString("#.####") + "\n";
 

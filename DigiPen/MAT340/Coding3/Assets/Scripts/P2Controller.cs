@@ -4,13 +4,10 @@ using UnityEngine;
 
 public class P2Controller : MonoBehaviour
 {
-    public UnityEngine.UI.InputField inputConsecutiveHeads;
-    public UnityEngine.UI.InputField inputTrialCount;
+    public UnityEngine.UI.InputField inputProb;
 
     public UnityEngine.UI.Text outputText;
-
-    int consecutiveHeads;
-    int trialCount;
+    float probability = 0.5f;
 
 	// Use this for initialization
 	void Start ()
@@ -22,67 +19,65 @@ public class P2Controller : MonoBehaviour
     {
         GetInput();
 
+        const int trialCount = 100;
+        const float runCount = 10000;
 
-        // flip all the coins
-        long[] tries = new long[trialCount];
+        float mean = probability;
+        float variance = (probability)*(1.0f - probability);
+        float stdev = Mathf.Sqrt(variance);
 
-        for (int tryIndex = 0; tryIndex < trialCount; ++tryIndex)
+        // 95% confidence interval 
+        // 95% CI = [mean - (2*Var)/Sqrt(runs), mean + (2*Var)/Sqrt(runs)] , Delta = (2*Var)/Sqrt(runs)
+        // 95% CI = [mean - Delta, mean + Delta]
+        float CI95Delta = ((2.0f * stdev) / Mathf.Sqrt(runCount));
+        Vector2 CI95 = new Vector2(mean - CI95Delta, mean + CI95Delta);
+
+        int countWithinCI95 = 0;
+        for(int trialIndex = 0; trialIndex < trialCount; ++trialIndex)
         {
-            for (long heads = 0; heads < consecutiveHeads; ++heads)
+            int successCount = 0;
+            // run random variables Bernoulii
+            for(int runIndex = 0; runIndex < runCount; ++runIndex)
             {
-                ++tries[tryIndex];
-                bool isHeads = Random.value > 0.5f;
+                if (UnityEngine.Random.value < probability)
+                    ++successCount;
+            }
 
-                if (!isHeads)
-                    heads = -1; // -1 negates the ++ above
+            double successPercent = (double)successCount / (double)runCount;
+
+            // within CI 95?
+            if(CI95.x < successPercent && successPercent < CI95.y)
+            {
+                ++countWithinCI95;
             }
         }
 
-        // get average!!
-        long totalTries = 0;
-        for(int i = 0; i < trialCount; ++i)
+        // output results
         {
-            totalTries += tries[i];
+            string text = "";
+            text += "Times Within CI95: " + countWithinCI95 + "\n";
+            text += "Percent of times within CI95: " + (100.0 *((double)countWithinCI95 / (double)trialCount)) + "%\n";
+            outputText.text = text;
         }
-
-        double averageTries = (double)totalTries / (double)trialCount;
-        outputText.text = averageTries.ToString("0.#####");
-
-
     }
 
     void GetInput()
     {
-        if (inputConsecutiveHeads != null)
+        if (inputProb != null)
         {
-            bool outputGood = int.TryParse(inputConsecutiveHeads.text, out consecutiveHeads);
+            bool outputGood = float.TryParse(inputProb.text, out probability);
             if (outputGood == false)
             {
-                inputConsecutiveHeads.text = "5";
-                consecutiveHeads = 5;
+                inputProb.text = "0.5";
+                probability = 0.5f;
             }
             else
             {
-                consecutiveHeads = Mathf.Clamp(consecutiveHeads, 1, 5000);
-                inputConsecutiveHeads.text = consecutiveHeads.ToString();
+                probability = Mathf.Clamp(probability, 0.0f, 1.0f);
+                inputProb.text = probability.ToString();
             }
         }
-
-        if (inputTrialCount != null)
-        {
-            bool outputGood = int.TryParse(inputTrialCount.text, out trialCount);
-            if (outputGood == false)
-            {
-                trialCount = Mathf.Clamp(trialCount, 1, 50000);
-                inputTrialCount.text = inputTrialCount.ToString();
-            }
-            else
-            {
-                trialCount = Mathf.Clamp(trialCount, 1, 50000);
-                inputTrialCount.text = trialCount.ToString();
-            }
-        }
-
+        
     }
     
 }
