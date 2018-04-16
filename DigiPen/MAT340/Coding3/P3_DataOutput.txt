@@ -1,0 +1,25 @@
+TODO
+
+
+
+- Post Processing Toggle
+- Audio Music/SFX Toggeles (Caleb)
+- Control Sensitivity Toggle
+- Pick up shield on First ballarena level
+
+- MAT 340 <- HW 10
+- Pause Menu Okyulo
+- GAT 260 <- Wireframe quiz (Before Friday)
+- Coding #3
+- Conversation with Orth about substance painter
+- GAT 240 <- HW 7
+- Coding #4 extra credit
+
+
+
+
+
+Done
+
++ GAT 240 <- HW 6
++ Fix Okyulo Arrows
