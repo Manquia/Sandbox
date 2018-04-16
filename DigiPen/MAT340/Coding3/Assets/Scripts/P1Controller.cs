@@ -41,7 +41,7 @@ public class P1Controller : MonoBehaviour
     {
         var ptCount = this.pointCount;
         Vector2[] points = new Vector2[ptCount];
-        float sqrt_2 = Mathf.Sqrt(2.0f);
+        //float sqrt_2 = Mathf.Sqrt(2.0f);
         
         // Generate random Points
         {
