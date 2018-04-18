@@ -179,25 +179,36 @@ public class Player : FFComponent
             // init
             fadeScreenSeq = action.Sequence();
             fadeScreenSeq.affectedByTimeScale = false;
-            FadeOutScreenMask();
+            Seq_FadeOutScreenMasks();
         }
     }
-    void FadeOutScreenMask()
+    void Seq_FadeOutScreenMasks()
     {
-        fadeScreenSeq.ClearSequence();
         fadeScreenMaskSprite.gameObject.SetActive(true);
         fadeScreenMaskImage.gameObject.SetActive(true);
         
         fadeScreenSeq.Property(new FFRef<Color>(() => fadeScreenMaskSprite.color, (v) => fadeScreenMaskSprite.color = v), fadeScreenMaskSprite.color.MakeClear(), FFEase.E_Continuous, fadeTime);
         fadeScreenSeq.Property(new FFRef<Color>(() => fadeScreenMaskImage.color, (v) => fadeScreenMaskImage.color = v), fadeScreenMaskImage.color.MakeClear(), FFEase.E_Continuous, fadeTime);
+        Seq_DisableScreenMasks();
+    }
+    void Seq_FadeScreenMasksToColor(Color color)
+    {
+        fadeScreenMaskSprite.gameObject.SetActive(true);
+        fadeScreenMaskImage.gameObject.SetActive(true);
 
+        fadeScreenSeq.Property(new FFRef<Color>(() => fadeScreenMaskSprite.color, (v) => fadeScreenMaskSprite.color = v), color, FFEase.E_Continuous, fadeTime);
+        fadeScreenSeq.Property(new FFRef<Color>(() => fadeScreenMaskImage.color, (v) => fadeScreenMaskImage.color = v), color, FFEase.E_Continuous, fadeTime);
+
+        fadeScreenSeq.Sync();
+    }
+    void Seq_DisableScreenMasks()
+    {
         fadeScreenSeq.Sync();
         fadeScreenSeq.Call(DisableGameObject, fadeScreenMaskSprite.gameObject);
         fadeScreenSeq.Call(DisableGameObject, fadeScreenMaskImage.gameObject);
     }
-    void FadeInScreenMask()
+    void Seq_FadeInScreenMasks()
     {
-        fadeScreenSeq.ClearSequence();
         fadeScreenMaskSprite.gameObject.SetActive(true);
         fadeScreenMaskImage.gameObject.SetActive(true);
         
@@ -210,8 +221,15 @@ public class Player : FFComponent
     // @Cleanup, @Move?
     public void LoadMainMenu()
     {
-        FadeInScreenMask();
+        Seq_FadeInScreenMasks();
         fadeScreenSeq.Call(LoadLevelOfName, "Menu");
+    }
+    public void LoadVictoryScreen(float delay)
+    {
+        fadeScreenSeq.Delay(delay);
+        fadeScreenSeq.Sync();
+        Seq_FadeScreenMasksToColor(Color.white);
+        fadeScreenSeq.Call(LoadLevelOfName, "VictoryScreen");
     }
     void OnDestroy()
     {
