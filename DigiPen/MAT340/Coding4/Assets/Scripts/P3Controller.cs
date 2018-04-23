@@ -36,7 +36,7 @@ public class P3Controller : MonoBehaviour
             int lastValue = perm[0];
             for(int s = 1; s < perm.Length; ++s)
             {
-                if(lastValue == perm[s] - 1)
+                if(lastValue < perm[s])
                 {
                     ++seqCounter;
                     seqCounterLongest[i] = Mathf.Max(seqCounterLongest[i], seqCounter);
