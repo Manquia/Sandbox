@@ -207,8 +207,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -70, y: 310}
-  m_SizeDelta: {x: 335, y: 30}
+  m_AnchoredPosition: {x: -70, y: 300.8}
+  m_SizeDelta: {x: 335, y: 48.4}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &179261539
 MonoBehaviour:
@@ -234,7 +234,7 @@ MonoBehaviour:
     m_FontSize: 20
     m_FontStyle: 0
     m_BestFit: 0
-    m_MinSize: 2
+    m_MinSize: 1
     m_MaxSize: 40
     m_Alignment: 0
     m_AlignByGeometry: 0
@@ -242,7 +242,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Data Output
+  m_Text: Random Random, 100 loops, N! length  sequence
 --- !u!222 &179261540
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -516,7 +516,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   output: {fileID: 1213062001}
-  filename: MAT340_MicahRust_P3
+  inputN: {fileID: 1755973975}
 --- !u!1 &639936709
 GameObject:
   m_ObjectHideFlags: 0
@@ -1076,8 +1076,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -69.95, y: 123}
-  m_SizeDelta: {x: 334.9, y: 346}
+  m_AnchoredPosition: {x: -69.95, y: 206.2}
+  m_SizeDelta: {x: 334.9, y: 140.8}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1213062001
 MonoBehaviour:

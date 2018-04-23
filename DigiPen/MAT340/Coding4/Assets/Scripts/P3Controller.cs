@@ -9,7 +9,7 @@ public class P3Controller : MonoBehaviour
 {
     public UnityEngine.UI.Text output;
     public UnityEngine.UI.InputField inputN;
-    int N;
+    int N= 9;
 
 
     // Use this for initialization
@@ -17,8 +17,7 @@ public class P3Controller : MonoBehaviour
     {
     }
     
-
-    // I THINK I AM DOING THIS ALL WRONG!!!
+    
     public void RunP3()
     {
         GetInput();
@@ -26,9 +25,7 @@ public class P3Controller : MonoBehaviour
         const int loopCount = 100;
 
         int[] perm = null;
-
-        int seqCounterLongest = 0;
-        int[] longestPerm = null;
+        int[] seqCounterLongest =  new int[loopCount];
         for (int i = 0; i < loopCount; ++i)
         {
             // Init perm!
@@ -42,7 +39,7 @@ public class P3Controller : MonoBehaviour
                 if(lastValue == perm[s] - 1)
                 {
                     ++seqCounter;
-                    seqCounterLongest = Mathf.Max(seqCounterLongest, seqCounter);
+                    seqCounterLongest[i] = Mathf.Max(seqCounterLongest[i], seqCounter);
                 }
                 else
                 {
@@ -54,7 +51,25 @@ public class P3Controller : MonoBehaviour
         }
 
 
+        // get average
+        int sum = 0;
+        double averageLength;
+        {
+            foreach (var counter in seqCounterLongest)
+            {
+                sum += counter;
+            }
+            averageLength = sum / (double)seqCounterLongest.Length;
 
+        }
+
+
+        // output text
+        string outText = "";
+        outText += "Average length of sequence: " + averageLength + "\n";
+        outText += "Sum of lengths of each sequence: " + sum + "\n";
+
+        output.text = outText;
     }
     void InitPerm(ref int[] perm, int length)
     {
@@ -80,8 +95,8 @@ public class P3Controller : MonoBehaviour
             bool outputGood = int.TryParse(inputN.text, out N);
             if (outputGood == false)
             {
-                inputN.text = "9";
                 N = 9;
+                inputN.text = "9";
             }
             else
             {

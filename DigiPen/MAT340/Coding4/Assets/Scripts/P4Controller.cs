@@ -7,7 +7,7 @@ public class P4Controller : MonoBehaviour
 {
     
     public UnityEngine.UI.InputField inputdimensions;
-    public UnityEngine.UI.InputField inputNumSteps;
+    public UnityEngine.UI.InputField inputWalkLength;
     public UnityEngine.UI.InputField InputTrialCount;
 
     
@@ -15,7 +15,7 @@ public class P4Controller : MonoBehaviour
 
 
     int dimensions;
-    int numSteps;
+    int walkLength;
     int trialCount;
 
     public void RunP4()
@@ -25,35 +25,19 @@ public class P4Controller : MonoBehaviour
         float[] distances = new float[trialCount];
         
         // run trials and record distances
+        int countOfCollisions = 0;
+
         for (int trialIndex = 0; trialIndex < trialCount; ++trialIndex)
         {
-            int[] dim = new int[dimensions];
-
-            for(int step = 0; step < numSteps; ++step)
+            for (int walkIndex = 0; walkIndex < walkLength; ++walkIndex)
             {
-                int selectedDim = UnityEngine.Random.Range(0, dimensions);
-                int selectedDir = UnityEngine.Random.Range(0, 2) == 1 ? -1 : 1;
-
-                dim[selectedDim] += selectedDir;
-            }
-
-            for (int dimIndex = 0; dimIndex < dim.Length; ++dimIndex)
-            {
-                distances[trialIndex] += dim[dimIndex] * dim[dimIndex];
+                // d-demensional random walk
+                int rw = 0;
             }
         }
-
-
-        // get ave distance
-        double aveDistance = 0.0;
-        for (int distIndex = 0; distIndex < distances.Length; ++distIndex)
-        {
-            aveDistance += Mathf.Sqrt(distances[distIndex]);
-        }
-        aveDistance /= distances.Length;
 
         // show result
-        outputText.text = aveDistance.ToString();
+        outputText.text = "Seems like a challenging problem...";
     }
 
 
@@ -62,24 +46,51 @@ public class P4Controller : MonoBehaviour
         if (inputdimensions != null)
         {
             int.TryParse(inputdimensions.text, out dimensions);
-            dimensions = Mathf.Clamp(dimensions, 1, 1024);
+            dimensions = Mathf.Clamp(dimensions, 2, 2048);
             inputdimensions.text = dimensions.ToString();
         }
 
-        if (inputNumSteps != null)
+        if (inputWalkLength != null)
         {
-            int.TryParse(inputNumSteps.text, out numSteps);
-            numSteps = Mathf.Clamp(numSteps, 100, 25000);
-            inputNumSteps.text = numSteps.ToString();
+            int.TryParse(inputWalkLength.text, out walkLength);
+            walkLength = Mathf.Clamp(walkLength, 5, 1000000);
+            inputWalkLength.text = walkLength.ToString();
         }
 
         if (InputTrialCount != null)
         {
             int.TryParse(InputTrialCount.text, out trialCount);
-            trialCount = Mathf.Clamp(trialCount, 2500, 25000);
+            trialCount = Mathf.Clamp(trialCount, 500, 5000000);
             InputTrialCount.text = trialCount.ToString();
         }
     }
     
 
 }
+
+/*
+            int rw1 =   1;
+            int rw2 = - 1;
+            Vector2Int rangeRW1 = Vector2Int.zero * 1;
+            Vector2Int rangeRW2 = Vector2Int.zero * -1;
+            for (int walkIndex = 0; walkIndex < walkLength; ++walkIndex)
+            {
+                {
+                    // +-1 per walk
+                    rw1 += UnityEngine.Random.value < 0.5f ? 1 : -1;
+                    // see if outside of original range
+                    rangeRW1.y = Mathf.Max(rangeRW1.y, rw1);
+                    rangeRW1.x = Mathf.Min(rangeRW1.x, rw1);
+                }
+                {
+                    // +-1 per walk
+                    rw2 += UnityEngine.Random.value < 0.5f ? 1 : -1;
+                    // see if outside of original range
+                    rangeRW2.y = Mathf.Max(rangeRW2.y, rw2);
+                    rangeRW2.x = Mathf.Min(rangeRW2.x, rw2);
+                }
+
+            }
+            // if collisions
+            if()
+ */

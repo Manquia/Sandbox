@@ -100,7 +100,7 @@ public class P2Controller : MonoBehaviour
             inputColorCount.text = colorCount.ToString();
 
 
-            outputGood = int.TryParse(inputStepCount.text, out stepCount);
+            bool outputGood = int.TryParse(inputStepCount.text, out stepCount);
             if (outputGood == false)
             {
                 stepCount = 50;
