@@ -24,20 +24,27 @@ public class P4Controller : MonoBehaviour
         
         // run trials and record distances
         int totalCountOfCollisions = 0;
+        
+        int[] rw1Cur = new int[dimensions];
+        int[] rw1Start = new int[dimensions];
+        for (int i = 0; i < rw1Start.Length; ++i) rw1Start[i] = 1;
+
+        int[] rw2Cur = new int[dimensions];
+        int[] rw2Start = new int[dimensions];
+        for (int i = 0; i < rw2Start.Length; ++i) rw2Start[i] = -1;
 
         int[][] rw1 = new int[walkLength + 1][];
-        int[] rw1Cur = new int[dimensions];
-        for (int i = 0; i < rw1Cur.Length; ++i) rw1Cur[i] = 1;
-        int[] rw2Cur = new int[dimensions];
-        for (int i = 0; i < rw2Cur.Length; ++i) rw2Cur[i] = -1;
         for (int i = 0; i < rw1.Length; ++i) rw1[i] = new int[dimensions];
 
         // copy over the first starting pos of rw1Cur
-        CopyVector(ref rw1Cur, ref rw1[0]);
+        CopyVector(ref rw1Start, ref rw1[0]);
         
 
         for (int trialIndex = 0; trialIndex < trialCount; ++trialIndex)
         {
+            // Init Rw1cur Rw1Cur
+            CopyVector(ref rw1Start, ref rw1Cur);
+            CopyVector(ref rw2Start, ref rw2Cur);
 
             // first walk
             for (int walkIndex = 0; walkIndex < walkLength; ++walkIndex)
@@ -50,12 +57,9 @@ public class P4Controller : MonoBehaviour
 
 
             // second walk
-            for (int walkIndex = 0; walkIndex < walkLength; ++walkIndex)
+            for (int walkIndex = 0; walkIndex < walkLength + 1; ++walkIndex)
             {
                 bool IntersectionHappened = false;
-                int randDir = UnityEngine.Random.value < 0.5f ? -1 : 1;
-                int randDim = UnityEngine.Random.Range(0, dimensions);
-                rw2Cur[randDim] += randDir;
                 for (int i = 0; i < rw1.Length; ++i)
                 {
                     if (CmpVector(ref rw2Cur, ref rw1[i]))
@@ -68,6 +72,11 @@ public class P4Controller : MonoBehaviour
 
                 if (IntersectionHappened)
                     break;
+
+
+                int randDir = UnityEngine.Random.value < 0.5f ? -1 : 1;
+                int randDim = UnityEngine.Random.Range(0, dimensions);
+                rw2Cur[randDim] += randDir;
             }
         }
         double aveCountOfCollisions = totalCountOfCollisions / (double)trialCount;
@@ -109,23 +118,44 @@ public class P4Controller : MonoBehaviour
     {
         if (inputdimensions != null)
         {
-            int.TryParse(inputdimensions.text, out dimensions);
-            dimensions = Mathf.Clamp(dimensions, 1, 128);
-            inputdimensions.text = dimensions.ToString();
+            if(int.TryParse(inputdimensions.text, out dimensions))
+            {
+                dimensions = Mathf.Clamp(dimensions, 1, 256);
+                inputdimensions.text = dimensions.ToString();
+            }
+            else
+            {
+                dimensions = 2;
+                inputdimensions.text = dimensions.ToString();
+            }
         }
 
         if (inputWalkLength != null)
         {
-            int.TryParse(inputWalkLength.text, out walkLength);
-            walkLength = Mathf.Clamp(walkLength, 25, 1000000);
-            inputWalkLength.text = walkLength.ToString();
+            if (int.TryParse(inputWalkLength.text, out walkLength))
+            {
+                walkLength = Mathf.Clamp(walkLength, 1, 1000000);
+                inputWalkLength.text = walkLength.ToString();
+            }
+            else
+            {
+                walkLength = 25;
+                inputWalkLength.text = walkLength.ToString();
+            }
         }
 
         if (InputTrialCount != null)
         {
-            int.TryParse(InputTrialCount.text, out trialCount);
-            trialCount = Mathf.Clamp(trialCount, 100, 5000000);
-            InputTrialCount.text = trialCount.ToString();
+            if(int.TryParse(InputTrialCount.text, out trialCount))
+            {
+                trialCount = Mathf.Clamp(trialCount, 1, 5000000);
+                InputTrialCount.text = trialCount.ToString();
+            }
+            else
+            {
+                trialCount = 100;
+                InputTrialCount.text = trialCount.ToString();
+            }
         }
     }
     
