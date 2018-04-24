@@ -21,23 +21,87 @@ public class P4Controller : MonoBehaviour
     public void RunP4()
     {
         GetInput();
-
-        float[] distances = new float[trialCount];
         
         // run trials and record distances
-        int countOfCollisions = 0;
+        int totalCountOfCollisions = 0;
+
+        int[][] rw1 = new int[walkLength + 1][];
+        int[] rw1Cur = new int[dimensions];
+        for (int i = 0; i < rw1Cur.Length; ++i) rw1Cur[i] = 1;
+        int[] rw2Cur = new int[dimensions];
+        for (int i = 0; i < rw2Cur.Length; ++i) rw2Cur[i] = -1;
+        for (int i = 0; i < rw1.Length; ++i) rw1[i] = new int[dimensions];
+
+        // copy over the first starting pos of rw1Cur
+        CopyVector(ref rw1Cur, ref rw1[0]);
+        
 
         for (int trialIndex = 0; trialIndex < trialCount; ++trialIndex)
         {
+
+            // first walk
             for (int walkIndex = 0; walkIndex < walkLength; ++walkIndex)
             {
-                // d-demensional random walk
-                int rw = 0;
+                int randDir = UnityEngine.Random.value < 0.5f ? -1 : 1;
+                int randDim = UnityEngine.Random.Range(0, dimensions);
+                rw1Cur[randDim] += randDir;
+                CopyVector(ref rw1Cur, ref rw1[walkIndex + 1]);
+            }
+
+
+            // second walk
+            for (int walkIndex = 0; walkIndex < walkLength; ++walkIndex)
+            {
+                bool IntersectionHappened = false;
+                int randDir = UnityEngine.Random.value < 0.5f ? -1 : 1;
+                int randDim = UnityEngine.Random.Range(0, dimensions);
+                rw2Cur[randDim] += randDir;
+                for (int i = 0; i < rw1.Length; ++i)
+                {
+                    if (CmpVector(ref rw2Cur, ref rw1[i]))
+                    {
+                        ++totalCountOfCollisions;
+                        IntersectionHappened = true;
+                        break;
+                    }
+                }
+
+                if (IntersectionHappened)
+                    break;
             }
         }
+        double aveCountOfCollisions = totalCountOfCollisions / (double)trialCount;
+        double exponent = (Math.Log(trialCount) - Math.Log(trialCount - totalCountOfCollisions)) / Math.Log(walkLength);
+
+        string outText = "";
+        outText += "Total Collisions: " + totalCountOfCollisions + "\n";
+        outText += "Average Collisions: " + aveCountOfCollisions + "\n";
+        outText += "Exponent: " + exponent + "\n";
 
         // show result
-        outputText.text = "Seems like a challenging problem...";
+        outputText.text = outText;
+    }
+
+    public static void CopyVector(ref int[] from, ref int[] to)
+    {
+        Debug.Assert(from.Length == to.Length);
+        for (int i = 0; i < from.Length; ++i)
+            to[i] = from[i];
+    }
+    public static bool CmpVector(ref int[] v1, ref int[] v2)
+    {
+        Debug.Assert(v1.Length == v2.Length);
+        int i = 0;
+        for (i = 0; i < v1.Length; ++i)
+        {
+            if (v1[i] != v2[i])
+                break;
+        }
+
+        if (i == v1.Length)
+            return true;
+        else
+            return false;
     }
 
 
@@ -46,21 +110,21 @@ public class P4Controller : MonoBehaviour
         if (inputdimensions != null)
         {
             int.TryParse(inputdimensions.text, out dimensions);
-            dimensions = Mathf.Clamp(dimensions, 2, 2048);
+            dimensions = Mathf.Clamp(dimensions, 1, 128);
             inputdimensions.text = dimensions.ToString();
         }
 
         if (inputWalkLength != null)
         {
             int.TryParse(inputWalkLength.text, out walkLength);
-            walkLength = Mathf.Clamp(walkLength, 5, 1000000);
+            walkLength = Mathf.Clamp(walkLength, 25, 1000000);
             inputWalkLength.text = walkLength.ToString();
         }
 
         if (InputTrialCount != null)
         {
             int.TryParse(InputTrialCount.text, out trialCount);
-            trialCount = Mathf.Clamp(trialCount, 500, 5000000);
+            trialCount = Mathf.Clamp(trialCount, 100, 5000000);
             InputTrialCount.text = trialCount.ToString();
         }
     }

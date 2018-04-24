@@ -355,8 +355,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 144.06}
-  m_SizeDelta: {x: 182.07, y: 33.97}
+  m_AnchoredPosition: {x: 0, y: 150.4}
+  m_SizeDelta: {x: 182.1, y: 21.4}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &71220677
 MonoBehaviour:
@@ -390,7 +390,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Average Distance walked in given number of dimensions
+  m_Text: Output
 --- !u!222 &71220678
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -433,7 +433,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 56, y: 28.699997}
+  m_AnchoredPosition: {x: 56, y: 1.4561615}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &206910092
@@ -726,7 +726,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inputdimensions: {fileID: 1259850925}
-  inputNumSteps: {fileID: 1958493507}
+  inputWalkLength: {fileID: 1958493507}
   InputTrialCount: {fileID: 206910092}
   outputText: {fileID: 2010897523}
 --- !u!1 &678667433
@@ -983,7 +983,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Dimension (ie 5)
+  m_Text: Dimension (ie 1)
 --- !u!222 &878769516
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1292,7 +1292,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 56, y: 88.7}
+  m_AnchoredPosition: {x: 56, y: 61.45616}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1259850925
@@ -1458,7 +1458,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Walk (ie 400000)
+  m_Text: Walk (ie 25)
 --- !u!222 &1373148309
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1699,7 +1699,7 @@ GameObject:
   - component: {fileID: 1958493508}
   - component: {fileID: 1958493507}
   m_Layer: 5
-  m_Name: InputNumSteps
+  m_Name: InputWalkLength
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1723,7 +1723,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 56, y: 58.699997}
+  m_AnchoredPosition: {x: 56, y: 31.456161}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1958493507
@@ -1854,8 +1854,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 113.47}
-  m_SizeDelta: {x: 178, y: 19.53}
+  m_AnchoredPosition: {x: 0, y: 108.07826}
+  m_SizeDelta: {x: 350, y: 63.244}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2010897523
 MonoBehaviour:
@@ -1965,7 +1965,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Trials (ie. 2500)
+  m_Text: Trials (ie. 100)
 --- !u!222 &2016748740
 CanvasRenderer:
   m_ObjectHideFlags: 0
