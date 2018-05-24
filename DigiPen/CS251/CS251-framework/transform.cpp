@@ -14,23 +14,44 @@ float* MAT4::Pntr()
 // NOTE:  Make sure to convert degrees to radians before using sin and cos:
 //        radians = degrees*PI/180
 const float pi = 3.14159f;
+const float toDegrees = (360.0f) / (2.0f*pi);
+const float toRadians = (2.0f * pi) / 360.0f;
+
+// Theta is in degrees!!!
 MAT4 Rotate(const int i, const float theta)
 {
-    MAT4 R;
+	MAT4 R = {};
+	const float thetaRad = theta * toRadians;
+	const int j = (i + 1) % 3;
+	const int k = (j + 1) % 3;
+	const float cosTheta = cosf(thetaRad);
+	const float sinTheta = sinf(thetaRad);
+
+	R.M[j][j] = R.M[k][k] = cosTheta;
+	R.M[j][k] = -sinTheta;
+	R.M[k][j] = sinTheta;
+
     return R;
 }
 
 // Return a scale matrix
 MAT4 Scale(const float x, const float y, const float z)
 {
-    MAT4 S;
+	MAT4 S = {};
+	S.M[0][0] = x;
+	S.M[1][1] = y;
+	S.M[2][2] = z;
+
     return S;
 }
 
 // Return a translation matrix
 MAT4 Translate(const float x, const float y, const float z)
 {
-    MAT4 T;
+	MAT4 T = {};
+	T.M[0][3] = x;
+	T.M[1][3] = y;
+	T.M[2][3] = z;
     return T;
 }
 
@@ -38,14 +59,70 @@ MAT4 Translate(const float x, const float y, const float z)
 MAT4 Perspective(const float rx, const float ry,
              const float front, const float back)
 {
-    MAT4 P;
+	MAT4 P = {};
+	P.M[0][0] = 1.0f / rx;
+	P.M[1][1] = 1.0f / ry;
+	P.M[2][2] = -(back + front) / (back - front); P.M[2][3] = -2 * front*back / (back - front);
+	P.M[3][2] = -1;
+
     return P;
 }
 
+#include <xmmintrin.h>
+//#define USE_SSE
+
 // Multiplies two 4x4 matrices
-MAT4 operator* (const MAT4 A, const MAT4 B)
+MAT4 operator* (const MAT4 a, const MAT4 b)
 {  
-    MAT4 M;
+	//@ Speed M is initialized to identity
+	MAT4 M = {};
+#ifdef USE_SSE
+	__m128 otherRow0 = _mm_loadu_ps(b.M[0]);
+	__m128 otherRow1 = _mm_loadu_ps(b.M[1]);
+	__m128 otherRow2 = _mm_loadu_ps(b.M[2]);
+	__m128 otherRow3 = _mm_loadu_ps(b.M[3]);
+
+	__m128 newRow0 = _mm_mul_ps(otherRow0, _mm_set1_ps(a.M[0][0]));
+	newRow0 = _mm_add_ps(newRow0, _mm_mul_ps(otherRow1, _mm_set1_ps(a.M[0][1])));
+	newRow0 = _mm_add_ps(newRow0, _mm_mul_ps(otherRow2, _mm_set1_ps(a.M[0][2])));
+	newRow0 = _mm_add_ps(newRow0, _mm_mul_ps(otherRow3, _mm_set1_ps(a.M[0][3])));
+
+	__m128 newRow1 = _mm_mul_ps(otherRow0, _mm_set1_ps(a.M[1][0]));
+	newRow1 = _mm_add_ps(newRow1, _mm_mul_ps(otherRow1, _mm_set1_ps(a.M[1][1])));
+	newRow1 = _mm_add_ps(newRow1, _mm_mul_ps(otherRow2, _mm_set1_ps(a.M[1][2])));
+	newRow1 = _mm_add_ps(newRow1, _mm_mul_ps(otherRow3, _mm_set1_ps(a.M[1][3])));
+
+	__m128 newRow2 = _mm_mul_ps(otherRow0, _mm_set1_ps(a.M[2][0]));
+	newRow2 = _mm_add_ps(newRow2, _mm_mul_ps(otherRow1, _mm_set1_ps(a.M[2][1])));
+	newRow2 = _mm_add_ps(newRow2, _mm_mul_ps(otherRow2, _mm_set1_ps(a.M[2][2])));
+	newRow2 = _mm_add_ps(newRow2, _mm_mul_ps(otherRow3, _mm_set1_ps(a.M[2][3])));
+
+	__m128 newRow3 = _mm_mul_ps(otherRow0, _mm_set1_ps(a.M[3][0]));
+	newRow3 = _mm_add_ps(newRow3, _mm_mul_ps(otherRow1, _mm_set1_ps(a.M[3][1])));
+	newRow3 = _mm_add_ps(newRow3, _mm_mul_ps(otherRow2, _mm_set1_ps(a.M[3][2])));
+	newRow3 = _mm_add_ps(newRow3, _mm_mul_ps(otherRow3, _mm_set1_ps(a.M[3][3])));
+
+	_mm_storeu_ps(M.M[0], newRow0);
+	_mm_storeu_ps(M.M[1], newRow1);
+	_mm_storeu_ps(M.M[2], newRow2);
+	_mm_storeu_ps(M.M[3], newRow3);
+#else
+
+	for (int x = 0; x < 4; x++)
+	{
+		for (int y = 0; y < 4; y++)
+		{
+			M.M[x][y] = 0.0f; // set value to 0 for accumulations of multiplications
+			for (int z = 0; z < 4; z++)
+			{
+				M.M[x][y] += a.M[x][z] * b.M[z][y];
+			}
+		}
+	}
+
+
+#endif
+#undef USE_SSE
     return M;
 }
 
