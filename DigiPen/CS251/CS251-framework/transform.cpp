@@ -62,8 +62,10 @@ MAT4 Perspective(const float rx, const float ry,
 	MAT4 P = {};
 	P.M[0][0] = 1.0f / rx;
 	P.M[1][1] = 1.0f / ry;
-	P.M[2][2] = -(back + front) / (back - front); P.M[2][3] = -2 * front*back / (back - front);
+	P.M[2][2] = -(back + front) / (back - front);
+	P.M[2][3] = (-2.0f * front * back) / (back - front);
 	P.M[3][2] = -1;
+	P.M[3][3] = 0.0f;
 
     return P;
 }

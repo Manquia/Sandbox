@@ -40,6 +40,24 @@ public:
     // user mouse/keyboard actions and used in DrawScene to create the
     // transformation matrices.
 
+	//Scene Veriables
+	float ry;
+	float frontClippingPlaneDist;
+	float backClippingPlanedist;
+	float cameraTilt;
+	float cameraSpin;
+	float cameraZoom;
+	float dt;
+	int elapsedTime;
+	glm::vec2 cameraPan;
+	enum MovementType
+	{
+		MT_ORBIT,
+		MT_GROUND,
+	};
+	MovementType movementType;
+
+
     ProceduralGround* ground;
 
     // Light position parameters

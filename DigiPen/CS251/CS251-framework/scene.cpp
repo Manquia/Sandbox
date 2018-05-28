@@ -40,6 +40,10 @@ const float grndPersistence = 0.03; // Terrain roughness: Slight:0.01  rough:0.0
 const float grndLow = -3.0;         // Lowest extent below sea level
 const float grndHigh = 5.0;        // Highest extent above sea level
 
+
+					
+
+
 // Simple procedure to print a 4x4 matrix -- useful for debugging
 void PrintMat(const MAT4& m)
 {
@@ -118,6 +122,20 @@ void Scene::InitializeScene()
 
     // FIXME: This is a good place for initializing the transformation
     // values.
+	ry = 0.2f;
+	frontClippingPlaneDist = 0.01f;
+	backClippingPlanedist = 100000.0f;
+	cameraTilt = 20.0f;
+	cameraSpin = 30.0f;
+	cameraZoom = 80.0f;
+	cameraPan = glm::vec2(0.0f,0.0f);
+	movementType = MovementType::MT_ORBIT;
+	dt = 0.016f;
+
+	// @TODO FIXME
+	//elapsedTime = glutGet(GLUT_ELAPSED_TIME);
+	// dt = ...
+
 
 
     objectRoot = new Object(NULL, nullId);
@@ -130,10 +148,14 @@ void Scene::InitializeScene()
     // Enable OpenGL depth-testing
     glEnable(GL_DEPTH_TEST);
 
-    // FIXME:  Must be false for project 1.  May be true otherwise
-    bool RandomizeRoomPosition = false; 
-    ground =  new ProceduralGround(grndSize, grndTiles, grndOctaves, grndFreq,
-                                   grndPersistence, grndLow, grndHigh, RandomizeRoomPosition);
+	bool RandomizeRoomPosition;
+	if (movementType == Scene::MovementType::MT_ORBIT) {
+		RandomizeRoomPosition = false;
+	}else{
+		RandomizeRoomPosition = true;
+	}
+
+    ground =  new ProceduralGround(grndSize, grndTiles, grndOctaves, grndFreq, grndPersistence, grndLow, grndHigh, RandomizeRoomPosition);
 
     basePoint = ground->highPoint;
 
@@ -221,10 +243,14 @@ void Scene::InitializeScene()
     CHECKERROR;
 }
 
+
+
 ////////////////////////////////////////////////////////////////////////
 // Procedure DrawScene is called whenever the scene needs to be drawn.
 void Scene::DrawScene()
 {
+	// @TODO @FIXME
+	// dt = ...
 
     // Calculate the light's position.
     float lPos[4] = {
@@ -245,27 +271,23 @@ void Scene::DrawScene()
     // the following hardcoded values for WorldProj and WorldView with
     // transformation matrices calculated from variables such as spin,
     // tilt, tr, basePoint, ry, front, and back.
-    WorldProj[0][0]=  2.368;
-    WorldProj[0][1]= -0.800;
-    WorldProj[0][2]=  0.000;
-    WorldProj[0][3]=  0.000;
-    WorldProj[1][0]=  0.384;
-    WorldProj[1][1]=  1.136;
-    WorldProj[1][2]=  2.194;
-    WorldProj[1][3]=  0.000;
-    WorldProj[2][0]=  0.281;
-    WorldProj[2][1]=  0.831;
-    WorldProj[2][2]= -0.480;
-    WorldProj[2][3]= 42.451;
-    WorldProj[3][0]=  0.281;
-    WorldProj[3][1]=  0.831;
-    WorldProj[3][2]= -0.480;
-    WorldProj[3][3]= 43.442;
     
-    WorldView[0][3]= -basePoint[0];
-    WorldView[1][3]= -basePoint[1];
-    WorldView[2][3]= -basePoint[2];
+	WorldProj = Perspective(
+		(static_cast<float>(width) * ry) / static_cast<float>(height),
+		ry,
+		frontClippingPlaneDist,
+		backClippingPlanedist);
     
+	WorldView = Translate(cameraPan.x, cameraPan.y, -cameraZoom)*Rotate(0, cameraTilt - 90.0f)*Rotate(2, cameraSpin);
+
+	// P2? 
+	//WorldView =
+	//	Translate(cameraPan.x, cameraPan.y, -cameraZoom)*
+	//	Translate(basePoint.x, basePoint.y, basePoint.z)*
+	//	Rotate(0, cameraTilt - 90.0f)*
+	//	Rotate(2, cameraSpin)*
+	//	Translate(-basePoint.x, -basePoint.y, -basePoint.z);
+
     invert(&WorldView, &WorldInverse);
 
     // Use the lighting shader
