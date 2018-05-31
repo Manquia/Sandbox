@@ -22,7 +22,7 @@ bool rightDown = false;
 const float cameraPanSpeed = 0.05f;
 const float cameraRotateSpeed = 10.2f;
 
-const float staticDT = 0.016f; // @TODO REMOVE
+const float staticDT = 0.016f; // @TODO REMOVE @P2
 
 ////////////////////////////////////////////////////////////////////////
 // Called by GLUT when the scene needs to be redrawn.
@@ -132,15 +132,28 @@ void MouseMotion(int x, int y)
     int dx = x-mouseX;
     int dy = y-mouseY;
 
-    if (leftDown && shifted) {  // Rotate light position
+    if (leftDown && shifted)
+	{  // Rotate light position
         scene.lightSpin += dx/3.0;
-        scene.lightTilt -= dy/3.0; }
-
-    else if (leftDown) {
+        scene.lightTilt -= dy/3.0; 
+	}
+    else if (leftDown) 
+	{
+		// Which movement type are we in?
+		if (scene.movementType == Scene::MovementType::MT_ORBIT)// pan the camera
+		{
+			// Pan the camera in X,Y
+			scene.cameraPan.x += dx * cameraPanSpeed * scene.cameraZoom * staticDT;
+			scene.cameraPan.y += -dy * cameraPanSpeed * scene.cameraZoom * staticDT;
+		}
+		else if (scene.movementType == Scene::MovementType::MT_GROUND)
+		{
+		}
     }
 
     if (middleDown && shifted) // move light
 	{
+		// Which movement type are we in?
 		scene.lightDist = pow(scene.lightDist, 1.0f - dy / 200.0f);
 		if (scene.movementType == Scene::MovementType::MT_ORBIT)
 		{
@@ -151,20 +164,14 @@ void MouseMotion(int x, int y)
 	}
     else if (middleDown) 
 	{
-		if (scene.movementType == Scene::MovementType::MT_ORBIT)// pan the camera
-		{
-			scene.cameraPan.x += dx  * cameraPanSpeed * scene.cameraZoom * staticDT;
-			scene.cameraPan.y += -dy * cameraPanSpeed * scene.cameraZoom * staticDT;
-		}
-		else if (scene.movementType == Scene::MovementType::MT_GROUND)
-		{
-		}
 	}
 
     if (rightDown) 
 	{
+		// Which movement type are we in?
 		if (scene.movementType == Scene::MovementType::MT_ORBIT)
 		{
+			// Rotate the camera Spin + Tilt
 			scene.cameraSpin += dx * staticDT * cameraRotateSpeed;
 			scene.cameraTilt += dy * staticDT * cameraRotateSpeed;
 		}

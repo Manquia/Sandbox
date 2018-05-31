@@ -1,0 +1,24 @@
+Project 1
+
+-Driving Instructions (Controls)
+
+Left-Click + Drag     	- Pan Camera
+Right-Click + Drag    	- Rotate Camera
+Scroll in/out			- Zoom in/out
+
+-Misc
+
+Added DigitalState enum, which I ended up not using on P1 but will
+probably use for P2 to ensure button states for W,A,S,D.
+
+I also added a number of varaibles to the scene class for our camera
+parameters such as cameraTilt, cameraSpin, cameraZoom, etc...
+
+I got board on the first part of the project and decided to try and
+put in SSE instructions for the matrix mulitply. I was able to get
+this working on my machine but have #ifdef them out in case your
+test platform's environment doesn't have <xmmintrin.h> for the 
+include of SSE primatives... There is of course the normal code below it...
+
+by
+Micah Rust

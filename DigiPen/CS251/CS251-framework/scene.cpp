@@ -132,7 +132,7 @@ void Scene::InitializeScene()
 	movementType = MovementType::MT_ORBIT;
 	dt = 0.016f;
 
-	// @TODO FIXME
+	// @TODO FIXME This will need to be done for Project 2
 	//elapsedTime = glutGet(GLUT_ELAPSED_TIME);
 	// dt = ...
 

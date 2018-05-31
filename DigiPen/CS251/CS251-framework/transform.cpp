@@ -17,7 +17,8 @@ const float pi = 3.14159f;
 const float toDegrees = (360.0f) / (2.0f*pi);
 const float toRadians = (2.0f * pi) / 360.0f;
 
-// Theta is in degrees!!!
+// Gives rotation Matrix around (ith) axis (0=x, 1=y,2=z)
+// in degrees.
 MAT4 Rotate(const int i, const float theta)
 {
 	MAT4 R = {};
@@ -70,14 +71,19 @@ MAT4 Perspective(const float rx, const float ry,
     return P;
 }
 
-#include <xmmintrin.h>
 //#define USE_SSE
+#ifdef USE_SSE
+#include <xmmintrin.h>
+#endif
 
 // Multiplies two 4x4 matrices
 MAT4 operator* (const MAT4 a, const MAT4 b)
 {  
-	//@ Speed M is initialized to identity
+	//@ Speed M is initialized to identity. Scale, Translate, Rotate, and Perspective take advantage of this so they 
+	// will need to be changed otherwise they will break...
 	MAT4 M = {};
+
+	// SSE code which was for fun is disabed for submit version
 #ifdef USE_SSE
 	__m128 otherRow0 = _mm_loadu_ps(b.M[0]);
 	__m128 otherRow1 = _mm_loadu_ps(b.M[1]);
@@ -110,6 +116,8 @@ MAT4 operator* (const MAT4 a, const MAT4 b)
 	_mm_storeu_ps(M.M[3], newRow3);
 #else
 
+
+	// Normal Matrix multiplication!!! YEAH!
 	for (int x = 0; x < 4; x++)
 	{
 		for (int y = 0; y < 4; y++)
