@@ -1,18 +1,10 @@
 
 #include "framework.h"
+#include <unordered_map>
+
 
 extern Scene scene;       // Declared in framework.cpp, but used here.
 
-// Some globals used for mouse handling.
-// input state
-enum DigitalState
-{
-	Up = 0,
-	Down = 0,
-	Pressed = 0,
-	Released = 0,
-};
-DigitalState mouseButtonStates[16] = {};
 int mouseX, mouseY;
 bool shifted = false;
 bool leftDown = false;
@@ -24,13 +16,45 @@ const float cameraRotateSpeed = 10.2f;
 
 const float staticDT = 0.016f; // @TODO REMOVE @P2
 
+void BeforeDraw();
+void AfterDraw();
+
 ////////////////////////////////////////////////////////////////////////
-// Called by GLUT when the scene needs to be redrawn.
+// Called by GLUT when the scene needs to be redrawn. DO NOT USE THIS
+// Unless its a whole new frame! it will mess with dt and Input in
+// a way you may not expect
 void ReDraw()
 {
+	BeforeDraw();
     scene.DrawScene();
     glutSwapBuffers();
+	AfterDraw();
+	// Assumed this is the begingin of a new frame, UpdateKeyStates
+	Scene::UpdateKeyStates(scene.keyStates);
 }
+
+
+void BeforeDraw()
+{
+	// Change movement type
+	if (scene.GetKeyDigitalState('c') == DigitalState::Pressed)
+	{
+		if (scene.movementType == Scene::MovementType::MT_ORBIT)
+		{
+			scene.movementType = Scene::MovementType::MT_GROUND;
+			// Setup scene stuff @TODO
+		}
+		else if (scene.movementType == Scene::MovementType::MT_GROUND)
+		{
+			scene.movementType = Scene::MovementType::MT_ORBIT;
+			// Setup scene stuff @TODO
+		}
+	}
+}
+void AfterDraw()
+{
+}
+
 
 ////////////////////////////////////////////////////////////////////////
 // Function called to exit
@@ -59,7 +83,10 @@ void KeyboardDown(unsigned char key, int x, int y)
     printf("key down %c(%d)\n", key, key);
     fflush(stdout);
   
+	scene.KeyboardKeyDown(key);
+
     switch(key) {
+
     case 27: case 'q':       // Escape and 'q' keys quit the application
         exit(0);
     }
@@ -68,6 +95,7 @@ void KeyboardDown(unsigned char key, int x, int y)
 void KeyboardUp(unsigned char key, int x, int y)
 {
     fflush(stdout);
+	scene.KeyboardKeyUp(key);
 }
 
 
@@ -146,21 +174,12 @@ void MouseMotion(int x, int y)
 			scene.cameraPan.x += dx * cameraPanSpeed * scene.cameraZoom * staticDT;
 			scene.cameraPan.y += -dy * cameraPanSpeed * scene.cameraZoom * staticDT;
 		}
-		else if (scene.movementType == Scene::MovementType::MT_GROUND)
-		{
-		}
     }
 
     if (middleDown && shifted) // move light
 	{
 		// Which movement type are we in?
 		scene.lightDist = pow(scene.lightDist, 1.0f - dy / 200.0f);
-		if (scene.movementType == Scene::MovementType::MT_ORBIT)
-		{
-		}
-		else if (scene.movementType == Scene::MovementType::MT_GROUND)
-		{
-		}
 	}
     else if (middleDown) 
 	{
@@ -175,10 +194,13 @@ void MouseMotion(int x, int y)
 			scene.cameraSpin += dx * staticDT * cameraRotateSpeed;
 			scene.cameraTilt += dy * staticDT * cameraRotateSpeed;
 		}
-		else if (scene.movementType == Scene::MovementType::MT_GROUND)
-		{
-		}
     }
+
+
+	if (scene.movementType == Scene::MovementType::MT_GROUND)
+	{
+
+	}
 
     // Record this position
     mouseX = x;

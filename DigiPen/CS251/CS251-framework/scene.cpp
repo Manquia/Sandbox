@@ -41,6 +41,7 @@ const float grndLow = -3.0;         // Lowest extent below sea level
 const float grndHigh = 5.0;        // Highest extent above sea level
 
 
+
 					
 
 
@@ -120,8 +121,7 @@ void Scene::InitializeScene()
     glEnable(GL_DEPTH_TEST);
     CHECKERROR;
 
-    // FIXME: This is a good place for initializing the transformation
-    // values.
+	// Initialize Render data
 	ry = 0.2f;
 	frontClippingPlaneDist = 0.01f;
 	backClippingPlanedist = 100000.0f;
@@ -130,13 +130,11 @@ void Scene::InitializeScene()
 	cameraZoom = 80.0f;
 	cameraPan = glm::vec2(0.0f,0.0f);
 	movementType = MovementType::MT_ORBIT;
-	dt = 0.016f;
-
-	// @TODO FIXME This will need to be done for Project 2
-	//elapsedTime = glutGet(GLUT_ELAPSED_TIME);
-	// dt = ...
 
 
+	time_startProgram = glutGet(static_cast<gl::GLenum>(GLUT_ELAPSED_TIME));
+	time_LastFrame = time_startProgram;
+	dt = 0.0167777777f;
 
     objectRoot = new Object(NULL, nullId);
     
@@ -249,8 +247,9 @@ void Scene::InitializeScene()
 // Procedure DrawScene is called whenever the scene needs to be drawn.
 void Scene::DrawScene()
 {
-	// @TODO @FIXME
-	// dt = ...
+	int time_curFrame = glutGet(static_cast<gl::GLenum>(GLUT_ELAPSED_TIME));
+	dt = static_cast<float>(time_curFrame - time_LastFrame) / 1000.0f;
+	time_LastFrame = time_curFrame;
 
     // Calculate the light's position.
     float lPos[4] = {
@@ -267,26 +266,25 @@ void Scene::DrawScene()
     // Compute Viewing and Perspective transformations.
     MAT4 WorldProj, WorldView, WorldInverse;
 
-    // FIXME: When you are ready to try interactive viewing, replace
-    // the following hardcoded values for WorldProj and WorldView with
-    // transformation matrices calculated from variables such as spin,
-    // tilt, tr, basePoint, ry, front, and back.
-    
 	WorldProj = Perspective(
 		(static_cast<float>(width) * ry) / static_cast<float>(height),
 		ry,
 		frontClippingPlaneDist,
 		backClippingPlanedist);
     
-	WorldView = Translate(cameraPan.x, cameraPan.y, -cameraZoom)*Rotate(0, cameraTilt - 90.0f)*Rotate(2, cameraSpin);
-
-	// P2? 
-	//WorldView =
-	//	Translate(cameraPan.x, cameraPan.y, -cameraZoom)*
-	//	Translate(basePoint.x, basePoint.y, basePoint.z)*
-	//	Rotate(0, cameraTilt - 90.0f)*
-	//	Rotate(2, cameraSpin)*
-	//	Translate(-basePoint.x, -basePoint.y, -basePoint.z);
+	if (movementType == MovementType::MT_ORBIT)
+	{
+		WorldView = Translate(cameraPan.x, cameraPan.y, -cameraZoom)*Rotate(0, cameraTilt - 90.0f)*Rotate(2, cameraSpin);
+	}
+	else if (movementType == MovementType::MT_GROUND)
+	{
+		WorldView =
+			Translate(cameraPan.x, cameraPan.y, -cameraZoom)*
+			Translate(basePoint.x, basePoint.y, basePoint.z)*
+			Rotate(0, cameraTilt - 90.0f)*
+			Rotate(2, cameraSpin)*
+			Translate(-basePoint.x, -basePoint.y, -basePoint.z);
+	}
 
     invert(&WorldView, &WorldInverse);
 
