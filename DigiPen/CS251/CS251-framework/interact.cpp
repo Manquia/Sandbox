@@ -14,6 +14,24 @@ bool rightDown = false;
 const float cameraPanSpeed = 0.05f;
 const float cameraRotateSpeed = 10.2f;
 
+
+const float cameraGroundSpeed = 5.5f;
+const float cameraGroundMovementHeight = 2.0f;
+const float cameraGroundTiltSpeed = 0.1f;
+const float cameraGroundSpinSpeed = 0.22f;
+const float cameraGroundTiltMaxUp = 90.0f;
+const float cameraGroundTiltMaxDown = 80.0f;
+
+
+
+// math stuffs
+const float pi = 3.14159f;
+const float toDegrees = (360.0f) / (2.0f*pi);
+const float toRadians = (2.0f * pi) / 360.0f;
+
+bool passiveMotionOn = false;
+
+
 const float staticDT = 0.016f; // @TODO REMOVE @P2
 
 void BeforeDraw();
@@ -34,6 +52,17 @@ void ReDraw()
 }
 
 
+// NOT TESTED!!!!!!
+glm::vec4 Mulitply(glm::vec4 vec, MAT4 mat)
+{
+	glm::vec4 out;
+	out.x = vec.x * mat[0][0] + vec.y * mat[0][1] + vec.z * mat[0][2] + vec.w * mat[0][3];
+	out.y = vec.x * mat[1][0] + vec.y * mat[1][1] + vec.z * mat[1][2] + vec.w * mat[1][3];
+	out.z = vec.x * mat[2][0] + vec.y * mat[2][1] + vec.z * mat[2][2] + vec.w * mat[2][3];
+	out.w = vec.x * mat[3][0] + vec.y * mat[3][1] + vec.z * mat[3][2] + vec.w * mat[3][3];
+	return out;
+}
+
 void BeforeDraw()
 {
 	// Change movement type
@@ -49,6 +78,24 @@ void BeforeDraw()
 			scene.movementType = Scene::MovementType::MT_ORBIT;
 			// Setup scene stuff @TODO
 		}
+	}
+
+	if (scene.GetKeyDigitalState('p') == DigitalState::Pressed)
+	{
+		passiveMotionOn = !passiveMotionOn;
+	}
+
+	if (scene.movementType == Scene::MovementType::MT_GROUND)
+	{
+		const float step = cameraGroundSpeed * scene.dt;
+		const float spin = scene.cameraSpin;
+		if ((scene.GetKeyDigitalState('w') & DigitalState::Down) == DigitalState::Down) scene.cameraPos += step * glm::vec3(sin(spin * toRadians),  cos(spin * toRadians), 0.0f);
+		if ((scene.GetKeyDigitalState('s') & DigitalState::Down) == DigitalState::Down) scene.cameraPos -= step * glm::vec3(sin(spin * toRadians),  cos(spin * toRadians), 0.0f);
+		if ((scene.GetKeyDigitalState('d') & DigitalState::Down) == DigitalState::Down) scene.cameraPos += step * glm::vec3(cos(spin * toRadians), -sin(spin * toRadians), 0.0f);
+		if ((scene.GetKeyDigitalState('a') & DigitalState::Down) == DigitalState::Down) scene.cameraPos -= step * glm::vec3(cos(spin * toRadians), -sin(spin * toRadians), 0.0f);
+
+		// clamp camera to an offset off the gournd while in ground movement mode
+		scene.cameraPos.z = scene.ground->HeightAt(scene.cameraPos.x, scene.cameraPos.y) + cameraGroundMovementHeight;
 	}
 }
 void AfterDraw()
@@ -136,12 +183,12 @@ void MouseButton(int button, int state, int x, int y)
         rightDown = (state == GLUT_DOWN);
         printf("Right button down\n");  
 	}
-    else if (button == 3) 
+    else if (button == 3 && scene.movementType == Scene::MovementType::MT_ORBIT) 
 	{
         printf("scroll up\n"); 
 		scene.cameraZoom *= 0.9f;
 	}
-    else if (button == 4) 
+    else if (button == 4 && scene.movementType == Scene::MovementType::MT_ORBIT)
 	{
         printf("scroll down\n");
 		scene.cameraZoom *= 1.1f;
@@ -197,17 +244,49 @@ void MouseMotion(int x, int y)
     }
 
 
-	if (scene.movementType == Scene::MovementType::MT_GROUND)
+	if (scene.movementType == Scene::MovementType::MT_GROUND && !shifted)
 	{
+		// spin camera based on horizontal movement
+		scene.cameraSpin += cameraGroundSpinSpeed * dx;
 
+		// pitch camera based on vertical movmeent
+		scene.cameraTilt = glm::clamp(scene.cameraTilt + cameraGroundTiltSpeed * dy, -cameraGroundTiltMaxDown, cameraGroundTiltMaxUp);
 	}
 
-    // Record this position
-    mouseX = x;
-    mouseY = y;
+	// Record this position
+	mouseX = x;
+	mouseY = y;
 
-    // Force a redraw
-    glutPostRedisplay();
+	// Force a redraw
+	glutPostRedisplay();
+}
+
+void MouseMovedNoButton(int x, int y)
+{
+	// Calculate the change in the mouse position
+	int dx = x - mouseX;
+	int dy = y - mouseY;
+
+
+	if (scene.movementType == Scene::MovementType::MT_GROUND && passiveMotionOn)
+	{
+		// spin camera based on horizontal movement
+		scene.cameraSpin += cameraGroundSpinSpeed * dx;
+
+		// pitch camera based on vertical movmeent
+		scene.cameraTilt += cameraGroundTiltSpeed * dy;
+
+		// @TODO for better movement in capture mode
+		//glutWarpPointer(scene.width/2, scene.height/2);
+	}
+
+
+	// Record this position
+	mouseX = x;
+	mouseY = y;
+
+	// Force a redraw
+	glutPostRedisplay();
 }
 
 void InitInteraction()
@@ -222,4 +301,5 @@ void InitInteraction()
 
     glutMouseFunc(&MouseButton);
     glutMotionFunc(&MouseMotion);
+	glutPassiveMotionFunc(&MouseMovedNoButton);
 }

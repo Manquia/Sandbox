@@ -61,7 +61,9 @@ public:
 	float cameraSpin;
 	float cameraZoom;
 	int elapsedTime;
-	glm::vec2 cameraPan;
+	glm::vec2 cameraPan; // P1 for orbit movement type
+	glm::vec3 cameraPos; // P2 for ground movement type
+
 	enum MovementType
 	{
 		MT_ORBIT,

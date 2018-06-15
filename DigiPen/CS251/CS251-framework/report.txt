@@ -1,16 +1,39 @@
-Project 1
+Report
+Micah Rust, CS 251, Summer 2018
 
 -Driving Instructions (Controls)
-
-Left-Click + Drag     	- Pan Camera
-Right-Click + Drag    	- Rotate Camera
+						
+Control					  ORBIT (Project 1)					  | Ground (Project 2)
+Left-Click + Drag     	- Pan Camera 							- Spin and Tile camera in first person (ground)
+Right-Click + Drag    	- Rotate Camera							- Spin and Tile camera in first person (ground)
 Scroll in/out			- Zoom in/out
 
--Misc
+Move Mouse 				- N/A									- Spin and Tilt camera when in passive mode (Added), Needs mouse capture to be good, disabled by default
 
-Added DigitalState enum, which I ended up not using on P1 but will
-probably use for P2 to ensure button states for W,A,S,D.
+c 						- Switch P1/P2							- Switch P1/P2
+p						- N/A 									- Toogle passive (capture) mouse, will have to click+drag if this is turned off. This mode needs a bit more work, kinda wanky at the moment w/o mouse capture
 
+w						- N/A 									- When in Project 2 naviation Mode, this will move the player forward
+s						- N/A 									- When in Project 2 naviation Mode, this will move the player backward
+a						- N/A 									- When in Project 2 naviation Mode, this will move the player left
+d						- N/A 									- When in Project 2 naviation Mode, this will move the player rigth
+
+
+-Misc Notes
+
+
+- Project 2 --------------------------------------------------
+
+Added DigitalState enum, for button states for W,A,S,D. and C
+This makes it easy to see if any button on the keyboard has been
+pressed, released, down, or up. This code is actually mostly
+on the scene b/c of project structure. I may change this in the future
+for greater clarity.
+
+
+
+
+- Project 1 --------------------------------------------------
 I also added a number of varaibles to the scene class for our camera
 parameters such as cameraTilt, cameraSpin, cameraZoom, etc...
 

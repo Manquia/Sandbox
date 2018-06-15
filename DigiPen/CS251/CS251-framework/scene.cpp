@@ -130,7 +130,7 @@ void Scene::InitializeScene()
 	cameraZoom = 80.0f;
 	cameraPan = glm::vec2(0.0f,0.0f);
 	movementType = MovementType::MT_ORBIT;
-
+	cameraPos = { 0.0f, -10.0f, 5.0f };
 
 	time_startProgram = glutGet(static_cast<gl::GLenum>(GLUT_ELAPSED_TIME));
 	time_LastFrame = time_startProgram;
@@ -247,6 +247,7 @@ void Scene::InitializeScene()
 // Procedure DrawScene is called whenever the scene needs to be drawn.
 void Scene::DrawScene()
 {
+	// @TODO move this to beforeDraw...?
 	int time_curFrame = glutGet(static_cast<gl::GLenum>(GLUT_ELAPSED_TIME));
 	dt = static_cast<float>(time_curFrame - time_LastFrame) / 1000.0f;
 	time_LastFrame = time_curFrame;
@@ -279,11 +280,9 @@ void Scene::DrawScene()
 	else if (movementType == MovementType::MT_GROUND)
 	{
 		WorldView =
-			Translate(cameraPan.x, cameraPan.y, -cameraZoom)*
-			Translate(basePoint.x, basePoint.y, basePoint.z)*
 			Rotate(0, cameraTilt - 90.0f)*
 			Rotate(2, cameraSpin)*
-			Translate(-basePoint.x, -basePoint.y, -basePoint.z);
+			Translate(-cameraPos.x, -cameraPos.y, -cameraPos.z);
 	}
 
     invert(&WorldView, &WorldInverse);

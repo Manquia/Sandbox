@@ -35,6 +35,7 @@ MAT4 Rotate(const int i, const float theta)
     return R;
 }
 
+
 // Return a scale matrix
 MAT4 Scale(const float x, const float y, const float z)
 {
