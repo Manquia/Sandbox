@@ -11,6 +11,7 @@
 
 Scene scene;
 
+#include <iostream>
 
 ////////////////////////////////////////////////////////////////////////
 // Do the OpenGL/GLut setup and then enter the interactive loop.
@@ -41,4 +42,7 @@ int main(int argc, char** argv)
 
     // Enter the event loop.
     glutMainLoop();
+
+	int input;
+	std::cin >> input;
 }

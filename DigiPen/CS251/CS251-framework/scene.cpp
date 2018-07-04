@@ -66,7 +66,7 @@ Object* SphereOfSpheres(Shape* SpherePolygons)
 {
     Object* ob = new Object(NULL, nullId);
     Object* sp = new Object(SpherePolygons, spheresId,
-                            vec3(0.5, 0.5, 1.0), vec3(1.0, 1.0, 1.0), 120.0);
+                            vec3(0.5, 0.5, 1.0), vec3(0.2, 0.2, 0.2), 120.0);
     
     for (float angle=0.0;  angle<360.0;  angle+= 18.0)
         for (float row=0.1;  row<PI/2.0;  row += PI/2.0/6.0) {
@@ -185,7 +185,7 @@ void Scene::InitializeScene()
                               vec3(0.8, 0.8, 0.5), vec3(0.0, 0.0, 0.0), 1);
     Object* rightAnim = new Object(NULL, nullId);
     Object* teapot = new Object(TeapotPolygons, teapotId,
-                                vec3(0.5, 0.5, 0.1), vec3(0.5, 0.5, 0.5), 120);
+                                vec3(0.5, 0.5, 0.1), vec3(0.2, 0.2, 0.2), 120);
     Object* rightPodium = new Object(BoxPolygons, boxId,
                                      vec3(0.25, 0.25, 0.1), vec3(0.3, 0.3, 0.3), 10);
     
@@ -207,7 +207,7 @@ void Scene::InitializeScene()
                                 vec3(0.3, 0.2, 0.1), vec3(0.0, 0.0, 0.0), 1);
 
     Object* sea = new Object(SeaPolygons, seaId,
-                             vec3(0.3, 0.3, 1.0), vec3(1.0, 1.0, 1.0), 120);
+                             vec3(0.3, 0.3, 1.0), vec3(0.15, 0.15, 0.15), 120);
 
     // FIXME: This is where you could read in all the textures and
     // associate them with the various objects just created above

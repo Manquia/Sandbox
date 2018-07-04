@@ -53,6 +53,15 @@ void Object::Draw(ShaderProgram* program, MAT4& objectTr)
     loc = glGetUniformLocation(program->programId, "NormalTr");
     glUniformMatrix4fv(loc, 1, GL_TRUE, inv.Pntr());
 
+	glm::vec3 light(3.0f, 3.0f, 3.0f);
+	glm::vec3 ambient(0.4f, 0.4f, 0.4f);
+
+	loc = glGetUniformLocation(program->programId, "light");
+	glUniform3fv(loc, 1, &(light[0]));
+
+	loc = glGetUniformLocation(program->programId, "ambient");
+	glUniform3fv(loc, 1, &(ambient[0]));
+
     // If this oject has an associated texture, this is the place to
     // load the texture unto a texture-unit of your choice and inform
     // the shader program of the texture-unit number:
