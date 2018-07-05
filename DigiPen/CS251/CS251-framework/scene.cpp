@@ -66,7 +66,7 @@ Object* SphereOfSpheres(Shape* SpherePolygons)
 {
     Object* ob = new Object(NULL, nullId);
     Object* sp = new Object(SpherePolygons, spheresId,
-                            vec3(0.5, 0.5, 1.0), vec3(0.2, 0.2, 0.2), 120.0);
+                            vec3(0.5, 0.5, 1.0), vec3(0.02, 0.02, 0.02), 120.0);
     
     for (float angle=0.0;  angle<360.0;  angle+= 18.0)
         for (float row=0.1;  row<PI/2.0;  row += PI/2.0/6.0) {
@@ -87,7 +87,7 @@ Object* FramedPicture(const MAT4& modelTr, const int objectId,
     Object* ob;
     
     ob = new Object(BoxPolygons, frameId,
-                    vec3(0.3, 0.3, 0.0), vec3(0.2, 0.2, 0.2), 10.0);
+                    vec3(0.3, 0.3, 0.0), vec3(0.02, 0.02, 0.02), 10.0);
     frame->add(ob, Translate(0.0, 0.0, 1.0+w)*Scale(1.0, w, w));
     frame->add(ob, Translate(0.0, 0.0, -1.0-w)*Scale(1.0, w, w));
     frame->add(ob, Translate(1.0+w, 0.0, 0.0)*Scale(w, w, 1.0+2*w));
@@ -185,13 +185,13 @@ void Scene::InitializeScene()
                               vec3(0.8, 0.8, 0.5), vec3(0.0, 0.0, 0.0), 1);
     Object* rightAnim = new Object(NULL, nullId);
     Object* teapot = new Object(TeapotPolygons, teapotId,
-                                vec3(0.5, 0.5, 0.1), vec3(0.2, 0.2, 0.2), 120);
+                                vec3(0.5, 0.5, 0.1), vec3(0.03, 0.03, 0.03), 120);
     Object* rightPodium = new Object(BoxPolygons, boxId,
-                                     vec3(0.25, 0.25, 0.1), vec3(0.3, 0.3, 0.3), 10);
+                                     vec3(0.25, 0.25, 0.1), vec3(0.03, 0.03, 0.03), 10);
     
     Object* leftAnim = new Object(NULL, nullId);
     Object* leftPodium = new Object(BoxPolygons, boxId,
-                                    vec3(0.25, 0.25, 0.1), vec3(0.3, 0.3, 0.3), 10);
+                                    vec3(0.25, 0.25, 0.1), vec3(0.03, 0.03, 0.03), 10);
 
     Object* spheres = SphereOfSpheres(SpherePolygons);
     Object* leftFrame = FramedPicture(Identity, lPicId,
@@ -204,10 +204,10 @@ void Scene::InitializeScene()
                              vec3(), vec3(), 0);
 
     Object* ground = new Object(GroundPolygons, groundId,
-                                vec3(0.3, 0.2, 0.1), vec3(0.0, 0.0, 0.0), 1);
+                                vec3(0.3, 0.2, 0.1), vec3(0.0, 0.0, 0.0), 0.5);
 
     Object* sea = new Object(SeaPolygons, seaId,
-                             vec3(0.3, 0.3, 1.0), vec3(0.15, 0.15, 0.15), 120);
+                             vec3(0.3, 0.3, 1.0), vec3(0.015, 0.015, 0.015), 80);
 
     // FIXME: This is where you could read in all the textures and
     // associate them with the various objects just created above
