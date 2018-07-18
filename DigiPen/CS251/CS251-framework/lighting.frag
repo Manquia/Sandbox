@@ -53,16 +53,16 @@ void main()
 
 	// UV transformations
 	if(objectId==groundId)
-		uv *= 24.0;
+		uv *= 45.0;
 
 	if(objectId==wallId)
-		uv = uv.yx * 14.0;
+		uv = uv.yx * 25.0;
 
 	if(objectId==spheresId)
 		uv *= 4.0f;
 
 	if(objectId==boxId)
-		uv *= 3.0;
+		uv *= 9.0;
 
 	if(objectId==teapotId)
 		uv *= 2.5;
