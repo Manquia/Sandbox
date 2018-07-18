@@ -15,6 +15,7 @@
 
 class Shader;
 class Object;
+class Texture;
 
 // Object:: A shape, and its transformations, colors, and textures and sub-objects.
 class Object
@@ -23,6 +24,9 @@ class Object
     Shape* shape;               // Polygons 
     MAT4 animTr;                // This model's animation transformation
     int objectId;               // Object id to be sent to the shader
+
+	// @MEMLEAK, no distructor to clean this up atm... may be shared with others...
+	std::vector<Texture*> textures;
 
     vec3 diffuseColor;          // Diffuse color of object
     vec3 specularColor;         // Specular color of object

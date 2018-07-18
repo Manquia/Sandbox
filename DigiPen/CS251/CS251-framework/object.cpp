@@ -65,14 +65,28 @@ void Object::Draw(ShaderProgram* program, MAT4& objectTr)
     // If this oject has an associated texture, this is the place to
     // load the texture unto a texture-unit of your choice and inform
     // the shader program of the texture-unit number:
-    //    glActiveTexture(GL_TEXTURE0);					// Choose unit 0
-    //    glBindTexture(GL_TEXTURE_2D, textureId);			// Load the texture
-    //    loc=glGetUniformLocation(program->programId, "samplerName");	// Find the sampler2D
-    //    glUniform1i(loc, 0);						// Tell the shader program
-    
+	//unsigned int unitId = 0;
+	if(textures.size() > 0)
+	{
+		auto &tex = textures[0];
+		glActiveTexture(GL_TEXTURE0);					// Choose unit 0
+		glBindTexture(GL_TEXTURE_2D, tex->textureId);			// Load the texture
+		loc=glGetUniformLocation(program->programId, "texDif");	// Find the sampler2D
+		glUniform1i(loc, 0);						// Tell the shader program
+	}
 
+     //  glActiveTexture(GL_TEXTURE0);					// Choose unit 0
+     //  glBindTexture(GL_TEXTURE_2D, textureId);			// Load the texture
+     //  loc=glGetUniformLocation(program->programId, "samplerName");	// Find the sampler2D
+     //  glUniform1i(loc, 0);						// Tell the shader program
+    
     // Draw this object's triangle
     if (shape) shape->DrawVAO();
+
+	for each (auto& tex in this->textures)
+	{
+		tex->Unbind();
+	}
 
     // Recursively draw each sub-objects, each with its own transformation.
     for (int i=0;  i<instances.size();  i++) {

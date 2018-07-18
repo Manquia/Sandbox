@@ -67,6 +67,8 @@ Object* SphereOfSpheres(Shape* SpherePolygons)
     Object* ob = new Object(NULL, nullId);
     Object* sp = new Object(SpherePolygons, spheresId,
                             vec3(0.5, 0.5, 1.0), vec3(0.02, 0.02, 0.02), 120.0);
+
+	sp->textures.push_back(new Texture("textures/Brazilian_rosewood_pxr128.png"));
     
     for (float angle=0.0;  angle<360.0;  angle+= 18.0)
         for (float row=0.1;  row<PI/2.0;  row += PI/2.0/6.0) {
@@ -95,6 +97,8 @@ Object* FramedPicture(const MAT4& modelTr, const int objectId,
 
     ob = new Object(QuadPolygons, objectId,
                     vec3(0.3, 0.2, 0.1), vec3(0.0, 0.0, 0.0), 10.0);
+
+	ob->textures.push_back(new Texture("textures/my-house-01.png"));
     frame->add(ob, Rotate(0,90));
 
     return frame;
@@ -183,31 +187,43 @@ void Scene::InitializeScene()
     // alpha.
     Object* wall = new Object(WallPolygons, wallId,
                               vec3(0.8, 0.8, 0.5), vec3(0.0, 0.0, 0.0), 1);
+	wall->textures.push_back(new Texture("textures/Standard_red_pxr128.png"));
+
     Object* rightAnim = new Object(NULL, nullId);
     Object* teapot = new Object(TeapotPolygons, teapotId,
                                 vec3(0.5, 0.5, 0.1), vec3(0.03, 0.03, 0.03), 120);
+	teapot->textures.push_back(new Texture("textures/cracks.png"));
+
     Object* rightPodium = new Object(BoxPolygons, boxId,
                                      vec3(0.25, 0.25, 0.1), vec3(0.03, 0.03, 0.03), 10);
-    
+	rightPodium->textures.push_back(new Texture("textures/Brazilian_rosewood_pxr128.png"));
+
     Object* leftAnim = new Object(NULL, nullId);
     Object* leftPodium = new Object(BoxPolygons, boxId,
                                     vec3(0.25, 0.25, 0.1), vec3(0.03, 0.03, 0.03), 10);
+	leftPodium->textures.push_back(new Texture("textures/Brazilian_rosewood_pxr128.png"));
 
     Object* spheres = SphereOfSpheres(SpherePolygons);
+
     Object* leftFrame = FramedPicture(Identity, lPicId,
                                       BoxPolygons, QuadPolygons);
+	leftFrame->textures.push_back(new Texture("textures/Standard_red_pxr128.png"));
     Object* rightFrame = FramedPicture(Identity, rPicId,
                                       BoxPolygons, QuadPolygons);
+	rightFrame->textures.push_back(new Texture("textures/Brazilian_rosewood_pxr128.png"));
     
     
     Object* sky = new Object(SpherePolygons, skyId,
                              vec3(), vec3(), 0);
+	sky->textures.push_back(new Texture("textures/sky.jpg"));
 
     Object* ground = new Object(GroundPolygons, groundId,
                                 vec3(0.3, 0.2, 0.1), vec3(0.0, 0.0, 0.0), 0.5);
+	ground->textures.push_back(new Texture("textures/grass.jpg"));
 
     Object* sea = new Object(SeaPolygons, seaId,
                              vec3(0.3, 0.3, 1.0), vec3(0.015, 0.015, 0.015), 80);
+	sea->textures.push_back(new Texture("textures/Standard_red_pxr128.png"));
 
     // FIXME: This is where you could read in all the textures and
     // associate them with the various objects just created above

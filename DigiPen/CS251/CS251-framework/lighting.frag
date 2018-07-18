@@ -21,6 +21,8 @@ const int     spheresId	= 10;
 in vec3 normalVec, lightVec, worldPos, eyeVec;
 in vec2 texCoord;
 
+uniform sampler2D texDif;
+
 uniform int objectId;
 uniform vec3 diffuse;	// Kd
 uniform vec3 specular;	// Ks
@@ -47,17 +49,70 @@ void main()
 	float HN = max(dot(H,N), 0.0);
 	float LH = max(dot(L,H), 0.0);
 
-    vec3 Kd = diffuse;
+	vec2 uv = texCoord;
+
+	// UV transformations
+	if(objectId==groundId)
+		uv *= 24.0;
+
+	if(objectId==wallId)
+		uv = uv.yx * 14.0;
+
+	if(objectId==spheresId)
+		uv *= 4.0f;
+
+	if(objectId==boxId)
+		uv *= 3.0;
+
+	if(objectId==teapotId)
+		uv *= 2.5;
+		
+
+	// END uv transformations
+    vec3 Kd = texture(texDif, uv).xyz;
 	vec3 Ks = specular;
 	float alpha = shininess;
     
-    if (objectId==groundId || objectId==seaId) {
+	// Color transformations
+
+    if (objectId==groundId || objectId==seaId) 
+	{
         ivec2 uv = ivec2(floor(200.0*texCoord));
         if ((uv[0]+uv[1])%2==0)
-            Kd *= 0.9; }
+            Kd *= 0.9; 
+	}
     
-	vec3 ambientOut = ambient * Kd;
+	// procedural colors
+	if(objectId==lPicId)
+	{
+		float blackOrWhite;
+		bool x = fract(uv.x * 4) < 0.5;
+		bool y = fract(uv.y * 4) < 0.5;
+		if( (x || y) && !(x && y) )
+			blackOrWhite = 0;
+		else
+			blackOrWhite = 1;
+		Kd = vec3(blackOrWhite,blackOrWhite,blackOrWhite);
+	}
+	
+	if(objectId==rPicId)
+	{
+		bool x = abs(uv.x -0.5) > 0.45;
+		bool y = abs(uv.y -0.5) > 0.45;
+		if(x || y)
+			Kd = vec3(0.2,0.4,0.2);
+	}
+	if(objectId==frameId)
+	{
+		Kd = vec3(0.4,0.4,0.6);
+	}
+	if(objectId==seaId)
+	{
+		Kd = vec3(0.01,0.09,0.4);
+	}
 
+	// Lighting calculations
+	vec3 ambientOut = ambient * Kd;
 	vec3 BRDFDiffuse =  Kd / M_PI;
 	vec3 BRDFSpecular = (D(HN, alpha) * F(Ks, LH)) /
 						(4 * LH*LH);

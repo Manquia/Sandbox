@@ -17,14 +17,24 @@ using namespace gl;
 #define STB_IMAGE_IMPLEMENTATION
 #define STBI_FAILURE_USERMSG
 #include "stb_image.h"
+#include <unordered_map>
+
+static std::unordered_map<std::string, Texture*> texturesLoaded;
 
 Texture::Texture(const std::string &path) : textureId(0)
 {
+	const char* pathcStr = path.c_str();
+	if (texturesLoaded.find(path) != texturesLoaded.end())
+	{
+		textureId = texturesLoaded[path]->textureId;
+		return;
+	}
+
     stbi_set_flip_vertically_on_load(true);
     int width, height, n;
-    unsigned char* image = stbi_load(path.c_str(), &width, &height, &n, 4);
+    unsigned char* image = stbi_load(pathcStr, &width, &height, &n, 4);
     if (!image) {
-        printf("\nRead error on file %s:\n  %s\n\n", path.c_str(), stbi_failure_reason());
+        printf("\nRead error on file %s:\n  %s\n\n", pathcStr, stbi_failure_reason());
         exit(-1); }
 
     // Here we create MIPMAP and set some useful modes for the texture
@@ -36,7 +46,16 @@ Texture::Texture(const std::string &path) : textureId(0)
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, (int)GL_LINEAR);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, (int)GL_LINEAR_MIPMAP_LINEAR);  
     glBindTexture(GL_TEXTURE_2D, 0);
+
+	// insert newly loaded texture
+	texturesLoaded[path] = this;
+
     stbi_image_free(image);
+}
+
+Texture::~Texture()
+{
+	
 }
 
 void Texture::Bind(const int unit, const int programId, const std::string& name)
