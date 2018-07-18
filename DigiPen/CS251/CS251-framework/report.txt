@@ -23,10 +23,13 @@ d						- N/A 									- When in Project 2 naviation Mode, this will move the pla
 
 - Project 4 --------------------------------------------------
 
-Everything should be here as far at textures, orientation, and scale. The only
-thing a bit odd is the water color which is a very solid blue since I don't have
-a texture for it.
+Everything should be here as far at textures, orientation, and 
+scale. The only thing a bit odd is the water color which is a 
+very solid blue since I don't have a texture for it.
 
+I did different colors for the outline on the house picture
+and the frames also have different colors on them as well then
+the given example.
 
 - Project 3 --------------------------------------------------
 
