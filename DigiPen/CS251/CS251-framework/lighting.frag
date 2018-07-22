@@ -18,10 +18,12 @@ const int     spheresId	= 10;
 
 #define M_PI 3.1415926535897932384626433832795
 
-in vec3 normalVec, lightVec, worldPos, eyeVec;
+in vec3 normalVec, lightVec, worldPos, eyeVec, tanVec;
 in vec2 texCoord;
 
+uniform sampler2D skyDome;
 uniform sampler2D texDif;
+uniform sampler2D texNorm;
 
 uniform int objectId;
 uniform vec3 diffuse;	// Kd
@@ -45,18 +47,19 @@ void main()
     vec3 L = normalize(lightVec);
 	vec3 V = normalize(eyeVec);
 	vec3 H = normalize(L + V);
-	float LN = max(dot(L,N), 0.0);
-	float HN = max(dot(H,N), 0.0);
-	float LH = max(dot(L,H), 0.0);
+
 
 	vec2 uv = texCoord;
 
 	// UV transformations
+	if(objectId==seaId)
+		uv *= 800.0;
+
 	if(objectId==groundId)
 		uv *= 45.0;
 
 	if(objectId==wallId)
-		uv = uv.yx * 25.0;
+		uv = vec2(uv.y, -uv.x) * 25.0;
 
 	if(objectId==spheresId)
 		uv *= 4.0f;
@@ -66,14 +69,46 @@ void main()
 
 	if(objectId==teapotId)
 		uv *= 2.5;
-		
 
+	if(objectId==skyId)
+	{
+		uv = vec2(0.5 - atan(V.y,V.x)/(2*M_PI), acos(V.z)/(M_PI));
+	}
 	// END uv transformations
+
+	
+	// Normal map adjustment
+	{
+		vec3 delta = texture(texNorm, uv).xyz;
+		delta = delta*2 - vec3(1,1,1);
+		vec3 T = normalize(tanVec);
+		vec3 B = normalize(cross(T,N));
+		N = delta.x*T + delta.y*B + delta.z*N;
+	}
+	// lighting variable calculations
+	vec3 R = normalize(-2*dot(V,N) - V);
+	float LN = max(dot(L,N), 0.0);
+	float HN = max(dot(H,N), 0.0);
+	float LH = max(dot(L,H), 0.0);
+
+
     vec3 Kd = texture(texDif, uv).xyz;
 	vec3 Ks = specular;
+
+	// reflection
+	vec2 uvR = vec2(0.5 - atan(R.y,R.x)/(2*M_PI), acos(R.z)/(M_PI));
+	vec3 Kr = texture(skyDome, uvR).xyz;
 	float alpha = shininess;
-    
+	float reflectionFraction = 0.01;
+
 	// Color transformations
+	
+	// Lighting Quick Escape for skydome
+	if(objectId==skyId)
+	{
+		gl_FragColor.xyz = Kd;
+		return;
+	}
 
     if (objectId==groundId || objectId==seaId) 
 	{
@@ -108,18 +143,20 @@ void main()
 	}
 	if(objectId==seaId)
 	{
-		Kd = vec3(0.01,0.09,0.4);
+		Kd = vec3(0.01,0.09,0.26);
+		reflectionFraction = 0.75;
 	}
 
 	// Lighting calculations
 	vec3 ambientOut = ambient * Kd;
+	vec3 reflectOut = reflectionFraction * Kr;
 	vec3 BRDFDiffuse =  Kd / M_PI;
 	vec3 BRDFSpecular = (D(HN, alpha) * F(Ks, LH)) /
 						(4 * LH*LH);
 
 	vec3 diffSpecOut = (light * LN) * (BRDFDiffuse + BRDFSpecular);
 	
-	gl_FragColor.xyz = ambientOut + diffSpecOut;
+	gl_FragColor.xyz = ambientOut + diffSpecOut + reflectOut;
 
 	// Old Lighting
     //gl_FragColor.xyz = vec3(0.5,0.5,0.5)*Kd + Kd*max(dot(L,N),0.0);

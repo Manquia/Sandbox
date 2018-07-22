@@ -27,6 +27,7 @@ class Object
 
 	// @MEMLEAK, no distructor to clean this up atm... may be shared with others...
 	std::vector<Texture*> textures;
+	static std::vector<Texture*> globalTextures;
 
     vec3 diffuseColor;          // Diffuse color of object
     vec3 specularColor;         // Specular color of object
@@ -42,6 +43,7 @@ class Object
     // texture id should be set in Scene::InitializeScene and used in
     // Object::Draw.
     
+	static void InitDrawEnvironment();
     void Draw(ShaderProgram* program, MAT4& objectTr);
 
     void add(Object* m, MAT4 tr=MAT4()) { instances.push_back(std::make_pair(m,tr)); }

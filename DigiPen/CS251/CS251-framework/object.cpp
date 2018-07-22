@@ -22,6 +22,9 @@ using namespace glm;
 #include "scene.h"
 #include "transform.h"
 
+
+std::vector<Texture*> Object::globalTextures;
+
 Object::Object(Shape* _shape, const int _objectId,
                const vec3 _diffuseColor, const vec3 _specularColor, const float _shininess)
     : diffuseColor(_diffuseColor), specularColor(_specularColor), shininess(_shininess),
@@ -65,14 +68,31 @@ void Object::Draw(ShaderProgram* program, MAT4& objectTr)
     // If this oject has an associated texture, this is the place to
     // load the texture unto a texture-unit of your choice and inform
     // the shader program of the texture-unit number:
-	//unsigned int unitId = 0;
+	
+	// skydome
+	unsigned int unitId = 0;
+	{
+		auto& tex = Object::globalTextures[0];
+		glActiveTexture(GL_TEXTURE0 + unitId);					// Choose unit 0
+		glBindTexture(GL_TEXTURE_2D, tex->textureId);			// Load the texture
+		loc = glGetUniformLocation(program->programId, "skyDome");	// Find the sampler2D
+		glUniform1i(loc, unitId++);						// Tell the shader program
+	}
 	if(textures.size() > 0)
 	{
 		auto &tex = textures[0];
-		glActiveTexture(GL_TEXTURE0);					// Choose unit 0
+		glActiveTexture(GL_TEXTURE0 + unitId);					// Choose unit 0
 		glBindTexture(GL_TEXTURE_2D, tex->textureId);			// Load the texture
 		loc=glGetUniformLocation(program->programId, "texDif");	// Find the sampler2D
-		glUniform1i(loc, 0);						// Tell the shader program
+		glUniform1i(loc, unitId++);						// Tell the shader program
+	}
+	if (textures.size() > 1) // has normal
+	{
+		auto &tex = textures[1];
+		glActiveTexture(GL_TEXTURE0 + unitId);					// Choose unit 0
+		glBindTexture(GL_TEXTURE_2D, tex->textureId);			// Load the texture
+		loc = glGetUniformLocation(program->programId, "texNorm");	// Find the sampler2D
+		glUniform1i(loc, unitId++);						// Tell the shader program
 	}
 
      //  glActiveTexture(GL_TEXTURE0);					// Choose unit 0
