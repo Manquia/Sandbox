@@ -83,7 +83,7 @@ void Object::Draw(ShaderProgram* program, MAT4& objectTr)
     // Draw this object's triangle
     if (shape) shape->DrawVAO();
 
-	for each (auto& tex in this->textures)
+	for(auto& tex : this->textures)
 	{
 		tex->Unbind();
 	}
