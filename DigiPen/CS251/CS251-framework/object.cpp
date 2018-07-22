@@ -22,6 +22,9 @@ using namespace glm;
 #include "scene.h"
 #include "transform.h"
 
+#include <freeglut.h>
+#include <glu.h>                // For gluErrorString
+
 
 std::vector<Texture*> Object::globalTextures;
 
@@ -31,6 +34,12 @@ Object::Object(Shape* _shape, const int _objectId,
       shape(_shape), objectId(_objectId)
      
 {}
+
+float current_Time = 0.0f;
+void Object::InitDrawEnvironment()
+{
+	current_Time = static_cast<float>(static_cast<double>(glutGet(static_cast<gl::GLenum>(GLUT_ELAPSED_TIME))) / 1000);
+}
 
 
 void Object::Draw(ShaderProgram* program, MAT4& objectTr)
@@ -43,6 +52,9 @@ void Object::Draw(ShaderProgram* program, MAT4& objectTr)
 
     loc = glGetUniformLocation(program->programId, "shininess");
     glUniform1f(loc, shininess);
+
+	loc = glGetUniformLocation(program->programId, "time");
+	glUniform1f(loc, current_Time);
 
     loc = glGetUniformLocation(program->programId, "objectId");
     glUniform1i(loc, objectId);

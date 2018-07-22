@@ -195,6 +195,7 @@ void Scene::InitializeScene()
     Object* teapot = new Object(TeapotPolygons, teapotId,
                                 vec3(0.5, 0.5, 0.1), vec3(0.03, 0.03, 0.03), 120);
 	teapot->textures.push_back(new Texture("textures/cracks.png"));
+	teapot->textures.push_back(new Texture("textures/cracks_normal.png"));
 
     Object* rightPodium = new Object(BoxPolygons, boxId,
                                      vec3(0.25, 0.25, 0.1), vec3(0.03, 0.03, 0.03), 10);
@@ -229,6 +230,7 @@ void Scene::InitializeScene()
     Object* ground = new Object(GroundPolygons, groundId,
                                 vec3(0.3, 0.2, 0.1), vec3(0.0, 0.0, 0.0), 0.5);
 	ground->textures.push_back(new Texture("textures/grass.jpg"));
+	ground->textures.push_back(new Texture("textures/grass_normal.png"));
 
     Object* sea = new Object(SeaPolygons, seaId,
                              vec3(0.3, 0.3, 1.0), vec3(0.015, 0.015, 0.015), 80);
@@ -273,10 +275,15 @@ void Scene::InitializeScene()
 // Procedure DrawScene is called whenever the scene needs to be drawn.
 void Scene::DrawScene()
 {
+	// Update shader time, etc
+	Object::InitDrawEnvironment();
+
 	// @TODO move this to beforeDraw...?
 	int time_curFrame = glutGet(static_cast<gl::GLenum>(GLUT_ELAPSED_TIME));
 	dt = static_cast<float>(time_curFrame - time_LastFrame) / 1000.0f;
 	time_LastFrame = time_curFrame;
+
+	
 
     // Calculate the light's position.
     float lPos[4] = {

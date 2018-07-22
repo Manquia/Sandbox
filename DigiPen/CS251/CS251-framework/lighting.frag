@@ -31,6 +31,7 @@ uniform vec3 specular;	// Ks
 uniform float shininess;// alpha exponent
 uniform vec3 light;		// li
 uniform vec3 ambient;	// la
+uniform float time;		// time
 
 float D(float HN, float alpha)
 {
@@ -53,7 +54,7 @@ void main()
 
 	// UV transformations
 	if(objectId==seaId)
-		uv *= 800.0;
+		uv = (uv * 600) + vec2(0.01*time, 0.02*time);
 
 	if(objectId==groundId)
 		uv *= 45.0;
@@ -78,6 +79,9 @@ void main()
 
 	
 	// Normal map adjustment
+	if(objectId==frameId || objectId==lPicId || objectId==rPicId)
+	{} // do nothing for normal map adjustment
+	else
 	{
 		vec3 delta = texture(texNorm, uv).xyz;
 		delta = delta*2 - vec3(1,1,1);
@@ -86,7 +90,8 @@ void main()
 		N = delta.x*T + delta.y*B + delta.z*N;
 	}
 	// lighting variable calculations
-	vec3 R = normalize(-2*dot(V,N) - V);
+	//vec3 R = normalize(-2*dot(V,N) - V);
+	vec3 R = V - (2*dot(V,N))*N;
 	float LN = max(dot(L,N), 0.0);
 	float HN = max(dot(H,N), 0.0);
 	float LH = max(dot(L,H), 0.0);

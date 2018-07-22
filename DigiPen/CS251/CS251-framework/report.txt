@@ -21,6 +21,17 @@ d						- N/A 									- When in Project 2 naviation Mode, this will move the pla
 
 -Misc Notes
 
+- Project 5 --------------------------------------------------
+
+Everything should be there for the project
+
+- Added normal map for teapot
+- Added normal map for grass
+- Added normal maps given for each texture (wood, ocean, bricks)
+- Did all 3 modificaions (Reflections, Normal maps, Skydome)
+- Added sea texture scrolling
+
+
 - Project 4 --------------------------------------------------
 
 Everything should be here as far at textures, orientation, and 
