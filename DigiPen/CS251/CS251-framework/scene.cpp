@@ -69,6 +69,7 @@ Object* SphereOfSpheres(Shape* SpherePolygons)
                             vec3(0.5, 0.5, 1.0), vec3(0.02, 0.02, 0.02), 120.0);
 
 	sp->textures.push_back(new Texture("textures/Brazilian_rosewood_pxr128.png"));
+	sp->textures.push_back(new Texture("textures/Brazilian_rosewood_pxr128_normal.png"));
     
     for (float angle=0.0;  angle<360.0;  angle+= 18.0)
         for (float row=0.1;  row<PI/2.0;  row += PI/2.0/6.0) {
@@ -188,42 +189,53 @@ void Scene::InitializeScene()
     Object* wall = new Object(WallPolygons, wallId,
                               vec3(0.8, 0.8, 0.5), vec3(0.0, 0.0, 0.0), 1);
 	wall->textures.push_back(new Texture("textures/Standard_red_pxr128.png"));
+	wall->textures.push_back(new Texture("textures/Standard_red_pxr128_normal.png"));
 
     Object* rightAnim = new Object(NULL, nullId);
     Object* teapot = new Object(TeapotPolygons, teapotId,
                                 vec3(0.5, 0.5, 0.1), vec3(0.03, 0.03, 0.03), 120);
 	teapot->textures.push_back(new Texture("textures/cracks.png"));
+	teapot->textures.push_back(new Texture("textures/cracks_normal.png"));
 
     Object* rightPodium = new Object(BoxPolygons, boxId,
                                      vec3(0.25, 0.25, 0.1), vec3(0.03, 0.03, 0.03), 10);
 	rightPodium->textures.push_back(new Texture("textures/Brazilian_rosewood_pxr128.png"));
+	rightPodium->textures.push_back(new Texture("textures/Brazilian_rosewood_pxr128_normal.png"));
 
     Object* leftAnim = new Object(NULL, nullId);
     Object* leftPodium = new Object(BoxPolygons, boxId,
                                     vec3(0.25, 0.25, 0.1), vec3(0.03, 0.03, 0.03), 10);
 	leftPodium->textures.push_back(new Texture("textures/Brazilian_rosewood_pxr128.png"));
+	leftPodium->textures.push_back(new Texture("textures/Brazilian_rosewood_pxr128_normal.png"));
 
     Object* spheres = SphereOfSpheres(SpherePolygons);
 
     Object* leftFrame = FramedPicture(Identity, lPicId,
                                       BoxPolygons, QuadPolygons);
-	leftFrame->textures.push_back(new Texture("textures/Standard_red_pxr128.png"));
+	leftFrame->textures.push_back(new Texture("textures/Brazilian_rosewood_pxr128.png"));
+	leftFrame->textures.push_back(new Texture("textures/Brazilian_rosewood_pxr128_normal.png"));
+
     Object* rightFrame = FramedPicture(Identity, rPicId,
                                       BoxPolygons, QuadPolygons);
 	rightFrame->textures.push_back(new Texture("textures/Brazilian_rosewood_pxr128.png"));
+	rightFrame->textures.push_back(new Texture("textures/Brazilian_rosewood_pxr128_normal.png"));
     
     
     Object* sky = new Object(SpherePolygons, skyId,
-                             vec3(), vec3(), 0);
+                             vec3(1,1,1), vec3(1,1,1), 0);
 	sky->textures.push_back(new Texture("textures/sky.jpg"));
+	// should be the first texture to be pushed back
+	Object::globalTextures.push_back(new Texture("textures/sky.jpg"));
 
     Object* ground = new Object(GroundPolygons, groundId,
                                 vec3(0.3, 0.2, 0.1), vec3(0.0, 0.0, 0.0), 0.5);
 	ground->textures.push_back(new Texture("textures/grass.jpg"));
+	ground->textures.push_back(new Texture("textures/grass_normal.png"));
 
     Object* sea = new Object(SeaPolygons, seaId,
                              vec3(0.3, 0.3, 1.0), vec3(0.015, 0.015, 0.015), 80);
-	sea->textures.push_back(new Texture("textures/Standard_red_pxr128.png"));
+	sea->textures.push_back(new Texture("textures/Standard_red_pxr128.png")); // placeholder
+	sea->textures.push_back(new Texture("textures/oceannormalmap.png"));
 
     // FIXME: This is where you could read in all the textures and
     // associate them with the various objects just created above
@@ -263,10 +275,15 @@ void Scene::InitializeScene()
 // Procedure DrawScene is called whenever the scene needs to be drawn.
 void Scene::DrawScene()
 {
+	// Update shader time, etc
+	Object::InitDrawEnvironment();
+
 	// @TODO move this to beforeDraw...?
 	int time_curFrame = glutGet(static_cast<gl::GLenum>(GLUT_ELAPSED_TIME));
 	dt = static_cast<float>(time_curFrame - time_LastFrame) / 1000.0f;
 	time_LastFrame = time_curFrame;
+
+	
 
     // Calculate the light's position.
     float lPos[4] = {
