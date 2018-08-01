@@ -1,0 +1,24 @@
+[RunInEditor]
+class CrossTest : ZilchComponent
+{
+  [Property]var UpVec : Real3 = Real3(0,0,0);
+  [Property]var Normal : Real3 = Real3(1,0,0);
+  function Initialize(init : CogInitializer)
+  {
+    Zero.Connect(this.Space, Events.FrameUpdate, this.OnLogicUpdate);
+  }
+
+  function OnLogicUpdate(event : UpdateEvent)
+  {
+    
+    var debugLine = DebugLine();
+    debugLine.Start = Real3.Zero;
+    
+    
+    debugLine.Color = Real4(0,1,0,1);
+    debugLine.End = this.UpVec;
+    
+    
+    
+  }
+}

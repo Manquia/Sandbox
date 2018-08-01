@@ -1,0 +1,272 @@
+[RunInEditor]
+class PathVisuals : ZilchComponent
+{
+  [Property]var SplineType : SplineType = SplineType.BSpline;
+  [Property]var Spacing : Real = 5.0;
+  [Property]var Closed : Boolean = false;
+  
+  [Property]var PathLink  : Archetype = null;
+  [Property]var PathBegin : Archetype = null;
+  [Property]var PathEnd  : Archetype = null;
+  
+  [Static]var ObjectPoolName : String = "ObjectPool";
+  [Static]var PathName : String = "Points";
+  
+  // Will automatically Update shape depending on
+  // Spline if set to true
+  [Property]var Dynamic : Boolean
+  {
+    get { return this.Dynamic_S;  }
+    set
+    {
+      this.Dynamic_S = value;
+      if(this.Internal_Flag_Initialized)
+        this.ReInitialize();
+    }
+  }
+  [Serialize]var Dynamic_S : Boolean = false;
+  // When Dynamic is not set to tru this
+  // command can be called to generate the
+  // correct curve given the spline
+  [Property]var COMMAND_Generate : Boolean 
+  {
+    get { return false;}
+    set 
+    {
+      if(this.Internal_Flag_Initialized)
+        this.ReInitialize();
+    }
+  }
+  
+  var Snakes : Array[Snake] = new Array[Snake]();
+  var SnakeSegments : Array[Model] = new Array[Model]();
+  
+  
+  var Internal_Flag_Initialized : Boolean = false;
+  function Initialize(init : CogInitializer)
+  {
+    this.ReInitialize();
+    
+    this.Internal_Flag_Initialized = true;
+  }
+
+  
+  function ReInitialize()
+  {
+    // Dissconnect if we are connected to an event
+    if(this.Space != null)
+      Zero.Disconnect(this.Space, Events.FrameUpdate, this);
+    
+    if(this.Dynamic_S && this.Space != null)
+      Zero.Connect(this.Space, Events.FrameUpdate, this.OnFrameUpdate);
+    
+    this.IndexVisuals();
+    
+    this.GetOrMakePath();
+    this.UpdatePathData();
+    this.Path.ForceRebuild();
+    this.UpdateVisuals();
+  }
+
+  function OnFrameUpdate(event : UpdateEvent)
+  {
+    if(this.Dynamic_S)
+      this.UpdateVisuals();
+    else
+      this.ReInitialize();
+  }
+  
+  function UpdateVisuals()
+  {
+    // destroy references to points which have been destroyed
+    for(var i = 0; i < this.SnakeSegments.Count; ++i)
+    {
+      if(this.SnakeSegments[i] == null)
+      {
+        this.SnakeSegments.RemoveAt(i);
+        this.Snakes.RemoveAt(i);
+        --i;
+      }
+    }
+    
+    this.GetOrMakePath();
+    var pts = this.Path.Spline.BakedPoints;
+    var ptMaxIndex = this.Path.Spline.BakedPoints.Count - 1;
+    
+    // We don't have enough points
+    if(pts.Count < 2) return;
+    
+    this.AdjustVisualCount();
+      
+    var closed = this.Closed;
+    
+    var pt0 = Real3();
+    if(closed)  pt0 = pts.Get(pts.Count - 2).WorldPosition;
+    else        pt0 = pts.Get(0).WorldPosition;
+    
+    var pt1 = pts.Get(0).WorldPosition;
+    var pt2 = pts.Get(Math.Min(1, ptMaxIndex)).WorldPosition;
+    
+    if(this.Snakes[0] == null)
+    {
+      Console.WriteLine("Given archetype for PathLink doesn't have a valid material. It is on an object called: `this.Owner.Name`");
+      return;
+    }
+    
+    var pt3 = Real3();
+    if(closed)  pt3 = pts.Get(2 % pts.Count).WorldPosition;
+    else        pt3 = pts.Get(Math.Min(2, ptMaxIndex)).WorldPosition;
+    
+    var snakeSegmentIndex = 0;
+    while(snakeSegmentIndex < ptMaxIndex)
+    {
+      this.SnakeSegments[snakeSegmentIndex].Visible = true;
+      var snakeSegment = this.Snakes[snakeSegmentIndex];
+      
+      snakeSegment.PT0 = pt0;
+      snakeSegment.PT1 = pt1;
+      snakeSegment.PT2 = pt2;
+      snakeSegment.PT3 = pt3;
+      
+      ++snakeSegmentIndex;
+      
+      pt0 = pt1;
+      pt1 = pt2;
+      pt2 = pt3;
+      if(closed)
+      {
+        if(snakeSegmentIndex + 1 >= ptMaxIndex)
+        {
+          pt3 = pts.Get(1).WorldPosition;
+        }
+        else
+        {
+          pt3 = pts.Get(snakeSegmentIndex + 2).WorldPosition;
+        }
+      }
+      else
+        pt3 = pts.Get(Math.Min(ptMaxIndex, snakeSegmentIndex + 2)).WorldPosition;
+        
+    }
+    
+    while(snakeSegmentIndex < this.SnakeSegments.Count)
+    {
+      this.SnakeSegments[snakeSegmentIndex].Visible = false;
+      ++snakeSegmentIndex;
+    }
+    
+  }
+  
+  function AddVisual()
+  {
+    var pool = this.ObjectPool;
+    var visual = this.Space.CreateAtPosition(this.PathLink, Real3.Zero);
+    visual.AttachToPreserveLocal(pool);
+    //visual.ClearArchetype();
+    
+    var model = visual.Model;
+    model.Material = model.Material.RuntimeClone();
+    var snake = visual.Model.Material.Snake;
+    
+    this.Snakes.Add(snake);
+    this.SnakeSegments.Add(model);
+  }
+  function RemoveVisual()
+  {
+    this.Snakes.Pop();
+    this.SnakeSegments.Pop().Owner.Destroy();
+  }
+  
+  var ObjectPool : Cog = null;
+  function GetOrMakeObjectPool() : Cog
+  {
+    if(this.ObjectPool == null)
+    {
+      // try and find
+      this.ObjectPool = this.Owner.FindChildByName(PathVisuals.ObjectPoolName);
+      if(this.ObjectPool != null) return this.ObjectPool;
+      
+      this.ObjectPool = this.Space.CreateAtPosition(Archetype.Transform, Real3(0,0,0));
+      this.ObjectPool.Name = PathVisuals.ObjectPoolName;
+      this.ObjectPool.AttachToPreserveLocal(this.Owner);
+      this.ObjectPool.ClearArchetype();
+      return this.ObjectPool;
+    }
+    return this.ObjectPool;
+  }
+  
+  
+  var Path : HierarchySpline = null;
+  function GetOrMakePath() : HierarchySpline
+  {
+    if(this.Path == null)
+    {
+      // try and find
+      var pathCog = this.Owner.FindChildByName(PathVisuals.PathName);
+      if(pathCog != null)
+      {
+        this.Path = pathCog.HierarchySpline;
+        return this.Path;
+      }
+      
+      // then create it
+      pathCog = this.Space.CreateAtPosition(Archetype.Transform, Real3(0,0,0));
+      pathCog.AddComponentByName("HierarchySpline");
+      pathCog.AttachToPreserveLocal(this.Owner);
+      pathCog.Name = PathVisuals.PathName;
+      pathCog.ClearArchetype();
+      
+      this.Path = pathCog.HierarchySpline;
+      
+    }
+    
+    this.UpdatePathData();
+    return this.Path;
+  }
+  
+  function UpdatePathData()
+  {
+      this.Path.SplineType  = this.SplineType;
+      this.Path.Error       = this.Spacing;
+      this.Path.Closed      = this.Closed;
+  }
+  
+  function AdjustVisualCount()
+  {
+    this.Path.RebuildIfModified();
+    var ptCount = this.Path.Spline.BakedPoints.Count;
+    if(ptCount < 2) ptCount = 1;
+    
+    this.GetOrMakeObjectPool();
+    
+    // Add?
+    while(this.SnakeSegments.Count < ptCount -1)
+      this.AddVisual();
+    
+    // remove?
+    while(this.SnakeSegments.Count > ptCount -1)
+      this.RemoveVisual();
+  }
+  
+  function IndexVisuals()
+  {
+    var link = this.Space.Create(this.PathLink);
+    var linkMateial = link.Model.Material;
+    
+    this.SnakeSegments.Clear();
+    this.Snakes.Clear();
+    
+    this.GetOrMakeObjectPool();
+    
+    foreach(var child in this.ObjectPool.Children)
+    {
+      var model = child.Model;
+      model.Material = linkMateial.RuntimeClone();
+      
+      this.SnakeSegments.Push(child.Model);
+      this.Snakes.Push(model.Material.Snake);
+    }
+    
+    link.Destroy();
+  }
+}
