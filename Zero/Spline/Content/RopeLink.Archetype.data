@@ -4,7 +4,7 @@ Cog
 	var Name = "RopeLink"
 	Transform 
 	{
-		var Translation = Real3{0, -0.5, 0.0861974955}
+		var Translation = Real3{0, -0.5, 0}
 		var Scale = Real3{1, 1, 1}
 		var Rotation = Quaternion{0, 0, 0, 1}
 	}
@@ -18,6 +18,6 @@ Cog
 		var LocalAabbHalfExtents = Real3{1, 1, 1}
 		var GroupSortValue = 0
 		var Material = "5bc897efd4a74aeb:Rope"
-		var Mesh = "5bc9c6453df144ce:Cylinder5X_N625"
+		var Mesh = "5bc9cba907a2aba1:Cylinder5X_N3125"
 	}
 }

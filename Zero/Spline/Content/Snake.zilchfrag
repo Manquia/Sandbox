@@ -40,7 +40,7 @@ struct Snake
     // -------------------------------------------------------------------
     // Calculate Rotation Local pos
     // -------------------------------------------------------------------
-    // --- NOTE: @POLISH @ADDITIONAL @WORKFLOW this causes a visual glitch at 
+    // --- NOTE: @POLISH @VISUAL BUG this causes a visual glitch at 
     // certain angles but mostly looks alright. May want to find a better way
     // to do this with a rotation passed in or something simular. As it stands we
     // get semi random rotations around the path's axis which is fine

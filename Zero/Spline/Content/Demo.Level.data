@@ -10,7 +10,7 @@ Level
 			var WakeUpOnChange = false
 			var DebugDrawEffect = false
 			var LocalSpaceDirection = true
-			var Strength = 10
+			var Strength = 1
 			var Direction = Real3{0, -1, 0}
 		}
 		DragEffect 
@@ -175,9 +175,9 @@ Level
 		var Name = "EditorCamera"
 		Transform 
 		{
-			var Translation = Real3{-28.0250854, 59.3484154, 19.0242844}
+			var Translation = Real3{-50.2002258, 9.11235619, 21.7995853}
 			var Scale = Real3{1, 1, 1}
-			var Rotation = Quaternion{-0.421701789, 0.473987311, 0.276975632, 0.721656621}
+			var Rotation = Quaternion{-0.145578161, -0.268401802, -0.0410712436, 0.951357305}
 		}
 		CameraViewport 
 		{
@@ -234,10 +234,10 @@ Level
 		{
 			var ControlMode = ControlMode.Orbit
 			var Previous3DMode = ControlMode.Orbit
-			var LookDistance = 49.530571
-			var VerticalAngle = 1.05766892
-			var HorizontalAngle = 11.4040833
-			var LookTarget = Real3{-50.3390923, 16.1967125, 9.36545181}
+			var LookDistance = 17.3360176
+			var VerticalAngle = 0.303687364
+			var HorizontalAngle = 13.1163273
+			var LookTarget = Real3{-41.5541649, 3.92817879, 7.69613123}
 			var MoveSensitivity = 1
 		}
 	}
@@ -321,7 +321,7 @@ Level
 		var Name = "Chain"
 		Transform 
 		{
-			var Translation = Real3{-14.0773773, -7.62939453e-06, 9.29136562}
+			var Translation = Real3{-30.1561031, 4.49496174, 9.29136562}
 			var Scale = Real3{1, 1, 1}
 			var Rotation = Quaternion{0, 0, 0, 1}
 		}
@@ -400,177 +400,177 @@ Level
 					}
 				}
 			}
-			Cog [Id:0x5bc9d01a9380d6a1][ContextId:12]
+			Cog [Id:0x5bc9f5ddb0ccf417][ContextId:12]
 			{
 				var Name = "ObjectPool"
 				Transform 
 				{
-					var Translation = Real3{14.0773773, 7.62939453e-06, -9.29136562}
+					var Translation = Real3{30.1561031, -4.49496174, -9.29136562}
 					var Scale = Real3{1, 1, 1}
 					var Rotation = Quaternion{0, 0, 0, 1}
 				}
 				Hierarchy 
 				{
-					Cog [Id:0x5bc9d1522e03baed][InheritId:"5bc87562328112b4:ChainLink"][ContextId:13]
+					Cog [Id:0x5bc9f5b1c394158e][InheritId:"5bc87562328112b4:ChainLink"][ContextId:13]
 					{
 					}
-					Cog [Id:0x5bc9d1522e03bb11][InheritId:"5bc87562328112b4:ChainLink"][ContextId:14]
+					Cog [Id:0x5bc9f5b1c3941891][InheritId:"5bc87562328112b4:ChainLink"][ContextId:14]
 					{
 					}
-					Cog [Id:0x5bc9d1522e03bb35][InheritId:"5bc87562328112b4:ChainLink"][ContextId:15]
+					Cog [Id:0x5bc9f5b1c3941b16][InheritId:"5bc87562328112b4:ChainLink"][ContextId:15]
 					{
 					}
-					Cog [Id:0x5bc9d1522e03bb52][InheritId:"5bc87562328112b4:ChainLink"][ContextId:16]
+					Cog [Id:0x5bc9f5b1c3941d94][InheritId:"5bc87562328112b4:ChainLink"][ContextId:16]
 					{
 					}
-					Cog [Id:0x5bc9d1522e03bb76][InheritId:"5bc87562328112b4:ChainLink"][ContextId:17]
+					Cog [Id:0x5bc9f5b1c3942020][InheritId:"5bc87562328112b4:ChainLink"][ContextId:17]
 					{
 					}
-					Cog [Id:0x5bc9d1522e03bb93][InheritId:"5bc87562328112b4:ChainLink"][ContextId:18]
+					Cog [Id:0x5bc9f5b1c394226d][InheritId:"5bc87562328112b4:ChainLink"][ContextId:18]
 					{
 					}
-					Cog [Id:0x5bc9d1522e03bbb0][InheritId:"5bc87562328112b4:ChainLink"][ContextId:19]
+					Cog [Id:0x5bc9f5b1c39424dd][InheritId:"5bc87562328112b4:ChainLink"][ContextId:19]
 					{
 					}
-					Cog [Id:0x5bc9d1522e03bbd4][InheritId:"5bc87562328112b4:ChainLink"][ContextId:20]
+					Cog [Id:0x5bc9f5b1c394271c][InheritId:"5bc87562328112b4:ChainLink"][ContextId:20]
 					{
 					}
-					Cog [Id:0x5bc9d1522e03bbf1][InheritId:"5bc87562328112b4:ChainLink"][ContextId:21]
+					Cog [Id:0x5bc9f5b1c3942977][InheritId:"5bc87562328112b4:ChainLink"][ContextId:21]
 					{
 					}
-					Cog [Id:0x5bc9d1522e03bc0e][InheritId:"5bc87562328112b4:ChainLink"][ContextId:22]
+					Cog [Id:0x5bc9f5b1c3942bb6][InheritId:"5bc87562328112b4:ChainLink"][ContextId:22]
 					{
 					}
-					Cog [Id:0x5bc9d1522e03bc32][InheritId:"5bc87562328112b4:ChainLink"][ContextId:23]
+					Cog [Id:0x5bc9f5b1c3942de7][InheritId:"5bc87562328112b4:ChainLink"][ContextId:23]
 					{
 					}
-					Cog [Id:0x5bc9d1522e03bc4f][InheritId:"5bc87562328112b4:ChainLink"][ContextId:24]
+					Cog [Id:0x5bc9f5b1c394302d][InheritId:"5bc87562328112b4:ChainLink"][ContextId:24]
 					{
 					}
-					Cog [Id:0x5bc9d1522e03bc73][InheritId:"5bc87562328112b4:ChainLink"][ContextId:25]
+					Cog [Id:0x5bc9f5b1c3943265][InheritId:"5bc87562328112b4:ChainLink"][ContextId:25]
 					{
 					}
-					Cog [Id:0x5bc9d1522e03bc90][InheritId:"5bc87562328112b4:ChainLink"][ContextId:26]
+					Cog [Id:0x5bc9f5b1c39434ab][InheritId:"5bc87562328112b4:ChainLink"][ContextId:26]
 					{
 					}
-					Cog [Id:0x5bc9d1522e03bcad][InheritId:"5bc87562328112b4:ChainLink"][ContextId:27]
+					Cog [Id:0x5bc9f5b1c3943722][InheritId:"5bc87562328112b4:ChainLink"][ContextId:27]
 					{
 					}
-					Cog [Id:0x5bc9d1522e03bcd1][InheritId:"5bc87562328112b4:ChainLink"][ContextId:28]
+					Cog [Id:0x5bc9f5b1c394394c][InheritId:"5bc87562328112b4:ChainLink"][ContextId:28]
 					{
 					}
-					Cog [Id:0x5bc9d1522e03bcee][InheritId:"5bc87562328112b4:ChainLink"][ContextId:29]
+					Cog [Id:0x5bc9f5b1c3943b7d][InheritId:"5bc87562328112b4:ChainLink"][ContextId:29]
 					{
 					}
-					Cog [Id:0x5bc9d1522e03bd0b][InheritId:"5bc87562328112b4:ChainLink"][ContextId:30]
+					Cog [Id:0x5bc9f5b1c3943eb1][InheritId:"5bc87562328112b4:ChainLink"][ContextId:30]
 					{
 					}
-					Cog [Id:0x5bc9d1522e03bd28][InheritId:"5bc87562328112b4:ChainLink"][ContextId:31]
+					Cog [Id:0x5bc9f5b1c39440f0][InheritId:"5bc87562328112b4:ChainLink"][ContextId:31]
 					{
 					}
-					Cog [Id:0x5bc9d1522e03bd4c][InheritId:"5bc87562328112b4:ChainLink"][ContextId:32]
+					Cog [Id:0x5bc9f5b1c3944336][InheritId:"5bc87562328112b4:ChainLink"][ContextId:32]
 					{
 					}
-					Cog [Id:0x5bc9d1522e03bd69][InheritId:"5bc87562328112b4:ChainLink"][ContextId:33]
+					Cog [Id:0x5bc9f5b1c39445a6][InheritId:"5bc87562328112b4:ChainLink"][ContextId:33]
 					{
 					}
-					Cog [Id:0x5bc9d1522e03bd8d][InheritId:"5bc87562328112b4:ChainLink"][ContextId:34]
+					Cog [Id:0x5bc9f5b1c3944801][InheritId:"5bc87562328112b4:ChainLink"][ContextId:34]
 					{
 					}
-					Cog [Id:0x5bc9d1522e03bdaa][InheritId:"5bc87562328112b4:ChainLink"][ContextId:35]
+					Cog [Id:0x5bc9f5b1c3944a71][InheritId:"5bc87562328112b4:ChainLink"][ContextId:35]
 					{
 					}
-					Cog [Id:0x5bc9d1522e03bdc7][InheritId:"5bc87562328112b4:ChainLink"][ContextId:36]
+					Cog [Id:0x5bc9f5b1c3944cbe][InheritId:"5bc87562328112b4:ChainLink"][ContextId:36]
 					{
 					}
-					Cog [Id:0x5bc9d1522e03bde4][InheritId:"5bc87562328112b4:ChainLink"][ContextId:37]
+					Cog [Id:0x5bc9f5b1c3944f27][InheritId:"5bc87562328112b4:ChainLink"][ContextId:37]
 					{
 					}
-					Cog [Id:0x5bc9d1522e03be08][InheritId:"5bc87562328112b4:ChainLink"][ContextId:38]
+					Cog [Id:0x5bc9f5b1c3945189][InheritId:"5bc87562328112b4:ChainLink"][ContextId:38]
 					{
 					}
-					Cog [Id:0x5bc9d1522e03be25][InheritId:"5bc87562328112b4:ChainLink"][ContextId:39]
+					Cog [Id:0x5bc9f5b1c39453ba][InheritId:"5bc87562328112b4:ChainLink"][ContextId:39]
 					{
 					}
-					Cog [Id:0x5bc9d1522e03be42][InheritId:"5bc87562328112b4:ChainLink"][ContextId:40]
+					Cog [Id:0x5bc9f5b1c39455dd][InheritId:"5bc87562328112b4:ChainLink"][ContextId:40]
 					{
 					}
-					Cog [Id:0x5bc9d1522e03be66][InheritId:"5bc87562328112b4:ChainLink"][ContextId:41]
+					Cog [Id:0x5bc9f5b1c3945800][InheritId:"5bc87562328112b4:ChainLink"][ContextId:41]
 					{
 					}
-					Cog [Id:0x5bc9d1522e03be83][InheritId:"5bc87562328112b4:ChainLink"][ContextId:42]
+					Cog [Id:0x5bc9f5b1c3945a2a][InheritId:"5bc87562328112b4:ChainLink"][ContextId:42]
 					{
 					}
-					Cog [Id:0x5bc9d1522e03bea0][InheritId:"5bc87562328112b4:ChainLink"][ContextId:43]
+					Cog [Id:0x5bc9f5b1c3945c46][InheritId:"5bc87562328112b4:ChainLink"][ContextId:43]
 					{
 					}
-					Cog [Id:0x5bc9d1522e03bec4][InheritId:"5bc87562328112b4:ChainLink"][ContextId:44]
+					Cog [Id:0x5bc9f5b1c3945e7e][InheritId:"5bc87562328112b4:ChainLink"][ContextId:44]
 					{
 					}
-					Cog [Id:0x5bc9d1522e03bee1][InheritId:"5bc87562328112b4:ChainLink"][ContextId:45]
+					Cog [Id:0x5bc9f5b1c39460af][InheritId:"5bc87562328112b4:ChainLink"][ContextId:45]
 					{
 					}
-					Cog [Id:0x5bc9d1522e03befe][InheritId:"5bc87562328112b4:ChainLink"][ContextId:46]
+					Cog [Id:0x5bc9f5b1c39462fc][InheritId:"5bc87562328112b4:ChainLink"][ContextId:46]
 					{
 					}
-					Cog [Id:0x5bc9d1522e03bf22][InheritId:"5bc87562328112b4:ChainLink"][ContextId:47]
+					Cog [Id:0x5bc9f5b1c39465ab][InheritId:"5bc87562328112b4:ChainLink"][ContextId:47]
 					{
 					}
-					Cog [Id:0x5bc9d1522e03bf3f][InheritId:"5bc87562328112b4:ChainLink"][ContextId:48]
+					Cog [Id:0x5bc9f5b1c39467f8][InheritId:"5bc87562328112b4:ChainLink"][ContextId:48]
 					{
 					}
-					Cog [Id:0x5bc9d1522e03bf5c][InheritId:"5bc87562328112b4:ChainLink"][ContextId:49]
+					Cog [Id:0x5bc9f5b1c3946a6f][InheritId:"5bc87562328112b4:ChainLink"][ContextId:49]
 					{
 					}
-					Cog [Id:0x5bc9d1522e03bf80][InheritId:"5bc87562328112b4:ChainLink"][ContextId:50]
+					Cog [Id:0x5bc9f5b1c3946c92][InheritId:"5bc87562328112b4:ChainLink"][ContextId:50]
 					{
 					}
-					Cog [Id:0x5bc9d1522e03bf9d][InheritId:"5bc87562328112b4:ChainLink"][ContextId:51]
+					Cog [Id:0x5bc9f5b1c3946edf][InheritId:"5bc87562328112b4:ChainLink"][ContextId:51]
 					{
 					}
-					Cog [Id:0x5bc9d1522e03bfba][InheritId:"5bc87562328112b4:ChainLink"][ContextId:52]
+					Cog [Id:0x5bc9f5b1c3947117][InheritId:"5bc87562328112b4:ChainLink"][ContextId:52]
 					{
 					}
-					Cog [Id:0x5bc9d1522e03bfde][InheritId:"5bc87562328112b4:ChainLink"][ContextId:53]
+					Cog [Id:0x5bc9f5b1c3947333][InheritId:"5bc87562328112b4:ChainLink"][ContextId:53]
 					{
 					}
-					Cog [Id:0x5bc9d1522e03bffb][InheritId:"5bc87562328112b4:ChainLink"][ContextId:54]
+					Cog [Id:0x5bc9f5b1c3947579][InheritId:"5bc87562328112b4:ChainLink"][ContextId:54]
 					{
 					}
-					Cog [Id:0x5bc9d1522e03c018][InheritId:"5bc87562328112b4:ChainLink"][ContextId:55]
+					Cog [Id:0x5bc9f5b1c39477a3][InheritId:"5bc87562328112b4:ChainLink"][ContextId:55]
 					{
 					}
-					Cog [Id:0x5bc9d1522e03c03c][InheritId:"5bc87562328112b4:ChainLink"][ContextId:56]
+					Cog [Id:0x5bc9f5b1c39479bf][InheritId:"5bc87562328112b4:ChainLink"][ContextId:56]
 					{
 					}
-					Cog [Id:0x5bc9d1522e03c059][InheritId:"5bc87562328112b4:ChainLink"][ContextId:57]
+					Cog [Id:0x5bc9f5b1c3947c0c][InheritId:"5bc87562328112b4:ChainLink"][ContextId:57]
 					{
 					}
-					Cog [Id:0x5bc9d1522e03c076][InheritId:"5bc87562328112b4:ChainLink"][ContextId:58]
+					Cog [Id:0x5bc9f5b1c3947e28][InheritId:"5bc87562328112b4:ChainLink"][ContextId:58]
 					{
 					}
-					Cog [Id:0x5bc9d1522e03c09a][InheritId:"5bc87562328112b4:ChainLink"][ContextId:59]
+					Cog [Id:0x5bc9f5b1c394803d][InheritId:"5bc87562328112b4:ChainLink"][ContextId:59]
 					{
 					}
-					Cog [Id:0x5bc9d1522e03c0b7][InheritId:"5bc87562328112b4:ChainLink"][ContextId:60]
+					Cog [Id:0x5bc9f5b1c39482b4][InheritId:"5bc87562328112b4:ChainLink"][ContextId:60]
 					{
 					}
-					Cog [Id:0x5bc9d1522e03c0d4][InheritId:"5bc87562328112b4:ChainLink"][ContextId:61]
+					Cog [Id:0x5bc9f5b1c39484fa][InheritId:"5bc87562328112b4:ChainLink"][ContextId:61]
 					{
 					}
-					Cog [Id:0x5bc9d1522e03c0f8][InheritId:"5bc87562328112b4:ChainLink"][ContextId:62]
+					Cog [Id:0x5bc9f5b1c3948724][InheritId:"5bc87562328112b4:ChainLink"][ContextId:62]
 					{
 					}
-					Cog [Id:0x5bc9d1522e03c11c][InheritId:"5bc87562328112b4:ChainLink"][ContextId:63]
+					Cog [Id:0x5bc9f5b1c3948955][InheritId:"5bc87562328112b4:ChainLink"][ContextId:63]
 					{
 					}
-					Cog [Id:0x5bc9d1522e03c178][InheritId:"5bc87562328112b4:ChainLink"][ContextId:64]
+					Cog [Id:0x5bc9f5b1c3948bc5][InheritId:"5bc87562328112b4:ChainLink"][ContextId:64]
 					{
 					}
-					Cog [Id:0x5bc9d1522e03c19c][InheritId:"5bc87562328112b4:ChainLink"][ContextId:65]
+					Cog [Id:0x5bc9f5b1c394905e][InheritId:"5bc87562328112b4:ChainLink"][ContextId:65]
 					{
 					}
-					Cog [Id:0x5bc9d1522e03c1c0][InheritId:"5bc87562328112b4:ChainLink"][ContextId:66]
+					Cog [Id:0x5bc9f5b1c39495bb][InheritId:"5bc87562328112b4:ChainLink"][ContextId:66]
 					{
 					}
 				}
@@ -579,19 +579,19 @@ Level
 	}
 	Cog [ContextId:67]
 	{
-		var Name = "Rope"
+		var Name = "Chain"
 		Transform 
 		{
-			var Translation = Real3{-50.1552505, 26.2408581, 9.53464317}
+			var Translation = Real3{-44.8992844, 5.43799973, 9.53464317}
 			var Scale = Real3{1, 1, 1}
 			var Rotation = Quaternion{0, 0, 0, 1}
 		}
 		PathVisuals 
 		{
-			var SplineType = SplineType.BSpline
-			var Spacing = 50
+			var SplineType = SplineType.Linear
+			var Spacing = 10000
 			var Closed = false
-			var PathLink = "5bc8961dc414ef4e:RopeLink"
+			var PathLink = "5bc87562328112b4:ChainLink"
 			var PathBegin = "null"
 			var PathEnd = "null"
 			var Dynamic = true
@@ -612,8 +612,8 @@ Level
 				HierarchySpline 
 				{
 					var Closed = false
-					var SplineType = SplineType.BSpline
-					var Error = 50
+					var SplineType = SplineType.Linear
+					var Error = 10000
 					var DebugDrawSpline = true
 					var SplineColor = Real4{0, 0, 0, 1}
 				}
@@ -680,18 +680,7 @@ Level
 							var Material = "4de020863e872da8:DefaultPhysicsMaterial"
 							var CollisionGroup = "4e740859314e5515:DefaultGroup"
 							var Offset = Real3{0, 0, 0}
-							var Radius = 0.5
-						}
-						StickJoint 
-						{
-							var Active = true
-							var SendsEvents = true
-							var AutoSnaps = false
-							var CollideConnected = true
-							var MaxImpulse = 0
-							var Length = 8
-							var LocalPointA = Real3{0, 0, 0}
-							var LocalPointB = Real3{0, 0, 0}
+							var Radius = 0.100000001
 						}
 						IgnoreSpaceEffects 
 						{
@@ -708,13 +697,24 @@ Level
 							var IgnoreBuoyancy = true
 							var IgnoreCustom = true
 						}
+						StickJoint 
+						{
+							var Active = true
+							var SendsEvents = true
+							var AutoSnaps = false
+							var CollideConnected = true
+							var MaxImpulse = 0
+							var Length = 1.00681782
+							var LocalPointA = Real3{0, 0, 0}
+							var LocalPointB = Real3{0, 0, 0}
+						}
 					}
 					Cog [Id:0x5bc9cc4e633244ad][ContextId:70]
 					{
 						var Name = "T2"
 						Transform 
 						{
-							var Translation = Real3{8, 0, 2.17071342}
+							var Translation = Real3{1, 0, 0.116970062}
 							var Scale = Real3{1, 1, 1}
 							var Rotation = Quaternion{0, 0, 0, 1}
 						}
@@ -770,18 +770,7 @@ Level
 							var Material = "4de020863e872da8:DefaultPhysicsMaterial"
 							var CollisionGroup = "4e740859314e5515:DefaultGroup"
 							var Offset = Real3{0, 0, 0}
-							var Radius = 0.5
-						}
-						StickJoint 
-						{
-							var Active = true
-							var SendsEvents = true
-							var AutoSnaps = false
-							var CollideConnected = true
-							var MaxImpulse = 0
-							var Length = 8
-							var LocalPointA = Real3{0, 0, 0}
-							var LocalPointB = Real3{0, 0, 0}
+							var Radius = 0.100000001
 						}
 						IgnoreSpaceEffects 
 						{
@@ -798,13 +787,24 @@ Level
 							var IgnoreBuoyancy = true
 							var IgnoreCustom = true
 						}
+						StickJoint 
+						{
+							var Active = true
+							var SendsEvents = true
+							var AutoSnaps = false
+							var CollideConnected = true
+							var MaxImpulse = 0
+							var Length = 1.00681782
+							var LocalPointA = Real3{0, 0, 0}
+							var LocalPointB = Real3{0, 0, 0}
+						}
 					}
 					Cog [Id:0x5bc9cd91085d408e][ContextId:71]
 					{
 						var Name = "T3"
 						Transform 
 						{
-							var Translation = Real3{16, 0, -1.31006622}
+							var Translation = Real3{2, 0, -0.227374077}
 							var Scale = Real3{1, 1, 1}
 							var Rotation = Quaternion{0, 0, 0, 1}
 						}
@@ -860,18 +860,7 @@ Level
 							var Material = "4de020863e872da8:DefaultPhysicsMaterial"
 							var CollisionGroup = "4e740859314e5515:DefaultGroup"
 							var Offset = Real3{0, 0, 0}
-							var Radius = 0.5
-						}
-						StickJoint 
-						{
-							var Active = true
-							var SendsEvents = true
-							var AutoSnaps = false
-							var CollideConnected = true
-							var MaxImpulse = 0
-							var Length = 8
-							var LocalPointA = Real3{0, 0, 0}
-							var LocalPointB = Real3{0, 0, 0}
+							var Radius = 0.100000001
 						}
 						IgnoreSpaceEffects 
 						{
@@ -888,13 +877,24 @@ Level
 							var IgnoreBuoyancy = true
 							var IgnoreCustom = true
 						}
+						StickJoint 
+						{
+							var Active = true
+							var SendsEvents = true
+							var AutoSnaps = false
+							var CollideConnected = true
+							var MaxImpulse = 0
+							var Length = 1.05762601
+							var LocalPointA = Real3{0, 0, 0}
+							var LocalPointB = Real3{0, 0, 0}
+						}
 					}
 					Cog [Id:0x5bc9c867aa1a2c2f][ContextId:72]
 					{
 						var Name = "T4"
 						Transform 
 						{
-							var Translation = Real3{24, 0, 0.996253967}
+							var Translation = Real3{3, 0, 0.266432762}
 							var Scale = Real3{1, 1, 1}
 							var Rotation = Quaternion{0, 0, 0, 1}
 						}
@@ -950,18 +950,7 @@ Level
 							var Material = "4de020863e872da8:DefaultPhysicsMaterial"
 							var CollisionGroup = "4e740859314e5515:DefaultGroup"
 							var Offset = Real3{0, 0, 0}
-							var Radius = 0.5
-						}
-						StickJoint 
-						{
-							var Active = true
-							var SendsEvents = true
-							var AutoSnaps = false
-							var CollideConnected = true
-							var MaxImpulse = 0
-							var Length = 8
-							var LocalPointA = Real3{0, 0, 0}
-							var LocalPointB = Real3{0, 0, 0}
+							var Radius = 0.100000001
 						}
 						IgnoreSpaceEffects 
 						{
@@ -978,61 +967,890 @@ Level
 							var IgnoreBuoyancy = true
 							var IgnoreCustom = true
 						}
+						StickJoint 
+						{
+							var Active = true
+							var SendsEvents = true
+							var AutoSnaps = false
+							var CollideConnected = true
+							var MaxImpulse = 0
+							var Length = 1.11527812
+							var LocalPointA = Real3{0, 0, 0}
+							var LocalPointB = Real3{0, 0, 0}
+						}
+					}
+					Cog [Id:0x5bc9cb7a4a2c850e][ContextId:73]
+					{
+						var Name = "T5"
+						Transform 
+						{
+							var Translation = Real3{4, 0, -0.0202980042}
+							var Scale = Real3{1, 1, 1}
+							var Rotation = Quaternion{0, 0, 0, 1}
+						}
+						RigidBody 
+						{
+							var Velocity = Real3{0, 0, 0}
+							var AngularVelocity = Real3{0, 0, 0}
+							var DynamicState = RigidBodyDynamicState.Dynamic
+							var AllowSleep = true
+							var Asleep = false
+							var RotationLocked = false
+							var Mode2D = Mode2DStates.InheritFromSpace
+						}
+						ObjectLink 
+						{
+							var ObjectAPath = CogPath
+							{
+								var Path = "../T4"
+								var ErrorOnResolveToNull = false
+								var ErrorOnPathCantCompute = false
+								var ErrorOnDirectLinkFail = false
+								var UpdateCogOnPathChange = true
+								var UpdatePathOnCogChange = true
+								var UpdateCogOnInitialize = true
+								var ResolvedNullErrorOccurred = false
+								var Cog = 72
+								var PathPreference0 = CogPathPreference.CogRelative
+								var PathPreference1 = CogPathPreference.SpaceRelative
+								var PathPreference2 = CogPathPreference.Absolute
+							}
+							var ObjectBPath = CogPath
+							{
+								var Path = "."
+								var ErrorOnResolveToNull = false
+								var ErrorOnPathCantCompute = false
+								var ErrorOnDirectLinkFail = false
+								var UpdateCogOnPathChange = true
+								var UpdatePathOnCogChange = true
+								var UpdateCogOnInitialize = true
+								var ResolvedNullErrorOccurred = false
+								var Cog = 73
+								var PathPreference0 = CogPathPreference.CogRelative
+								var PathPreference1 = CogPathPreference.SpaceRelative
+								var PathPreference2 = CogPathPreference.Absolute
+							}
+							var LocalPointA = Real3{0, 0, 0}
+							var LocalPointB = Real3{0, 0, 0}
+						}
+						SphereCollider 
+						{
+							var Ghost = false
+							var SendsEvents = true
+							var Material = "4de020863e872da8:DefaultPhysicsMaterial"
+							var CollisionGroup = "4e740859314e5515:DefaultGroup"
+							var Offset = Real3{0, 0, 0}
+							var Radius = 0.100000001
+						}
+						IgnoreSpaceEffects 
+						{
+							var IgnoreDrag = true
+							var IgnoreFlow = true
+							var IgnoreForce = true
+							var IgnoreGravity = false
+							var IgnorePointForce = true
+							var IgnorePointGravity = true
+							var IgnoreThrust = true
+							var IgnoreVortex = true
+							var IgnoreWind = true
+							var IgnoreTorque = true
+							var IgnoreBuoyancy = true
+							var IgnoreCustom = true
+						}
+						StickJoint 
+						{
+							var Active = true
+							var SendsEvents = true
+							var AutoSnaps = false
+							var CollideConnected = true
+							var MaxImpulse = 0
+							var Length = 1.04029548
+							var LocalPointA = Real3{0, 0, 0}
+							var LocalPointB = Real3{0, 0, 0}
+						}
+					}
+					Cog [Id:0x5bc9cb4a59220b97][ContextId:74]
+					{
+						var Name = "T6"
+						Transform 
+						{
+							var Translation = Real3{5, 0, -0.032412529}
+							var Scale = Real3{1, 1, 1}
+							var Rotation = Quaternion{0, 0, 0, 1}
+						}
+						RigidBody 
+						{
+							var Velocity = Real3{0, 0, 0}
+							var AngularVelocity = Real3{0, 0, 0}
+							var DynamicState = RigidBodyDynamicState.Dynamic
+							var AllowSleep = true
+							var Asleep = false
+							var RotationLocked = false
+							var Mode2D = Mode2DStates.InheritFromSpace
+						}
+						ObjectLink 
+						{
+							var ObjectAPath = CogPath
+							{
+								var Path = "../T5"
+								var ErrorOnResolveToNull = false
+								var ErrorOnPathCantCompute = false
+								var ErrorOnDirectLinkFail = false
+								var UpdateCogOnPathChange = true
+								var UpdatePathOnCogChange = true
+								var UpdateCogOnInitialize = true
+								var ResolvedNullErrorOccurred = false
+								var Cog = 73
+								var PathPreference0 = CogPathPreference.CogRelative
+								var PathPreference1 = CogPathPreference.SpaceRelative
+								var PathPreference2 = CogPathPreference.Absolute
+							}
+							var ObjectBPath = CogPath
+							{
+								var Path = "."
+								var ErrorOnResolveToNull = false
+								var ErrorOnPathCantCompute = false
+								var ErrorOnDirectLinkFail = false
+								var UpdateCogOnPathChange = true
+								var UpdatePathOnCogChange = true
+								var UpdateCogOnInitialize = true
+								var ResolvedNullErrorOccurred = false
+								var Cog = 74
+								var PathPreference0 = CogPathPreference.CogRelative
+								var PathPreference1 = CogPathPreference.SpaceRelative
+								var PathPreference2 = CogPathPreference.Absolute
+							}
+							var LocalPointA = Real3{0, 0, 0}
+							var LocalPointB = Real3{0, 0, 0}
+						}
+						SphereCollider 
+						{
+							var Ghost = false
+							var SendsEvents = true
+							var Material = "4de020863e872da8:DefaultPhysicsMaterial"
+							var CollisionGroup = "4e740859314e5515:DefaultGroup"
+							var Offset = Real3{0, 0, 0}
+							var Radius = 0.100000001
+						}
+						IgnoreSpaceEffects 
+						{
+							var IgnoreDrag = true
+							var IgnoreFlow = true
+							var IgnoreForce = true
+							var IgnoreGravity = false
+							var IgnorePointForce = true
+							var IgnorePointGravity = true
+							var IgnoreThrust = true
+							var IgnoreVortex = true
+							var IgnoreWind = true
+							var IgnoreTorque = true
+							var IgnoreBuoyancy = true
+							var IgnoreCustom = true
+						}
+						StickJoint 
+						{
+							var Active = true
+							var SendsEvents = true
+							var AutoSnaps = false
+							var CollideConnected = true
+							var MaxImpulse = 0
+							var Length = 1.00007331
+							var LocalPointA = Real3{0, 0, 0}
+							var LocalPointB = Real3{0, 0, 0}
+						}
 					}
 				}
 			}
-			Cog [Id:0x5bc9cddcddc0966a][ContextId:73]
+			Cog [Id:0x5bc9f55314e98874][ContextId:75]
 			{
 				var Name = "ObjectPool"
 				Transform 
 				{
-					var Translation = Real3{50.1552505, -26.2408581, -9.53464317}
+					var Translation = Real3{44.8992844, -5.43799973, -9.53464317}
 					var Scale = Real3{1, 1, 1}
 					var Rotation = Quaternion{0, 0, 0, 1}
 				}
 				Hierarchy 
 				{
-					Cog [Id:0x5bc9cecba9a06004][InheritId:"5bc8961dc414ef4e:RopeLink"][ContextId:74]
+					Cog [Id:0x5bc9f50942453a8a][InheritId:"5bc87562328112b4:ChainLink"][ContextId:76]
 					{
 					}
-					Cog [Id:0x5bc9cecba9a0602f][InheritId:"5bc8961dc414ef4e:RopeLink"][ContextId:75]
+					Cog [Id:0x5bc9f50942453aae][InheritId:"5bc87562328112b4:ChainLink"][ContextId:77]
 					{
 					}
-					Cog [Id:0x5bc9cecba9a0604c][InheritId:"5bc8961dc414ef4e:RopeLink"][ContextId:76]
+					Cog [Id:0x5bc9f50942453ad2][InheritId:"5bc87562328112b4:ChainLink"][ContextId:78]
 					{
 					}
-					Cog [Id:0x5bc9cecba9a06070][InheritId:"5bc8961dc414ef4e:RopeLink"][ContextId:77]
+					Cog [Id:0x5bc9f50942453aef][InheritId:"5bc87562328112b4:ChainLink"][ContextId:79]
 					{
 					}
-					Cog [Id:0x5bc9cecba9a0608d][InheritId:"5bc8961dc414ef4e:RopeLink"][ContextId:78]
-					{
-					}
-					Cog [Id:0x5bc9cecba9a060aa][InheritId:"5bc8961dc414ef4e:RopeLink"][ContextId:79]
-					{
-					}
-					Cog [Id:0x5bc9cecba9a060ce][InheritId:"5bc8961dc414ef4e:RopeLink"][ContextId:80]
-					{
-					}
-					Cog [Id:0x5bc9cecba9a060eb][InheritId:"5bc8961dc414ef4e:RopeLink"][ContextId:81]
-					{
-					}
-					Cog [Id:0x5bc9cecba9a0610f][InheritId:"5bc8961dc414ef4e:RopeLink"][ContextId:82]
-					{
-					}
-					Cog [Id:0x5bc9cecba9a0612c][InheritId:"5bc8961dc414ef4e:RopeLink"][ContextId:83]
-					{
-					}
-					Cog [Id:0x5bc9cecba9a06149][InheritId:"5bc8961dc414ef4e:RopeLink"][ContextId:84]
-					{
-					}
-					Cog [Id:0x5bc9cecba9a0616d][InheritId:"5bc8961dc414ef4e:RopeLink"][ContextId:85]
+					Cog [Id:0x5bc9f50942453b13][InheritId:"5bc87562328112b4:ChainLink"][ContextId:80]
 					{
 					}
 				}
 			}
 		}
 	}
-	Cog [ContextId:86]
+	Cog [ContextId:81]
+	{
+		var Name = "Rope"
+		Transform 
+		{
+			var Translation = Real3{-50.1552505, 5.43799973, 9.53464317}
+			var Scale = Real3{1, 1, 1}
+			var Rotation = Quaternion{0, 0, 0, 1}
+		}
+		PathVisuals 
+		{
+			var SplineType = SplineType.BSpline
+			var Spacing = 50
+			var Closed = false
+			var PathLink = "5bc8961dc414ef4e:RopeLink"
+			var PathBegin = "null"
+			var PathEnd = "null"
+			var Dynamic = true
+			var Dynamic_S = true
+			var COMMAND_Generate = false
+		}
+		Hierarchy 
+		{
+			Cog [Id:0x5bcb7e17c95457de][ContextId:82]
+			{
+				var Name = "Points"
+				Transform 
+				{
+					var Translation = Real3{0, 0.841369629, 0}
+					var Scale = Real3{1, 1, 1}
+					var Rotation = Quaternion{0, 0, 0, 1}
+				}
+				HierarchySpline 
+				{
+					var Closed = false
+					var SplineType = SplineType.BSpline
+					var Error = 50
+					var DebugDrawSpline = true
+					var SplineColor = Real4{0, 0, 0, 1}
+				}
+				Hierarchy 
+				{
+					Cog [Id:0x5bc9cc4b615e4f97][ContextId:83]
+					{
+						var Name = "T1"
+						Transform 
+						{
+							var Translation = Real3{0, 0, 0}
+							var Scale = Real3{1, 1, 1}
+							var Rotation = Quaternion{0, 0, 0, 1}
+						}
+						RigidBody 
+						{
+							var Velocity = Real3{0, 0, 0}
+							var AngularVelocity = Real3{0, 0, 0}
+							var DynamicState = RigidBodyDynamicState.Static
+							var AllowSleep = true
+							var Asleep = false
+							var RotationLocked = false
+							var Mode2D = Mode2DStates.InheritFromSpace
+						}
+						ObjectLink 
+						{
+							var ObjectAPath = CogPath
+							{
+								var Path = "."
+								var ErrorOnResolveToNull = false
+								var ErrorOnPathCantCompute = false
+								var ErrorOnDirectLinkFail = false
+								var UpdateCogOnPathChange = true
+								var UpdatePathOnCogChange = true
+								var UpdateCogOnInitialize = true
+								var ResolvedNullErrorOccurred = false
+								var Cog = 83
+								var PathPreference0 = CogPathPreference.CogRelative
+								var PathPreference1 = CogPathPreference.SpaceRelative
+								var PathPreference2 = CogPathPreference.Absolute
+							}
+							var ObjectBPath = CogPath
+							{
+								var Path = "../T2"
+								var ErrorOnResolveToNull = false
+								var ErrorOnPathCantCompute = false
+								var ErrorOnDirectLinkFail = false
+								var UpdateCogOnPathChange = true
+								var UpdatePathOnCogChange = true
+								var UpdateCogOnInitialize = true
+								var ResolvedNullErrorOccurred = false
+								var Cog = 84
+								var PathPreference0 = CogPathPreference.CogRelative
+								var PathPreference1 = CogPathPreference.SpaceRelative
+								var PathPreference2 = CogPathPreference.Absolute
+							}
+							var LocalPointA = Real3{0, 0, 0}
+							var LocalPointB = Real3{0, 0, 0}
+						}
+						SphereCollider 
+						{
+							var Ghost = false
+							var SendsEvents = true
+							var Material = "4de020863e872da8:DefaultPhysicsMaterial"
+							var CollisionGroup = "4e740859314e5515:DefaultGroup"
+							var Offset = Real3{0, 0, 0}
+							var Radius = 0.100000001
+						}
+						IgnoreSpaceEffects 
+						{
+							var IgnoreDrag = true
+							var IgnoreFlow = true
+							var IgnoreForce = true
+							var IgnoreGravity = false
+							var IgnorePointForce = true
+							var IgnorePointGravity = true
+							var IgnoreThrust = true
+							var IgnoreVortex = true
+							var IgnoreWind = true
+							var IgnoreTorque = true
+							var IgnoreBuoyancy = true
+							var IgnoreCustom = true
+						}
+						StickJoint 
+						{
+							var Active = true
+							var SendsEvents = true
+							var AutoSnaps = false
+							var CollideConnected = true
+							var MaxImpulse = 0
+							var Length = 1.00681782
+							var LocalPointA = Real3{0, 0, 0}
+							var LocalPointB = Real3{0, 0, 0}
+						}
+					}
+					Cog [Id:0x5bc9cc4e633244ad][ContextId:84]
+					{
+						var Name = "T2"
+						Transform 
+						{
+							var Translation = Real3{1, 0, 0.116970062}
+							var Scale = Real3{1, 1, 1}
+							var Rotation = Quaternion{0, 0, 0, 1}
+						}
+						RigidBody 
+						{
+							var Velocity = Real3{0, 0, 0}
+							var AngularVelocity = Real3{0, 0, 0}
+							var DynamicState = RigidBodyDynamicState.Dynamic
+							var AllowSleep = true
+							var Asleep = false
+							var RotationLocked = false
+							var Mode2D = Mode2DStates.InheritFromSpace
+						}
+						ObjectLink 
+						{
+							var ObjectAPath = CogPath
+							{
+								var Path = "../T1"
+								var ErrorOnResolveToNull = false
+								var ErrorOnPathCantCompute = false
+								var ErrorOnDirectLinkFail = false
+								var UpdateCogOnPathChange = true
+								var UpdatePathOnCogChange = true
+								var UpdateCogOnInitialize = true
+								var ResolvedNullErrorOccurred = false
+								var Cog = 83
+								var PathPreference0 = CogPathPreference.CogRelative
+								var PathPreference1 = CogPathPreference.SpaceRelative
+								var PathPreference2 = CogPathPreference.Absolute
+							}
+							var ObjectBPath = CogPath
+							{
+								var Path = "."
+								var ErrorOnResolveToNull = false
+								var ErrorOnPathCantCompute = false
+								var ErrorOnDirectLinkFail = false
+								var UpdateCogOnPathChange = true
+								var UpdatePathOnCogChange = true
+								var UpdateCogOnInitialize = true
+								var ResolvedNullErrorOccurred = false
+								var Cog = 84
+								var PathPreference0 = CogPathPreference.CogRelative
+								var PathPreference1 = CogPathPreference.SpaceRelative
+								var PathPreference2 = CogPathPreference.Absolute
+							}
+							var LocalPointA = Real3{0, 0, 0}
+							var LocalPointB = Real3{0, 0, 0}
+						}
+						SphereCollider 
+						{
+							var Ghost = false
+							var SendsEvents = true
+							var Material = "4de020863e872da8:DefaultPhysicsMaterial"
+							var CollisionGroup = "4e740859314e5515:DefaultGroup"
+							var Offset = Real3{0, 0, 0}
+							var Radius = 0.100000001
+						}
+						IgnoreSpaceEffects 
+						{
+							var IgnoreDrag = true
+							var IgnoreFlow = true
+							var IgnoreForce = true
+							var IgnoreGravity = false
+							var IgnorePointForce = true
+							var IgnorePointGravity = true
+							var IgnoreThrust = true
+							var IgnoreVortex = true
+							var IgnoreWind = true
+							var IgnoreTorque = true
+							var IgnoreBuoyancy = true
+							var IgnoreCustom = true
+						}
+						StickJoint 
+						{
+							var Active = true
+							var SendsEvents = true
+							var AutoSnaps = false
+							var CollideConnected = true
+							var MaxImpulse = 0
+							var Length = 1.00681782
+							var LocalPointA = Real3{0, 0, 0}
+							var LocalPointB = Real3{0, 0, 0}
+						}
+					}
+					Cog [Id:0x5bc9cd91085d408e][ContextId:85]
+					{
+						var Name = "T3"
+						Transform 
+						{
+							var Translation = Real3{2, 0, -0.227374077}
+							var Scale = Real3{1, 1, 1}
+							var Rotation = Quaternion{0, 0, 0, 1}
+						}
+						RigidBody 
+						{
+							var Velocity = Real3{0, 0, 0}
+							var AngularVelocity = Real3{0, 0, 0}
+							var DynamicState = RigidBodyDynamicState.Dynamic
+							var AllowSleep = true
+							var Asleep = false
+							var RotationLocked = false
+							var Mode2D = Mode2DStates.InheritFromSpace
+						}
+						ObjectLink 
+						{
+							var ObjectAPath = CogPath
+							{
+								var Path = "../T2"
+								var ErrorOnResolveToNull = false
+								var ErrorOnPathCantCompute = false
+								var ErrorOnDirectLinkFail = false
+								var UpdateCogOnPathChange = true
+								var UpdatePathOnCogChange = true
+								var UpdateCogOnInitialize = true
+								var ResolvedNullErrorOccurred = false
+								var Cog = 84
+								var PathPreference0 = CogPathPreference.CogRelative
+								var PathPreference1 = CogPathPreference.SpaceRelative
+								var PathPreference2 = CogPathPreference.Absolute
+							}
+							var ObjectBPath = CogPath
+							{
+								var Path = "."
+								var ErrorOnResolveToNull = false
+								var ErrorOnPathCantCompute = false
+								var ErrorOnDirectLinkFail = false
+								var UpdateCogOnPathChange = true
+								var UpdatePathOnCogChange = true
+								var UpdateCogOnInitialize = true
+								var ResolvedNullErrorOccurred = false
+								var Cog = 85
+								var PathPreference0 = CogPathPreference.CogRelative
+								var PathPreference1 = CogPathPreference.SpaceRelative
+								var PathPreference2 = CogPathPreference.Absolute
+							}
+							var LocalPointA = Real3{0, 0, 0}
+							var LocalPointB = Real3{0, 0, 0}
+						}
+						SphereCollider 
+						{
+							var Ghost = false
+							var SendsEvents = true
+							var Material = "4de020863e872da8:DefaultPhysicsMaterial"
+							var CollisionGroup = "4e740859314e5515:DefaultGroup"
+							var Offset = Real3{0, 0, 0}
+							var Radius = 0.100000001
+						}
+						IgnoreSpaceEffects 
+						{
+							var IgnoreDrag = true
+							var IgnoreFlow = true
+							var IgnoreForce = true
+							var IgnoreGravity = false
+							var IgnorePointForce = true
+							var IgnorePointGravity = true
+							var IgnoreThrust = true
+							var IgnoreVortex = true
+							var IgnoreWind = true
+							var IgnoreTorque = true
+							var IgnoreBuoyancy = true
+							var IgnoreCustom = true
+						}
+						StickJoint 
+						{
+							var Active = true
+							var SendsEvents = true
+							var AutoSnaps = false
+							var CollideConnected = true
+							var MaxImpulse = 0
+							var Length = 1.05762601
+							var LocalPointA = Real3{0, 0, 0}
+							var LocalPointB = Real3{0, 0, 0}
+						}
+					}
+					Cog [Id:0x5bc9c867aa1a2c2f][ContextId:86]
+					{
+						var Name = "T4"
+						Transform 
+						{
+							var Translation = Real3{3, 0, 0.266432762}
+							var Scale = Real3{1, 1, 1}
+							var Rotation = Quaternion{0, 0, 0, 1}
+						}
+						RigidBody 
+						{
+							var Velocity = Real3{0, 0, 0}
+							var AngularVelocity = Real3{0, 0, 0}
+							var DynamicState = RigidBodyDynamicState.Dynamic
+							var AllowSleep = true
+							var Asleep = false
+							var RotationLocked = false
+							var Mode2D = Mode2DStates.InheritFromSpace
+						}
+						ObjectLink 
+						{
+							var ObjectAPath = CogPath
+							{
+								var Path = "../T3"
+								var ErrorOnResolveToNull = false
+								var ErrorOnPathCantCompute = false
+								var ErrorOnDirectLinkFail = false
+								var UpdateCogOnPathChange = true
+								var UpdatePathOnCogChange = true
+								var UpdateCogOnInitialize = true
+								var ResolvedNullErrorOccurred = false
+								var Cog = 85
+								var PathPreference0 = CogPathPreference.CogRelative
+								var PathPreference1 = CogPathPreference.SpaceRelative
+								var PathPreference2 = CogPathPreference.Absolute
+							}
+							var ObjectBPath = CogPath
+							{
+								var Path = "."
+								var ErrorOnResolveToNull = false
+								var ErrorOnPathCantCompute = false
+								var ErrorOnDirectLinkFail = false
+								var UpdateCogOnPathChange = true
+								var UpdatePathOnCogChange = true
+								var UpdateCogOnInitialize = true
+								var ResolvedNullErrorOccurred = false
+								var Cog = 86
+								var PathPreference0 = CogPathPreference.CogRelative
+								var PathPreference1 = CogPathPreference.SpaceRelative
+								var PathPreference2 = CogPathPreference.Absolute
+							}
+							var LocalPointA = Real3{0, 0, 0}
+							var LocalPointB = Real3{0, 0, 0}
+						}
+						SphereCollider 
+						{
+							var Ghost = false
+							var SendsEvents = true
+							var Material = "4de020863e872da8:DefaultPhysicsMaterial"
+							var CollisionGroup = "4e740859314e5515:DefaultGroup"
+							var Offset = Real3{0, 0, 0}
+							var Radius = 0.100000001
+						}
+						IgnoreSpaceEffects 
+						{
+							var IgnoreDrag = true
+							var IgnoreFlow = true
+							var IgnoreForce = true
+							var IgnoreGravity = false
+							var IgnorePointForce = true
+							var IgnorePointGravity = true
+							var IgnoreThrust = true
+							var IgnoreVortex = true
+							var IgnoreWind = true
+							var IgnoreTorque = true
+							var IgnoreBuoyancy = true
+							var IgnoreCustom = true
+						}
+						StickJoint 
+						{
+							var Active = true
+							var SendsEvents = true
+							var AutoSnaps = false
+							var CollideConnected = true
+							var MaxImpulse = 0
+							var Length = 1.11527812
+							var LocalPointA = Real3{0, 0, 0}
+							var LocalPointB = Real3{0, 0, 0}
+						}
+					}
+					Cog [Id:0x5bc9cb7a4a2c850e][ContextId:87]
+					{
+						var Name = "T5"
+						Transform 
+						{
+							var Translation = Real3{4, 0, -0.0202980042}
+							var Scale = Real3{1, 1, 1}
+							var Rotation = Quaternion{0, 0, 0, 1}
+						}
+						RigidBody 
+						{
+							var Velocity = Real3{0, 0, 0}
+							var AngularVelocity = Real3{0, 0, 0}
+							var DynamicState = RigidBodyDynamicState.Dynamic
+							var AllowSleep = true
+							var Asleep = false
+							var RotationLocked = false
+							var Mode2D = Mode2DStates.InheritFromSpace
+						}
+						ObjectLink 
+						{
+							var ObjectAPath = CogPath
+							{
+								var Path = "../T4"
+								var ErrorOnResolveToNull = false
+								var ErrorOnPathCantCompute = false
+								var ErrorOnDirectLinkFail = false
+								var UpdateCogOnPathChange = true
+								var UpdatePathOnCogChange = true
+								var UpdateCogOnInitialize = true
+								var ResolvedNullErrorOccurred = false
+								var Cog = 86
+								var PathPreference0 = CogPathPreference.CogRelative
+								var PathPreference1 = CogPathPreference.SpaceRelative
+								var PathPreference2 = CogPathPreference.Absolute
+							}
+							var ObjectBPath = CogPath
+							{
+								var Path = "."
+								var ErrorOnResolveToNull = false
+								var ErrorOnPathCantCompute = false
+								var ErrorOnDirectLinkFail = false
+								var UpdateCogOnPathChange = true
+								var UpdatePathOnCogChange = true
+								var UpdateCogOnInitialize = true
+								var ResolvedNullErrorOccurred = false
+								var Cog = 87
+								var PathPreference0 = CogPathPreference.CogRelative
+								var PathPreference1 = CogPathPreference.SpaceRelative
+								var PathPreference2 = CogPathPreference.Absolute
+							}
+							var LocalPointA = Real3{0, 0, 0}
+							var LocalPointB = Real3{0, 0, 0}
+						}
+						SphereCollider 
+						{
+							var Ghost = false
+							var SendsEvents = true
+							var Material = "4de020863e872da8:DefaultPhysicsMaterial"
+							var CollisionGroup = "4e740859314e5515:DefaultGroup"
+							var Offset = Real3{0, 0, 0}
+							var Radius = 0.100000001
+						}
+						IgnoreSpaceEffects 
+						{
+							var IgnoreDrag = true
+							var IgnoreFlow = true
+							var IgnoreForce = true
+							var IgnoreGravity = false
+							var IgnorePointForce = true
+							var IgnorePointGravity = true
+							var IgnoreThrust = true
+							var IgnoreVortex = true
+							var IgnoreWind = true
+							var IgnoreTorque = true
+							var IgnoreBuoyancy = true
+							var IgnoreCustom = true
+						}
+						StickJoint 
+						{
+							var Active = true
+							var SendsEvents = true
+							var AutoSnaps = false
+							var CollideConnected = true
+							var MaxImpulse = 0
+							var Length = 1.04029548
+							var LocalPointA = Real3{0, 0, 0}
+							var LocalPointB = Real3{0, 0, 0}
+						}
+					}
+					Cog [Id:0x5bc9cb4a59220b97][ContextId:88]
+					{
+						var Name = "T6"
+						Transform 
+						{
+							var Translation = Real3{5, 0, -0.032412529}
+							var Scale = Real3{1, 1, 1}
+							var Rotation = Quaternion{0, 0, 0, 1}
+						}
+						RigidBody 
+						{
+							var Velocity = Real3{0, 0, 0}
+							var AngularVelocity = Real3{0, 0, 0}
+							var DynamicState = RigidBodyDynamicState.Dynamic
+							var AllowSleep = true
+							var Asleep = false
+							var RotationLocked = false
+							var Mode2D = Mode2DStates.InheritFromSpace
+						}
+						ObjectLink 
+						{
+							var ObjectAPath = CogPath
+							{
+								var Path = "../T5"
+								var ErrorOnResolveToNull = false
+								var ErrorOnPathCantCompute = false
+								var ErrorOnDirectLinkFail = false
+								var UpdateCogOnPathChange = true
+								var UpdatePathOnCogChange = true
+								var UpdateCogOnInitialize = true
+								var ResolvedNullErrorOccurred = false
+								var Cog = 87
+								var PathPreference0 = CogPathPreference.CogRelative
+								var PathPreference1 = CogPathPreference.SpaceRelative
+								var PathPreference2 = CogPathPreference.Absolute
+							}
+							var ObjectBPath = CogPath
+							{
+								var Path = "."
+								var ErrorOnResolveToNull = false
+								var ErrorOnPathCantCompute = false
+								var ErrorOnDirectLinkFail = false
+								var UpdateCogOnPathChange = true
+								var UpdatePathOnCogChange = true
+								var UpdateCogOnInitialize = true
+								var ResolvedNullErrorOccurred = false
+								var Cog = 88
+								var PathPreference0 = CogPathPreference.CogRelative
+								var PathPreference1 = CogPathPreference.SpaceRelative
+								var PathPreference2 = CogPathPreference.Absolute
+							}
+							var LocalPointA = Real3{0, 0, 0}
+							var LocalPointB = Real3{0, 0, 0}
+						}
+						SphereCollider 
+						{
+							var Ghost = false
+							var SendsEvents = true
+							var Material = "4de020863e872da8:DefaultPhysicsMaterial"
+							var CollisionGroup = "4e740859314e5515:DefaultGroup"
+							var Offset = Real3{0, 0, 0}
+							var Radius = 0.100000001
+						}
+						IgnoreSpaceEffects 
+						{
+							var IgnoreDrag = true
+							var IgnoreFlow = true
+							var IgnoreForce = true
+							var IgnoreGravity = false
+							var IgnorePointForce = true
+							var IgnorePointGravity = true
+							var IgnoreThrust = true
+							var IgnoreVortex = true
+							var IgnoreWind = true
+							var IgnoreTorque = true
+							var IgnoreBuoyancy = true
+							var IgnoreCustom = true
+						}
+						StickJoint 
+						{
+							var Active = true
+							var SendsEvents = true
+							var AutoSnaps = false
+							var CollideConnected = true
+							var MaxImpulse = 0
+							var Length = 1.00007331
+							var LocalPointA = Real3{0, 0, 0}
+							var LocalPointB = Real3{0, 0, 0}
+						}
+					}
+				}
+			}
+			Cog [Id:0x5bc9f5f48fc7ee23][ContextId:89]
+			{
+				var Name = "ObjectPool"
+				Transform 
+				{
+					var Translation = Real3{50.1552505, -5.43799973, -9.53464317}
+					var Scale = Real3{1, 1, 1}
+					var Rotation = Quaternion{0, 0, 0, 1}
+				}
+				Hierarchy 
+				{
+					Cog [Id:0x5bc9f5f791ff3e22][InheritId:"5bc8961dc414ef4e:RopeLink"][ContextId:90]
+					{
+					}
+					Cog [Id:0x5bc9f5f791ff3e46][InheritId:"5bc8961dc414ef4e:RopeLink"][ContextId:91]
+					{
+					}
+					Cog [Id:0x5bc9f5f791ff3e6a][InheritId:"5bc8961dc414ef4e:RopeLink"][ContextId:92]
+					{
+					}
+					Cog [Id:0x5bc9f5f791ff3e87][InheritId:"5bc8961dc414ef4e:RopeLink"][ContextId:93]
+					{
+					}
+					Cog [Id:0x5bc9f5f791ff3eab][InheritId:"5bc8961dc414ef4e:RopeLink"][ContextId:94]
+					{
+					}
+					Cog [Id:0x5bc9f5f791ff3ec8][InheritId:"5bc8961dc414ef4e:RopeLink"][ContextId:95]
+					{
+					}
+					Cog [Id:0x5bc9f5f791ff3ee5][InheritId:"5bc8961dc414ef4e:RopeLink"][ContextId:96]
+					{
+					}
+					Cog [Id:0x5bc9f5f791ff3f09][InheritId:"5bc8961dc414ef4e:RopeLink"][ContextId:97]
+					{
+					}
+					Cog [Id:0x5bc9f5f791ff3f26][InheritId:"5bc8961dc414ef4e:RopeLink"][ContextId:98]
+					{
+					}
+					Cog [Id:0x5bc9f5f791ff3f43][InheritId:"5bc8961dc414ef4e:RopeLink"][ContextId:99]
+					{
+					}
+					Cog [Id:0x5bc9f5f791ff3f67][InheritId:"5bc8961dc414ef4e:RopeLink"][ContextId:100]
+					{
+					}
+					Cog [Id:0x5bc9f5f791ff3f84][InheritId:"5bc8961dc414ef4e:RopeLink"][ContextId:101]
+					{
+					}
+					Cog [Id:0x5bc9f5f791ff3fa1][InheritId:"5bc8961dc414ef4e:RopeLink"][ContextId:102]
+					{
+					}
+					Cog [Id:0x5bc9f5f791ff3fc5][InheritId:"5bc8961dc414ef4e:RopeLink"][ContextId:103]
+					{
+					}
+					Cog [Id:0x5bc9f5f791ff3fe2][InheritId:"5bc8961dc414ef4e:RopeLink"][ContextId:104]
+					{
+					}
+					Cog [Id:0x5bc9f5f791ff3fff][InheritId:"5bc8961dc414ef4e:RopeLink"][ContextId:105]
+					{
+					}
+					Cog [Id:0x5bc9f5f791ff4023][InheritId:"5bc8961dc414ef4e:RopeLink"][ContextId:106]
+					{
+					}
+					Cog [Id:0x5bc9f5f791ff4040][InheritId:"5bc8961dc414ef4e:RopeLink"][ContextId:107]
+					{
+					}
+					Cog [Id:0x5bc9f5f791ff405d][InheritId:"5bc8961dc414ef4e:RopeLink"][ContextId:108]
+					{
+					}
+					Cog [Id:0x5bc9f5f791ff4081][InheritId:"5bc8961dc414ef4e:RopeLink"][ContextId:109]
+					{
+					}
+				}
+			}
+		}
+	}
+	Cog [ContextId:110]
 	{
 		var Name = "WallSegment"
 		EditorFlags 
@@ -1048,7 +1866,7 @@ Level
 		}
 		Hierarchy 
 		{
-			Cog [Id:0x5bc9de70569753d6][ContextId:87]
+			Cog [Id:0x5bc9de70569753d6][ContextId:111]
 			{
 				var Name = "Cube"
 				EditorFlags 
@@ -1084,7 +1902,7 @@ Level
 					var HalfSize = Real3{0.5, 0.5, 0.5}
 				}
 			}
-			Cog [Id:0x5bc9de70569754ef][ContextId:88]
+			Cog [Id:0x5bc9de70569754ef][ContextId:112]
 			{
 				var Name = "Cube"
 				EditorFlags 
@@ -1120,7 +1938,7 @@ Level
 					var HalfSize = Real3{0.5, 0.5, 0.5}
 				}
 			}
-			Cog [Id:0x5bc9de7056975601][ContextId:89]
+			Cog [Id:0x5bc9de7056975601][ContextId:113]
 			{
 				var Name = "Cube"
 				EditorFlags 
@@ -1156,7 +1974,7 @@ Level
 					var HalfSize = Real3{0.5, 0.5, 0.5}
 				}
 			}
-			Cog [Id:0x5bc9de70569756fe][ContextId:90]
+			Cog [Id:0x5bc9de70569756fe][ContextId:114]
 			{
 				var Name = "Cube"
 				EditorFlags 
@@ -1194,7 +2012,7 @@ Level
 			}
 		}
 	}
-	Cog [ContextId:91]
+	Cog [ContextId:115]
 	{
 		var Name = "WallSegment"
 		EditorFlags 
@@ -1210,7 +2028,7 @@ Level
 		}
 		Hierarchy 
 		{
-			Cog [Id:0x5bc9de70569753d6][ContextId:92]
+			Cog [Id:0x5bc9de70569753d6][ContextId:116]
 			{
 				var Name = "Cube"
 				EditorFlags 
@@ -1246,7 +2064,7 @@ Level
 					var HalfSize = Real3{0.5, 0.5, 0.5}
 				}
 			}
-			Cog [Id:0x5bc9de70569754ef][ContextId:93]
+			Cog [Id:0x5bc9de70569754ef][ContextId:117]
 			{
 				var Name = "Cube"
 				EditorFlags 
@@ -1282,7 +2100,7 @@ Level
 					var HalfSize = Real3{0.5, 0.5, 0.5}
 				}
 			}
-			Cog [Id:0x5bc9de7056975601][ContextId:94]
+			Cog [Id:0x5bc9de7056975601][ContextId:118]
 			{
 				var Name = "Cube"
 				EditorFlags 
@@ -1318,7 +2136,7 @@ Level
 					var HalfSize = Real3{0.5, 0.5, 0.5}
 				}
 			}
-			Cog [Id:0x5bc9de70569756fe][ContextId:95]
+			Cog [Id:0x5bc9de70569756fe][ContextId:119]
 			{
 				var Name = "Cube"
 				EditorFlags 
@@ -1356,7 +2174,7 @@ Level
 			}
 		}
 	}
-	Cog [ContextId:96]
+	Cog [ContextId:120]
 	{
 		var Name = "WallSegment"
 		EditorFlags 
@@ -1372,7 +2190,7 @@ Level
 		}
 		Hierarchy 
 		{
-			Cog [Id:0x5bc9de70569753d6][ContextId:97]
+			Cog [Id:0x5bc9de70569753d6][ContextId:121]
 			{
 				var Name = "Cube"
 				EditorFlags 
@@ -1408,7 +2226,7 @@ Level
 					var HalfSize = Real3{0.5, 0.5, 0.5}
 				}
 			}
-			Cog [Id:0x5bc9de70569754ef][ContextId:98]
+			Cog [Id:0x5bc9de70569754ef][ContextId:122]
 			{
 				var Name = "Cube"
 				EditorFlags 
@@ -1444,7 +2262,7 @@ Level
 					var HalfSize = Real3{0.5, 0.5, 0.5}
 				}
 			}
-			Cog [Id:0x5bc9de7056975601][ContextId:99]
+			Cog [Id:0x5bc9de7056975601][ContextId:123]
 			{
 				var Name = "Cube"
 				EditorFlags 
@@ -1480,7 +2298,7 @@ Level
 					var HalfSize = Real3{0.5, 0.5, 0.5}
 				}
 			}
-			Cog [Id:0x5bc9de70569756fe][ContextId:100]
+			Cog [Id:0x5bc9de70569756fe][ContextId:124]
 			{
 				var Name = "Cube"
 				EditorFlags 
@@ -1518,7 +2336,7 @@ Level
 			}
 		}
 	}
-	Cog [ContextId:101]
+	Cog [ContextId:125]
 	{
 		var Name = "WallSegment"
 		EditorFlags 
@@ -1534,7 +2352,7 @@ Level
 		}
 		Hierarchy 
 		{
-			Cog [Id:0x5bc9de70569753d6][ContextId:102]
+			Cog [Id:0x5bc9de70569753d6][ContextId:126]
 			{
 				var Name = "Cube"
 				EditorFlags 
@@ -1570,7 +2388,7 @@ Level
 					var HalfSize = Real3{0.5, 0.5, 0.5}
 				}
 			}
-			Cog [Id:0x5bc9de70569754ef][ContextId:103]
+			Cog [Id:0x5bc9de70569754ef][ContextId:127]
 			{
 				var Name = "Cube"
 				EditorFlags 
@@ -1606,7 +2424,7 @@ Level
 					var HalfSize = Real3{0.5, 0.5, 0.5}
 				}
 			}
-			Cog [Id:0x5bc9de7056975601][ContextId:104]
+			Cog [Id:0x5bc9de7056975601][ContextId:128]
 			{
 				var Name = "Cube"
 				EditorFlags 
@@ -1642,7 +2460,7 @@ Level
 					var HalfSize = Real3{0.5, 0.5, 0.5}
 				}
 			}
-			Cog [Id:0x5bc9de70569756fe][ContextId:105]
+			Cog [Id:0x5bc9de70569756fe][ContextId:129]
 			{
 				var Name = "Cube"
 				EditorFlags 
@@ -1680,7 +2498,7 @@ Level
 			}
 		}
 	}
-	Cog [ContextId:106]
+	Cog [ContextId:130]
 	{
 		var Name = "WallSegment"
 		EditorFlags 
@@ -1696,7 +2514,7 @@ Level
 		}
 		Hierarchy 
 		{
-			Cog [Id:0x5bc9de70569753d6][ContextId:107]
+			Cog [Id:0x5bc9de70569753d6][ContextId:131]
 			{
 				var Name = "Cube"
 				EditorFlags 
@@ -1732,7 +2550,7 @@ Level
 					var HalfSize = Real3{0.5, 0.5, 0.5}
 				}
 			}
-			Cog [Id:0x5bc9de70569754ef][ContextId:108]
+			Cog [Id:0x5bc9de70569754ef][ContextId:132]
 			{
 				var Name = "Cube"
 				EditorFlags 
@@ -1768,7 +2586,7 @@ Level
 					var HalfSize = Real3{0.5, 0.5, 0.5}
 				}
 			}
-			Cog [Id:0x5bc9de7056975601][ContextId:109]
+			Cog [Id:0x5bc9de7056975601][ContextId:133]
 			{
 				var Name = "Cube"
 				EditorFlags 
@@ -1804,7 +2622,7 @@ Level
 					var HalfSize = Real3{0.5, 0.5, 0.5}
 				}
 			}
-			Cog [Id:0x5bc9de70569756fe][ContextId:110]
+			Cog [Id:0x5bc9de70569756fe][ContextId:134]
 			{
 				var Name = "Cube"
 				EditorFlags 
@@ -1842,7 +2660,7 @@ Level
 			}
 		}
 	}
-	Cog [ContextId:111]
+	Cog [ContextId:135]
 	{
 		var Name = "WallSegment"
 		EditorFlags 
@@ -1858,7 +2676,7 @@ Level
 		}
 		Hierarchy 
 		{
-			Cog [Id:0x5bc9de70569753d6][ContextId:112]
+			Cog [Id:0x5bc9de70569753d6][ContextId:136]
 			{
 				var Name = "Cube"
 				EditorFlags 
@@ -1894,7 +2712,7 @@ Level
 					var HalfSize = Real3{0.5, 0.5, 0.5}
 				}
 			}
-			Cog [Id:0x5bc9de70569754ef][ContextId:113]
+			Cog [Id:0x5bc9de70569754ef][ContextId:137]
 			{
 				var Name = "Cube"
 				EditorFlags 
@@ -1930,7 +2748,7 @@ Level
 					var HalfSize = Real3{0.5, 0.5, 0.5}
 				}
 			}
-			Cog [Id:0x5bc9de7056975601][ContextId:114]
+			Cog [Id:0x5bc9de7056975601][ContextId:138]
 			{
 				var Name = "Cube"
 				EditorFlags 
@@ -1966,7 +2784,7 @@ Level
 					var HalfSize = Real3{0.5, 0.5, 0.5}
 				}
 			}
-			Cog [Id:0x5bc9de70569756fe][ContextId:115]
+			Cog [Id:0x5bc9de70569756fe][ContextId:139]
 			{
 				var Name = "Cube"
 				EditorFlags 
@@ -2004,7 +2822,7 @@ Level
 			}
 		}
 	}
-	Cog [ContextId:116]
+	Cog [ContextId:140]
 	{
 		var Name = "WallSegment"
 		EditorFlags 
@@ -2020,7 +2838,7 @@ Level
 		}
 		Hierarchy 
 		{
-			Cog [Id:0x5bc9de70569753d6][ContextId:117]
+			Cog [Id:0x5bc9de70569753d6][ContextId:141]
 			{
 				var Name = "Cube"
 				EditorFlags 
@@ -2056,7 +2874,7 @@ Level
 					var HalfSize = Real3{0.5, 0.5, 0.5}
 				}
 			}
-			Cog [Id:0x5bc9de70569754ef][ContextId:118]
+			Cog [Id:0x5bc9de70569754ef][ContextId:142]
 			{
 				var Name = "Cube"
 				EditorFlags 
@@ -2092,7 +2910,7 @@ Level
 					var HalfSize = Real3{0.5, 0.5, 0.5}
 				}
 			}
-			Cog [Id:0x5bc9de7056975601][ContextId:119]
+			Cog [Id:0x5bc9de7056975601][ContextId:143]
 			{
 				var Name = "Cube"
 				EditorFlags 
@@ -2128,7 +2946,7 @@ Level
 					var HalfSize = Real3{0.5, 0.5, 0.5}
 				}
 			}
-			Cog [Id:0x5bc9de70569756fe][ContextId:120]
+			Cog [Id:0x5bc9de70569756fe][ContextId:144]
 			{
 				var Name = "Cube"
 				EditorFlags 
@@ -2164,41 +2982,6 @@ Level
 					var HalfSize = Real3{0.5, 0.5, 0.5}
 				}
 			}
-		}
-	}
-	Cog [ContextId:121]
-	{
-		var Name = "Cylinder5X_EDGETEST"
-		Transform 
-		{
-			var Translation = Real3{-49.8830643, 4.34043026, 27.6339283}
-			var Scale = Real3{1, 1, 1}
-			var Rotation = Quaternion{0, 0, 0, 1}
-		}
-		Model 
-		{
-			var Visible = true
-			var ViewCulling = true
-			var VisibilityEvents = true
-			var OverrideBoundingBox = false
-			var LocalAabbCenter = Real3{0, 0, 0}
-			var LocalAabbHalfExtents = Real3{1, 1, 1}
-			var GroupSortValue = 0
-			var Material = "583afb5e7bf75e18:ZeroMaterial"
-			var Mesh = "5bc9c6453d2cdb66:Cylinder5X_EDGETEST"
-		}
-	}
-	Cog [ContextId:122]
-	{
-		var Name = "Transform"
-		Transform 
-		{
-			var Translation = Real3{-51.0306053, 27.3729877, 9.64999771}
-			var Scale = Real3{1, 1, 1}
-			var Rotation = Quaternion{0, 0, 0, 1}
-		}
-		SandboxComponent 
-		{
 		}
 	}
 }
