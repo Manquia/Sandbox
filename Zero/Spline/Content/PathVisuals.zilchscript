@@ -53,12 +53,9 @@ class PathVisuals : ZilchComponent
   
   function ReInitialize()
   {
+    Zero.Disconnect(this.Space, Events.FrameUpdate, this);
     // Dissconnect if we are connected to an event
-    if(this.Space != null)
-      Zero.Disconnect(this.Space, Events.FrameUpdate, this);
-    
-    if(this.Dynamic_S && this.Space != null)
-      Zero.Connect(this.Space, Events.FrameUpdate, this.OnFrameUpdate);
+    Zero.Connect(this.Space, Events.FrameUpdate, this.OnFrameUpdate);
     
     this.IndexVisuals();
     
@@ -70,10 +67,13 @@ class PathVisuals : ZilchComponent
 
   function OnFrameUpdate(event : UpdateEvent)
   {
+    this.GetOrMakeObjectPool();
+    if(this.Dynamic_S)
+      this.ObjectPool.Transform.WorldTranslation = Real3.Zero;
+    
+    
     if(this.Dynamic_S)
       this.UpdateVisuals();
-    else
-      this.ReInitialize();
   }
   
   function UpdateVisuals()
@@ -92,6 +92,8 @@ class PathVisuals : ZilchComponent
     this.GetOrMakePath();
     var pts = this.Path.Spline.BakedPoints;
     var ptMaxIndex = this.Path.Spline.BakedPoints.Count - 1;
+    
+    this.ObjectPool.Transform.WorldTranslation = Real3.Zero;
     
     // We don't have enough points
     if(pts.Count < 2) return;
@@ -154,7 +156,6 @@ class PathVisuals : ZilchComponent
       this.SnakeSegments[snakeSegmentIndex].Visible = false;
       ++snakeSegmentIndex;
     }
-    
   }
   
   function AddVisual()
