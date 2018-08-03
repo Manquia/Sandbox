@@ -1,0 +1,8 @@
+[Version:1]
+ContentLibrary 
+{
+	var Name = "SandboxLocalDrive"
+	var LibraryId = 0x5bc9a585da4baed3
+	var SourceControlType = ""
+	var ReadOnly = false
+}

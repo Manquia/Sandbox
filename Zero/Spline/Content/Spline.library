@@ -1,0 +1,8 @@
+[Version:1]
+ContentLibrary 
+{
+	var Name = "Spline"
+	var LibraryId = 0x5bc9a5333bb39980
+	var SourceControlType = ""
+	var ReadOnly = false
+}

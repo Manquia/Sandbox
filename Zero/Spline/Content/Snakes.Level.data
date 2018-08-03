@@ -1,0 +1,715 @@
+[Version:1]
+Level 
+{
+	Cog [ContextId:1]
+	{
+		var Name = "LevelSettings"
+		GravityEffect 
+		{
+			var Active = true
+			var WakeUpOnChange = false
+			var DebugDrawEffect = false
+			var LocalSpaceDirection = true
+			var Strength = 10
+			var Direction = Real3{0, -1, 0}
+		}
+		DragEffect 
+		{
+			var Active = true
+			var WakeUpOnChange = false
+			var DebugDrawEffect = false
+			var LinearDamping = 0.200000003
+			var AngularDamping = 0.100000001
+			var LinearDrag = 0
+			var AngularDrag = 0
+		}
+		GridDraw 
+		{
+			var Active = true
+			var HalfCellOffset = false
+			var CellSize = 1
+			var Axis = AxisDirection.Y
+			var Lines = 100
+			var DrawAxisOrigins = true
+			var AlwaysDrawInEditor = true
+			var DrawInGame = false
+			var GridColor = Real4{0.5, 0.5, 0.5, 0.400000006}
+			var GridHighlight = Real4{0, 0, 0, 0.400000006}
+			var HighlightInterval = 10
+			var FollowEditorCamera = false
+		}
+	}
+	Cog [ContextId:2]
+	{
+		var Name = "Renderer"
+		DeferredRenderer 
+		{
+			var GeometryDebug = GeometryValue.None
+			var EditorDebugDraw = true
+			var GameDebugDraw = true
+			var RenderDiffuse = true
+			var RenderSpecular = true
+			var RenderSkybox = true
+			var Skybox = "5822dec85e380cf1:SimpleSkybox"
+			var ClearColor = Real4{0, 0, 0, 1}
+			var DirectLighting = true
+			var IndirectLighting = true
+			var IndirectIntensity = 1
+			var ToneMap = true
+		}
+		Ssao 
+		{
+			var Active = true
+			var Radius = 1
+			var Intensity = 1
+			var BlurDepthThreshold = 0.0500000007
+			var DebugBuffer = false
+		}
+		Bloom 
+		{
+			var Active = true
+			var Intensity = 0.100000001
+			var Threshold = 1
+			var Bloom1 = true
+			var Bloom2 = true
+			var Bloom3 = true
+			var Bloom4 = true
+			var Bloom5 = true
+			var DebugBuffer = false
+		}
+	}
+	Cog [ContextId:3]
+	{
+		var Name = "DirectionalLightShadows"
+		Transform 
+		{
+			var Translation = Real3{-3.81469727e-06, 98.2930527, 80.4082489}
+			var Scale = Real3{1, 1, 1}
+			var Rotation = Quaternion{-0.382683456, 0, 0, 0.923879504}
+		}
+		SelectionIcon 
+		{
+			var Visible = true
+			var VisibilityEvents = true
+			var Material = "56581e2bb81777be:DebugDrawOnTop"
+			var SpriteSource = "58f8e4be736f5ea2:LightIcon"
+			var ViewScale = 1
+			var OverrideSelections = true
+		}
+		Model 
+		{
+			var Visible = true
+			var ViewCulling = false
+			var VisibilityEvents = true
+			var OverrideBoundingBox = false
+			var LocalAabbCenter = Real3{0, 0, 0}
+			var LocalAabbHalfExtents = Real3{1, 1, 1}
+			var GroupSortValue = 0
+			var Material = "580267aabbf7843e:DirectionalLightShadows"
+			var Mesh = "59040f1e835d03e1:Triangle"
+		}
+		DirectionalLight 
+		{
+			var LightColor = Real4{1, 1, 1, 1}
+			var LightIntensity = 5
+		}
+		CameraViewport 
+		{
+			var RenderInEditor = true
+			var RenderInGame = true
+			var RenderOrder = -1
+			var CameraPath = CogPath
+			{
+				var Path = "."
+				var ErrorOnResolveToNull = false
+				var ErrorOnPathCantCompute = false
+				var ErrorOnDirectLinkFail = false
+				var UpdateCogOnPathChange = true
+				var UpdatePathOnCogChange = true
+				var UpdateCogOnInitialize = true
+				var ResolvedNullErrorOccurred = false
+				var Cog = 3
+				var PathPreference0 = CogPathPreference.CogRelative
+				var PathPreference1 = CogPathPreference.SpaceRelative
+				var PathPreference2 = CogPathPreference.Absolute
+			}
+			var RendererPath = CogPath
+			{
+				var Path = "."
+				var ErrorOnResolveToNull = false
+				var ErrorOnPathCantCompute = false
+				var ErrorOnDirectLinkFail = false
+				var UpdateCogOnPathChange = true
+				var UpdatePathOnCogChange = true
+				var UpdateCogOnInitialize = true
+				var ResolvedNullErrorOccurred = false
+				var Cog = 3
+				var PathPreference0 = CogPathPreference.CogRelative
+				var PathPreference1 = CogPathPreference.SpaceRelative
+				var PathPreference2 = CogPathPreference.Absolute
+			}
+			var ResolutionOrAspect = Integer2{1920, 1080}
+			var RenderToViewport = false
+			var ForwardViewportEvents = false
+			var ViewportScaling = ViewportScaling.Fill
+			var MarginColor = Real4{0, 0, 0, 1}
+			var NormalizedSize = Real2{1, 1}
+			var NormalizedOffset = Real2{0, 0}
+		}
+		Camera 
+		{
+			var NearPlane = 0.100000001
+			var FarPlane = 100
+			var PerspectiveMode = PerspectiveMode.Orthographic
+			var FieldOfView = 45
+			var Size = 64
+		}
+		ShadowRenderer 
+		{
+			var ResolutionValue = ShadowResolution.Low
+			var NormalOffsetBias = 0.100000001
+		}
+	}
+	Cog [ContextId:4]
+	{
+		var Name = "EditorCamera"
+		Transform 
+		{
+			var Translation = Real3{42.3271065, 61.3859711, 6.08035088}
+			var Scale = Real3{1, 1, 1}
+			var Rotation = Quaternion{-0.486344278, 0.294549137, 0.17838493, 0.803049803}
+		}
+		CameraViewport 
+		{
+			var RenderInEditor = true
+			var RenderInGame = false
+			var RenderOrder = 0
+			var CameraPath = CogPath
+			{
+				var Path = "."
+				var ErrorOnResolveToNull = false
+				var ErrorOnPathCantCompute = false
+				var ErrorOnDirectLinkFail = false
+				var UpdateCogOnPathChange = true
+				var UpdatePathOnCogChange = true
+				var UpdateCogOnInitialize = true
+				var ResolvedNullErrorOccurred = false
+				var Cog = 4
+				var PathPreference0 = CogPathPreference.CogRelative
+				var PathPreference1 = CogPathPreference.SpaceRelative
+				var PathPreference2 = CogPathPreference.Absolute
+			}
+			var RendererPath = CogPath
+			{
+				var Path = ":/Renderer"
+				var ErrorOnResolveToNull = false
+				var ErrorOnPathCantCompute = false
+				var ErrorOnDirectLinkFail = false
+				var UpdateCogOnPathChange = true
+				var UpdatePathOnCogChange = true
+				var UpdateCogOnInitialize = true
+				var ResolvedNullErrorOccurred = false
+				var Cog = 2
+				var PathPreference0 = CogPathPreference.CogRelative
+				var PathPreference1 = CogPathPreference.SpaceRelative
+				var PathPreference2 = CogPathPreference.Absolute
+			}
+			var ResolutionOrAspect = Integer2{1920, 1080}
+			var RenderToViewport = true
+			var ForwardViewportEvents = false
+			var ViewportScaling = ViewportScaling.Fill
+			var MarginColor = Real4{0, 0, 0, 1}
+			var NormalizedSize = Real2{1, 1}
+			var NormalizedOffset = Real2{0, 0}
+		}
+		Camera 
+		{
+			var NearPlane = 0.100000001
+			var FarPlane = 200
+			var PerspectiveMode = PerspectiveMode.Perspective
+			var FieldOfView = 60
+			var Size = 20
+		}
+		EditorCameraController 
+		{
+			var ControlMode = ControlMode.Orbit
+			var Previous3DMode = ControlMode.Orbit
+			var LookDistance = 81.7837448
+			var VerticalAngle = 1.0890851
+			var HorizontalAngle = 156.376526
+			var LookTarget = Real3{17.8277111, -11.0910654, -22.8236294}
+			var MoveSensitivity = 1
+		}
+	}
+	Cog [ContextId:5]
+	{
+		var Name = "GameCamera"
+		Transform 
+		{
+			var Translation = Real3{-71.4075317, 5.35506439, 14.6911602}
+			var Scale = Real3{1, 1, 1}
+			var Rotation = Quaternion{-0.0791068599, -0.603599787, -0.103094056, 0.786626399}
+		}
+		SelectionIcon 
+		{
+			var Visible = true
+			var VisibilityEvents = true
+			var Material = "56581e2bb81777be:DebugDrawOnTop"
+			var SpriteSource = "58f8e4be7360cf7c:CameraIcon"
+			var ViewScale = 1
+			var OverrideSelections = true
+		}
+		CameraViewport 
+		{
+			var RenderInEditor = false
+			var RenderInGame = true
+			var RenderOrder = 0
+			var CameraPath = CogPath
+			{
+				var Path = "."
+				var ErrorOnResolveToNull = false
+				var ErrorOnPathCantCompute = false
+				var ErrorOnDirectLinkFail = false
+				var UpdateCogOnPathChange = true
+				var UpdatePathOnCogChange = true
+				var UpdateCogOnInitialize = true
+				var ResolvedNullErrorOccurred = false
+				var Cog = 5
+				var PathPreference0 = CogPathPreference.CogRelative
+				var PathPreference1 = CogPathPreference.SpaceRelative
+				var PathPreference2 = CogPathPreference.Absolute
+			}
+			var RendererPath = CogPath
+			{
+				var Path = ":/Renderer"
+				var ErrorOnResolveToNull = false
+				var ErrorOnPathCantCompute = false
+				var ErrorOnDirectLinkFail = false
+				var UpdateCogOnPathChange = true
+				var UpdatePathOnCogChange = true
+				var UpdateCogOnInitialize = true
+				var ResolvedNullErrorOccurred = false
+				var Cog = 2
+				var PathPreference0 = CogPathPreference.CogRelative
+				var PathPreference1 = CogPathPreference.SpaceRelative
+				var PathPreference2 = CogPathPreference.Absolute
+			}
+			var ResolutionOrAspect = Integer2{1920, 1080}
+			var RenderToViewport = true
+			var ForwardViewportEvents = false
+			var ViewportScaling = ViewportScaling.Letterbox
+			var MarginColor = Real4{0, 0, 0, 1}
+			var NormalizedSize = Real2{1, 1}
+			var NormalizedOffset = Real2{0, 0}
+		}
+		Camera 
+		{
+			var NearPlane = 0.100000001
+			var FarPlane = 200
+			var PerspectiveMode = PerspectiveMode.Perspective
+			var FieldOfView = 60
+			var Size = 20
+		}
+		SoundListener 
+		{
+			var Active = true
+			var AttenuationScale = 1
+		}
+	}
+	Cog [ContextId:6]
+	{
+		var Name = "Chain"
+		Transform 
+		{
+			var Translation = Real3{0, 0, 0}
+			var Scale = Real3{1, 1, 1}
+			var Rotation = Quaternion{0, 0, 0, 1}
+		}
+		PathVisuals 
+		{
+			var SplineType = SplineType.BSpline
+			var Spacing = 0.5
+			var Closed = true
+			var PathLink = "5bc87562328112b4:ChainLink"
+			var PathBegin = "null"
+			var PathEnd = "null"
+			var Dynamic = true
+			var Dynamic_S = true
+			var COMMAND_Generate = false
+		}
+		Hierarchy 
+		{
+			Cog [Id:0x5bcb7e17c95457de][ContextId:7]
+			{
+				var Name = "Points"
+				Transform 
+				{
+					var Translation = Real3{0, 0, 0}
+					var Scale = Real3{1, 1, 1}
+					var Rotation = Quaternion{0, 0, 0, 1}
+				}
+				HierarchySpline 
+				{
+					var Closed = true
+					var SplineType = SplineType.BSpline
+					var Error = 0.5
+					var DebugDrawSpline = true
+					var SplineColor = Real4{0, 0, 0, 1}
+				}
+				Hierarchy 
+				{
+					Cog [Id:0x5bcb7fe0d1d0c9e4][ContextId:8]
+					{
+						var Name = "Transform"
+						Transform 
+						{
+							var Translation = Real3{-7.79370975, 6.21753216, -5.48276186}
+							var Scale = Real3{3.06856775, 1, 2.19579101}
+							var Rotation = Quaternion{0.049039159, -0.000997579773, 0.0203138348, 0.998589873}
+						}
+					}
+					Cog [Id:0x5bcb78f0b9d49d10][ContextId:9]
+					{
+						var Name = "Transform"
+						Transform 
+						{
+							var Translation = Real3{11.4477282, 1.8352021, -7.97360086}
+							var Scale = Real3{3.06856775, 1, 2.19579101}
+							var Rotation = Quaternion{0.049039159, -0.000997579773, 0.0203138348, 0.998589873}
+						}
+					}
+					Cog [Id:0x5bcb78f2bba9730b][ContextId:10]
+					{
+						var Name = "Transform"
+						Transform 
+						{
+							var Translation = Real3{20.6847992, -0.0299132913, 14.8077106}
+							var Scale = Real3{3.06856775, 1, 2.19579101}
+							var Rotation = Quaternion{0.049039159, -0.000997579773, 0.0203138348, 0.998589873}
+						}
+					}
+					Cog [Id:0x5bcb78f6bf941a65][ContextId:11]
+					{
+						var Name = "Transform"
+						Transform 
+						{
+							var Translation = Real3{-16.3317719, -2.61097026, 25.6465702}
+							var Scale = Real3{3.06856775, 1, 2.19579101}
+							var Rotation = Quaternion{0.049039159, -0.000997579773, 0.0203138348, 0.998589873}
+						}
+					}
+				}
+			}
+			Cog [Id:0x5bc9d6ce2e2c261e][ContextId:12]
+			{
+				var Name = "ObjectPool"
+				Transform 
+				{
+					var Translation = Real3{0, 0, 0}
+					var Scale = Real3{1, 1, 1}
+					var Rotation = Quaternion{0, 0, 0, 1}
+				}
+				Hierarchy 
+				{
+					Cog [Id:0x5bc9d6ac48dfe9b6][InheritId:"5bc87562328112b4:ChainLink"][ContextId:13]
+					{
+					}
+					Cog [Id:0x5bc9d6ac48dfe9e1][InheritId:"5bc87562328112b4:ChainLink"][ContextId:14]
+					{
+					}
+					Cog [Id:0x5bc9d6ac48dfe9fe][InheritId:"5bc87562328112b4:ChainLink"][ContextId:15]
+					{
+					}
+					Cog [Id:0x5bc9d6ac48dfea22][InheritId:"5bc87562328112b4:ChainLink"][ContextId:16]
+					{
+					}
+					Cog [Id:0x5bc9d6ac48dfea3f][InheritId:"5bc87562328112b4:ChainLink"][ContextId:17]
+					{
+					}
+					Cog [Id:0x5bc9d6ac48dfea63][InheritId:"5bc87562328112b4:ChainLink"][ContextId:18]
+					{
+					}
+					Cog [Id:0x5bc9d6ac48dfea80][InheritId:"5bc87562328112b4:ChainLink"][ContextId:19]
+					{
+					}
+					Cog [Id:0x5bc9d6ac48dfea9d][InheritId:"5bc87562328112b4:ChainLink"][ContextId:20]
+					{
+					}
+					Cog [Id:0x5bc9d6ac48dfeac1][InheritId:"5bc87562328112b4:ChainLink"][ContextId:21]
+					{
+					}
+					Cog [Id:0x5bc9d6ac48dfeade][InheritId:"5bc87562328112b4:ChainLink"][ContextId:22]
+					{
+					}
+					Cog [Id:0x5bc9d6ac48dfeb02][InheritId:"5bc87562328112b4:ChainLink"][ContextId:23]
+					{
+					}
+					Cog [Id:0x5bc9d6ac48dfeb1f][InheritId:"5bc87562328112b4:ChainLink"][ContextId:24]
+					{
+					}
+					Cog [Id:0x5bc9d6ac48dfeb3c][InheritId:"5bc87562328112b4:ChainLink"][ContextId:25]
+					{
+					}
+					Cog [Id:0x5bc9d6ac48dfeb60][InheritId:"5bc87562328112b4:ChainLink"][ContextId:26]
+					{
+					}
+					Cog [Id:0x5bc9d6ac48dfeb7d][InheritId:"5bc87562328112b4:ChainLink"][ContextId:27]
+					{
+					}
+					Cog [Id:0x5bc9d6ac48dfeb9a][InheritId:"5bc87562328112b4:ChainLink"][ContextId:28]
+					{
+					}
+					Cog [Id:0x5bc9d6ac48dfebbe][InheritId:"5bc87562328112b4:ChainLink"][ContextId:29]
+					{
+					}
+					Cog [Id:0x5bc9d6ac48dfebdb][InheritId:"5bc87562328112b4:ChainLink"][ContextId:30]
+					{
+					}
+					Cog [Id:0x5bc9d6ac48dfebf8][InheritId:"5bc87562328112b4:ChainLink"][ContextId:31]
+					{
+					}
+					Cog [Id:0x5bc9d6ac48dfec15][InheritId:"5bc87562328112b4:ChainLink"][ContextId:32]
+					{
+					}
+					Cog [Id:0x5bc9d6ac48dfec39][InheritId:"5bc87562328112b4:ChainLink"][ContextId:33]
+					{
+					}
+					Cog [Id:0x5bc9d6ac48dfec56][InheritId:"5bc87562328112b4:ChainLink"][ContextId:34]
+					{
+					}
+					Cog [Id:0x5bc9d6ac48dfec73][InheritId:"5bc87562328112b4:ChainLink"][ContextId:35]
+					{
+					}
+					Cog [Id:0x5bc9d6ac48dfec97][InheritId:"5bc87562328112b4:ChainLink"][ContextId:36]
+					{
+					}
+					Cog [Id:0x5bc9d6ac48dfecb4][InheritId:"5bc87562328112b4:ChainLink"][ContextId:37]
+					{
+					}
+					Cog [Id:0x5bc9d6ac48dfecd1][InheritId:"5bc87562328112b4:ChainLink"][ContextId:38]
+					{
+					}
+					Cog [Id:0x5bc9d6ac48dfecf5][InheritId:"5bc87562328112b4:ChainLink"][ContextId:39]
+					{
+					}
+					Cog [Id:0x5bc9d6ac48dfed12][InheritId:"5bc87562328112b4:ChainLink"][ContextId:40]
+					{
+					}
+					Cog [Id:0x5bc9d6ac48dfed2f][InheritId:"5bc87562328112b4:ChainLink"][ContextId:41]
+					{
+					}
+					Cog [Id:0x5bc9d6ac48dfed53][InheritId:"5bc87562328112b4:ChainLink"][ContextId:42]
+					{
+					}
+					Cog [Id:0x5bc9d6ac48dfed70][InheritId:"5bc87562328112b4:ChainLink"][ContextId:43]
+					{
+					}
+					Cog [Id:0x5bc9d6ac48dfed94][InheritId:"5bc87562328112b4:ChainLink"][ContextId:44]
+					{
+					}
+					Cog [Id:0x5bc9d6ac48dfedb1][InheritId:"5bc87562328112b4:ChainLink"][ContextId:45]
+					{
+					}
+					Cog [Id:0x5bc9d6ac48dfedce][InheritId:"5bc87562328112b4:ChainLink"][ContextId:46]
+					{
+					}
+					Cog [Id:0x5bc9d6ac48dfedf2][InheritId:"5bc87562328112b4:ChainLink"][ContextId:47]
+					{
+					}
+					Cog [Id:0x5bc9d6ac48dfee0f][InheritId:"5bc87562328112b4:ChainLink"][ContextId:48]
+					{
+					}
+					Cog [Id:0x5bc9d6ac48dfee33][InheritId:"5bc87562328112b4:ChainLink"][ContextId:49]
+					{
+					}
+					Cog [Id:0x5bc9d6ac48dfee50][InheritId:"5bc87562328112b4:ChainLink"][ContextId:50]
+					{
+					}
+					Cog [Id:0x5bc9d6ac48dfee6d][InheritId:"5bc87562328112b4:ChainLink"][ContextId:51]
+					{
+					}
+					Cog [Id:0x5bc9d6ac48dfee91][InheritId:"5bc87562328112b4:ChainLink"][ContextId:52]
+					{
+					}
+					Cog [Id:0x5bc9d6ac48dfeeae][InheritId:"5bc87562328112b4:ChainLink"][ContextId:53]
+					{
+					}
+					Cog [Id:0x5bc9d6ac48dfeecb][InheritId:"5bc87562328112b4:ChainLink"][ContextId:54]
+					{
+					}
+					Cog [Id:0x5bc9d6ac48dfeee8][InheritId:"5bc87562328112b4:ChainLink"][ContextId:55]
+					{
+					}
+					Cog [Id:0x5bc9d6ac48dfef0c][InheritId:"5bc87562328112b4:ChainLink"][ContextId:56]
+					{
+					}
+					Cog [Id:0x5bc9d6ac48dfef29][InheritId:"5bc87562328112b4:ChainLink"][ContextId:57]
+					{
+					}
+					Cog [Id:0x5bc9d6ac48dfef46][InheritId:"5bc87562328112b4:ChainLink"][ContextId:58]
+					{
+					}
+					Cog [Id:0x5bc9d6ac48dfef6a][InheritId:"5bc87562328112b4:ChainLink"][ContextId:59]
+					{
+					}
+					Cog [Id:0x5bc9d6ac48dfef87][InheritId:"5bc87562328112b4:ChainLink"][ContextId:60]
+					{
+					}
+					Cog [Id:0x5bc9d6ac48dfefa4][InheritId:"5bc87562328112b4:ChainLink"][ContextId:61]
+					{
+					}
+					Cog [Id:0x5bc9d6ac48dfefc1][InheritId:"5bc87562328112b4:ChainLink"][ContextId:62]
+					{
+					}
+					Cog [Id:0x5bc9d6ac48dfefe5][InheritId:"5bc87562328112b4:ChainLink"][ContextId:63]
+					{
+					}
+					Cog [Id:0x5bc9d6ac48dff002][InheritId:"5bc87562328112b4:ChainLink"][ContextId:64]
+					{
+					}
+					Cog [Id:0x5bc9d6ac48dff01f][InheritId:"5bc87562328112b4:ChainLink"][ContextId:65]
+					{
+					}
+					Cog [Id:0x5bc9d6ac48dff043][InheritId:"5bc87562328112b4:ChainLink"][ContextId:66]
+					{
+					}
+				}
+			}
+		}
+	}
+	Cog [ContextId:67]
+	{
+		var Name = "Rope"
+		Transform 
+		{
+			var Translation = Real3{0, 0, 0}
+			var Scale = Real3{1, 1, 1}
+			var Rotation = Quaternion{0, 0, 0, 1}
+		}
+		PathVisuals 
+		{
+			var SplineType = SplineType.CatmullRom
+			var Spacing = 50
+			var Closed = false
+			var PathLink = "5bc8961dc414ef4e:RopeLink"
+			var PathBegin = "null"
+			var PathEnd = "null"
+			var Dynamic = true
+			var Dynamic_S = true
+			var COMMAND_Generate = false
+		}
+		Hierarchy 
+		{
+			Cog [Id:0x5bcb7e17c95457de][ContextId:68]
+			{
+				var Name = "Points"
+				Transform 
+				{
+					var Translation = Real3{0, 0, 0}
+					var Scale = Real3{1, 1, 1}
+					var Rotation = Quaternion{0, 0, 0, 1}
+				}
+				HierarchySpline 
+				{
+					var Closed = false
+					var SplineType = SplineType.CatmullRom
+					var Error = 50
+					var DebugDrawSpline = true
+					var SplineColor = Real4{0, 0, 0, 1}
+				}
+				Hierarchy 
+				{
+					Cog [Id:0x5bcb7fe0d1d0c9e4][ContextId:69]
+					{
+						var Name = "Transform"
+						Transform 
+						{
+							var Translation = Real3{-2.48323536, 1.30845249, -24.6516819}
+							var Scale = Real3{3.06856775, 1, 2.19579101}
+							var Rotation = Quaternion{0.049039159, -0.000997579773, 0.0203138348, 0.998589873}
+						}
+					}
+					Cog [Id:0x5bcb78f0b9d49d10][ContextId:70]
+					{
+						var Name = "Transform"
+						Transform 
+						{
+							var Translation = Real3{16.7582016, 1.83519828, -27.1425209}
+							var Scale = Real3{3.06856775, 1, 2.19579101}
+							var Rotation = Quaternion{0.049039159, -0.000997579773, 0.0203138348, 0.998589873}
+						}
+					}
+					Cog [Id:0x5bcb78f2bba9730b][ContextId:71]
+					{
+						var Name = "Transform"
+						Transform 
+						{
+							var Translation = Real3{25.9952736, -0.029917106, -4.36120987}
+							var Scale = Real3{3.06856775, 1, 2.19579101}
+							var Rotation = Quaternion{0.049039159, -0.000997579773, 0.0203138348, 0.998589873}
+						}
+					}
+					Cog [Id:0x5bcb78f6bf941a65][ContextId:72]
+					{
+						var Name = "Transform"
+						Transform 
+						{
+							var Translation = Real3{-11.0212975, -2.61097407, 6.47764969}
+							var Scale = Real3{3.06856775, 1, 2.19579101}
+							var Rotation = Quaternion{0.049039159, -0.000997579773, 0.0203138348, 0.998589873}
+						}
+					}
+				}
+			}
+			Cog [Id:0x5bc9d6805bb565ae][ContextId:73]
+			{
+				var Name = "ObjectPool"
+				Transform 
+				{
+					var Translation = Real3{0, 0, 0}
+					var Scale = Real3{1, 1, 1}
+					var Rotation = Quaternion{0, 0, 0, 1}
+				}
+				Hierarchy 
+				{
+					Cog [Id:0x5bc9d67d8c73fc8b][InheritId:"5bc8961dc414ef4e:RopeLink"][ContextId:74]
+					{
+					}
+					Cog [Id:0x5bc9d67d8c73fcb6][InheritId:"5bc8961dc414ef4e:RopeLink"][ContextId:75]
+					{
+					}
+					Cog [Id:0x5bc9d67d8c73fcd3][InheritId:"5bc8961dc414ef4e:RopeLink"][ContextId:76]
+					{
+					}
+					Cog [Id:0x5bc9d67d8c73fcf7][InheritId:"5bc8961dc414ef4e:RopeLink"][ContextId:77]
+					{
+					}
+					Cog [Id:0x5bc9d67d8c73fd14][InheritId:"5bc8961dc414ef4e:RopeLink"][ContextId:78]
+					{
+					}
+					Cog [Id:0x5bc9d67d8c73fd31][InheritId:"5bc8961dc414ef4e:RopeLink"][ContextId:79]
+					{
+					}
+					Cog [Id:0x5bc9d67d8c73fd55][InheritId:"5bc8961dc414ef4e:RopeLink"][ContextId:80]
+					{
+					}
+					Cog [Id:0x5bc9d67d8c73fd72][InheritId:"5bc8961dc414ef4e:RopeLink"][ContextId:81]
+					{
+					}
+					Cog [Id:0x5bc9d67d8c73fd8f][InheritId:"5bc8961dc414ef4e:RopeLink"][ContextId:82]
+					{
+					}
+					Cog [Id:0x5bc9d67d8c73fdb3][InheritId:"5bc8961dc414ef4e:RopeLink"][ContextId:83]
+					{
+					}
+					Cog [Id:0x5bc9d67d8c73fdd0][InheritId:"5bc8961dc414ef4e:RopeLink"][ContextId:84]
+					{
+					}
+					Cog [Id:0x5bc9d67d8c73fded][InheritId:"5bc8961dc414ef4e:RopeLink"][ContextId:85]
+					{
+					}
+				}
+			}
+		}
+	}
+}

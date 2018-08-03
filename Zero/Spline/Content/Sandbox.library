@@ -1,0 +1,8 @@
+[Version:1]
+ContentLibrary 
+{
+	var Name = "Sandbox"
+	var LibraryId = 0x5a03fe9905c05fd3
+	var SourceControlType = ""
+	var ReadOnly = false
+}

@@ -1,0 +1,165 @@
+[Vertex]
+struct Snake
+{
+  [BuiltInInput] var FrameTime : Real;
+  
+  [BuiltInInput] var LocalToView : Real4x4;
+  [BuiltInInput] var LocalToViewNormal : Real3x3;
+  [BuiltInInput] var LocalToPerspective : Real4x4;
+  
+  [StageInput] var LocalPosition : Real3;
+  [StageInput] var LocalTangent : Real3;
+  [StageInput] var LocalBitangent : Real3;
+  [StageInput] var LocalNormal : Real3;
+  
+  [Input] var PT0 : Real3;
+  [Input] var PT1 : Real3;
+  [Input] var PT2 : Real3;
+  [Input] var PT3 : Real3;
+
+
+  [StageInput][Output] var Uv : Real2;
+
+  [Output] var ViewPosition : Real3;
+  [Output] var ViewNormal : Real3;
+  [Output] var ViewTangent : Real3;
+  [Output] var ViewBitangent : Real3;
+  
+  [Output] var PerspectivePosition : Real4;
+
+  // assumes model has a height of exactly 1.0 starting from 0 in the y dimension
+  function Main()
+  {
+    var vertPos = this.LocalPosition;
+    
+    // get "up"/forward vectors for the surrounding segments
+    var upVecMid =    Math.Normalize(this.PT2 - this.PT1);
+    var upVecFuture = Math.Normalize((this.PT3 - this.PT2) + upVecMid * 0.000001);
+    var upVecPast =   Math.Normalize((this.PT1 - this.PT0) + upVecMid * 0.000001);
+    
+    // we use the Y positio to represent how far a given vert
+    // is between the segemnts
+    var mu = vertPos.Y;
+    
+    // -------------------------------------------------------------------
+    // Calculate Rotation Local pos
+    // -------------------------------------------------------------------
+    // calculate the "up" vector so that we rotate the verts
+    // to the other segments
+    var upVec = upVecMid *    (1.0 - Math.Abs(mu - 0.5)) +
+                upVecPast *   (1.0 - Math.Min(mu + 0.5, 1.0)) + 
+                upVecFuture * (Math.Max(mu - 0.5, 0));
+    
+    upVec = Math.Normalize(upVec);
+    var angle = Math.AngleBetween(Real3(0,1,0), upVec);
+    var newLocalPos = Real3(this.LocalPosition.X, 0.0, this.LocalPosition.Z);
+    
+    var rotMat : Real3x3 = Real3x3();
+    // if angle is basically up the cross will fail so we just set it to
+    // identity since that is the assumed starting state of the mesh
+    if(angle  > 0.01)
+    {
+      // Get rotation for Local vert
+      var rotationAxis = Math.Normalize(Math.Cross(upVec, Real3(0,1,0)));
+      rotMat = Snake.RotationMatrix(rotationAxis, -angle);
+      newLocalPos = Math.Multiply(rotMat, newLocalPos);
+    }
+    else // make matrix identity
+    {
+      rotMat.M00 = 1.0; rotMat.M11 = 1.0; rotMat.M22 = 1;
+    }
+    
+    // -------------------------------------------------------------------
+    // Calculate Position Offset
+    // -------------------------------------------------------------------
+    var pos = Real3.Zero;
+    
+    // --- Linear Interpolated Point
+    // Fast in Shader. But to make this look good we need many material
+    // instances and may end up being slower than cat mul rom below
+    // for the same visual effect.
+    //scope
+    //{
+    //    pos = newLocalPos + Math.Lerp(this.PT1, this.PT2, mu);
+    //}
+    
+    
+    // ------------------- OR -----------------
+    
+    // --- Catmull-Rom Spline
+    // slower In shader, but should require less points, Best for ropes/cables
+    // where as chains do not really bend in the same way so that will probably
+    // use the linear
+    scope
+    {
+      var mu2 = mu * mu;
+      var mu3 = mu2 * mu;
+      
+      var a0 = Real3(
+        (-0.5 * this.PT0.X) + (1.5 * this.PT1.X) + (-1.5 * this.PT2.X) + (0.5 * this.PT3.X),
+        (-0.5 * this.PT0.Y) + (1.5 * this.PT1.Y) + (-1.5 * this.PT2.Y) + (0.5 * this.PT3.Y),
+        (-0.5 * this.PT0.Z) + (1.5 * this.PT1.Z) + (-1.5 * this.PT2.Z) + (0.5 * this.PT3.Z));
+        
+      var a1 = Real3(
+        (this.PT0.X) + (-2.5 * this.PT1.X) + (2.0 * this.PT2.X) + (-0.5 * this.PT3.X),
+        (this.PT0.Y) + (-2.5 * this.PT1.Y) + (2.0 * this.PT2.Y) + (-0.5 * this.PT3.Y),
+        (this.PT0.Z) + (-2.5 * this.PT1.Z) + (2.0 * this.PT2.Z) + (-0.5 * this.PT3.Z));
+        
+      var a2 = Real3(
+        (-0.5 * this.PT0.X) + (0.5 * this.PT2.X),
+        (-0.5 * this.PT0.Y) + (0.5 * this.PT2.Y),
+        (-0.5 * this.PT0.Z) + (0.5 * this.PT2.Z));
+
+      // Inlined
+      //a3.X = PT1.X;
+      //a3.Y = PT1.Y;
+      //a3.Z = PT1.Z;
+
+      pos = newLocalPos + Real3(
+        (a0.X * mu * mu2) + (a1.X * mu2) + (a2.X * mu) + (this.PT1.X),
+        (a0.Y * mu * mu2) + (a1.Y * mu2) + (a2.Y * mu) + (this.PT1.Y),
+        (a0.Z * mu * mu2) + (a1.Z * mu2) + (a2.Z * mu) + (this.PT1.Z));
+    }
+    
+    
+    
+    // -------------------------------------------------------------------
+    // Output Results
+    // -------------------------------------------------------------------
+    // Make rotation matrix for normals/tangents/bitangents
+    var localToViewNormal = Math.Multiply(this.LocalToViewNormal, rotMat);    
+    this.ViewPosition =  Math.MultiplyPoint(this.LocalToView, pos);
+    this.ViewNormal =    Math.Normalize(Math.Multiply(localToViewNormal, this.LocalNormal));
+    this.ViewTangent =   Math.Normalize(Math.Multiply(localToViewNormal, this.LocalTangent));
+    this.ViewBitangent = Math.Normalize(Math.Multiply(localToViewNormal, this.LocalBitangent));
+    
+    // output postion to perspective. This is a specific grpahics API thing which
+    // is seperate from thiw.viewPosition
+    this.PerspectivePosition = Math.Multiply(this.LocalToPerspective, Real4(pos, 1.0));
+  }
+  
+  // Utility Function b/c Zero's shader library isn't very mature yet
+  [Static]
+  function RotationMatrix(u : Real3, t : Real) : Real3x3
+  {
+    var m = Real3x3();
+    var sin = Math.Sin(t);
+    var cos = Math.Cos(t);
+    var cos_1 = 1 - cos;
+    
+    m.M00 = cos + u.X * u.X * cos_1;
+    m.M11 = cos + u.Y * u.Y * cos_1;
+    m.M22 = cos + u.Z * u.Z * cos_1;
+    
+    m.M01 = u.X * u.Y * cos_1 - u.Z * sin;
+    m.M02 = u.X * u.Z * cos_1 + u.Y * sin;
+    
+    m.M10 = u.Y * u.X * cos_1 + u.Z * sin;
+    m.M12 = u.Y * u.Z * cos_1 - u.X * sin;
+    
+    m.M20 = u.Z * u.X * cos_1 - u.Y * sin;
+    m.M21 = u.Z * u.Y * cos_1 - u.X * sin;
+    
+    return m;
+  }
+}

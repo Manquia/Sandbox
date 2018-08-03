@@ -1,0 +1,23 @@
+[Version:1]
+Cog 
+{
+	var Name = "PathLink"
+	Transform 
+	{
+		var Translation = Real3{0, 0, 0}
+		var Scale = Real3{1, 1, 1}
+		var Rotation = Quaternion{0, 0, 0, 1}
+	}
+	Model 
+	{
+		var Visible = true
+		var ViewCulling = false
+		var VisibilityEvents = false
+		var OverrideBoundingBox = false
+		var LocalAabbCenter = Real3{0, 0, 0}
+		var LocalAabbHalfExtents = Real3{1, 1, 1}
+		var GroupSortValue = 0
+		var Material = "5be5ffebdebf96cf:Snakes"
+		var Mesh = "5bcb0e70262b5136:Cylinder5X"
+	}
+}
