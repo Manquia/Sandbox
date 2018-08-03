@@ -1,0 +1,76 @@
+// Utility Helper to make chains.
+[RunInEditor]
+class ChainMaker : ZilchComponent
+{
+  [Property] var LinkObj : Archetype = null;
+  [Property] var LinkCount : Integer = 16;
+  [Property] var Direction : Real3 = Real3(0,-1,0);
+  [Property] var DistanceBetweenObjs : Real = 2.5;
+  
+  [Property] var COMMAND_Generate : Boolean
+  {
+    get { return false; }
+    set { this.Generate(); }
+  }
+  
+  var Internal_Flag_Initialized : Boolean = false;
+  function Initialize(init : CogInitializer){ this.Internal_Flag_Initialized = true; }
+  
+  function Generate()
+  {
+    if(this.Internal_Flag_Initialized == false)
+      return;
+      
+    if(this.LinkCount < 2)
+      return;
+    
+    // clean up childeren if they exist
+    while(this.Owner.ChildCount != 0)
+    {
+      var child = this.Owner.Children.Current;
+      child.Detach();
+      child.Destroy();
+    }
+    
+    // Make new objects
+    var objs = Array[Cog]();
+    this.Direction = Math.Normalize(this.Direction);
+    for(var i = 0; i < this.LinkCount; ++i)
+    {
+      var obj = this.Space.CreateAtPosition(this.LinkObj, this.Direction * this.DistanceBetweenObjs * i);
+      obj.AttachToPreserveLocal(this.Owner);
+      obj.ClearArchetype();
+      obj.Name = "PT`i`";
+      objs.Add(obj);
+    }
+    
+    
+    // Setup new Objects
+    this.LinkObjects_O1ToO2(objs[0], objs[1]);
+    for(var i = 1; i < objs.Count; ++i)
+    {
+      this.LinkObjects_O1ToO2(objs[i], objs[i-1]);
+    }
+    
+    // setup rigid body
+    objs[0].RigidBody.DynamicState = RigidBodyDynamicState.Static;
+    for(var i = 1; i < objs.Count; ++i)
+    {
+      objs[i].RigidBody.DynamicState = RigidBodyDynamicState.Dynamic;
+    }
+  }
+  
+  function LinkObjects_O1ToO2(o1 : Cog, o2 : Cog)
+  {
+    if(o1.ObjectLink != null)
+    {
+      o1.ObjectLink.ObjectA = o1;
+      o1.ObjectLink.ObjectB = o2;
+    }
+    
+    if(o1.StickJoint != null)
+    {
+      o1.StickJoint.Length = this.DistanceBetweenObjs;
+    }
+  }
+}

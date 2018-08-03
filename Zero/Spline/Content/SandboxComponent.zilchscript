@@ -8,5 +8,6 @@ class SandboxComponent : ZilchComponent
   function OnLogicUpdate(event : UpdateEvent)
   {
     //Console.WriteLine("`Math.AngleBetween(Real3(0,1,0), Real3(0,1,0))`");
+    Console.WriteLine("`this.Owner.Transform.Rotation`");
   }
 }

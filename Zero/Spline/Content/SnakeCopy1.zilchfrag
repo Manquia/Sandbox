@@ -1,5 +1,5 @@
 [Vertex]
-struct Snake
+struct Snake2
 {
   [BuiltInInput] var FrameTime : Real;
   [BuiltInInput] var LocalToView : Real4x4;
@@ -12,12 +12,11 @@ struct Snake
   [StageInput] var LocalNormal : Real3;
   
   // 4th element is the angle of the axis of rotation about the "up" vec
-  [Input] var PT0 : Real3;
-  [Input] var PT1 : Real3;
-  [Input] var PT2 : Real3;
-  [Input] var PT3 : Real3;
-  [Input] var RunSpeed : Real = 0;
-    
+  [Input] var PT0 : Real4;
+  [Input] var PT1 : Real4;
+  [Input] var PT2 : Real4;
+  [Input] var PT3 : Real4;
+  
   [StageInput][Output] var Uv : Real2;
   [Output] var ViewPosition : Real3;
   [Output] var ViewNormal : Real3;
@@ -37,56 +36,64 @@ struct Snake
     
     // we use the Y positio to represent how far a given vert
     // is between the segemnts
-    
-    var mu = (vertPos.Y + 0.5);
+    var mu = vertPos.Y;
     
     // -------------------------------------------------------------------
     // Calculate Rotation Local pos
     // -------------------------------------------------------------------
-    // --- NOTE about visual glitchs: Because the orientation is derrived
-    // from the position of the points on certain angle changes we will
-    // "pinch" the model because we cannot create a perfect rotation unless
-    // we have N points in the shader. OR we could pass in a rotation explicitly
-    // which then just pushed the problem onto the artist or code above the shader.
-    // As it is it looks good and is a semi0simple solution for our needs.
+    // --- NOTE: @POLISH @VISUAL BUG this causes a visual glitch at 
+    // certain angles but mostly looks alright. May want to find a better way
+    // to do this with a rotation passed in or something simular. As it stands we
+    // get semi random rotations around the path's axis which is fine
+    // for ropes/chain/etc. But we may want to add rotation to the
+    // input parameters so that we don't have this issue. Also, if they do pass
+    // rotations they would need to do additional work to make them look "ok"
+    // whereas here they look good most of the time.
     
     // calculate the "up" vector so that we rotate the verts
     // to the other segments
     var upVec : Real3 = Real3();
+    var upAngle : Real = 0;
     scope 
     {
-      // sum of weights = 1.0
       var wMid =    (1.0 - Math.Abs(mu - 0.5));
       var wPast =   (1.0 - Math.Min(mu + 0.5, 1.0));
       var wFuture = (Math.Max(mu - 0.5, 0));
       
-      upVec = upVecMid    * wMid +
-              upVecPast   * wPast +
-              upVecFuture * wFuture;
+      upVec = upVecMid.XYZ    * wMid +
+              upVecPast.XYZ   * wPast +
+              upVecFuture.XYZ * wFuture;
               
-      upVec = Math.Normalize(-upVec);
+      upAngle = upVecMid.W    * wMid +
+                upVecPast.W   * wPast +
+                upVecFuture.W * wFuture;
+      upAngle /= 3; // average angles
     }
     
+    upVec = Math.Normalize(upVec);
     
-    var angle = Math.AngleBetween(Real3(0,-1,0), upVec);
+    
+    var angle = Math.AngleBetween(Real3(0,1,0), upVec);
     var newLocalPos = Real3(this.LocalPosition.X, 0.0, this.LocalPosition.Z);
+    
+    
     
     // if angle is basically up/down the cross will fail so we just set it to
     // identity since that is the assumed starting state of the mesh
     var rotMat : Real3x3 = Real3x3();
-    if(Math.Abs(angle - (Math.Pi/2)) > (Math.Pi/2) - 0.01) // make matrix identity
-    {
-      // rotate by 0 or 180 degrees if we are looking direclty up or down
-      rotMat = Snake.RotationMatrix(Real3(0,0,1), Math.Pi * Math.Floor(angle / (Math.Pi * 0.8)));
-    }
-    else
-    {
+    //if(Math.Abs(angle - (Math.Pi/2)) > (Math.Pi/2) - 0.001) // make matrix identity
+    //{
+    //  rotMat.M00 = 1.0; rotMat.M11 = 1.0; rotMat.M22 = 1;
+    //}
+    //else
+    //{
       // Get rotation for Local vert
-      var rotAxis = Math.Normalize(Math.Cross(upVec, Real3(0,-1,0)));
+      //var rotationAxis = Math.Normalize(Math.Cross(upVec, Real3(0,1,0)));
+      
+      var rotAxis = Math.Multiply(Snake2.RotationMatrix(Real3(0,1,0), upAngle), Real3(0,0,1));
       rotMat = Snake2.RotationMatrix(rotAxis, -angle);
-    }
-    
-    newLocalPos = Math.Multiply(rotMat, newLocalPos);
+      newLocalPos = Math.Multiply(rotMat, newLocalPos);
+    //}
     
     
     // -------------------------------------------------------------------

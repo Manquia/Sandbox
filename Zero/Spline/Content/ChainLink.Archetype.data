@@ -18,6 +18,6 @@ Cog
 		var LocalAabbHalfExtents = Real3{1, 1, 1}
 		var GroupSortValue = 0
 		var Material = "5bc86aa9c0334cd8:MetalChain"
-		var Mesh = "5bc86fb73fbd548d:ChainLinkJoined"
+		var Mesh = "5bce8b0b6d555047:ChainLinkJoined_Centered"
 	}
 }

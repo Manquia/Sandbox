@@ -4,6 +4,7 @@ class PathVisuals : ZilchComponent
   [Property]var SplineType : SplineType = SplineType.BSpline;
   [Property]var Spacing : Real = 5.0;
   [Property]var Closed : Boolean = false;
+  [Property]var RunSpeed : Real = 0;
   
   [Property]var PathLink  : Archetype = null;
   [Property]var PathBegin : Archetype = null;
@@ -98,7 +99,7 @@ class PathVisuals : ZilchComponent
     // We don't have enough points
     if(pts.Count < 2) return;
     
-    this.AdjustVisualCount();
+    this.AdjustVisualCount(this.Path.Spline.BakedPoints.Count);
       
     var closed = this.Closed;
     
@@ -119,6 +120,7 @@ class PathVisuals : ZilchComponent
     if(closed)  pt3 = pts.Get(2 % pts.Count).Position;
     else        pt3 = pts.Get(Math.Min(2, ptMaxIndex)).Position;
     
+    var rotationAngle = 0;
     var snakeSegmentIndex = 0;
     while(snakeSegmentIndex < ptMaxIndex)
     {
@@ -129,6 +131,7 @@ class PathVisuals : ZilchComponent
       snakeSegment.PT1 = pt1;
       snakeSegment.PT2 = pt2;
       snakeSegment.PT3 = pt3;
+      snakeSegment.RunSpeed = this.RunSpeed;
       
       ++snakeSegmentIndex;
       
@@ -151,32 +154,11 @@ class PathVisuals : ZilchComponent
         
     }
     
-    while(snakeSegmentIndex < this.SnakeSegments.Count)
-    {
-      this.SnakeSegments[snakeSegmentIndex].Visible = false;
-      ++snakeSegmentIndex;
-    }
+    
+    
   }
   
-  function AddVisual()
-  {
-    var pool = this.ObjectPool;
-    var visual = this.Space.CreateAtPosition(this.PathLink, Real3.Zero);
-    visual.AttachToPreserveLocal(pool);
-    //visual.ClearArchetype();
-    
-    var model = visual.Model;
-    model.Material = model.Material.RuntimeClone();
-    var snake = visual.Model.Material.Snake;
-    
-    this.Snakes.Add(snake);
-    this.SnakeSegments.Add(model);
-  }
-  function RemoveVisual()
-  {
-    this.Snakes.Pop();
-    this.SnakeSegments.Pop().Owner.Destroy();
-  }
+  
   
   var ObjectPool : Cog = null;
   function GetOrMakeObjectPool() : Cog
@@ -232,21 +214,42 @@ class PathVisuals : ZilchComponent
       this.Path.Closed      = this.Closed;
   }
   
-  function AdjustVisualCount()
+  function AdjustVisualCount(ptCount : Integer)
   {
     this.Path.RebuildIfModified();
-    var ptCount = this.Path.Spline.BakedPoints.Count;
     if(ptCount < 2) ptCount = 1;
     
     this.GetOrMakeObjectPool();
     
     // Add?
     while(this.SnakeSegments.Count < ptCount -1)
-      this.AddVisual();
+    {
+      if(this.PathBegin != null && this.SnakeSegments.Count == 0)             this.AddVisual(this.PathBegin);
+      else if(this.PathEnd != null && this.SnakeSegments.Count == ptCount -2) this.AddVisual(this.PathEnd);
+      else this.AddVisual(this.PathLink);
+    }
     
     // remove?
     while(this.SnakeSegments.Count > ptCount -1)
       this.RemoveVisual();
+  }
+  function AddVisual(arch : Archetype)
+  {
+    var pool = this.ObjectPool;
+    var visual = this.Space.CreateAtPosition(arch, Real3.Zero);
+    visual.AttachToPreserveLocal(pool);
+    
+    var model = visual.Model;
+    model.Material = model.Material.RuntimeClone();
+    var snake = visual.Model.Material.Snake;
+    
+    this.Snakes.Add(snake);
+    this.SnakeSegments.Add(model);
+  }
+  function RemoveVisual()
+  {
+    this.Snakes.Pop();
+    this.SnakeSegments.Pop().Owner.Destroy();
   }
   
   function IndexVisuals()

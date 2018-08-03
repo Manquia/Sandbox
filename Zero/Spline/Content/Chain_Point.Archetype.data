@@ -1,0 +1,91 @@
+[Version:1]
+Cog 
+{
+	var Name = "UNINIT_T"
+	Transform 
+	{
+		var Translation = Real3{0, 0, 0}
+		var Scale = Real3{1, 1, 1}
+		var Rotation = Quaternion{0, 0, 0, 1}
+	}
+	RigidBody 
+	{
+		var Velocity = Real3{0, 0, 0}
+		var AngularVelocity = Real3{0, 0, 0}
+		var DynamicState = RigidBodyDynamicState.Static
+		var AllowSleep = true
+		var Asleep = false
+		var RotationLocked = false
+		var Mode2D = Mode2DStates.InheritFromSpace
+	}
+	ObjectLink 
+	{
+		var ObjectAPath = CogPath
+		{
+			var Path = "."
+			var ErrorOnResolveToNull = false
+			var ErrorOnPathCantCompute = false
+			var ErrorOnDirectLinkFail = false
+			var UpdateCogOnPathChange = true
+			var UpdatePathOnCogChange = true
+			var UpdateCogOnInitialize = true
+			var ResolvedNullErrorOccurred = false
+			var Cog = 4294967293
+			var PathPreference0 = CogPathPreference.CogRelative
+			var PathPreference1 = CogPathPreference.SpaceRelative
+			var PathPreference2 = CogPathPreference.Absolute
+		}
+		var ObjectBPath = CogPath
+		{
+			var Path = "../T2"
+			var ErrorOnResolveToNull = false
+			var ErrorOnPathCantCompute = false
+			var ErrorOnDirectLinkFail = false
+			var UpdateCogOnPathChange = true
+			var UpdatePathOnCogChange = true
+			var UpdateCogOnInitialize = true
+			var ResolvedNullErrorOccurred = false
+			var Cog = 4294967293
+			var PathPreference0 = CogPathPreference.CogRelative
+			var PathPreference1 = CogPathPreference.SpaceRelative
+			var PathPreference2 = CogPathPreference.Absolute
+		}
+		var LocalPointA = Real3{0, 0, 0}
+		var LocalPointB = Real3{0, 0, 0}
+	}
+	SphereCollider 
+	{
+		var Ghost = false
+		var SendsEvents = true
+		var Material = "4de020863e872da8:DefaultPhysicsMaterial"
+		var CollisionGroup = "4e740859314e5515:DefaultGroup"
+		var Offset = Real3{0, 0, 0}
+		var Radius = 0.00100000005
+	}
+	IgnoreSpaceEffects 
+	{
+		var IgnoreDrag = true
+		var IgnoreFlow = true
+		var IgnoreForce = true
+		var IgnoreGravity = false
+		var IgnorePointForce = true
+		var IgnorePointGravity = true
+		var IgnoreThrust = true
+		var IgnoreVortex = true
+		var IgnoreWind = true
+		var IgnoreTorque = true
+		var IgnoreBuoyancy = true
+		var IgnoreCustom = true
+	}
+	StickJoint 
+	{
+		var Active = true
+		var SendsEvents = true
+		var AutoSnaps = false
+		var CollideConnected = true
+		var MaxImpulse = 0
+		var Length = 1.00681782
+		var LocalPointA = Real3{0, 0, 0}
+		var LocalPointB = Real3{0, 0, 0}
+	}
+}

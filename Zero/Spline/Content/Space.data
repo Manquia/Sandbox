@@ -22,7 +22,7 @@ Space
 	PhysicsSpace 
 	{
 		var AllowSleep = true
-		var Mode2D = true
+		var Mode2D = false
 		var Deterministic = true
 		var SubStepCount = 1
 		var CollisionTable = "4e66a5c0b9dc59b9:DefaultCollisionTable"

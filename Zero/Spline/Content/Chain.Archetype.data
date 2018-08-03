@@ -1,0 +1,212 @@
+[Version:1]
+Cog 
+{
+	var Name = "Chain"
+	Transform 
+	{
+		var Translation = Real3{-58.773365, 13.2761431, 9.29136562}
+		var Scale = Real3{1, 1, 1}
+		var Rotation = Quaternion{0, 0, 0, 1}
+	}
+	PathVisuals 
+	{
+		var SplineType = SplineType.Linear
+		var Spacing = 0.5
+		var Closed = false
+		var PathLink = "5bc87562328112b4:ChainLink"
+		var PathBegin = "null"
+		var PathEnd = "null"
+		var Dynamic = true
+		var Dynamic_S = true
+		var COMMAND_Generate = false
+	}
+	Hierarchy 
+	{
+		Cog [Id:0x5bcb7e17c95457de]
+		{
+			var Name = "Points"
+			Transform 
+			{
+				var Translation = Real3{0, 0, 5.73578453}
+				var Scale = Real3{1, 1, 1}
+				var Rotation = Quaternion{0, 0, 0, 1}
+			}
+			HierarchySpline 
+			{
+				var Closed = false
+				var SplineType = SplineType.Linear
+				var Error = 0.5
+				var DebugDrawSpline = true
+				var SplineColor = Real4{0, 0, 0, 1}
+			}
+			Hierarchy 
+			{
+				Cog [Id:0x5bcb7fe0d1d0c9e4]
+				{
+					var Name = "Transform"
+					Transform 
+					{
+						var Translation = Real3{0, 6.21753216, 0}
+						var Scale = Real3{1, 1, 1}
+						var Rotation = Quaternion{0, 0, 0, 1}
+					}
+				}
+				Cog [Id:0x5bcb78f0b9d49d10]
+				{
+					var Name = "Transform"
+					Transform 
+					{
+						var Translation = Real3{0, 1.8352021, 0}
+						var Scale = Real3{1, 1, 1}
+						var Rotation = Quaternion{0, 0, 0, 1}
+					}
+				}
+				Cog [Id:0x5bcb78f2bba9730b]
+				{
+					var Name = "Transform"
+					Transform 
+					{
+						var Translation = Real3{0, -0.0299132913, 0}
+						var Scale = Real3{1, 1, 1}
+						var Rotation = Quaternion{0, 0, 0, 1}
+					}
+				}
+				Cog [Id:0x5bcb78f6bf941a65]
+				{
+					var Name = "Transform"
+					Transform 
+					{
+						var Translation = Real3{0, -2.61097026, 2}
+						var Scale = Real3{1, 1, 1}
+						var Rotation = Quaternion{0, 0, 0, 1}
+					}
+				}
+				Cog [Id:0x5bcebc8fb09f2cb8]
+				{
+					var Name = "Transform"
+					Transform 
+					{
+						var Translation = Real3{0, -2.56107688, 2}
+						var Scale = Real3{1, 1, 1}
+						var Rotation = Quaternion{0, 0, 0, 1}
+					}
+				}
+				Cog [Id:0x5bcebc94b57fafc9]
+				{
+					var Name = "Transform"
+					Transform 
+					{
+						var Translation = Real3{0, 3.24704456, 2}
+						var Scale = Real3{1, 1, 1}
+						var Rotation = Quaternion{0, 0, 0, 1}
+					}
+				}
+				Cog [Id:0x5bcebc96b6a7647e]
+				{
+					var Name = "Transform"
+					Transform 
+					{
+						var Translation = Real3{0, 5.84717846, 2}
+						var Scale = Real3{1, 1, 1}
+						var Rotation = Quaternion{0, 0, 0, 1}
+					}
+				}
+				Cog [Id:0x5bcebc98b9073879]
+				{
+					var Name = "Transform"
+					Transform 
+					{
+						var Translation = Real3{0, 8.03868008, 2}
+						var Scale = Real3{1, 1, 1}
+						var Rotation = Quaternion{0, 0, 0, 1}
+					}
+					Hierarchy 
+					{
+					}
+				}
+				Cog [Id:0x5bcebfab20061461]
+				{
+					var Name = "Transform"
+					Transform 
+					{
+						var Translation = Real3{0, 11.1467028, 2}
+						var Scale = Real3{1, 1, 1}
+						var Rotation = Quaternion{0, 0, 0, 1}
+					}
+					Hierarchy 
+					{
+					}
+				}
+				Cog [Id:0x5bcebfae25cef1dc]
+				{
+					var Name = "Transform"
+					Transform 
+					{
+						var Translation = Real3{0, 15.1751299, 2}
+						var Scale = Real3{1, 1, 1}
+						var Rotation = Quaternion{0, 0, 0, 1}
+					}
+					Hierarchy 
+					{
+					}
+				}
+				Cog [Id:0x5bcebfb329a6b2ce]
+				{
+					var Name = "Transform"
+					Transform 
+					{
+						var Translation = Real3{0, 19.1378822, 2}
+						var Scale = Real3{1, 1, 1}
+						var Rotation = Quaternion{0, 0, 0, 1}
+					}
+					Hierarchy 
+					{
+					}
+				}
+			}
+		}
+		Cog [Id:0x5bcebd14fd0cf051]
+		{
+			var Name = "ObjectPool"
+			Transform 
+			{
+				var Translation = Real3{58.773365, -13.2761431, -9.29136562}
+				var Scale = Real3{1, 1, 1}
+				var Rotation = Quaternion{0, 0, 0, 1}
+			}
+			Hierarchy 
+			{
+				Cog [Id:0x5bcebe966a110efe][InheritId:"5bc87562328112b4:ChainLink"]
+				{
+				}
+				Cog [Id:0x5bcebe966a110f29][InheritId:"5bc87562328112b4:ChainLink"]
+				{
+				}
+				Cog [Id:0x5bcebe966a110f4d][InheritId:"5bc87562328112b4:ChainLink"]
+				{
+				}
+				Cog [Id:0x5bcebe966a110f6a][InheritId:"5bc87562328112b4:ChainLink"]
+				{
+				}
+				Cog [Id:0x5bcebe966a110f8e][InheritId:"5bc87562328112b4:ChainLink"]
+				{
+				}
+				Cog [Id:0x5bcebe966a110fab][InheritId:"5bc87562328112b4:ChainLink"]
+				{
+				}
+				Cog [Id:0x5bcebe966a110fcf][InheritId:"5bc87562328112b4:ChainLink"]
+				{
+				}
+				Cog [Id:0x5bcebe966a110fec][InheritId:"5bc87562328112b4:ChainLink"]
+				{
+				}
+				Cog [Id:0x5bcebe966a111010][InheritId:"5bc87562328112b4:ChainLink"]
+				{
+				}
+				Cog [Id:0x5bcebe966a11102d][InheritId:"5bc87562328112b4:ChainLink"]
+				{
+				}
+			}
+		}
+	}
+}

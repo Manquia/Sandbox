@@ -1,7 +1,7 @@
 [Version:1]
 Cog 
 {
-	var Name = "RopeLink"
+	var Name = "PathLink"
 	Transform 
 	{
 		var Translation = Real3{0, -0.5, 0}
@@ -17,7 +17,7 @@ Cog
 		var LocalAabbCenter = Real3{0, 0, 0}
 		var LocalAabbHalfExtents = Real3{1, 1, 1}
 		var GroupSortValue = 0
-		var Material = "5bc897efd4a74aeb:Rope"
-		var Mesh = "5bceb2bded6d5a54:Cylinder6X_Centered"
+		var Material = "5bc86aa9c0334cd8:MetalChain"
+		var Mesh = "5bce8b0c6c8a17e2:ChainLinkTopEnd_Centered"
 	}
 }
