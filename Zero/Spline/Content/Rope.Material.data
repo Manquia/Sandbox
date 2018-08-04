@@ -8,28 +8,29 @@ Material
 	}
 	AlbedoMap 
 	{
-		var AlbedoMap = "5bc8962f9fe7ae6f:Rope03_col"
+		var AlbedoMap = "58269ef7734c0e55:Grey"
 	}
 	NormalMap 
 	{
-		var NormalMap = "5bc8962f9feed2a8:Rope03_nrm"
+		var NormalMap = "58269ef7734c0e55:Grey"
 		var Bumpiness = 0.5
 		var RedLeft = false
 		var GreenDown = false
 	}
 	MetallicMap 
 	{
-		var MetallicMap = "5bc8962f9fe18736:Rope03_met"
+		var MetallicMap = "58269ef7734c0e55:Grey"
 	}
 	RoughnessMap 
 	{
-		var RoughnessMap = "5bc8962f9feed2a8:Rope03_nrm"
+		var RoughnessMap = "58269ef7734c0e55:Grey"
 	}
-	Snake 
+	SplineVertShader 
 	{
 		var PT0 = Real3{0, -1, 0}
 		var PT1 = Real3{0, 0, 0}
 		var PT2 = Real3{0, 1, 0}
 		var PT3 = Real3{0, 2, 0}
+		var RunSpeed = 0
 	}
 }

@@ -53,10 +53,10 @@ class ChainMaker : ZilchComponent
     }
     
     // setup rigid body
-    objs[0].RigidBody.DynamicState = RigidBodyDynamicState.Static;
+    if(objs[0].RigidBody != null) objs[0].RigidBody.DynamicState = RigidBodyDynamicState.Static;
     for(var i = 1; i < objs.Count; ++i)
     {
-      objs[i].RigidBody.DynamicState = RigidBodyDynamicState.Dynamic;
+      if(objs[i].RigidBody != null) objs[i].RigidBody.DynamicState = RigidBodyDynamicState.Dynamic;
     }
   }
   

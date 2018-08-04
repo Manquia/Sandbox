@@ -1,10 +1,16 @@
 //
 //
+// Author: Micah Rust
+// 
+// A simple spline vertex shader which takes a model between
+// the y values -0.5 to 0.5 and renders it along the 4 given
+// points. The input for this is set in PathVisuals
 //
-//
-//
+
+
+// assumes model has a height of exactly 1.0 starting from -0.5 -> 0.5 in the y dimension
 [Vertex]
-struct Snake
+struct SplineVertShader
 {
   [BuiltInInput] var FrameTime : Real;
   [BuiltInInput] var LocalToView : Real4x4;
@@ -30,7 +36,6 @@ struct Snake
   [Output] var ViewBitangent : Real3;
   [Output] var PerspectivePosition : Real4;
 
-  // assumes model has a height of exactly 1.0 starting from 0 in the y dimension
   function Main()
   {
     var vertPos = this.LocalPosition;
@@ -84,13 +89,13 @@ struct Snake
     if(Math.Abs(angle - (Math.Pi/2)) > (Math.Pi/2) - 0.01) // make matrix identity
     {
       // rotate by 0 or 180 degrees if we are looking direclty up or down
-      rotMat = Snake.RotationMatrix(Real3(0,0,1), Math.Pi * Math.Floor(angle / (Math.Pi * 0.8)));
+      rotMat = Util.RotationMatrix(Real3(0,0,1), Math.Pi * Math.Floor(angle / (Math.Pi * 0.8)));
     }
     else
     {
       // Get rotation for Local vert
       var rotAxis = Math.Normalize(Math.Cross(upVec, Real3(0,-1,0)));
-      rotMat = Snake.RotationMatrix(rotAxis, -angle);
+      rotMat = Util.RotationMatrix(rotAxis, -angle);
     }
     
     newLocalPos = Math.Multiply(rotMat, newLocalPos);
@@ -163,7 +168,11 @@ struct Snake
     this.PerspectivePosition = Math.Multiply(this.LocalToPerspective, Real4(pos, 1.0));
   }
   
+}
+
   // Utility Function b/c Zero's shader library isn't very mature yet
+struct Util
+{
   [Static]
   function RotationMatrix(u : Real3, t : Real) : Real3x3
   {

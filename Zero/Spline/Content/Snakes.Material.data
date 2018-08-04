@@ -25,11 +25,12 @@ Material
 	{
 		var RoughnessMap = "58269ef7734c0e55:Grey"
 	}
-	Snake 
+	SplineVertShader 
 	{
-		var PT0 = Real3{1, -2, 0}
+		var PT0 = Real3{0, -1, 0}
 		var PT1 = Real3{0, 0, 0}
-		var PT2 = Real3{0, 1, 0}
-		var PT3 = Real3{1, 2, 0}
+		var PT2 = Real3{0, 2, 0}
+		var PT3 = Real3{0, 3, 0}
+		var RunSpeed = 0
 	}
 }

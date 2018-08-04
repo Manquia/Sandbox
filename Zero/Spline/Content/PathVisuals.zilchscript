@@ -40,8 +40,8 @@ class PathVisuals : ZilchComponent
     }
   }
   
-  var Snakes : Array[Snake] = new Array[Snake]();
-  var SnakeSegments : Array[Model] = new Array[Model]();
+  var Splines : Array[SplineVertShader] = new Array[SplineVertShader]();
+  var Segments : Array[Model] = new Array[Model]();
   
   
   var Internal_Flag_Initialized : Boolean = false;
@@ -81,12 +81,12 @@ class PathVisuals : ZilchComponent
   function UpdateVisuals()
   {
     // destroy references to points which have been destroyed
-    for(var i = 0; i < this.SnakeSegments.Count; ++i)
+    for(var i = 0; i < this.Segments.Count; ++i)
     {
-      if(this.SnakeSegments[i] == null)
+      if(this.Segments[i] == null)
       {
-        this.SnakeSegments.RemoveAt(i);
-        this.Snakes.RemoveAt(i);
+        this.Segments.RemoveAt(i);
+        this.Splines.RemoveAt(i);
         --i;
       }
     }
@@ -111,7 +111,7 @@ class PathVisuals : ZilchComponent
     var pt1 = pts.Get(0).Position;
     var pt2 = pts.Get(Math.Min(1, ptMaxIndex)).Position;
     
-    if(this.Snakes[0] == null)
+    if(this.Splines[0] == null)
     {
       Console.WriteLine("Given archetype for PathLink doesn't have a valid material. It is on an object called: `this.Owner.Name`");
       return;
@@ -125,8 +125,8 @@ class PathVisuals : ZilchComponent
     var snakeSegmentIndex = 0;
     while(snakeSegmentIndex < ptMaxIndex)
     {
-      this.SnakeSegments[snakeSegmentIndex].Visible = true;
-      var snakeSegment = this.Snakes[snakeSegmentIndex];
+      this.Segments[snakeSegmentIndex].Visible = true;
+      var snakeSegment = this.Splines[snakeSegmentIndex];
       
       snakeSegment.PT0 = pt0;
       snakeSegment.PT1 = pt1;
@@ -223,15 +223,15 @@ class PathVisuals : ZilchComponent
     this.GetOrMakeObjectPool();
     
     // Add?
-    while(this.SnakeSegments.Count < ptCount -1)
+    while(this.Segments.Count < ptCount -1)
     {
-      if(this.PathBegin != null && this.SnakeSegments.Count == 0)             this.AddVisual(this.PathBegin);
-      else if(this.PathEnd != null && this.SnakeSegments.Count == ptCount -2) this.AddVisual(this.PathEnd);
+      if(this.PathBegin != null && this.Segments.Count == 0)             this.AddVisual(this.PathBegin);
+      else if(this.PathEnd != null && this.Segments.Count == ptCount -2) this.AddVisual(this.PathEnd);
       else this.AddVisual(this.PathLink);
     }
     
     // remove?
-    while(this.SnakeSegments.Count > ptCount -1)
+    while(this.Segments.Count > ptCount -1)
       this.RemoveVisual();
   }
   function AddVisual(arch : Archetype)
@@ -249,15 +249,15 @@ class PathVisuals : ZilchComponent
     }
     
     model.Material = model.Material.RuntimeClone();
-    var snake = visual.Model.Material.Snake;
+    var snake = visual.Model.Material.SplineVertShader;
     
-    this.Snakes.Add(snake);
-    this.SnakeSegments.Add(model);
+    this.Splines.Add(snake);
+    this.Segments.Add(model);
   }
   function RemoveVisual()
   {
-    this.Snakes.Pop();
-    this.SnakeSegments.Pop().Owner.Destroy();
+    this.Splines.Pop();
+    this.Segments.Pop().Owner.Destroy();
   }
   
   function IndexVisuals()
@@ -265,8 +265,8 @@ class PathVisuals : ZilchComponent
     var link = this.Space.Create(this.PathLink);
     var linkMateial = link.Model.Material;
     
-    this.SnakeSegments.Clear();
-    this.Snakes.Clear();
+    this.Segments.Clear();
+    this.Splines.Clear();
     
     this.GetOrMakeObjectPool();
     
@@ -283,8 +283,8 @@ class PathVisuals : ZilchComponent
       }
       
       
-      this.SnakeSegments.Push(child.Model);
-      this.Snakes.Push(model.Material.Snake);
+      this.Segments.Push(child.Model);
+      this.Splines.Push(model.Material.SplineVertShader);
     }
     
     link.Destroy();
