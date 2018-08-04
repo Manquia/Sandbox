@@ -1,9 +1,0 @@
-[Version:1]
-TextContent 
-{
-	ZilchFragmentBuilder 
-	{
-		var Name = "Oscillate"
-		var ResourceId = 0x5be5f88f0f1937c9
-	}
-}

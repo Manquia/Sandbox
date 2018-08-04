@@ -1,0 +1,9 @@
+[Version:1]
+TextContent 
+{
+	ZilchScriptBuilder 
+	{
+		var Name = "InputEffects"
+		var ResourceId = 0x5bcef61dabb9765a
+	}
+}

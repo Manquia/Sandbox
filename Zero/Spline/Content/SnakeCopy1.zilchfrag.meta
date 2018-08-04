@@ -1,9 +1,0 @@
-[Version:1]
-TextContent 
-{
-	ZilchFragmentBuilder 
-	{
-		var Name = "SnakeCopy1"
-		var ResourceId = 0x5bc9f9931de30745
-	}
-}

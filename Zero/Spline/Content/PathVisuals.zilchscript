@@ -9,6 +9,7 @@ class PathVisuals : ZilchComponent
   [Property]var PathLink  : Archetype = null;
   [Property]var PathBegin : Archetype = null;
   [Property]var PathEnd  : Archetype = null;
+  [Property]var MaterialOverride : Material = null;
   
   [Static]var ObjectPoolName : String = "ObjectPool";
   [Static]var PathName : String = "Points";
@@ -240,6 +241,13 @@ class PathVisuals : ZilchComponent
     visual.AttachToPreserveLocal(pool);
     
     var model = visual.Model;
+    
+    if(this.MaterialOverride != null)
+    {
+      visual.ClearArchetype();
+      model.Material = this.MaterialOverride;
+    }
+    
     model.Material = model.Material.RuntimeClone();
     var snake = visual.Model.Material.Snake;
     
@@ -265,7 +273,15 @@ class PathVisuals : ZilchComponent
     foreach(var child in this.ObjectPool.Children)
     {
       var model = child.Model;
-      model.Material = linkMateial.RuntimeClone();
+      if(this.MaterialOverride != null)
+      {
+        model.Material = this.MaterialOverride.RuntimeClone();
+      }
+      else
+      {
+        model.Material = linkMateial.RuntimeClone();
+      }
+      
       
       this.SnakeSegments.Push(child.Model);
       this.Snakes.Push(model.Material.Snake);

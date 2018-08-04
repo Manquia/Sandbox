@@ -2,11 +2,10 @@
 GameSession 
 {
 	var Name = ""
-	var LinkId = 1
 	DefaultGameSetup 
 	{
 		var StartingSpace = "576f215c0825de61:Space"
-		var StartingLevel = "59097123da28242a:Level"
+		var StartingLevel = "5bc9d0bc0a52eec6:Demo"
 		var LoadEditingLevel = true
 	}
 	NetPeer 
@@ -14,6 +13,9 @@ GameSession
 		var DetectOutgoingChanges = true
 		var AcceptIncomingChanges = true
 		var AllowNapping = true
+		var AccurateTimestampOnOnline = true
+		var AccurateTimestampOnChange = true
+		var AccurateTimestampOnOffline = true
 		var AutomaticChannel = "56f22bdc94800e65:Default"
 		var NetPropertyInfos = Array
 		{

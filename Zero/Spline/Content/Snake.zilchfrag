@@ -1,3 +1,8 @@
+//
+//
+//
+//
+//
 [Vertex]
 struct Snake
 {
@@ -37,8 +42,10 @@ struct Snake
     
     // we use the Y positio to represent how far a given vert
     // is between the segemnts
-    
-    var mu = (vertPos.Y + 0.5);
+    // --- NOTE: @Refactor This isn't quite right but can't be done correclty with current
+    // object setup. We would need to allow segments to overlap to make this work
+    // correctly for things like chains.
+    var mu = (vertPos.Y + 0.5) + Math.Frac(this.RunSpeed * this.FrameTime);
     
     // -------------------------------------------------------------------
     // Calculate Rotation Local pos
@@ -83,7 +90,7 @@ struct Snake
     {
       // Get rotation for Local vert
       var rotAxis = Math.Normalize(Math.Cross(upVec, Real3(0,-1,0)));
-      rotMat = Snake2.RotationMatrix(rotAxis, -angle);
+      rotMat = Snake.RotationMatrix(rotAxis, -angle);
     }
     
     newLocalPos = Math.Multiply(rotMat, newLocalPos);
