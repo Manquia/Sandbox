@@ -76,29 +76,50 @@ struct SplineVertShader
               upVecPast   * wPast +
               upVecFuture * wFuture;
               
-      upVec = Math.Normalize(-upVec);
+      upVec = Math.Normalize(upVec);
     }
     
+    // Either 0(up) or 1(down) depending on the direction it points
+    var pointsDown = Math.Ceil(-upVec.Y);
+    // if down, invert
+    upVec = upVec * (1.0 - 2.0 * pointsDown);
+    var axisAngle = Math.AngleBetween(Real3(0,1,0), upVec);
     
-    var angle = Math.AngleBetween(Real3(0,-1,0), upVec);
     var newLocalPos = Real3(this.LocalPosition.X, 0.0, this.LocalPosition.Z);
     
-    // if angle is basically up/down the cross will fail so we just set it to
-    // identity since that is the assumed starting state of the mesh
-    var rotMat : Real3x3 = Real3x3();
-    if(Math.Abs(angle - (Math.Pi/2)) > (Math.Pi/2) - 0.01) // make matrix identity
+    // @WIP Work in progress to fix the visual bug
+    var planeVec = Math.Normalize(Math.Abs(Real2(upVec.X, upVec.Z)));
+    var spinAngleVec = Math.Min(planeVec.X/planeVec.Y, planeVec.Y/planeVec.X);
+    var spinAngle = Math.Tan(spinAngleVec) * 2;
+    // @WIP
+    
+    // rotate by 0 or 180 degrees spin to align with other chains
+    var rotMat = Util.RotationMatrix(Real3(0,1,0), Math.Pi * pointsDown);
+    // rotate by 0 or 180 degrees if we are looking direclty up or down
+    rotMat = Math.Multiply(Util.RotationMatrix(Real3(0,0,1), Math.Pi * pointsDown), rotMat);
+    
+    // if angle is basically up/down we don't need a rotation and need to
+    //  conditionally skip the cross product below
+    if(Math.Abs(axisAngle - (Math.Pi/2)) > (Math.Pi/2) - 0.01) // no rotation needed
     {
-      // rotate by 0 or 180 degrees if we are looking direclty up or down
-      rotMat = Util.RotationMatrix(Real3(0,0,1), Math.Pi * Math.Floor(angle / (Math.Pi * 0.8)));
     }
     else
     {
-      // Get rotation for Local vert
-      var rotAxis = Math.Normalize(Math.Cross(upVec, Real3(0,-1,0)));
-      rotMat = Util.RotationMatrix(rotAxis, -angle);
+      // cross from either up or down to get rotation axis
+      var rotAxis = Math.Normalize(Math.Cross(
+        upVec, Real3(0,1,0)));
+      
+      // rotate by (axisAngle) OR (Math.Pi - axisAngle)
+      rotMat = Math.Multiply(
+          Util.RotationMatrix(rotAxis, -axisAngle),
+          rotMat);
     }
     
     newLocalPos = Math.Multiply(rotMat, newLocalPos);
+    
+    
+    
+    
     
     
     // -------------------------------------------------------------------
@@ -196,4 +217,38 @@ struct Util
     
     return m;
   }
+  
+  
+  /*
+  Double Sided technique
+  
+  
+  
+    var axisAngle = Math.AngleBetween(Real3(0,1,0), upVec);
+    // Either 0(up) or 1(down) depending on the direction it points
+    var pointsDown : Real = Math.Floor(Math.Abs(axisAngle - 0.00001) / (Math.Pi/2));
+    
+    // rotate by 0 or 180 degrees if we are looking direclty up or down
+    var rotMat = Util.RotationMatrix(Real3(1,0,0), Math.Pi * pointsDown);
+    
+    // if angle is basically up/down we don't need a rotation and need to
+    //  conditionally skip the cross product below
+    if(Math.Abs(axisAngle - (Math.Pi/2)) > (Math.Pi/2) - 0.01) // no rotation needed
+    {
+    }
+    else
+    {
+      // cross from either up or down to get rotation axis
+      var rotAxis = Math.Normalize(Math.Cross(
+        upVec,
+        Real3(0, 1.0 - 2.0 * pointsDown,0)));
+      
+      // rotate by (axisAngle) OR (Math.Pi - axisAngle)
+      rotMat = Math.Multiply(
+          Util.RotationMatrix(rotAxis, -Math.Abs((Math.Pi * pointsDown -axisAngle))),
+          rotMat);
+    }
+    
+  
+  */
 }
