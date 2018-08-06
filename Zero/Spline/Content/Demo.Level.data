@@ -321,9 +321,9 @@ Level
 		var Name = "EditorCamera"
 		Transform 
 		{
-			var Translation = Real3{-54.1773682, 9.3983593, 21.9003887}
+			var Translation = Real3{-59.742588, 10.9071484, 14.942812}
 			var Scale = Real3{1, 1, 1}
-			var Rotation = Quaternion{-0.180559456, 0.133082345, 0.024665447, 0.974206805}
+			var Rotation = Quaternion{-0.249140844, -0.546018183, -0.174257442, 0.780658185}
 		}
 		CameraViewport 
 		{
@@ -380,10 +380,10 @@ Level
 		{
 			var ControlMode = ControlMode.Orbit
 			var Previous3DMode = ControlMode.Orbit
-			var LookDistance = 6.78792477
-			var VerticalAngle = 0.366520911
-			var HorizontalAngle = 43.7107658
-			var LookTarget = Real3{-55.8770142, 6.96577406, 15.7955017}
+			var LookDistance = 6.7879281
+			var VerticalAngle = 0.617849112
+			var HorizontalAngle = 45.2029877
+			var LookTarget = Real3{-54.5452232, 6.97501564, 13.045002}
 			var MoveSensitivity = 1
 		}
 		Hierarchy 
@@ -17211,13 +17211,13 @@ Level
 				{
 					var LinkObj = "5bcea03040e1d49a:Chain_Point"
 					var LinkCount = 7
-					var Direction = Real3{0, 0, 0.99999994}
+					var Direction = Real3{0, 1, 0}
 					var DistanceBetweenObjs = 1
 					var COMMAND_Generate = false
 				}
 				Hierarchy 
 				{
-					Cog [Id:0x5bc2d4464d37373e][ContextId:474]
+					Cog [Id:0x5bc2dc5d32421bf7][ContextId:474]
 					{
 						var Name = "PT0"
 						Transform 
@@ -17307,12 +17307,12 @@ Level
 							var LocalPointB = Real3{0, 0, 0}
 						}
 					}
-					Cog [Id:0x5bc2d4464d374347][ContextId:475]
+					Cog [Id:0x5bc2dc5d324225d7][ContextId:475]
 					{
 						var Name = "PT1"
 						Transform 
 						{
-							var Translation = Real3{1.25088501, 0.232210636, 0.99999994}
+							var Translation = Real3{0, 1, 0}
 							var Scale = Real3{1, 1, 1}
 							var Rotation = Quaternion{0, 0, 0, 1}
 						}
@@ -17397,12 +17397,12 @@ Level
 							var LocalPointB = Real3{0, 0, 0}
 						}
 					}
-					Cog [Id:0x5bc2d4464d375030][ContextId:476]
+					Cog [Id:0x5bc2dc5d324230f2][ContextId:476]
 					{
 						var Name = "PT2"
 						Transform 
 						{
-							var Translation = Real3{1.25088501, 0.566075802, 1.99999988}
+							var Translation = Real3{0, 2, 0}
 							var Scale = Real3{1, 1, 1}
 							var Rotation = Quaternion{0, 0, 0, 1}
 						}
@@ -17487,12 +17487,12 @@ Level
 							var LocalPointB = Real3{0, 0, 0}
 						}
 					}
-					Cog [Id:0x5bc2d4464d375b67][ContextId:477]
+					Cog [Id:0x5bc2dc5d32423a77][ContextId:477]
 					{
 						var Name = "PT3"
 						Transform 
 						{
-							var Translation = Real3{1.25088501, 0.584543705, 2.99999976}
+							var Translation = Real3{0, 3, 0}
 							var Scale = Real3{1, 1, 1}
 							var Rotation = Quaternion{0, 0, 0, 1}
 						}
@@ -17577,12 +17577,12 @@ Level
 							var LocalPointB = Real3{0, 0, 0}
 						}
 					}
-					Cog [Id:0x5bc2d4464d37669e][ContextId:478]
+					Cog [Id:0x5bc2dc5d32424346][ContextId:478]
 					{
 						var Name = "PT4"
 						Transform 
 						{
-							var Translation = Real3{1.25088501, 0.419029713, 3.99999976}
+							var Translation = Real3{0, 4, 0}
 							var Scale = Real3{1, 1, 1}
 							var Rotation = Quaternion{0, 0, 0, 1}
 						}
@@ -17667,12 +17667,12 @@ Level
 							var LocalPointB = Real3{0, 0, 0}
 						}
 					}
-					Cog [Id:0x5bc2d4464d377214][ContextId:479]
+					Cog [Id:0x5bc2dc5d32424bf2][ContextId:479]
 					{
 						var Name = "PT5"
 						Transform 
 						{
-							var Translation = Real3{1.25088501, 0.170161724, 4.99999952}
+							var Translation = Real3{0, 5, 0}
 							var Scale = Real3{1, 1, 1}
 							var Rotation = Quaternion{0, 0, 0, 1}
 						}
@@ -17757,12 +17757,12 @@ Level
 							var LocalPointB = Real3{0, 0, 0}
 						}
 					}
-					Cog [Id:0x5bc2d4464d377d59][ContextId:480]
+					Cog [Id:0x5bc2dc5d324254a5][ContextId:480]
 					{
 						var Name = "PT6"
 						Transform 
 						{
-							var Translation = Real3{0, 0, 5.99999952}
+							var Translation = Real3{0, 6, 0}
 							var Scale = Real3{1, 1, 1}
 							var Rotation = Quaternion{0, 0, 0, 1}
 						}
@@ -17849,7 +17849,7 @@ Level
 					}
 				}
 			}
-			Cog [Id:0x5bc2d7d57a2dbc2d][ContextId:481]
+			Cog [Id:0x5bc2dc48239c639d][ContextId:481]
 			{
 				var Name = "ObjectPool"
 				Transform 
@@ -17860,22 +17860,22 @@ Level
 				}
 				Hierarchy 
 				{
-					Cog [Id:0x5bc2d7b6962e4607][InheritId:"5bc87562328112b4:ChainLink"][ContextId:482]
+					Cog [Id:0x5bc2dc105e295ea1][InheritId:"5bc87562328112b4:ChainLink"][ContextId:482]
 					{
 					}
-					Cog [Id:0x5bc2d7b6962e462b][InheritId:"5bc87562328112b4:ChainLink"][ContextId:483]
+					Cog [Id:0x5bc2dc105e295ecc][InheritId:"5bc87562328112b4:ChainLink"][ContextId:483]
 					{
 					}
-					Cog [Id:0x5bc2d7b6962e464f][InheritId:"5bc87562328112b4:ChainLink"][ContextId:484]
+					Cog [Id:0x5bc2dc105e295ee9][InheritId:"5bc87562328112b4:ChainLink"][ContextId:484]
 					{
 					}
-					Cog [Id:0x5bc2d7b6962e466c][InheritId:"5bc87562328112b4:ChainLink"][ContextId:485]
+					Cog [Id:0x5bc2dc105e295f0d][InheritId:"5bc87562328112b4:ChainLink"][ContextId:485]
 					{
 					}
-					Cog [Id:0x5bc2d7b6962e4689][InheritId:"5bc87562328112b4:ChainLink"][ContextId:486]
+					Cog [Id:0x5bc2dc105e295f2a][InheritId:"5bc87562328112b4:ChainLink"][ContextId:486]
 					{
 					}
-					Cog [Id:0x5bc2d7b6962e46ad][InheritId:"5bc87562328112b4:ChainLink"][ContextId:487]
+					Cog [Id:0x5bc2dc105e295f47][InheritId:"5bc87562328112b4:ChainLink"][ContextId:487]
 					{
 					}
 				}

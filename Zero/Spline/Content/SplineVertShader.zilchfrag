@@ -80,7 +80,7 @@ struct SplineVertShader
     }
     
     // Either 0(up) or 1(down) depending on the direction it points
-    var pointsDown = Math.Ceil(-upVec.Y);
+    var pointsDown = Math.Ceil(-(upVec.Y * 0.9999999));
     // if down, invert
     upVec = upVec * (1.0 - 2.0 * pointsDown);
     var axisAngle = Math.AngleBetween(Real3(0,1,0), upVec);
