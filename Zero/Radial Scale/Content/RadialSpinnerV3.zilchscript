@@ -1,0 +1,38 @@
+[RunInEditor]
+class RadialSpinnerV3 : ZilchComponent
+{
+  // In degrees
+  [Property]var ScaleMaterial : Material = Material.RadialScaleV3;
+  [Property]var Angle : Real = 360;
+  [Property]var Width : Real = 0.2;
+  [Property]var Length : Real = 1.0;
+  
+  
+  [Property]var Color : Real4 = Real4(1,1,1,1);
+  var Material : Material = null;
+  
+  var Internal_Initialized : Boolean = false;
+  function Initialize(init : CogInitializer)
+  {
+    Zero.Connect(this.Space, Events.FrameUpdate, this.OnFrameUpdate);
+    
+    var model = this.Owner.Model;
+    this.Material = this.ScaleMaterial.RuntimeClone();
+    model.Material = this.Material;
+    
+    
+    this.Internal_Initialized = true;
+  }
+
+  function OnFrameUpdate(event : UpdateEvent)
+  {
+    if(this.Internal_Initialized == false ||
+       this.Material.RadialScaleV3 == null)
+      return;
+      
+    this.Material.RadialScaleV3.Angle = Math.ToRadians(this.Angle);
+    this.Material.RadialScaleV3.Radius = this.Length;
+    this.Material.RadialScaleV3.Width = this.Width;
+    this.Material.RadialScaleFrag.ColorValue = this.Color;
+  }
+}

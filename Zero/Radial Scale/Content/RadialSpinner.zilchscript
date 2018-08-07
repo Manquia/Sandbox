@@ -9,7 +9,7 @@ class RadialSpinner : ZilchComponent
   function Initialize(init : CogInitializer)
   {
     Zero.Connect(this.Space, Events.FrameUpdate, this.OnFrameUpdate);
-    
+     
     var model = this.Owner.Model;
     this.Material = model.Material.RuntimeClone();
     model.Material = this.Material;

@@ -1,0 +1,50 @@
+//
+//  Author: Micah Rust
+//
+// Radially scales a strip of faces between -0.5 and 0.5
+// and scales them  around the the circle described by
+// the parameters.
+//
+// NOTE - This doesn't handle normals/bitangent/tangent
+// transformations but they could be added if needed for
+// doing normal or lite model.
+//
+// Since we are just outputting a color, this isn't needed here.
+//
+[Vertex]
+struct RadialScaleV3
+{
+  // Shader Inputs
+  [BuiltInInput] var LocalToPerspective : Real4x4;
+  [StageInput] var LocalPosition : Real3;
+  
+  // Describe Circle
+  [Input] var Angle : Real;  // in radians
+  [Input] var Radius : Real; // radius of arc
+  [Input] var Width : Real;  // width of arc.
+  
+  // Note: if width > radius, you may get unexpected visual artefacts.
+  
+  // Shader output
+  [Output] var PerspectivePosition : Real4;
+  
+  function Main()
+  {
+    // between -0.5 and 0.5 ---> -1.0 and 1.0
+    var mu = this.LocalPosition.Y * 2;
+    
+    var angle = mu * this.Angle;
+    var length = this.Radius;
+    
+    // 0 when left, 1 when right
+    var pointIsRight = Math.Ceil(this.LocalPosition.X);
+    
+    // if left or right, add width offset
+    length += this.Width * pointIsRight + (-this.Width * (1.0 - pointIsRight));
+    // display along the Z axis
+    this.LocalPosition = Math.Normalize(Real3(Math.Cos(angle), Math.Sin(angle), 0)) * length;
+    
+    // output perspective point
+    this.PerspectivePosition = Math.Multiply(this.LocalToPerspective, Real4(this.LocalPosition, 1.0));
+  }
+}

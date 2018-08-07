@@ -1,0 +1,17 @@
+[Version:1]
+DataContent 
+{
+	RichAnimationBuilder 
+	{
+		var Name = "RadialSpinnerV3"
+		var ResourceId = 0x5bc3e98fa9e15cc1
+		var PreviewArchetype = ""
+	}
+	ContentTags 
+	{
+		var Tags = Array
+		{
+			"Animation"
+		}
+	}
+}

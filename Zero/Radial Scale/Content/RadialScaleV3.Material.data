@@ -1,0 +1,20 @@
+[Version:1]
+Material 
+{
+	var RenderGroups = Array
+	{
+		"581cffd64d449122:Opaque"
+		"580269d9a1d6b870:ShadowCasters"
+	}
+	RadialScaleV3 
+	{
+		var Angle = 0.5
+		var Length = 1
+		var Width = 0.200000003
+	}
+	RadialScaleFrag 
+	{
+		var ColorValue = Real4{1, 1, 1, 1}
+		var GammaCorrect = true
+	}
+}
