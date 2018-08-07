@@ -102,10 +102,10 @@ struct SplineVertShader
     else
     {
       // @WIP Work in progress to fix the visual bug
-      var planeVec = Math.Normalize(Math.Abs(Real2(upVec.X, upVec.Z)));
+      var planeVec = Math.Normalize(Real2(upVec.X, upVec.Z));
       //var spinAngleVec = Math.Min(planeVec.X/planeVec.Y, planeVec.Y/planeVec.X);
       //var spinAngle = Math.Tan(spinAngleVec);
-      var spinAngle = Math.ATan2(planeVec.X, upVec.Y);
+      var spinAngle = Math.ATan2(planeVec.Y, planeVec.X) * 2.0;
       // @WIP
       
       rotMat = Math.Multiply(

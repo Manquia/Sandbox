@@ -1,13 +1,19 @@
 class Sandbox : ZilchComponent
 {
+  [Property] var Vec2 : Real2 = Real2(1,1);
   
   function Initialize(init : CogInitializer)
   {
     Zero.Connect(this.Space, Events.LogicUpdate, this.OnLogicUpdate);
   }
+  
+  
 
   function OnLogicUpdate(event : UpdateEvent)
   {
+    this.Vec2 = Math.Normalize(this.Vec2);
+    
+    Console.WriteLine("Atan2(Y,X): `Math.ATan2(this.Vec2.Y, this.Vec2.X)/Math.Pi`");
     
   }
 }
