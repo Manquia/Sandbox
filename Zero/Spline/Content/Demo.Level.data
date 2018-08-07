@@ -321,9 +321,9 @@ Level
 		var Name = "EditorCamera"
 		Transform 
 		{
-			var Translation = Real3{-55.237442, 10.2806492, 28.3140945}
+			var Translation = Real3{-38.7652702, 27.7064991, 17.680542}
 			var Scale = Real3{1, 1, 1}
-			var Rotation = Quaternion{-0.313468188, -0.0548264906, -0.0181318875, 0.947841227}
+			var Rotation = Quaternion{-0.570696473, 0.00632000063, 0.00439274637, 0.82112509}
 		}
 		CameraViewport 
 		{
@@ -380,10 +380,10 @@ Level
 		{
 			var ControlMode = ControlMode.Orbit
 			var Previous3DMode = ControlMode.Orbit
-			var LookDistance = 6.86097193
-			var VerticalAngle = 0.638789833
-			var HorizontalAngle = 69.2305984
-			var LookTarget = Real3{-54.6023407, 6.18997049, 22.8427219}
+			var LookDistance = 15.2675619
+			var VerticalAngle = 1.21474862
+			var HorizontalAngle = 69.0996475
+			var LookTarget = Real3{-38.8471756, 13.3964911, 12.3593197}
 			var MoveSensitivity = 1
 		}
 		Hierarchy 
@@ -2279,7 +2279,7 @@ Level
 				}
 				Hierarchy 
 				{
-					Cog [Id:0x5bceaa24be6fbc9f][ContextId:75]
+					Cog [Id:0x5bc2fa4a904e1f78][ContextId:75]
 					{
 						var Name = "PT0"
 						Transform 
@@ -2342,6 +2342,21 @@ Level
 							var Offset = Real3{0, 0, 0}
 							var Radius = 0.00100000005
 						}
+						IgnoreSpaceEffects 
+						{
+							var IgnoreDrag = true
+							var IgnoreFlow = true
+							var IgnoreForce = true
+							var IgnoreGravity = false
+							var IgnorePointForce = true
+							var IgnorePointGravity = true
+							var IgnoreThrust = true
+							var IgnoreVortex = true
+							var IgnoreWind = true
+							var IgnoreTorque = true
+							var IgnoreBuoyancy = true
+							var IgnoreCustom = true
+						}
 						StickJoint 
 						{
 							var Active = true
@@ -2353,31 +2368,8 @@ Level
 							var LocalPointA = Real3{0, 0, 0}
 							var LocalPointB = Real3{0, 0, 0}
 						}
-						IgnoreSpaceEffects 
-						{
-							var IgnoreDrag = false
-							var IgnoreFlow = true
-							var IgnoreForce = true
-							var IgnoreGravity = false
-							var IgnorePointForce = true
-							var IgnorePointGravity = true
-							var IgnoreThrust = true
-							var IgnoreVortex = true
-							var IgnoreWind = false
-							var IgnoreTorque = true
-							var IgnoreBuoyancy = true
-							var IgnoreCustom = true
-						}
-						MassOverride 
-						{
-							var Active = true
-							var InverseMass = 0.200000003
-							var Mass = 5
-							var LocalInverseInertiaTensor = Real3x3{0.200000003, 0, 0, 0, 0.200000003, 0, 0, 0, 0.200000003}
-							var LocalCenterOfMass = Real3{0, 0, 0}
-						}
 					}
-					Cog [Id:0x5bceaa24be6fd92c][ContextId:76]
+					Cog [Id:0x5bc2fa4a904e2aa8][ContextId:76]
 					{
 						var Name = "PT1"
 						Transform 
@@ -2440,6 +2432,21 @@ Level
 							var Offset = Real3{0, 0, 0}
 							var Radius = 0.00100000005
 						}
+						IgnoreSpaceEffects 
+						{
+							var IgnoreDrag = true
+							var IgnoreFlow = true
+							var IgnoreForce = true
+							var IgnoreGravity = false
+							var IgnorePointForce = true
+							var IgnorePointGravity = true
+							var IgnoreThrust = true
+							var IgnoreVortex = true
+							var IgnoreWind = true
+							var IgnoreTorque = true
+							var IgnoreBuoyancy = true
+							var IgnoreCustom = true
+						}
 						StickJoint 
 						{
 							var Active = true
@@ -2451,31 +2458,8 @@ Level
 							var LocalPointA = Real3{0, 0, 0}
 							var LocalPointB = Real3{0, 0, 0}
 						}
-						IgnoreSpaceEffects 
-						{
-							var IgnoreDrag = false
-							var IgnoreFlow = true
-							var IgnoreForce = true
-							var IgnoreGravity = false
-							var IgnorePointForce = true
-							var IgnorePointGravity = true
-							var IgnoreThrust = true
-							var IgnoreVortex = true
-							var IgnoreWind = false
-							var IgnoreTorque = true
-							var IgnoreBuoyancy = true
-							var IgnoreCustom = true
-						}
-						MassOverride 
-						{
-							var Active = true
-							var InverseMass = 0.200000003
-							var Mass = 5
-							var LocalInverseInertiaTensor = Real3x3{0, 0, 0, 0, 0, 0, 0, 0, 0}
-							var LocalCenterOfMass = Real3{0, 0, 0}
-						}
 					}
-					Cog [Id:0x5bceaa24be6fe5e4][ContextId:77]
+					Cog [Id:0x5bc2fa4a904e3418][ContextId:77]
 					{
 						var Name = "PT2"
 						Transform 
@@ -2538,6 +2522,21 @@ Level
 							var Offset = Real3{0, 0, 0}
 							var Radius = 0.00100000005
 						}
+						IgnoreSpaceEffects 
+						{
+							var IgnoreDrag = true
+							var IgnoreFlow = true
+							var IgnoreForce = true
+							var IgnoreGravity = false
+							var IgnorePointForce = true
+							var IgnorePointGravity = true
+							var IgnoreThrust = true
+							var IgnoreVortex = true
+							var IgnoreWind = true
+							var IgnoreTorque = true
+							var IgnoreBuoyancy = true
+							var IgnoreCustom = true
+						}
 						StickJoint 
 						{
 							var Active = true
@@ -2549,31 +2548,8 @@ Level
 							var LocalPointA = Real3{0, 0, 0}
 							var LocalPointB = Real3{0, 0, 0}
 						}
-						IgnoreSpaceEffects 
-						{
-							var IgnoreDrag = false
-							var IgnoreFlow = true
-							var IgnoreForce = true
-							var IgnoreGravity = false
-							var IgnorePointForce = true
-							var IgnorePointGravity = true
-							var IgnoreThrust = true
-							var IgnoreVortex = true
-							var IgnoreWind = false
-							var IgnoreTorque = true
-							var IgnoreBuoyancy = true
-							var IgnoreCustom = true
-						}
-						MassOverride 
-						{
-							var Active = true
-							var InverseMass = 0.200000003
-							var Mass = 5
-							var LocalInverseInertiaTensor = Real3x3{0, 0, 0, 0, 0, 0, 0, 0, 0}
-							var LocalCenterOfMass = Real3{0, 0, 0}
-						}
 					}
-					Cog [Id:0x5bceaa24be6ff295][ContextId:78]
+					Cog [Id:0x5bc2fa4a904e3df1][ContextId:78]
 					{
 						var Name = "PT3"
 						Transform 
@@ -2636,6 +2612,21 @@ Level
 							var Offset = Real3{0, 0, 0}
 							var Radius = 0.00100000005
 						}
+						IgnoreSpaceEffects 
+						{
+							var IgnoreDrag = true
+							var IgnoreFlow = true
+							var IgnoreForce = true
+							var IgnoreGravity = false
+							var IgnorePointForce = true
+							var IgnorePointGravity = true
+							var IgnoreThrust = true
+							var IgnoreVortex = true
+							var IgnoreWind = true
+							var IgnoreTorque = true
+							var IgnoreBuoyancy = true
+							var IgnoreCustom = true
+						}
 						StickJoint 
 						{
 							var Active = true
@@ -2647,31 +2638,8 @@ Level
 							var LocalPointA = Real3{0, 0, 0}
 							var LocalPointB = Real3{0, 0, 0}
 						}
-						IgnoreSpaceEffects 
-						{
-							var IgnoreDrag = false
-							var IgnoreFlow = true
-							var IgnoreForce = true
-							var IgnoreGravity = false
-							var IgnorePointForce = true
-							var IgnorePointGravity = true
-							var IgnoreThrust = true
-							var IgnoreVortex = true
-							var IgnoreWind = false
-							var IgnoreTorque = true
-							var IgnoreBuoyancy = true
-							var IgnoreCustom = true
-						}
-						MassOverride 
-						{
-							var Active = true
-							var InverseMass = 0.200000003
-							var Mass = 5
-							var LocalInverseInertiaTensor = Real3x3{0, 0, 0, 0, 0, 0, 0, 0, 0}
-							var LocalCenterOfMass = Real3{0, 0, 0}
-						}
 					}
-					Cog [Id:0x5bceaa24be6fff77][ContextId:79]
+					Cog [Id:0x5bc2fa4a904e47b5][ContextId:79]
 					{
 						var Name = "PT4"
 						Transform 
@@ -2734,6 +2702,21 @@ Level
 							var Offset = Real3{0, 0, 0}
 							var Radius = 0.00100000005
 						}
+						IgnoreSpaceEffects 
+						{
+							var IgnoreDrag = true
+							var IgnoreFlow = true
+							var IgnoreForce = true
+							var IgnoreGravity = false
+							var IgnorePointForce = true
+							var IgnorePointGravity = true
+							var IgnoreThrust = true
+							var IgnoreVortex = true
+							var IgnoreWind = true
+							var IgnoreTorque = true
+							var IgnoreBuoyancy = true
+							var IgnoreCustom = true
+						}
 						StickJoint 
 						{
 							var Active = true
@@ -2745,31 +2728,8 @@ Level
 							var LocalPointA = Real3{0, 0, 0}
 							var LocalPointB = Real3{0, 0, 0}
 						}
-						IgnoreSpaceEffects 
-						{
-							var IgnoreDrag = false
-							var IgnoreFlow = true
-							var IgnoreForce = true
-							var IgnoreGravity = false
-							var IgnorePointForce = true
-							var IgnorePointGravity = true
-							var IgnoreThrust = true
-							var IgnoreVortex = true
-							var IgnoreWind = false
-							var IgnoreTorque = true
-							var IgnoreBuoyancy = true
-							var IgnoreCustom = true
-						}
-						MassOverride 
-						{
-							var Active = true
-							var InverseMass = 0.200000003
-							var Mass = 5
-							var LocalInverseInertiaTensor = Real3x3{0, 0, 0, 0, 0, 0, 0, 0, 0}
-							var LocalCenterOfMass = Real3{0, 0, 0}
-						}
 					}
-					Cog [Id:0x5bceaa24be6e09ea][ContextId:80]
+					Cog [Id:0x5bc2fa4a904e50ae][ContextId:80]
 					{
 						var Name = "PT5"
 						Transform 
@@ -2832,6 +2792,21 @@ Level
 							var Offset = Real3{0, 0, 0}
 							var Radius = 0.00100000005
 						}
+						IgnoreSpaceEffects 
+						{
+							var IgnoreDrag = true
+							var IgnoreFlow = true
+							var IgnoreForce = true
+							var IgnoreGravity = false
+							var IgnorePointForce = true
+							var IgnorePointGravity = true
+							var IgnoreThrust = true
+							var IgnoreVortex = true
+							var IgnoreWind = true
+							var IgnoreTorque = true
+							var IgnoreBuoyancy = true
+							var IgnoreCustom = true
+						}
 						StickJoint 
 						{
 							var Active = true
@@ -2843,31 +2818,8 @@ Level
 							var LocalPointA = Real3{0, 0, 0}
 							var LocalPointB = Real3{0, 0, 0}
 						}
-						IgnoreSpaceEffects 
-						{
-							var IgnoreDrag = false
-							var IgnoreFlow = true
-							var IgnoreForce = true
-							var IgnoreGravity = false
-							var IgnorePointForce = true
-							var IgnorePointGravity = true
-							var IgnoreThrust = true
-							var IgnoreVortex = true
-							var IgnoreWind = false
-							var IgnoreTorque = true
-							var IgnoreBuoyancy = true
-							var IgnoreCustom = true
-						}
-						MassOverride 
-						{
-							var Active = true
-							var InverseMass = 0.200000003
-							var Mass = 5
-							var LocalInverseInertiaTensor = Real3x3{0, 0, 0, 0, 0, 0, 0, 0, 0}
-							var LocalCenterOfMass = Real3{0, 0, 0}
-						}
 					}
-					Cog [Id:0x5bceaa24be6e2256][ContextId:81]
+					Cog [Id:0x5bc2fa4a904e598b][ContextId:81]
 					{
 						var Name = "PT6"
 						Transform 
@@ -2930,6 +2882,21 @@ Level
 							var Offset = Real3{0, 0, 0}
 							var Radius = 0.00100000005
 						}
+						IgnoreSpaceEffects 
+						{
+							var IgnoreDrag = true
+							var IgnoreFlow = true
+							var IgnoreForce = true
+							var IgnoreGravity = false
+							var IgnorePointForce = true
+							var IgnorePointGravity = true
+							var IgnoreThrust = true
+							var IgnoreVortex = true
+							var IgnoreWind = true
+							var IgnoreTorque = true
+							var IgnoreBuoyancy = true
+							var IgnoreCustom = true
+						}
 						StickJoint 
 						{
 							var Active = true
@@ -2941,31 +2908,8 @@ Level
 							var LocalPointA = Real3{0, 0, 0}
 							var LocalPointB = Real3{0, 0, 0}
 						}
-						IgnoreSpaceEffects 
-						{
-							var IgnoreDrag = false
-							var IgnoreFlow = true
-							var IgnoreForce = true
-							var IgnoreGravity = false
-							var IgnorePointForce = true
-							var IgnorePointGravity = true
-							var IgnoreThrust = true
-							var IgnoreVortex = true
-							var IgnoreWind = false
-							var IgnoreTorque = true
-							var IgnoreBuoyancy = true
-							var IgnoreCustom = true
-						}
-						MassOverride 
-						{
-							var Active = true
-							var InverseMass = 0.200000003
-							var Mass = 5
-							var LocalInverseInertiaTensor = Real3x3{0, 0, 0, 0, 0, 0, 0, 0, 0}
-							var LocalCenterOfMass = Real3{0, 0, 0}
-						}
 					}
-					Cog [Id:0x5bceaa24be6e34d3][ContextId:82]
+					Cog [Id:0x5bc2fa4a904e62ae][ContextId:82]
 					{
 						var Name = "PT7"
 						Transform 
@@ -3028,6 +2972,21 @@ Level
 							var Offset = Real3{0, 0, 0}
 							var Radius = 0.00100000005
 						}
+						IgnoreSpaceEffects 
+						{
+							var IgnoreDrag = true
+							var IgnoreFlow = true
+							var IgnoreForce = true
+							var IgnoreGravity = false
+							var IgnorePointForce = true
+							var IgnorePointGravity = true
+							var IgnoreThrust = true
+							var IgnoreVortex = true
+							var IgnoreWind = true
+							var IgnoreTorque = true
+							var IgnoreBuoyancy = true
+							var IgnoreCustom = true
+						}
 						StickJoint 
 						{
 							var Active = true
@@ -3039,31 +2998,8 @@ Level
 							var LocalPointA = Real3{0, 0, 0}
 							var LocalPointB = Real3{0, 0, 0}
 						}
-						IgnoreSpaceEffects 
-						{
-							var IgnoreDrag = false
-							var IgnoreFlow = true
-							var IgnoreForce = true
-							var IgnoreGravity = false
-							var IgnorePointForce = true
-							var IgnorePointGravity = true
-							var IgnoreThrust = true
-							var IgnoreVortex = true
-							var IgnoreWind = false
-							var IgnoreTorque = true
-							var IgnoreBuoyancy = true
-							var IgnoreCustom = true
-						}
-						MassOverride 
-						{
-							var Active = true
-							var InverseMass = 0.200000003
-							var Mass = 5
-							var LocalInverseInertiaTensor = Real3x3{0, 0, 0, 0, 0, 0, 0, 0, 0}
-							var LocalCenterOfMass = Real3{0, 0, 0}
-						}
 					}
-					Cog [Id:0x5bceaa24be6e3e12][ContextId:83]
+					Cog [Id:0x5bc2fa4a904e6b4c][ContextId:83]
 					{
 						var Name = "PT8"
 						Transform 
@@ -3126,6 +3062,21 @@ Level
 							var Offset = Real3{0, 0, 0}
 							var Radius = 0.00100000005
 						}
+						IgnoreSpaceEffects 
+						{
+							var IgnoreDrag = true
+							var IgnoreFlow = true
+							var IgnoreForce = true
+							var IgnoreGravity = false
+							var IgnorePointForce = true
+							var IgnorePointGravity = true
+							var IgnoreThrust = true
+							var IgnoreVortex = true
+							var IgnoreWind = true
+							var IgnoreTorque = true
+							var IgnoreBuoyancy = true
+							var IgnoreCustom = true
+						}
 						StickJoint 
 						{
 							var Active = true
@@ -3137,31 +3088,8 @@ Level
 							var LocalPointA = Real3{0, 0, 0}
 							var LocalPointB = Real3{0, 0, 0}
 						}
-						IgnoreSpaceEffects 
-						{
-							var IgnoreDrag = false
-							var IgnoreFlow = true
-							var IgnoreForce = true
-							var IgnoreGravity = false
-							var IgnorePointForce = true
-							var IgnorePointGravity = true
-							var IgnoreThrust = true
-							var IgnoreVortex = true
-							var IgnoreWind = false
-							var IgnoreTorque = true
-							var IgnoreBuoyancy = true
-							var IgnoreCustom = true
-						}
-						MassOverride 
-						{
-							var Active = true
-							var InverseMass = 0.200000003
-							var Mass = 5
-							var LocalInverseInertiaTensor = Real3x3{0, 0, 0, 0, 0, 0, 0, 0, 0}
-							var LocalCenterOfMass = Real3{0, 0, 0}
-						}
 					}
-					Cog [Id:0x5bceaa24be6e48af][ContextId:84]
+					Cog [Id:0x5bc2fa4a904e74fb][ContextId:84]
 					{
 						var Name = "PT9"
 						Transform 
@@ -3224,6 +3152,21 @@ Level
 							var Offset = Real3{0, 0, 0}
 							var Radius = 0.00100000005
 						}
+						IgnoreSpaceEffects 
+						{
+							var IgnoreDrag = true
+							var IgnoreFlow = true
+							var IgnoreForce = true
+							var IgnoreGravity = false
+							var IgnorePointForce = true
+							var IgnorePointGravity = true
+							var IgnoreThrust = true
+							var IgnoreVortex = true
+							var IgnoreWind = true
+							var IgnoreTorque = true
+							var IgnoreBuoyancy = true
+							var IgnoreCustom = true
+						}
 						StickJoint 
 						{
 							var Active = true
@@ -3235,33 +3178,10 @@ Level
 							var LocalPointA = Real3{0, 0, 0}
 							var LocalPointB = Real3{0, 0, 0}
 						}
-						IgnoreSpaceEffects 
-						{
-							var IgnoreDrag = false
-							var IgnoreFlow = true
-							var IgnoreForce = true
-							var IgnoreGravity = false
-							var IgnorePointForce = true
-							var IgnorePointGravity = true
-							var IgnoreThrust = true
-							var IgnoreVortex = true
-							var IgnoreWind = false
-							var IgnoreTorque = true
-							var IgnoreBuoyancy = true
-							var IgnoreCustom = true
-						}
-						MassOverride 
-						{
-							var Active = true
-							var InverseMass = 0.200000003
-							var Mass = 5
-							var LocalInverseInertiaTensor = Real3x3{0, 0, 0, 0, 0, 0, 0, 0, 0}
-							var LocalCenterOfMass = Real3{0, 0, 0}
-						}
 					}
 				}
 			}
-			Cog [Id:0x5bcefe026685bf0d][ContextId:85]
+			Cog [Id:0x5bc2fbefe65e98f9][ContextId:85]
 			{
 				var Name = "ObjectPool"
 				Transform 
@@ -3272,7 +3192,7 @@ Level
 				}
 				Hierarchy 
 				{
-					Cog [Id:0x5bcefe026685cb01][ContextId:86]
+					Cog [Id:0x5bc2fbefe65ea5b8][ContextId:86]
 					{
 						var Name = "PathLink"
 						Transform 
@@ -3294,7 +3214,7 @@ Level
 							var Mesh = "5bce8b0c6cbc8407:ChainLinkBotEnd_Centered"
 						}
 					}
-					Cog [Id:0x5bcefe026685dc4b][ContextId:87]
+					Cog [Id:0x5bc2fbefe65ebae4][ContextId:87]
 					{
 						var Name = "PathLink"
 						Transform 
@@ -3316,7 +3236,7 @@ Level
 							var Mesh = "5bceca9cd0f337b9:ChainLink_Joined_Faces"
 						}
 					}
-					Cog [Id:0x5bcefe026685ece6][ContextId:88]
+					Cog [Id:0x5bc2fbefe65ecd46][ContextId:88]
 					{
 						var Name = "PathLink"
 						Transform 
@@ -3338,7 +3258,7 @@ Level
 							var Mesh = "5bceca9cd0f337b9:ChainLink_Joined_Faces"
 						}
 					}
-					Cog [Id:0x5bcefe026685fd6c][ContextId:89]
+					Cog [Id:0x5bc2fbefe65edec1][ContextId:89]
 					{
 						var Name = "PathLink"
 						Transform 
@@ -3360,7 +3280,7 @@ Level
 							var Mesh = "5bceca9cd0f337b9:ChainLink_Joined_Faces"
 						}
 					}
-					Cog [Id:0x5bcefe026684176f][ContextId:90]
+					Cog [Id:0x5bc2fbefe65ef2f1][ContextId:90]
 					{
 						var Name = "PathLink"
 						Transform 
@@ -3382,7 +3302,7 @@ Level
 							var Mesh = "5bceca9cd0f337b9:ChainLink_Joined_Faces"
 						}
 					}
-					Cog [Id:0x5bcefe0266842b7c][ContextId:91]
+					Cog [Id:0x5bc2fbefe659068e][ContextId:91]
 					{
 						var Name = "PathLink"
 						Transform 
@@ -3404,7 +3324,7 @@ Level
 							var Mesh = "5bceca9cd0f337b9:ChainLink_Joined_Faces"
 						}
 					}
-					Cog [Id:0x5bcefe026684407e][ContextId:92]
+					Cog [Id:0x5bc2fbefe6591a86][ContextId:92]
 					{
 						var Name = "PathLink"
 						Transform 
@@ -3426,7 +3346,7 @@ Level
 							var Mesh = "5bceca9cd0f337b9:ChainLink_Joined_Faces"
 						}
 					}
-					Cog [Id:0x5bcefe0266845166][ContextId:93]
+					Cog [Id:0x5bc2fbefe6592f8f][ContextId:93]
 					{
 						var Name = "PathLink"
 						Transform 
@@ -3448,7 +3368,7 @@ Level
 							var Mesh = "5bceca9cd0f337b9:ChainLink_Joined_Faces"
 						}
 					}
-					Cog [Id:0x5bcefe0266846208][ContextId:94]
+					Cog [Id:0x5bc2fbefe6594325][ContextId:94]
 					{
 						var Name = "PathLink"
 						Transform 

@@ -175,9 +175,9 @@ Level
 		var Name = "EditorCamera"
 		Transform 
 		{
-			var Translation = Real3{13.3269768, 14.4794884, 1.07150841}
+			var Translation = Real3{14.9651041, -1.56839657, 22.0665627}
 			var Scale = Real3{1, 1, 1}
-			var Rotation = Quaternion{-0.318323642, 0.589864194, 0.271931529, 0.690495133}
+			var Rotation = Quaternion{0.151081517, 0.0481290817, -0.00736462371, 0.987321556}
 		}
 		CameraViewport 
 		{
@@ -234,10 +234,10 @@ Level
 		{
 			var ControlMode = ControlMode.Orbit
 			var Previous3DMode = ControlMode.Orbit
-			var LookDistance = 5.40698195
-			var VerticalAngle = 0.863939226
-			var HorizontalAngle = 174.515259
-			var LookTarget = Real3{9.85854435, 10.3679819, 0.52292043}
+			var LookDistance = 36.1786537
+			var VerticalAngle = -0.303687423
+			var HorizontalAngle = 131.849472
+			var LookTarget = Real3{11.6071987, 9.25050068, -12.2928734}
 			var MoveSensitivity = 1
 		}
 	}
@@ -320,9 +320,14 @@ Level
 	{
 		Transform 
 		{
-			var Translation = Real3{21.138052, 1.90734863e-06, -24.8825626}
+			var Translation = Real3{23.5112133, 1.90734863e-06, -24.8825626}
 			var Rotation = Quaternion{0, 0, 0, 1}
 			var Scale = Real3{1, 1, 1}
+		}
+		PathVisuals 
+		{
+			var Dynamic = false
+			var COMMAND_Generate = false
 		}
 	}
 	Cog [ContextId:7]
@@ -337,87 +342,165 @@ Level
 		ChainDisplay 
 		{
 			var ChainBase = "5bc2f6d1ed387c56:ChainSetup"
-			var ChainCount = 24
+			var ChainCount = 50
 			var ChainScale = 8
 			var COMMAND_Generate = false
 		}
 		Hierarchy 
 		{
-			Cog [Id:0x5bc2f8af8ebb39da][InheritId:"5bc2f6d1ed387c56:ChainSetup"][ContextId:8]
+			Cog [Id:0x5bc2e57d17b5f103][InheritId:"5bc2f6d1ed387c56:ChainSetup"][ContextId:8]
 			{
 			}
-			Cog [Id:0x5bc2f8af8eba788a][InheritId:"5bc2f6d1ed387c56:ChainSetup"][ContextId:9]
+			Cog [Id:0x5bc2e57d17b733db][InheritId:"5bc2f6d1ed387c56:ChainSetup"][ContextId:9]
 			{
 			}
-			Cog [Id:0x5bc2f8af8eb5b630][InheritId:"5bc2f6d1ed387c56:ChainSetup"][ContextId:10]
+			Cog [Id:0x5bc2e57d17b6691c][InheritId:"5bc2f6d1ed387c56:ChainSetup"][ContextId:10]
 			{
 			}
-			Cog [Id:0x5bc2f8af8eb4f462][InheritId:"5bc2f6d1ed387c56:ChainSetup"][ContextId:11]
+			Cog [Id:0x5bc2e57d17b1a931][InheritId:"5bc2f6d1ed387c56:ChainSetup"][ContextId:11]
 			{
 			}
-			Cog [Id:0x5bc2f8af8eb62e96][InheritId:"5bc2f6d1ed387c56:ChainSetup"][ContextId:12]
+			Cog [Id:0x5bc2e57d17b0dba1][InheritId:"5bc2f6d1ed387c56:ChainSetup"][ContextId:12]
 			{
 			}
-			Cog [Id:0x5bc2f8af8eb168a0][InheritId:"5bc2f6d1ed387c56:ChainSetup"][ContextId:13]
+			Cog [Id:0x5bc2e57d17b20c12][InheritId:"5bc2f6d1ed387c56:ChainSetup"][ContextId:13]
 			{
 			}
-			Cog [Id:0x5bc2f8af8eb0a4e8][InheritId:"5bc2f6d1ed387c56:ChainSetup"][ContextId:14]
+			Cog [Id:0x5bc2e57d17cd3a14][InheritId:"5bc2f6d1ed387c56:ChainSetup"][ContextId:14]
 			{
 			}
-			Cog [Id:0x5bc2f8af8eb3df8c][InheritId:"5bc2f6d1ed387c56:ChainSetup"][ContextId:15]
+			Cog [Id:0x5bc2e57d17cc71cb][InheritId:"5bc2f6d1ed387c56:ChainSetup"][ContextId:15]
 			{
 			}
-			Cog [Id:0x5bc2f8af8ecd1b10][InheritId:"5bc2f6d1ed387c56:ChainSetup"][ContextId:16]
+			Cog [Id:0x5bc2e57d17cfaf55][InheritId:"5bc2f6d1ed387c56:ChainSetup"][ContextId:16]
 			{
 			}
-			Cog [Id:0x5bc2f8af8ecc57b3][InheritId:"5bc2f6d1ed387c56:ChainSetup"][ContextId:17]
+			Cog [Id:0x5bc2e57d17cee878][InheritId:"5bc2f6d1ed387c56:ChainSetup"][ContextId:17]
 			{
 			}
-			Cog [Id:0x5bc2f8af8ecf9177][InheritId:"5bc2f6d1ed387c56:ChainSetup"][ContextId:18]
+			Cog [Id:0x5bc2e57d17c81df8][InheritId:"5bc2f6d1ed387c56:ChainSetup"][ContextId:18]
 			{
 			}
-			Cog [Id:0x5bc2f8af8ecec8be][InheritId:"5bc2f6d1ed387c56:ChainSetup"][ContextId:19]
+			Cog [Id:0x5bc2e57d17cb53e8][InheritId:"5bc2f6d1ed387c56:ChainSetup"][ContextId:19]
 			{
 			}
-			Cog [Id:0x5bc2f8af8ec807c2][InheritId:"5bc2f6d1ed387c56:ChainSetup"][ContextId:20]
+			Cog [Id:0x5bc2e57d17ca9b82][InheritId:"5bc2f6d1ed387c56:ChainSetup"][ContextId:20]
 			{
 			}
-			Cog [Id:0x5bc2f8af8ecb425f][InheritId:"5bc2f6d1ed387c56:ChainSetup"][ContextId:21]
+			Cog [Id:0x5bc2e57d17c5d451][InheritId:"5bc2f6d1ed387c56:ChainSetup"][ContextId:21]
 			{
 			}
-			Cog [Id:0x5bc2f8af8eca8f0f][InheritId:"5bc2f6d1ed387c56:ChainSetup"][ContextId:22]
+			Cog [Id:0x5bc2e57d17c7142e][InheritId:"5bc2f6d1ed387c56:ChainSetup"][ContextId:22]
 			{
 			}
-			Cog [Id:0x5bc2f8af8ec5d61d][InheritId:"5bc2f6d1ed387c56:ChainSetup"][ContextId:23]
+			Cog [Id:0x5bc2e57d17c643cd][InheritId:"5bc2f6d1ed387c56:ChainSetup"][ContextId:23]
 			{
 			}
-			Cog [Id:0x5bc2f8af8ec7127a][InheritId:"5bc2f6d1ed387c56:ChainSetup"][ContextId:24]
+			Cog [Id:0x5bc2e57d17c17652][InheritId:"5bc2f6d1ed387c56:ChainSetup"][ContextId:24]
 			{
 			}
-			Cog [Id:0x5bc2f8af8ec660ab][InheritId:"5bc2f6d1ed387c56:ChainSetup"][ContextId:25]
+			Cog [Id:0x5bc2e57d17c0b293][InheritId:"5bc2f6d1ed387c56:ChainSetup"][ContextId:25]
 			{
 			}
-			Cog [Id:0x5bc2f8af8ec1a670][InheritId:"5bc2f6d1ed387c56:ChainSetup"][ContextId:26]
+			Cog [Id:0x5bc2e57d17c24a13][InheritId:"5bc2f6d1ed387c56:ChainSetup"][ContextId:26]
 			{
 			}
-			Cog [Id:0x5bc2f8af8ec0ea28][InheritId:"5bc2f6d1ed387c56:ChainSetup"][ContextId:27]
+			Cog [Id:0x5bc2e57d17ddae63][InheritId:"5bc2f6d1ed387c56:ChainSetup"][ContextId:27]
 			{
 			}
-			Cog [Id:0x5bc2f8af8ec22ffb][InheritId:"5bc2f6d1ed387c56:ChainSetup"][ContextId:28]
+			Cog [Id:0x5bc2e57d17dce12e][InheritId:"5bc2f6d1ed387c56:ChainSetup"][ContextId:28]
 			{
 			}
-			Cog [Id:0x5bc2f8af8edd7358][InheritId:"5bc2f6d1ed387c56:ChainSetup"][ContextId:29]
+			Cog [Id:0x5bc2e57d17de11c9][InheritId:"5bc2f6d1ed387c56:ChainSetup"][ContextId:29]
 			{
 			}
-			Cog [Id:0x5bc2f8af8edcb614][InheritId:"5bc2f6d1ed387c56:ChainSetup"][ContextId:30]
+			Cog [Id:0x5bc2e57d17d94b1d][InheritId:"5bc2f6d1ed387c56:ChainSetup"][ContextId:30]
 			{
 			}
-			Cog [Id:0x5bc2f8af8edff0e9][InheritId:"5bc2f6d1ed387c56:ChainSetup"][ContextId:31]
+			Cog [Id:0x5bc2e57d17d8955e][InheritId:"5bc2f6d1ed387c56:ChainSetup"][ContextId:31]
+			{
+			}
+			Cog [Id:0x5bc2e57d17dbd1b4][InheritId:"5bc2f6d1ed387c56:ChainSetup"][ContextId:32]
+			{
+			}
+			Cog [Id:0x5bc2e57d17d506fc][InheritId:"5bc2f6d1ed387c56:ChainSetup"][ContextId:33]
+			{
+			}
+			Cog [Id:0x5bc2e57d17d44519][InheritId:"5bc2f6d1ed387c56:ChainSetup"][ContextId:34]
+			{
+			}
+			Cog [Id:0x5bc2e57d17d779e3][InheritId:"5bc2f6d1ed387c56:ChainSetup"][ContextId:35]
+			{
+			}
+			Cog [Id:0x5bc2e57d17d6bf9a][InheritId:"5bc2f6d1ed387c56:ChainSetup"][ContextId:36]
+			{
+			}
+			Cog [Id:0x5bc2e57d17d1f10e][InheritId:"5bc2f6d1ed387c56:ChainSetup"][ContextId:37]
+			{
+			}
+			Cog [Id:0x5bc2e57d17d31e76][InheritId:"5bc2f6d1ed387c56:ChainSetup"][ContextId:38]
+			{
+			}
+			Cog [Id:0x5bc2e57d17d25714][InheritId:"5bc2f6d1ed387c56:ChainSetup"][ContextId:39]
+			{
+			}
+			Cog [Id:0x5bc2e57d17ed84ad][InheritId:"5bc2f6d1ed387c56:ChainSetup"][ContextId:40]
+			{
+			}
+			Cog [Id:0x5bc2e57d17ecbe71][InheritId:"5bc2f6d1ed387c56:ChainSetup"][ContextId:41]
+			{
+			}
+			Cog [Id:0x5bc2e57d17eff6bb][InheritId:"5bc2f6d1ed387c56:ChainSetup"][ContextId:42]
+			{
+			}
+			Cog [Id:0x5bc2e57d17e93303][InheritId:"5bc2f6d1ed387c56:ChainSetup"][ContextId:43]
+			{
+			}
+			Cog [Id:0x5bc2e57d17e8699b][InheritId:"5bc2f6d1ed387c56:ChainSetup"][ContextId:44]
+			{
+			}
+			Cog [Id:0x5bc2e57d17eb9f37][InheritId:"5bc2f6d1ed387c56:ChainSetup"][ContextId:45]
+			{
+			}
+			Cog [Id:0x5bc2e57d17ead2e9][InheritId:"5bc2f6d1ed387c56:ChainSetup"][ContextId:46]
+			{
+			}
+			Cog [Id:0x5bc2e57d17e40273][InheritId:"5bc2f6d1ed387c56:ChainSetup"][ContextId:47]
+			{
+			}
+			Cog [Id:0x5bc2e57d17e74a6f][InheritId:"5bc2f6d1ed387c56:ChainSetup"][ContextId:48]
+			{
+			}
+			Cog [Id:0x5bc2e57d17e67d8e][InheritId:"5bc2f6d1ed387c56:ChainSetup"][ContextId:49]
+			{
+			}
+			Cog [Id:0x5bc2e57d17e1b990][InheritId:"5bc2f6d1ed387c56:ChainSetup"][ContextId:50]
+			{
+			}
+			Cog [Id:0x5bc2e57d17e0e998][InheritId:"5bc2f6d1ed387c56:ChainSetup"][ContextId:51]
+			{
+			}
+			Cog [Id:0x5bc2e57d17e2180a][InheritId:"5bc2f6d1ed387c56:ChainSetup"][ContextId:52]
+			{
+			}
+			Cog [Id:0x5bc2e57d17fd5586][InheritId:"5bc2f6d1ed387c56:ChainSetup"][ContextId:53]
+			{
+			}
+			Cog [Id:0x5bc2e57d17fc8fac][InheritId:"5bc2f6d1ed387c56:ChainSetup"][ContextId:54]
+			{
+			}
+			Cog [Id:0x5bc2e57d17ffcfdd][InheritId:"5bc2f6d1ed387c56:ChainSetup"][ContextId:55]
+			{
+			}
+			Cog [Id:0x5bc2e57d17f90b5a][InheritId:"5bc2f6d1ed387c56:ChainSetup"][ContextId:56]
+			{
+			}
+			Cog [Id:0x5bc2e57d17f84874][InheritId:"5bc2f6d1ed387c56:ChainSetup"][ContextId:57]
 			{
 			}
 		}
 	}
-	Cog [ContextId:32]
+	Cog [ContextId:58]
 	{
 		var Name = "Transform"
 		Transform 

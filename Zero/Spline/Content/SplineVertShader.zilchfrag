@@ -94,14 +94,18 @@ struct SplineVertShader
     //rotMat = Math.Multiply(Util.RotationMatrix(Real3(0,0,1), Math.Pi * pointsDown), rotMat);
     
     var rotMat = Util.RotationMatrix(Real3(0,0,1), Math.Pi * pointsDown);
+    
+    
+    // @WIP Work in progress to fix the visual bug
+    
     // if angle is basically up/down we don't need a rotation and need to
     //  conditionally skip the cross product below
-    if(Math.Abs(axisAngle - (Math.Pi/2)) > (Math.Pi/2) - 0.01) // no rotation needed
+    if(Math.Abs(axisAngle - (Math.Pi/2)) > (Math.Pi/2) - 0.00001) // no rotation needed
     {
     }
     else
     {
-      // @WIP Work in progress to fix the visual bug
+      
       var planeVec = Math.Normalize(Real2(upVec.X, upVec.Z));
       //var spinAngleVec = Math.Min(planeVec.X/planeVec.Y, planeVec.Y/planeVec.X);
       //var spinAngle = Math.Tan(spinAngleVec);

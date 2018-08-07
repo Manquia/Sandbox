@@ -1853,77 +1853,14 @@ Cog
 				}
 			}
 		}
-		Cog [Id:0x5bc2d9e4db1e1806]
+		Cog [Id:0x5bc2fb802c024e45]
 		{
 			var Name = "ObjectPool"
 			Transform 
 			{
-				var Translation = Real3{-21.138052, -1.90734863e-06, 24.8825626}
+				var Translation = Real3{0, 0, 0}
 				var Scale = Real3{1, 1, 1}
 				var Rotation = Quaternion{0, 0, 0, 1}
-			}
-			Hierarchy 
-			{
-				Cog [Id:0x5bc2d9e6dd0ea1e6][InheritId:"5bc87562328112b4:ChainLink"]
-				{
-				}
-				Cog [Id:0x5bc2d9e6dd0ea20a][InheritId:"5bc87562328112b4:ChainLink"]
-				{
-				}
-				Cog [Id:0x5bc2d9e6dd0ea227][InheritId:"5bc87562328112b4:ChainLink"]
-				{
-				}
-				Cog [Id:0x5bc2d9e6dd0ea24b][InheritId:"5bc87562328112b4:ChainLink"]
-				{
-				}
-				Cog [Id:0x5bc2d9e6dd0ea268][InheritId:"5bc87562328112b4:ChainLink"]
-				{
-				}
-				Cog [Id:0x5bc2d9e6dd0ea28c][InheritId:"5bc87562328112b4:ChainLink"]
-				{
-				}
-				Cog [Id:0x5bc2f09be0c87186][InheritId:"5bc87562328112b4:ChainLink"]
-				{
-				}
-				Cog [Id:0x5bc2f09be0c88577][InheritId:"5bc87562328112b4:ChainLink"]
-				{
-				}
-				Cog [Id:0x5bc2f09be0c89619][InheritId:"5bc87562328112b4:ChainLink"]
-				{
-				}
-				Cog [Id:0x5bc2f09be0c8a6c9][InheritId:"5bc87562328112b4:ChainLink"]
-				{
-				}
-				Cog [Id:0x5bc2f09be0c8b756][InheritId:"5bc87562328112b4:ChainLink"]
-				{
-				}
-				Cog [Id:0x5bc2f09be0c8c7d5][InheritId:"5bc87562328112b4:ChainLink"]
-				{
-				}
-				Cog [Id:0x5bc2f09be0c8d838][InheritId:"5bc87562328112b4:ChainLink"]
-				{
-				}
-				Cog [Id:0x5bc2f09be0c8e912][InheritId:"5bc87562328112b4:ChainLink"]
-				{
-				}
-				Cog [Id:0x5bc2f09be0c8f9ad][InheritId:"5bc87562328112b4:ChainLink"]
-				{
-				}
-				Cog [Id:0x5bc2f09be0cb0a02][InheritId:"5bc87562328112b4:ChainLink"]
-				{
-				}
-				Cog [Id:0x5bc2f09be0cb1ac7][InheritId:"5bc87562328112b4:ChainLink"]
-				{
-				}
-				Cog [Id:0x5bc2f09be0cb2b31][InheritId:"5bc87562328112b4:ChainLink"]
-				{
-				}
-				Cog [Id:0x5bc2f09be0cb40cd][InheritId:"5bc87562328112b4:ChainLink"]
-				{
-				}
-				Cog [Id:0x5bc2f2ed39c18f48][InheritId:"5bc87562328112b4:ChainLink"]
-				{
-				}
 			}
 		}
 	}
