@@ -1,0 +1,20 @@
+[Version:1]
+Material 
+{
+	var RenderGroups = Array
+	{
+		"581cffd64d449122:Opaque"
+		"580269d9a1d6b870:ShadowCasters"
+	}
+	RadialScaleVert 
+	{
+		var Squash = 120
+		var ScaleRadius = 0.800000012
+		var ScaleAmount = 0.0156065198
+	}
+	RadialScaleFrag 
+	{
+		var ColorValue = Real4{0.562950015, 0.694999993, 0.671231031, 1}
+		var GammaCorrect = true
+	}
+}

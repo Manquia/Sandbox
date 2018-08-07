@@ -1,0 +1,8 @@
+[Version:1]
+ContentLibrary 
+{
+	var Name = "Radial Scale"
+	var LibraryId = 0x5b95317cc5e3ac3e
+	var SourceControlType = ""
+	var ReadOnly = false
+}

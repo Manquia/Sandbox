@@ -1,0 +1,863 @@
+[Version:1]
+Level 
+{
+	Cog [ContextId:1]
+	{
+		var Name = "LevelSettings"
+		GravityEffect 
+		{
+			var Active = true
+			var WakeUpOnChange = false
+			var DebugDrawEffect = false
+			var LocalSpaceDirection = true
+			var Strength = 10
+			var Direction = Real3{0, -1, 0}
+		}
+		DragEffect 
+		{
+			var Active = true
+			var WakeUpOnChange = false
+			var DebugDrawEffect = false
+			var LinearDamping = 0.200000003
+			var AngularDamping = 0.100000001
+			var LinearDrag = 0
+			var AngularDrag = 0
+		}
+		GridDraw 
+		{
+			var Active = true
+			var HalfCellOffset = false
+			var CellSize = 1
+			var Axis = AxisDirection.Z
+			var Lines = 100
+			var DrawAxisOrigins = true
+			var AlwaysDrawInEditor = true
+			var DrawInGame = false
+			var GridColor = Real4{0.5, 0.5, 0.5, 0.400000006}
+			var GridHighlight = Real4{0, 0, 0, 0.400000006}
+			var HighlightInterval = 10
+			var FollowEditorCamera = false
+		}
+	}
+	Cog [ContextId:2]
+	{
+		var Name = "Renderer"
+		ForwardRenderer 
+		{
+			var EditorDebugDraw = true
+			var GameDebugDraw = true
+			var RenderDiffuse = true
+			var RenderSpecular = true
+			var RenderSkybox = false
+			var Skybox = "5822dec85e380cf1:SimpleSkybox"
+			var ClearColor = Real4{0, 0, 0, 1}
+			var DirectLighting = true
+			var IndirectLighting = true
+			var IndirectIntensity = 1
+			var ToneMap = true
+			var DirectionalLight = CogPath
+			{
+				var Path = ""
+				var ErrorOnResolveToNull = false
+				var ErrorOnPathCantCompute = false
+				var ErrorOnDirectLinkFail = false
+				var UpdateCogOnPathChange = true
+				var UpdatePathOnCogChange = true
+				var UpdateCogOnInitialize = true
+				var ResolvedNullErrorOccurred = false
+				var Cog = 4294967293
+				var PathPreference0 = CogPathPreference.CogRelative
+				var PathPreference1 = CogPathPreference.SpaceRelative
+				var PathPreference2 = CogPathPreference.Absolute
+			}
+		}
+	}
+	Cog [ContextId:3]
+	{
+		var Name = "EditorCamera"
+		Transform 
+		{
+			var Translation = Real3{-0.613819361, -0.33463645, 16.6867733}
+			var Scale = Real3{1, 1, 1}
+			var Rotation = Quaternion{0, -1.09278471e-08, 0, 1}
+		}
+		CameraViewport 
+		{
+			var RenderInEditor = true
+			var RenderInGame = false
+			var RenderOrder = 0
+			var CameraPath = CogPath
+			{
+				var Path = "."
+				var ErrorOnResolveToNull = false
+				var ErrorOnPathCantCompute = false
+				var ErrorOnDirectLinkFail = false
+				var UpdateCogOnPathChange = true
+				var UpdatePathOnCogChange = true
+				var UpdateCogOnInitialize = true
+				var ResolvedNullErrorOccurred = false
+				var Cog = 3
+				var PathPreference0 = CogPathPreference.CogRelative
+				var PathPreference1 = CogPathPreference.SpaceRelative
+				var PathPreference2 = CogPathPreference.Absolute
+			}
+			var RendererPath = CogPath
+			{
+				var Path = ":/Renderer"
+				var ErrorOnResolveToNull = false
+				var ErrorOnPathCantCompute = false
+				var ErrorOnDirectLinkFail = false
+				var UpdateCogOnPathChange = true
+				var UpdatePathOnCogChange = true
+				var UpdateCogOnInitialize = true
+				var ResolvedNullErrorOccurred = false
+				var Cog = 2
+				var PathPreference0 = CogPathPreference.CogRelative
+				var PathPreference1 = CogPathPreference.SpaceRelative
+				var PathPreference2 = CogPathPreference.Absolute
+			}
+			var ResolutionOrAspect = Integer2{1920, 1080}
+			var RenderToViewport = true
+			var ForwardViewportEvents = false
+			var ViewportScaling = ViewportScaling.Fill
+			var MarginColor = Real4{0, 0, 0, 1}
+			var NormalizedSize = Real2{1, 1}
+			var NormalizedOffset = Real2{0, 0}
+		}
+		Camera 
+		{
+			var NearPlane = 0.5
+			var FarPlane = 500
+			var PerspectiveMode = PerspectiveMode.Orthographic
+			var FieldOfView = 45
+			var Size = 14.8163767
+		}
+		EditorCameraController 
+		{
+			var ControlMode = ControlMode.ZPlane
+			var Previous3DMode = ControlMode.Orbit
+			var LookDistance = 16.6867218
+			var VerticalAngle = 0
+			var HorizontalAngle = 0
+			var LookTarget = Real3{-0.613819361, -0.33463645, 5.06229699e-05}
+			var MoveSensitivity = 1
+		}
+	}
+	Cog [ContextId:4]
+	{
+		var Name = "GameCamera"
+		Transform 
+		{
+			var Translation = Real3{0, 0, 10}
+			var Scale = Real3{1, 1, 1}
+			var Rotation = Quaternion{0, 0, 0, 1}
+		}
+		SelectionIcon 
+		{
+			var Visible = true
+			var VisibilityEvents = true
+			var Material = "56581e2bb81777be:DebugDrawOnTop"
+			var SpriteSource = "58f8e4be7360cf7c:CameraIcon"
+			var ViewScale = 1
+			var OverrideSelections = true
+		}
+		CameraViewport 
+		{
+			var RenderInEditor = false
+			var RenderInGame = true
+			var RenderOrder = 0
+			var CameraPath = CogPath
+			{
+				var Path = "."
+				var ErrorOnResolveToNull = false
+				var ErrorOnPathCantCompute = false
+				var ErrorOnDirectLinkFail = false
+				var UpdateCogOnPathChange = true
+				var UpdatePathOnCogChange = true
+				var UpdateCogOnInitialize = true
+				var ResolvedNullErrorOccurred = false
+				var Cog = 4
+				var PathPreference0 = CogPathPreference.CogRelative
+				var PathPreference1 = CogPathPreference.SpaceRelative
+				var PathPreference2 = CogPathPreference.Absolute
+			}
+			var RendererPath = CogPath
+			{
+				var Path = ":/Renderer"
+				var ErrorOnResolveToNull = false
+				var ErrorOnPathCantCompute = false
+				var ErrorOnDirectLinkFail = false
+				var UpdateCogOnPathChange = true
+				var UpdatePathOnCogChange = true
+				var UpdateCogOnInitialize = true
+				var ResolvedNullErrorOccurred = false
+				var Cog = 2
+				var PathPreference0 = CogPathPreference.CogRelative
+				var PathPreference1 = CogPathPreference.SpaceRelative
+				var PathPreference2 = CogPathPreference.Absolute
+			}
+			var ResolutionOrAspect = Integer2{1920, 1080}
+			var RenderToViewport = true
+			var ForwardViewportEvents = false
+			var ViewportScaling = ViewportScaling.Letterbox
+			var MarginColor = Real4{0, 0, 0, 1}
+			var NormalizedSize = Real2{1, 1}
+			var NormalizedOffset = Real2{0, 0}
+		}
+		Camera 
+		{
+			var NearPlane = 0.100000001
+			var FarPlane = 200
+			var PerspectiveMode = PerspectiveMode.Orthographic
+			var FieldOfView = 60
+			var Size = 20
+		}
+		SoundListener 
+		{
+			var Active = true
+			var AttenuationScale = 1
+		}
+	}
+	Cog [ContextId:5]
+	{
+		var Name = "Inner"
+		Transform 
+		{
+			var Translation = Real3{0, 0, 0}
+			var Scale = Real3{1, 1, 1}
+			var Rotation = Quaternion{0, 0, 0, 1}
+		}
+		Hierarchy 
+		{
+			Cog [Id:0x5bea7e63c4a21c1c][ContextId:6]
+			{
+				var Name = "RadialSpinner"
+				Transform 
+				{
+					var Translation = Real3{0, 0, 0}
+					var Scale = Real3{1.00000012, 1.00000012, 1.00000012}
+					var Rotation = Quaternion{0.707106829, 0, 0, 0.707106829}
+				}
+				Model 
+				{
+					var Visible = true
+					var ViewCulling = true
+					var VisibilityEvents = true
+					var OverrideBoundingBox = false
+					var LocalAabbCenter = Real3{0, 0, 0}
+					var LocalAabbHalfExtents = Real3{1, 1, 1}
+					var GroupSortValue = 0
+					var Material = "5bea499ea978b0c0:RadialScaleColor"
+					var Mesh = "5bea482e13287956:SemiCircle"
+				}
+				RigidBody 
+				{
+					var Velocity = Real3{0, 0, 0}
+					var AngularVelocity = Real3{0, 0, 3.40903234}
+					var DynamicState = RigidBodyDynamicState.Dynamic
+					var AllowSleep = false
+					var Asleep = false
+					var RotationLocked = false
+					var Mode2D = Mode2DStates.InheritFromSpace
+				}
+				IgnoreSpaceEffects 
+				{
+					var IgnoreDrag = true
+					var IgnoreFlow = true
+					var IgnoreForce = true
+					var IgnoreGravity = true
+					var IgnorePointForce = true
+					var IgnorePointGravity = true
+					var IgnoreThrust = true
+					var IgnoreVortex = true
+					var IgnoreWind = true
+					var IgnoreTorque = true
+					var IgnoreBuoyancy = true
+					var IgnoreCustom = true
+				}
+				AnimationGraph 
+				{
+					var Active = true
+					var PlayMode = AnimationPlayMode.PlayOnce
+					var TimeScale = 1
+					var Animation = "4f8ebbde619389d0:DefaultAnimation"
+					var DebugPreviewId = 0
+				}
+				SimpleAnimation 
+				{
+					var Animation = "5bea4b3aad94ea81:RadialSpinner"
+					var PlayMode = AnimationPlayMode.Loop
+				}
+				RadialSpinner 
+				{
+					var Squash = 90.5404892
+					var ScaleRadius = 0.779155254
+					var ScaleAmount = -0.887176156
+					var Color = Real4{0.623004973, 0.118272945, 0.376995027, 1}
+				}
+			}
+			Cog [Id:0x5bea7e63c4a21d35][ContextId:7]
+			{
+				var Name = "RadialSpinner"
+				Transform 
+				{
+					var Translation = Real3{0, 0, 0}
+					var Scale = Real3{0.99999994, 1, 0.99999994}
+					var Rotation = Quaternion{0.353553444, 0.612372398, 0.612372398, 0.353553444}
+				}
+				Model 
+				{
+					var Visible = true
+					var ViewCulling = true
+					var VisibilityEvents = true
+					var OverrideBoundingBox = false
+					var LocalAabbCenter = Real3{0, 0, 0}
+					var LocalAabbHalfExtents = Real3{1, 1, 1}
+					var GroupSortValue = 0
+					var Material = "5bea499ea978b0c0:RadialScaleColor"
+					var Mesh = "5bea482e13287956:SemiCircle"
+				}
+				RigidBody 
+				{
+					var Velocity = Real3{0, 0, 0}
+					var AngularVelocity = Real3{0, 0, 3.40903234}
+					var DynamicState = RigidBodyDynamicState.Dynamic
+					var AllowSleep = false
+					var Asleep = false
+					var RotationLocked = false
+					var Mode2D = Mode2DStates.InheritFromSpace
+				}
+				IgnoreSpaceEffects 
+				{
+					var IgnoreDrag = true
+					var IgnoreFlow = true
+					var IgnoreForce = true
+					var IgnoreGravity = true
+					var IgnorePointForce = true
+					var IgnorePointGravity = true
+					var IgnoreThrust = true
+					var IgnoreVortex = true
+					var IgnoreWind = true
+					var IgnoreTorque = true
+					var IgnoreBuoyancy = true
+					var IgnoreCustom = true
+				}
+				AnimationGraph 
+				{
+					var Active = true
+					var PlayMode = AnimationPlayMode.PlayOnce
+					var TimeScale = 1
+					var Animation = "4f8ebbde619389d0:DefaultAnimation"
+					var DebugPreviewId = 0
+				}
+				SimpleAnimation 
+				{
+					var Animation = "5bea4b3aad94ea81:RadialSpinner"
+					var PlayMode = AnimationPlayMode.Loop
+				}
+				RadialSpinner 
+				{
+					var Squash = 90.5404892
+					var ScaleRadius = 0.779155254
+					var ScaleAmount = -0.887176156
+					var Color = Real4{0.623004973, 0.118272945, 0.376995027, 1}
+				}
+			}
+			Cog [Id:0x5bea7e63c4a21e1d][ContextId:8]
+			{
+				var Name = "RadialSpinner"
+				Transform 
+				{
+					var Translation = Real3{0, 0, 0}
+					var Scale = Real3{1, 1.00000012, 1.00000012}
+					var Rotation = Quaternion{0.353553444, -0.612372398, -0.612372398, 0.353553444}
+				}
+				Model 
+				{
+					var Visible = true
+					var ViewCulling = true
+					var VisibilityEvents = true
+					var OverrideBoundingBox = false
+					var LocalAabbCenter = Real3{0, 0, 0}
+					var LocalAabbHalfExtents = Real3{1, 1, 1}
+					var GroupSortValue = 0
+					var Material = "5bea499ea978b0c0:RadialScaleColor"
+					var Mesh = "5bea482e13287956:SemiCircle"
+				}
+				RigidBody 
+				{
+					var Velocity = Real3{0, 0, 0}
+					var AngularVelocity = Real3{0, 0, 3.40903234}
+					var DynamicState = RigidBodyDynamicState.Dynamic
+					var AllowSleep = false
+					var Asleep = false
+					var RotationLocked = false
+					var Mode2D = Mode2DStates.InheritFromSpace
+				}
+				IgnoreSpaceEffects 
+				{
+					var IgnoreDrag = true
+					var IgnoreFlow = true
+					var IgnoreForce = true
+					var IgnoreGravity = true
+					var IgnorePointForce = true
+					var IgnorePointGravity = true
+					var IgnoreThrust = true
+					var IgnoreVortex = true
+					var IgnoreWind = true
+					var IgnoreTorque = true
+					var IgnoreBuoyancy = true
+					var IgnoreCustom = true
+				}
+				AnimationGraph 
+				{
+					var Active = true
+					var PlayMode = AnimationPlayMode.PlayOnce
+					var TimeScale = 1
+					var Animation = "4f8ebbde619389d0:DefaultAnimation"
+					var DebugPreviewId = 0
+				}
+				SimpleAnimation 
+				{
+					var Animation = "5bea4b3aad94ea81:RadialSpinner"
+					var PlayMode = AnimationPlayMode.Loop
+				}
+				RadialSpinner 
+				{
+					var Squash = 90.5404892
+					var ScaleRadius = 0.779155254
+					var ScaleAmount = -0.887176156
+					var Color = Real4{0.623004973, 0.118272945, 0.376995027, 1}
+				}
+			}
+		}
+	}
+	Cog [ContextId:9]
+	{
+		var Name = "Middle"
+		Transform 
+		{
+			var Translation = Real3{0, 0, 0}
+			var Scale = Real3{1, 1, 1}
+			var Rotation = Quaternion{0, 0, 0, 1}
+		}
+		Hierarchy 
+		{
+			Cog [Id:0x5bea7e73d3351a91][ContextId:10]
+			{
+				var Name = "RadialSpinner"
+				Transform 
+				{
+					var Translation = Real3{0, 0, 0}
+					var Scale = Real3{2.93449712, 1, 3.49269772}
+					var Rotation = Quaternion{0.707106829, 0, 0, 0.707106829}
+				}
+				Model 
+				{
+					var Visible = true
+					var ViewCulling = true
+					var VisibilityEvents = true
+					var OverrideBoundingBox = false
+					var LocalAabbCenter = Real3{0, 0, 0}
+					var LocalAabbHalfExtents = Real3{1, 1, 1}
+					var GroupSortValue = 0
+					var Material = "5bea499ea978b0c0:RadialScaleColor"
+					var Mesh = "5bea482e13287956:SemiCircle"
+				}
+				RigidBody 
+				{
+					var Velocity = Real3{0, 0, 0}
+					var AngularVelocity = Real3{0, 0, 0.72508812}
+					var DynamicState = RigidBodyDynamicState.Dynamic
+					var AllowSleep = false
+					var Asleep = false
+					var RotationLocked = false
+					var Mode2D = Mode2DStates.InheritFromSpace
+				}
+				IgnoreSpaceEffects 
+				{
+					var IgnoreDrag = true
+					var IgnoreFlow = true
+					var IgnoreForce = true
+					var IgnoreGravity = true
+					var IgnorePointForce = true
+					var IgnorePointGravity = true
+					var IgnoreThrust = true
+					var IgnoreVortex = true
+					var IgnoreWind = true
+					var IgnoreTorque = true
+					var IgnoreBuoyancy = true
+					var IgnoreCustom = true
+				}
+				AnimationGraph 
+				{
+					var Active = true
+					var PlayMode = AnimationPlayMode.PlayOnce
+					var TimeScale = 1.10000002
+					var Animation = "4f8ebbde619389d0:DefaultAnimation"
+					var DebugPreviewId = 0
+				}
+				SimpleAnimation 
+				{
+					var Animation = "5bea4b3aad94ea81:RadialSpinner"
+					var PlayMode = AnimationPlayMode.Loop
+				}
+				RadialSpinner 
+				{
+					var Squash = 168.338806
+					var ScaleRadius = 0.770290315
+					var ScaleAmount = -0.748383284
+					var Color = Real4{0.137045085, 0.247523516, 1, 1}
+				}
+			}
+			Cog [Id:0x5bea7e73d3351bdb][ContextId:11]
+			{
+				var Name = "RadialSpinner"
+				Transform 
+				{
+					var Translation = Real3{0, 0, 0}
+					var Scale = Real3{2.93449712, 1, 3.49269748}
+					var Rotation = Quaternion{0.353553444, 0.612372458, 0.612372458, 0.353553444}
+				}
+				Model 
+				{
+					var Visible = true
+					var ViewCulling = true
+					var VisibilityEvents = true
+					var OverrideBoundingBox = false
+					var LocalAabbCenter = Real3{0, 0, 0}
+					var LocalAabbHalfExtents = Real3{1, 1, 1}
+					var GroupSortValue = 0
+					var Material = "5bea499ea978b0c0:RadialScaleColor"
+					var Mesh = "5bea482e13287956:SemiCircle"
+				}
+				RigidBody 
+				{
+					var Velocity = Real3{0, 0, 0}
+					var AngularVelocity = Real3{0, 0, 3.40903234}
+					var DynamicState = RigidBodyDynamicState.Dynamic
+					var AllowSleep = false
+					var Asleep = false
+					var RotationLocked = false
+					var Mode2D = Mode2DStates.InheritFromSpace
+				}
+				IgnoreSpaceEffects 
+				{
+					var IgnoreDrag = true
+					var IgnoreFlow = true
+					var IgnoreForce = true
+					var IgnoreGravity = true
+					var IgnorePointForce = true
+					var IgnorePointGravity = true
+					var IgnoreThrust = true
+					var IgnoreVortex = true
+					var IgnoreWind = true
+					var IgnoreTorque = true
+					var IgnoreBuoyancy = true
+					var IgnoreCustom = true
+				}
+				AnimationGraph 
+				{
+					var Active = true
+					var PlayMode = AnimationPlayMode.PlayOnce
+					var TimeScale = 1.10000002
+					var Animation = "4f8ebbde619389d0:DefaultAnimation"
+					var DebugPreviewId = 0
+				}
+				SimpleAnimation 
+				{
+					var Animation = "5bea4b3aad94ea81:RadialSpinner"
+					var PlayMode = AnimationPlayMode.Loop
+				}
+				RadialSpinner 
+				{
+					var Squash = 90.5404892
+					var ScaleRadius = 0.779155254
+					var ScaleAmount = -0.887176156
+					var Color = Real4{0.623004973, 0.118272945, 0.376995027, 1}
+				}
+			}
+			Cog [Id:0x5bea7e73d3351d02][ContextId:12]
+			{
+				var Name = "RadialSpinner"
+				Transform 
+				{
+					var Translation = Real3{0, 0, 0}
+					var Scale = Real3{2.93449712, 1, 3.49269772}
+					var Rotation = Quaternion{0.353553444, -0.612372398, -0.612372398, 0.353553444}
+				}
+				Model 
+				{
+					var Visible = true
+					var ViewCulling = true
+					var VisibilityEvents = true
+					var OverrideBoundingBox = false
+					var LocalAabbCenter = Real3{0, 0, 0}
+					var LocalAabbHalfExtents = Real3{1, 1, 1}
+					var GroupSortValue = 0
+					var Material = "5bea499ea978b0c0:RadialScaleColor"
+					var Mesh = "5bea482e13287956:SemiCircle"
+				}
+				RigidBody 
+				{
+					var Velocity = Real3{0, 0, 0}
+					var AngularVelocity = Real3{0, 0, 3.40903234}
+					var DynamicState = RigidBodyDynamicState.Dynamic
+					var AllowSleep = false
+					var Asleep = false
+					var RotationLocked = false
+					var Mode2D = Mode2DStates.InheritFromSpace
+				}
+				IgnoreSpaceEffects 
+				{
+					var IgnoreDrag = true
+					var IgnoreFlow = true
+					var IgnoreForce = true
+					var IgnoreGravity = true
+					var IgnorePointForce = true
+					var IgnorePointGravity = true
+					var IgnoreThrust = true
+					var IgnoreVortex = true
+					var IgnoreWind = true
+					var IgnoreTorque = true
+					var IgnoreBuoyancy = true
+					var IgnoreCustom = true
+				}
+				AnimationGraph 
+				{
+					var Active = true
+					var PlayMode = AnimationPlayMode.PlayOnce
+					var TimeScale = 1.10000002
+					var Animation = "4f8ebbde619389d0:DefaultAnimation"
+					var DebugPreviewId = 0
+				}
+				SimpleAnimation 
+				{
+					var Animation = "5bea4b3aad94ea81:RadialSpinner"
+					var PlayMode = AnimationPlayMode.Loop
+				}
+				RadialSpinner 
+				{
+					var Squash = 90.5404892
+					var ScaleRadius = 0.779155254
+					var ScaleAmount = -0.887176156
+					var Color = Real4{0.623004973, 0.118272945, 0.376995027, 1}
+				}
+			}
+		}
+	}
+	Cog [ContextId:13]
+	{
+		var Name = "Outer"
+		Transform 
+		{
+			var Translation = Real3{0, 0, 0}
+			var Scale = Real3{1, 1, 1}
+			var Rotation = Quaternion{0, 0, 0, 1}
+		}
+		Hierarchy 
+		{
+			Cog [Id:0x5bea7e78d6d83630][ContextId:14]
+			{
+				var Name = "RadialSpinner"
+				Transform 
+				{
+					var Translation = Real3{0, 0, 0}
+					var Scale = Real3{7.36062193, 1.00000012, 7.85383415}
+					var Rotation = Quaternion{0.707106829, 0, 0, 0.707106829}
+				}
+				Model 
+				{
+					var Visible = true
+					var ViewCulling = true
+					var VisibilityEvents = true
+					var OverrideBoundingBox = false
+					var LocalAabbCenter = Real3{0, 0, 0}
+					var LocalAabbHalfExtents = Real3{1, 1, 1}
+					var GroupSortValue = 0
+					var Material = "5bea499ea978b0c0:RadialScaleColor"
+					var Mesh = "5bea482e13287956:SemiCircle"
+				}
+				RigidBody 
+				{
+					var Velocity = Real3{0, 0, 0}
+					var AngularVelocity = Real3{0, 0, -0.337204397}
+					var DynamicState = RigidBodyDynamicState.Dynamic
+					var AllowSleep = false
+					var Asleep = false
+					var RotationLocked = false
+					var Mode2D = Mode2DStates.InheritFromSpace
+				}
+				IgnoreSpaceEffects 
+				{
+					var IgnoreDrag = true
+					var IgnoreFlow = true
+					var IgnoreForce = true
+					var IgnoreGravity = true
+					var IgnorePointForce = true
+					var IgnorePointGravity = true
+					var IgnoreThrust = true
+					var IgnoreVortex = true
+					var IgnoreWind = true
+					var IgnoreTorque = true
+					var IgnoreBuoyancy = true
+					var IgnoreCustom = true
+				}
+				AnimationGraph 
+				{
+					var Active = true
+					var PlayMode = AnimationPlayMode.PlayOnce
+					var TimeScale = 1.20000005
+					var Animation = "4f8ebbde619389d0:DefaultAnimation"
+					var DebugPreviewId = 0
+				}
+				SimpleAnimation 
+				{
+					var Animation = "5bea4b3aad94ea81:RadialSpinner"
+					var PlayMode = AnimationPlayMode.Loop
+				}
+				RadialSpinner 
+				{
+					var Squash = 145.69368
+					var ScaleRadius = 0.709249556
+					var ScaleAmount = -0.694016099
+					var Color = Real4{0.836775064, 0, 0.510077775, 1}
+				}
+			}
+			Cog [Id:0x5bea7e78d6d83742][ContextId:15]
+			{
+				var Name = "RadialSpinner"
+				Transform 
+				{
+					var Translation = Real3{0, 0, 0}
+					var Scale = Real3{7.3606205, 1.00000012, 7.85383368}
+					var Rotation = Quaternion{0.353553444, 0.612372398, 0.612372398, 0.353553444}
+				}
+				Model 
+				{
+					var Visible = true
+					var ViewCulling = true
+					var VisibilityEvents = true
+					var OverrideBoundingBox = false
+					var LocalAabbCenter = Real3{0, 0, 0}
+					var LocalAabbHalfExtents = Real3{1, 1, 1}
+					var GroupSortValue = 0
+					var Material = "5bea499ea978b0c0:RadialScaleColor"
+					var Mesh = "5bea482e13287956:SemiCircle"
+				}
+				RigidBody 
+				{
+					var Velocity = Real3{0, 0, 0}
+					var AngularVelocity = Real3{0, 0, 3.40903234}
+					var DynamicState = RigidBodyDynamicState.Dynamic
+					var AllowSleep = false
+					var Asleep = false
+					var RotationLocked = false
+					var Mode2D = Mode2DStates.InheritFromSpace
+				}
+				IgnoreSpaceEffects 
+				{
+					var IgnoreDrag = true
+					var IgnoreFlow = true
+					var IgnoreForce = true
+					var IgnoreGravity = true
+					var IgnorePointForce = true
+					var IgnorePointGravity = true
+					var IgnoreThrust = true
+					var IgnoreVortex = true
+					var IgnoreWind = true
+					var IgnoreTorque = true
+					var IgnoreBuoyancy = true
+					var IgnoreCustom = true
+				}
+				AnimationGraph 
+				{
+					var Active = true
+					var PlayMode = AnimationPlayMode.PlayOnce
+					var TimeScale = 1.20000005
+					var Animation = "4f8ebbde619389d0:DefaultAnimation"
+					var DebugPreviewId = 0
+				}
+				SimpleAnimation 
+				{
+					var Animation = "5bea4b3aad94ea81:RadialSpinner"
+					var PlayMode = AnimationPlayMode.Loop
+				}
+				RadialSpinner 
+				{
+					var Squash = 90.5404892
+					var ScaleRadius = 0.779155254
+					var ScaleAmount = -0.887176156
+					var Color = Real4{0.623004973, 0.118272945, 0.376995027, 1}
+				}
+			}
+			Cog [Id:0x5bea7e78d6d83838][ContextId:16]
+			{
+				var Name = "RadialSpinner"
+				Transform 
+				{
+					var Translation = Real3{0, 0, 0}
+					var Scale = Real3{7.36062098, 1, 7.85383368}
+					var Rotation = Quaternion{0.353553444, -0.612372398, -0.612372398, 0.353553444}
+				}
+				Model 
+				{
+					var Visible = true
+					var ViewCulling = true
+					var VisibilityEvents = true
+					var OverrideBoundingBox = false
+					var LocalAabbCenter = Real3{0, 0, 0}
+					var LocalAabbHalfExtents = Real3{1, 1, 1}
+					var GroupSortValue = 0
+					var Material = "5bea499ea978b0c0:RadialScaleColor"
+					var Mesh = "5bea482e13287956:SemiCircle"
+				}
+				RigidBody 
+				{
+					var Velocity = Real3{0, 0, 0}
+					var AngularVelocity = Real3{0, 0, -0.9462322}
+					var DynamicState = RigidBodyDynamicState.Dynamic
+					var AllowSleep = false
+					var Asleep = false
+					var RotationLocked = false
+					var Mode2D = Mode2DStates.InheritFromSpace
+				}
+				IgnoreSpaceEffects 
+				{
+					var IgnoreDrag = true
+					var IgnoreFlow = true
+					var IgnoreForce = true
+					var IgnoreGravity = true
+					var IgnorePointForce = true
+					var IgnorePointGravity = true
+					var IgnoreThrust = true
+					var IgnoreVortex = true
+					var IgnoreWind = true
+					var IgnoreTorque = true
+					var IgnoreBuoyancy = true
+					var IgnoreCustom = true
+				}
+				AnimationGraph 
+				{
+					var Active = true
+					var PlayMode = AnimationPlayMode.PlayOnce
+					var TimeScale = 1.20000005
+					var Animation = "4f8ebbde619389d0:DefaultAnimation"
+					var DebugPreviewId = 0
+				}
+				SimpleAnimation 
+				{
+					var Animation = "5bea4b3aad94ea81:RadialSpinner"
+					var PlayMode = AnimationPlayMode.Loop
+				}
+				RadialSpinner 
+				{
+					var Squash = 192.641083
+					var ScaleRadius = 0.730383575
+					var ScaleAmount = -0.61595577
+					var Color = Real4{0.3369582, 0.156386629, 1, 1}
+				}
+			}
+		}
+	}
+}

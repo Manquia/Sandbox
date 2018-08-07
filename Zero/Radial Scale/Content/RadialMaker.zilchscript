@@ -1,0 +1,65 @@
+class RadialMaker : ZilchComponent
+{
+  
+  [Property]var SquashAngle : Real = 30.0;
+  [Property]var SpinSpeed : Real = 35.0;
+  [Property]var Animated : Boolean = false;
+  var Spin : Real = 0.0;
+  
+  function Initialize(init : CogInitializer)
+  {
+    
+    foreach(var child in this.Owner.Children)
+    {
+      this.Points.Add(child.Transform);
+      this.OriginalPts.Add(child.Transform.Translation);
+      
+      this.Spin = Random().Range(0,360);
+    }
+    
+    Zero.Connect(this.Space, Events.FrameUpdate, this.OnLogicUpdate);
+  }
+  
+  
+  var Points : Array[Transform] = new Array[Transform]();
+  var OriginalPts : Array[Real3] = new Array[Real3]();
+
+  function OnLogicUpdate(event : UpdateEvent)
+  { 
+    if(!this.Animated)
+    {
+      this.ResetTransforms();
+      return;
+    }
+      
+    var squash = this.SquashAngle / 360.0;
+    Console.WriteLine("`squash`");
+    // Update Points
+    for(var i = 0; i < this.Points.Count; ++i)
+    {
+      var trans = this.Points[i];
+      var pt = this.OriginalPts[i];
+      
+      var length = Math.Length(pt);
+      var angle = Math.ATan2(pt.X, pt.Y) * squash;
+      
+      trans.Translation = Real3(Math.Cos(angle), Math.Sin(angle), pt.Z) * length;
+      trans.Rotation = Math.AxisAngle(Real3(0,0,1), angle);
+    }
+    
+    // Update My Rotations
+    this.Spin += event.Dt * this.SpinSpeed;
+    this.Owner.Transform.Rotation = Math.AxisAngle(Real3(0,0,1), this.Spin * event.Dt);
+  }
+  
+  function ResetTransforms()
+  {
+      for(var i = 0; i < this.Points.Count; ++i)
+      {
+        this.Points[i].Translation = this.OriginalPts[i];
+      }
+  }
+  
+  
+  
+}

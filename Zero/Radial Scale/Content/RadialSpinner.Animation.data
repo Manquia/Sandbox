@@ -1,0 +1,734 @@
+[Version:1]
+RichAnimation 
+{
+	var SampleTolerance = 0.0500000007
+	var Duration = 10
+	var Root = Object
+	{
+		var Type = TrackType.Object
+		var Name = "Root"
+		var Path = ""
+		var Disabled = false
+		var PropertyTypeName = "void"
+		var KeyFrames = Array
+		{
+		}
+		var Children = Array
+		{
+			Object
+			{
+				var Type = TrackType.Object
+				var Name = "/"
+				var Path = "/"
+				var Disabled = false
+				var PropertyTypeName = "Void"
+				var KeyFrames = Array
+				{
+				}
+				var Children = Array
+				{
+					Object
+					{
+						var Type = TrackType.Component
+						var Name = "RigidBody"
+						var Path = "RigidBody"
+						var Disabled = false
+						var PropertyTypeName = "Void"
+						var KeyFrames = Array
+						{
+						}
+						var Children = Array
+						{
+							Object
+							{
+								var Type = TrackType.Property
+								var Name = "AngularVelocity"
+								var Path = "RigidBody.AngularVelocity"
+								var Disabled = false
+								var PropertyTypeName = "Real3"
+								var KeyFrames = Array
+								{
+								}
+								var Children = Array
+								{
+									Object
+									{
+										var Type = TrackType.SubProperty
+										var Name = "X"
+										var Path = "RigidBody.AngularVelocity.X"
+										var Disabled = false
+										var PropertyTypeName = "Real"
+										var KeyFrames = Array
+										{
+											Object
+											{
+												var key = 0
+												var value = Object
+												{
+													var Time = 0
+													var Value = 0
+													var TangentIn = Real2{-0.0500000007, 0}
+													var TangentOut = Real2{0.0500000007, 0}
+													var EditorFlags = 0
+												}
+											}
+											Object
+											{
+												var key = 3.33333349
+												var value = Object
+												{
+													var Time = 3.33333349
+													var Value = 0
+													var TangentIn = Real2{-0.0500000007, 0}
+													var TangentOut = Real2{0.0500000007, 0}
+													var EditorFlags = 0
+												}
+											}
+											Object
+											{
+												var key = 6.66666698
+												var value = Object
+												{
+													var Time = 6.66666698
+													var Value = 0
+													var TangentIn = Real2{-0.0500000007, 0}
+													var TangentOut = Real2{0.0500000007, 0}
+													var EditorFlags = 0
+												}
+											}
+											Object
+											{
+												var key = 10
+												var value = Object
+												{
+													var Time = 10
+													var Value = 0
+													var TangentIn = Real2{-0.0500000007, 0}
+													var TangentOut = Real2{0.0500000007, 0}
+													var EditorFlags = 0
+												}
+											}
+										}
+										var Children = Array
+										{
+										}
+									}
+									Object
+									{
+										var Type = TrackType.SubProperty
+										var Name = "Y"
+										var Path = "RigidBody.AngularVelocity.Y"
+										var Disabled = false
+										var PropertyTypeName = "Real"
+										var KeyFrames = Array
+										{
+											Object
+											{
+												var key = 0
+												var value = Object
+												{
+													var Time = 0
+													var Value = 0
+													var TangentIn = Real2{-0.0500000007, 0}
+													var TangentOut = Real2{0.0500000007, 0}
+													var EditorFlags = 0
+												}
+											}
+											Object
+											{
+												var key = 3.33333349
+												var value = Object
+												{
+													var Time = 3.33333349
+													var Value = 0
+													var TangentIn = Real2{-0.0500000007, 0}
+													var TangentOut = Real2{0.0500000007, 0}
+													var EditorFlags = 0
+												}
+											}
+											Object
+											{
+												var key = 6.66666698
+												var value = Object
+												{
+													var Time = 6.66666698
+													var Value = 0
+													var TangentIn = Real2{-0.0500000007, 0}
+													var TangentOut = Real2{0.0500000007, 0}
+													var EditorFlags = 0
+												}
+											}
+											Object
+											{
+												var key = 10
+												var value = Object
+												{
+													var Time = 10
+													var Value = 0
+													var TangentIn = Real2{-0.0500000007, 0}
+													var TangentOut = Real2{0.0500000007, 0}
+													var EditorFlags = 0
+												}
+											}
+										}
+										var Children = Array
+										{
+										}
+									}
+									Object
+									{
+										var Type = TrackType.SubProperty
+										var Name = "Z"
+										var Path = "RigidBody.AngularVelocity.Z"
+										var Disabled = false
+										var PropertyTypeName = "Real"
+										var KeyFrames = Array
+										{
+											Object
+											{
+												var key = 0
+												var value = Object
+												{
+													var Time = 0
+													var Value = 2
+													var TangentIn = Real2{-1.11111116, 2.04875302}
+													var TangentOut = Real2{1.11111116, -2.04875302}
+													var EditorFlags = 0
+												}
+											}
+											Object
+											{
+												var key = 3.33333349
+												var value = Object
+												{
+													var Time = 3.33333349
+													var Value = -2
+													var TangentIn = Real2{-1.11111116, 0.0244958401}
+													var TangentOut = Real2{1.11111116, -0.0244958401}
+													var EditorFlags = 0
+												}
+											}
+											Object
+											{
+												var key = 6.66666698
+												var value = Object
+												{
+													var Time = 6.66666698
+													var Value = 2.5
+													var TangentIn = Real2{-1.11111164, -1.04021692}
+													var TangentOut = Real2{1.11111164, 1.04021692}
+													var EditorFlags = 0
+												}
+											}
+											Object
+											{
+												var key = 10
+												var value = Object
+												{
+													var Time = 10
+													var Value = 2
+													var TangentIn = Real2{-1.11111069, 1.49338913}
+													var TangentOut = Real2{1.11111069, -1.49338913}
+													var EditorFlags = 0
+												}
+											}
+										}
+										var Children = Array
+										{
+										}
+									}
+								}
+							}
+						}
+					}
+					Object
+					{
+						var Type = TrackType.Component
+						var Name = "RadialSpinner"
+						var Path = "RadialSpinner"
+						var Disabled = false
+						var PropertyTypeName = "Void"
+						var KeyFrames = Array
+						{
+						}
+						var Children = Array
+						{
+							Object
+							{
+								var Type = TrackType.Property
+								var Name = "Squash"
+								var Path = "RadialSpinner.Squash"
+								var Disabled = false
+								var PropertyTypeName = "Real"
+								var KeyFrames = Array
+								{
+									Object
+									{
+										var key = 0
+										var value = Object
+										{
+											var Time = 0
+											var Value = 150
+											var TangentIn = Real2{-1.12595427, -29.786499}
+											var TangentOut = Real2{1.12595427, 29.786499}
+											var EditorFlags = 0
+										}
+									}
+									Object
+									{
+										var key = 3.33081746
+										var value = Object
+										{
+											var Time = 3.33081746
+											var Value = 200.234787
+											var TangentIn = Real2{-1.11195064, 7.73228455}
+											var TangentOut = Real2{1.11195064, -7.73228455}
+											var EditorFlags = 0
+										}
+									}
+									Object
+									{
+										var key = 6
+										var value = Object
+										{
+											var Time = 6
+											var Value = 80
+											var TangentIn = Real2{-0.16850853, -2.82800293}
+											var TangentOut = Real2{0.16850853, 2.82800293}
+											var EditorFlags = 8
+										}
+									}
+									Object
+									{
+										var key = 6.67104387
+										var value = Object
+										{
+											var Time = 6.67104387
+											var Value = 223.537704
+											var TangentIn = Real2{-0.233092308, -27.5820007}
+											var TangentOut = Real2{0.233092308, 27.5820007}
+											var EditorFlags = 8
+										}
+									}
+									Object
+									{
+										var key = 7.33333349
+										var value = Object
+										{
+											var Time = 7.33333349
+											var Value = 80
+											var TangentIn = Real2{-0.209326267, -0.307113647}
+											var TangentOut = Real2{0.209326267, 0.307113647}
+											var EditorFlags = 8
+										}
+									}
+									Object
+									{
+										var key = 10
+										var value = Object
+										{
+											var Time = 10
+											var Value = 150
+											var TangentIn = Real2{-1.11111069, -35.8359604}
+											var TangentOut = Real2{1.11111069, 35.8359604}
+											var EditorFlags = 0
+										}
+									}
+								}
+								var Children = Array
+								{
+								}
+							}
+							Object
+							{
+								var Type = TrackType.Property
+								var Name = "ScaleRadius"
+								var Path = "RadialSpinner.ScaleRadius"
+								var Disabled = false
+								var PropertyTypeName = "Real"
+								var KeyFrames = Array
+								{
+									Object
+									{
+										var key = 0
+										var value = Object
+										{
+											var Time = 0
+											var Value = 0.800000012
+											var TangentIn = Real2{-0.0500000007, 0}
+											var TangentOut = Real2{0.0500000007, 0}
+											var EditorFlags = 0
+										}
+									}
+									Object
+									{
+										var key = 3.33333349
+										var value = Object
+										{
+											var Time = 3.33333349
+											var Value = 0.699999988
+											var TangentIn = Real2{-1.11111164, 0.00011575222}
+											var TangentOut = Real2{1.11111164, -0.00011575222}
+											var EditorFlags = 0
+										}
+									}
+									Object
+									{
+										var key = 6.66666698
+										var value = Object
+										{
+											var Time = 6.66666698
+											var Value = 0.75
+											var TangentIn = Real2{-1.11111164, -0.0317910314}
+											var TangentOut = Real2{1.11111164, 0.0317910314}
+											var EditorFlags = 0
+										}
+									}
+									Object
+									{
+										var key = 10
+										var value = Object
+										{
+											var Time = 10
+											var Value = 0.800000012
+											var TangentIn = Real2{-0.0500000007, 0}
+											var TangentOut = Real2{0.0500000007, 0}
+											var EditorFlags = 0
+										}
+									}
+								}
+								var Children = Array
+								{
+								}
+							}
+							Object
+							{
+								var Type = TrackType.Property
+								var Name = "ScaleAmount"
+								var Path = "RadialSpinner.ScaleAmount"
+								var Disabled = false
+								var PropertyTypeName = "Real"
+								var KeyFrames = Array
+								{
+									Object
+									{
+										var key = 0
+										var value = Object
+										{
+											var Time = 0
+											var Value = -0.800000012
+											var TangentIn = Real2{-1.11111116, -0.0706083179}
+											var TangentOut = Real2{1.11111116, 0.0706083179}
+											var EditorFlags = 0
+										}
+									}
+									Object
+									{
+										var key = 3.33333349
+										var value = Object
+										{
+											var Time = 3.33333349
+											var Value = -0.5
+											var TangentIn = Real2{-1.11111116, 0.00549060106}
+											var TangentOut = Real2{1.11111116, -0.00549060106}
+											var EditorFlags = 0
+										}
+									}
+									Object
+									{
+										var key = 6.66666698
+										var value = Object
+										{
+											var Time = 6.66666698
+											var Value = -0.899999976
+											var TangentIn = Real2{-1.11111164, 0.000213623047}
+											var TangentOut = Real2{1.11111164, -0.000213623047}
+											var EditorFlags = 0
+										}
+									}
+									Object
+									{
+										var key = 10
+										var value = Object
+										{
+											var Time = 10
+											var Value = -0.800000012
+											var TangentIn = Real2{-1.11111069, -0.0487014055}
+											var TangentOut = Real2{1.11111069, 0.0487014055}
+											var EditorFlags = 0
+										}
+									}
+								}
+								var Children = Array
+								{
+								}
+							}
+							Object
+							{
+								var Type = TrackType.Property
+								var Name = "Color"
+								var Path = "RadialSpinner.Color"
+								var Disabled = false
+								var PropertyTypeName = "Real4"
+								var KeyFrames = Array
+								{
+								}
+								var Children = Array
+								{
+									Object
+									{
+										var Type = TrackType.SubProperty
+										var Name = "R"
+										var Path = "RadialSpinner.Color.R"
+										var Disabled = false
+										var PropertyTypeName = "Real"
+										var KeyFrames = Array
+										{
+											Object
+											{
+												var key = 0
+												var value = Object
+												{
+													var Time = 0
+													var Value = 0
+													var TangentIn = Real2{-0.0500000007, 0}
+													var TangentOut = Real2{0.0500000007, 0}
+													var EditorFlags = 0
+												}
+											}
+											Object
+											{
+												var key = 3.33333349
+												var value = Object
+												{
+													var Time = 3.33333349
+													var Value = 0.679999828
+													var TangentIn = Real2{-0.0500000007, 0}
+													var TangentOut = Real2{0.0500000007, 0}
+													var EditorFlags = 0
+												}
+											}
+											Object
+											{
+												var key = 6.66666698
+												var value = Object
+												{
+													var Time = 6.66666698
+													var Value = 1
+													var TangentIn = Real2{-0.0500000007, 0}
+													var TangentOut = Real2{0.0500000007, 0}
+													var EditorFlags = 0
+												}
+											}
+											Object
+											{
+												var key = 10
+												var value = Object
+												{
+													var Time = 10
+													var Value = 0
+													var TangentIn = Real2{-0.0500000007, 0}
+													var TangentOut = Real2{0.0500000007, 0}
+													var EditorFlags = 0
+												}
+											}
+										}
+										var Children = Array
+										{
+										}
+									}
+									Object
+									{
+										var Type = TrackType.SubProperty
+										var Name = "G"
+										var Path = "RadialSpinner.Color.G"
+										var Disabled = false
+										var PropertyTypeName = "Real"
+										var KeyFrames = Array
+										{
+											Object
+											{
+												var key = 0
+												var value = Object
+												{
+													var Time = 0
+													var Value = 0.309999943
+													var TangentIn = Real2{-0.0500000007, 0}
+													var TangentOut = Real2{0.0500000007, 0}
+													var EditorFlags = 0
+												}
+											}
+											Object
+											{
+												var key = 3.33333349
+												var value = Object
+												{
+													var Time = 3.33333349
+													var Value = 0
+													var TangentIn = Real2{-0.0500000007, 0}
+													var TangentOut = Real2{0.0500000007, 0}
+													var EditorFlags = 0
+												}
+											}
+											Object
+											{
+												var key = 6.66666698
+												var value = Object
+												{
+													var Time = 6.66666698
+													var Value = 0
+													var TangentIn = Real2{-0.0500000007, 0}
+													var TangentOut = Real2{0.0500000007, 0}
+													var EditorFlags = 0
+												}
+											}
+											Object
+											{
+												var key = 10
+												var value = Object
+												{
+													var Time = 10
+													var Value = 0.313725471
+													var TangentIn = Real2{-0.0500000007, 0}
+													var TangentOut = Real2{0.0500000007, 0}
+													var EditorFlags = 0
+												}
+											}
+										}
+										var Children = Array
+										{
+										}
+									}
+									Object
+									{
+										var Type = TrackType.SubProperty
+										var Name = "B"
+										var Path = "RadialSpinner.Color.B"
+										var Disabled = false
+										var PropertyTypeName = "Real"
+										var KeyFrames = Array
+										{
+											Object
+											{
+												var key = 0
+												var value = Object
+												{
+													var Time = 0
+													var Value = 1
+													var TangentIn = Real2{-0.0500000007, 0}
+													var TangentOut = Real2{0.0500000007, 0}
+													var EditorFlags = 0
+												}
+											}
+											Object
+											{
+												var key = 3.33333349
+												var value = Object
+												{
+													var Time = 3.33333349
+													var Value = 1
+													var TangentIn = Real2{-0.0500000007, 0}
+													var TangentOut = Real2{0.0500000007, 0}
+													var EditorFlags = 0
+												}
+											}
+											Object
+											{
+												var key = 6.66666698
+												var value = Object
+												{
+													var Time = 6.66666698
+													var Value = 0
+													var TangentIn = Real2{-0.0500000007, 0}
+													var TangentOut = Real2{0.0500000007, 0}
+													var EditorFlags = 0
+												}
+											}
+											Object
+											{
+												var key = 10
+												var value = Object
+												{
+													var Time = 10
+													var Value = 1
+													var TangentIn = Real2{-0.0500000007, 0}
+													var TangentOut = Real2{0.0500000007, 0}
+													var EditorFlags = 0
+												}
+											}
+										}
+										var Children = Array
+										{
+										}
+									}
+									Object
+									{
+										var Type = TrackType.SubProperty
+										var Name = "A"
+										var Path = "RadialSpinner.Color.A"
+										var Disabled = false
+										var PropertyTypeName = "Real"
+										var KeyFrames = Array
+										{
+											Object
+											{
+												var key = 0
+												var value = Object
+												{
+													var Time = 0
+													var Value = 1
+													var TangentIn = Real2{-0.0500000007, 0}
+													var TangentOut = Real2{0.0500000007, 0}
+													var EditorFlags = 0
+												}
+											}
+											Object
+											{
+												var key = 3.33333349
+												var value = Object
+												{
+													var Time = 3.33333349
+													var Value = 1
+													var TangentIn = Real2{-0.0500000007, 0}
+													var TangentOut = Real2{0.0500000007, 0}
+													var EditorFlags = 0
+												}
+											}
+											Object
+											{
+												var key = 6.66666698
+												var value = Object
+												{
+													var Time = 6.66666698
+													var Value = 1
+													var TangentIn = Real2{-0.0500000007, 0}
+													var TangentOut = Real2{0.0500000007, 0}
+													var EditorFlags = 0
+												}
+											}
+											Object
+											{
+												var key = 10
+												var value = Object
+												{
+													var Time = 10
+													var Value = 1
+													var TangentIn = Real2{-0.0500000007, 0}
+													var TangentOut = Real2{0.0500000007, 0}
+													var EditorFlags = 0
+												}
+											}
+										}
+										var Children = Array
+										{
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+}

@@ -1,0 +1,24 @@
+[Vertex]
+struct RadialScaleVert
+{
+  [BuiltInInput] var LocalToPerspective : Real4x4;
+  [StageInput] var LocalPosition : Real3;
+  
+  [Input] var Squash : Real;
+  
+  [Input] var ScaleRadius : Real;
+  [Input] var ScaleAmount : Real;
+
+  [Output] var PerspectivePosition : Real4;
+
+  function Main()
+  {
+    var squash = this.Squash / 360.0;
+    var angle = Math.ATan2(this.LocalPosition.Z, this.LocalPosition.X) * squash;
+    var length = Math.Length(this.LocalPosition);
+    var delta = length - this.ScaleRadius;
+    length += delta * this.ScaleAmount;
+    this.LocalPosition = Math.Normalize(Real3(Math.Cos(angle), 0, Math.Sin(angle))) * length;
+    this.PerspectivePosition = Math.Multiply(this.LocalToPerspective, Real4(this.LocalPosition, 1.0));
+  }
+}

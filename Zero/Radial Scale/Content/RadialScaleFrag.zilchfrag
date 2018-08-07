@@ -1,0 +1,15 @@
+[Pixel]
+struct RadialScaleFrag
+{
+  [Input] var ColorValue : Real4 = Real4(1.0);
+  [Input] var GammaCorrect : Boolean = true;
+  
+  [Output] var Albedo : Real3;
+  
+  function Main()
+  {
+    var power = Math.Lerp(Real3(1.0), Real3(2.2), this.GammaCorrect as Real);
+    this.Albedo = Math.Pow(this.ColorValue.XYZ, power);
+  }
+
+}

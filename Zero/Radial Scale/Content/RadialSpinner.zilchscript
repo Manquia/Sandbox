@@ -1,0 +1,25 @@
+class RadialSpinner : ZilchComponent
+{
+  [Property]var Squash : Real = 360;
+  [Property]var ScaleRadius : Real = 1;
+  [Property]var ScaleAmount : Real = 1.25;
+  [Property]var Color : Real4 = Real4(1,1,1,1);
+  var Material : Material = null;
+  
+  function Initialize(init : CogInitializer)
+  {
+    Zero.Connect(this.Space, Events.FrameUpdate, this.OnFrameUpdate);
+    
+    var model = this.Owner.Model;
+    this.Material = model.Material.RuntimeClone();
+    model.Material = this.Material;
+  }
+
+  function OnFrameUpdate(event : UpdateEvent)
+  {
+    this.Material.RadialScaleVert.Squash = this.Squash;
+    this.Material.RadialScaleVert.ScaleRadius = this.ScaleRadius;
+    this.Material.RadialScaleVert.ScaleAmount = this.ScaleAmount;
+    this.Material.RadialScaleFrag.ColorValue = this.Color;
+  }
+}

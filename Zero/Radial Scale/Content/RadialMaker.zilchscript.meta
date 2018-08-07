@@ -1,0 +1,9 @@
+[Version:1]
+TextContent 
+{
+	ZilchScriptBuilder 
+	{
+		var Name = "RadialMaker"
+		var ResourceId = 0x5b953202db3ee49c
+	}
+}

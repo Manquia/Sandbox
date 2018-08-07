@@ -1,0 +1,9 @@
+[Version:1]
+TextContent 
+{
+	ZilchFragmentBuilder 
+	{
+		var Name = "RadialScaleFrag"
+		var ResourceId = 0x5bea4a9179463e23
+	}
+}
