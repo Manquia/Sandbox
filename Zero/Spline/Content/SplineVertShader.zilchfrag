@@ -87,17 +87,13 @@ struct SplineVertShader
     
     var newLocalPos = Real3(this.LocalPosition.X, 0.0, this.LocalPosition.Z);
     
-    // @WIP Work in progress to fix the visual bug
-    var planeVec = Math.Normalize(Math.Abs(Real2(upVec.X, upVec.Z)));
-    var spinAngleVec = Math.Min(planeVec.X/planeVec.Y, planeVec.Y/planeVec.X);
-    var spinAngle = Math.Tan(spinAngleVec) * 2;
-    // @WIP
     
-    // rotate by 0 or 180 degrees spin to align with other chains
-    var rotMat = Util.RotationMatrix(Real3(0,1,0), Math.Pi * pointsDown);
-    // rotate by 0 or 180 degrees if we are looking direclty up or down
-    rotMat = Math.Multiply(Util.RotationMatrix(Real3(0,0,1), Math.Pi * pointsDown), rotMat);
+    //// rotate by 0 or 180 degrees spin to align with other chains
+    //var rotMat = Util.RotationMatrix(Real3(0,1,0), (Math.Pi - spinAngle) * pointsDown);
+    //// rotate by 0 or 180 degrees if we are looking direclty up or down
+    //rotMat = Math.Multiply(Util.RotationMatrix(Real3(0,0,1), Math.Pi * pointsDown), rotMat);
     
+    var rotMat = Util.RotationMatrix(Real3(0,0,1), Math.Pi * pointsDown);
     // if angle is basically up/down we don't need a rotation and need to
     //  conditionally skip the cross product below
     if(Math.Abs(axisAngle - (Math.Pi/2)) > (Math.Pi/2) - 0.01) // no rotation needed
@@ -105,6 +101,18 @@ struct SplineVertShader
     }
     else
     {
+      // @WIP Work in progress to fix the visual bug
+      var planeVec = Math.Normalize(Math.Abs(Real2(upVec.X, upVec.Z)));
+      //var spinAngleVec = Math.Min(planeVec.X/planeVec.Y, planeVec.Y/planeVec.X);
+      //var spinAngle = Math.Tan(spinAngleVec);
+      var spinAngle = Math.ATan2(planeVec.X, upVec.Y);
+      // @WIP
+      
+      rotMat = Math.Multiply(
+        rotMat,
+        Util.RotationMatrix(Real3(0,1,0), (spinAngle) * pointsDown)
+        );
+      
       // cross from either up or down to get rotation axis
       var rotAxis = Math.Normalize(Math.Cross(
         upVec, Real3(0,1,0)));

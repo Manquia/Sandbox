@@ -1,0 +1,9 @@
+[Version:1]
+TextContent 
+{
+	ZilchScriptBuilder 
+	{
+		var Name = "ChainDisplay"
+		var ResourceId = 0x5bc2c9313152cabf
+	}
+}

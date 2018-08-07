@@ -321,9 +321,9 @@ Level
 		var Name = "EditorCamera"
 		Transform 
 		{
-			var Translation = Real3{-59.742588, 10.9071484, 14.942812}
+			var Translation = Real3{-55.237442, 10.2806492, 28.3140945}
 			var Scale = Real3{1, 1, 1}
-			var Rotation = Quaternion{-0.249140844, -0.546018183, -0.174257442, 0.780658185}
+			var Rotation = Quaternion{-0.313468188, -0.0548264906, -0.0181318875, 0.947841227}
 		}
 		CameraViewport 
 		{
@@ -380,10 +380,10 @@ Level
 		{
 			var ControlMode = ControlMode.Orbit
 			var Previous3DMode = ControlMode.Orbit
-			var LookDistance = 6.7879281
-			var VerticalAngle = 0.617849112
-			var HorizontalAngle = 45.2029877
-			var LookTarget = Real3{-54.5452232, 6.97501564, 13.045002}
+			var LookDistance = 6.86097193
+			var VerticalAngle = 0.638789833
+			var HorizontalAngle = 69.2305984
+			var LookTarget = Real3{-54.6023407, 6.18997049, 22.8427219}
 			var MoveSensitivity = 1
 		}
 		Hierarchy 
@@ -17211,13 +17211,13 @@ Level
 				{
 					var LinkObj = "5bcea03040e1d49a:Chain_Point"
 					var LinkCount = 7
-					var Direction = Real3{0, 1, 0}
+					var Direction = Real3{0.707106769, 0, 0.707106769}
 					var DistanceBetweenObjs = 1
 					var COMMAND_Generate = false
 				}
 				Hierarchy 
 				{
-					Cog [Id:0x5bc2dc5d32421bf7][ContextId:474]
+					Cog [Id:0x5bc2df21c6a63ca8][ContextId:474]
 					{
 						var Name = "PT0"
 						Transform 
@@ -17307,12 +17307,12 @@ Level
 							var LocalPointB = Real3{0, 0, 0}
 						}
 					}
-					Cog [Id:0x5bc2dc5d324225d7][ContextId:475]
+					Cog [Id:0x5bc2df21c6a6476f][ContextId:475]
 					{
 						var Name = "PT1"
 						Transform 
 						{
-							var Translation = Real3{0, 1, 0}
+							var Translation = Real3{0.707106769, 0.611724854, 0.707106769}
 							var Scale = Real3{1, 1, 1}
 							var Rotation = Quaternion{0, 0, 0, 1}
 						}
@@ -17397,12 +17397,12 @@ Level
 							var LocalPointB = Real3{0, 0, 0}
 						}
 					}
-					Cog [Id:0x5bc2dc5d324230f2][ContextId:476]
+					Cog [Id:0x5bc2df21c6a65099][ContextId:476]
 					{
 						var Name = "PT2"
 						Transform 
 						{
-							var Translation = Real3{0, 2, 0}
+							var Translation = Real3{1.41421354, 1.33304024, 1.41421354}
 							var Scale = Real3{1, 1, 1}
 							var Rotation = Quaternion{0, 0, 0, 1}
 						}
@@ -17487,12 +17487,12 @@ Level
 							var LocalPointB = Real3{0, 0, 0}
 						}
 					}
-					Cog [Id:0x5bc2dc5d32423a77][ContextId:477]
+					Cog [Id:0x5bc2df21c6a65999][ContextId:477]
 					{
 						var Name = "PT3"
 						Transform 
 						{
-							var Translation = Real3{0, 3, 0}
+							var Translation = Real3{2.15161276, 2.0570488, 2.07181406}
 							var Scale = Real3{1, 1, 1}
 							var Rotation = Quaternion{0, 0, 0, 1}
 						}
@@ -17577,12 +17577,12 @@ Level
 							var LocalPointB = Real3{0, 0, 0}
 						}
 					}
-					Cog [Id:0x5bc2dc5d32424346][ContextId:478]
+					Cog [Id:0x5bc2df21c6a6633a][ContextId:478]
 					{
 						var Name = "PT4"
 						Transform 
 						{
-							var Translation = Real3{0, 4, 0}
+							var Translation = Real3{2.82842708, 1.33304024, 2.82842708}
 							var Scale = Real3{1, 1, 1}
 							var Rotation = Quaternion{0, 0, 0, 1}
 						}
@@ -17667,12 +17667,12 @@ Level
 							var LocalPointB = Real3{0, 0, 0}
 						}
 					}
-					Cog [Id:0x5bc2dc5d32424bf2][ContextId:479]
+					Cog [Id:0x5bc2df21c6a66c10][ContextId:479]
 					{
 						var Name = "PT5"
 						Transform 
 						{
-							var Translation = Real3{0, 5, 0}
+							var Translation = Real3{3.53553391, 0.974636078, 3.53553391}
 							var Scale = Real3{1, 1, 1}
 							var Rotation = Quaternion{0, 0, 0, 1}
 						}
@@ -17757,12 +17757,12 @@ Level
 							var LocalPointB = Real3{0, 0, 0}
 						}
 					}
-					Cog [Id:0x5bc2dc5d324254a5][ContextId:480]
+					Cog [Id:0x5bc2df21c6a6746f][ContextId:480]
 					{
 						var Name = "PT6"
 						Transform 
 						{
-							var Translation = Real3{0, 6, 0}
+							var Translation = Real3{4.2426405, 0, 4.2426405}
 							var Scale = Real3{1, 1, 1}
 							var Rotation = Quaternion{0, 0, 0, 1}
 						}
@@ -17849,7 +17849,7 @@ Level
 					}
 				}
 			}
-			Cog [Id:0x5bc2dc48239c639d][ContextId:481]
+			Cog [Id:0x5bc2d9e4db1e1806][ContextId:481]
 			{
 				var Name = "ObjectPool"
 				Transform 
@@ -17860,22 +17860,2893 @@ Level
 				}
 				Hierarchy 
 				{
-					Cog [Id:0x5bc2dc105e295ea1][InheritId:"5bc87562328112b4:ChainLink"][ContextId:482]
+					Cog [Id:0x5bc2d9e6dd0ea1e6][InheritId:"5bc87562328112b4:ChainLink"][ContextId:482]
 					{
 					}
-					Cog [Id:0x5bc2dc105e295ecc][InheritId:"5bc87562328112b4:ChainLink"][ContextId:483]
+					Cog [Id:0x5bc2d9e6dd0ea20a][InheritId:"5bc87562328112b4:ChainLink"][ContextId:483]
 					{
 					}
-					Cog [Id:0x5bc2dc105e295ee9][InheritId:"5bc87562328112b4:ChainLink"][ContextId:484]
+					Cog [Id:0x5bc2d9e6dd0ea227][InheritId:"5bc87562328112b4:ChainLink"][ContextId:484]
 					{
 					}
-					Cog [Id:0x5bc2dc105e295f0d][InheritId:"5bc87562328112b4:ChainLink"][ContextId:485]
+					Cog [Id:0x5bc2d9e6dd0ea24b][InheritId:"5bc87562328112b4:ChainLink"][ContextId:485]
 					{
 					}
-					Cog [Id:0x5bc2dc105e295f2a][InheritId:"5bc87562328112b4:ChainLink"][ContextId:486]
+					Cog [Id:0x5bc2d9e6dd0ea268][InheritId:"5bc87562328112b4:ChainLink"][ContextId:486]
 					{
 					}
-					Cog [Id:0x5bc2dc105e295f47][InheritId:"5bc87562328112b4:ChainLink"][ContextId:487]
+					Cog [Id:0x5bc2d9e6dd0ea28c][InheritId:"5bc87562328112b4:ChainLink"][ContextId:487]
+					{
+					}
+				}
+			}
+		}
+	}
+	Cog [ContextId:488]
+	{
+		var Name = "Transform"
+		Transform 
+		{
+			var Translation = Real3{-55.8770142, 6.96577406, 17.9702396}
+			var Scale = Real3{1, 1, 1}
+			var Rotation = Quaternion{0, 0, 0, 1}
+		}
+		PathVisuals 
+		{
+			var SplineType = SplineType.Linear
+			var Spacing = 5
+			var Closed = false
+			var RunSpeed = 0
+			var PathLink = "5bc87562328112b4:ChainLink"
+			var PathBegin = "null"
+			var PathEnd = "null"
+			var MaterialOverride = "null"
+			var Dynamic = true
+			var Dynamic_S = true
+			var COMMAND_Generate = false
+		}
+		Hierarchy 
+		{
+			Cog [Id:0x5bcc619025865d3d][ContextId:489]
+			{
+				var Name = "Points"
+				Transform 
+				{
+					var Translation = Real3{0, 0, 0}
+					var Scale = Real3{1, 1, 1}
+					var Rotation = Quaternion{0, 0, 0, 1}
+				}
+				HierarchySpline 
+				{
+					var Closed = false
+					var SplineType = SplineType.Linear
+					var Error = 5
+					var DebugDrawSpline = true
+					var SplineColor = Real4{0, 0, 0, 1}
+				}
+				ChainMaker 
+				{
+					var LinkObj = "5bcea03040e1d49a:Chain_Point"
+					var LinkCount = 7
+					var Direction = Real3{-0.707106769, 0, -0.707106769}
+					var DistanceBetweenObjs = 1
+					var COMMAND_Generate = false
+				}
+				Hierarchy 
+				{
+					Cog [Id:0x5bc2d8aa3a138607][ContextId:490]
+					{
+						var Name = "PT0"
+						Transform 
+						{
+							var Translation = Real3{0, 0, 0}
+							var Scale = Real3{1, 1, 1}
+							var Rotation = Quaternion{0, 0, 0, 1}
+						}
+						RigidBody 
+						{
+							var Velocity = Real3{0, 0, 0}
+							var AngularVelocity = Real3{0, 0, 0}
+							var DynamicState = RigidBodyDynamicState.Static
+							var AllowSleep = true
+							var Asleep = false
+							var RotationLocked = false
+							var Mode2D = Mode2DStates.InheritFromSpace
+						}
+						ObjectLink 
+						{
+							var ObjectAPath = CogPath
+							{
+								var Path = "."
+								var ErrorOnResolveToNull = false
+								var ErrorOnPathCantCompute = false
+								var ErrorOnDirectLinkFail = false
+								var UpdateCogOnPathChange = true
+								var UpdatePathOnCogChange = true
+								var UpdateCogOnInitialize = true
+								var ResolvedNullErrorOccurred = false
+								var Cog = 490
+								var PathPreference0 = CogPathPreference.CogRelative
+								var PathPreference1 = CogPathPreference.SpaceRelative
+								var PathPreference2 = CogPathPreference.Absolute
+							}
+							var ObjectBPath = CogPath
+							{
+								var Path = "../PT1"
+								var ErrorOnResolveToNull = false
+								var ErrorOnPathCantCompute = false
+								var ErrorOnDirectLinkFail = false
+								var UpdateCogOnPathChange = true
+								var UpdatePathOnCogChange = true
+								var UpdateCogOnInitialize = true
+								var ResolvedNullErrorOccurred = false
+								var Cog = 491
+								var PathPreference0 = CogPathPreference.CogRelative
+								var PathPreference1 = CogPathPreference.SpaceRelative
+								var PathPreference2 = CogPathPreference.Absolute
+							}
+							var LocalPointA = Real3{0, 0, 0}
+							var LocalPointB = Real3{0, 0, 0}
+						}
+						SphereCollider 
+						{
+							var Ghost = false
+							var SendsEvents = true
+							var Material = "4de020863e872da8:DefaultPhysicsMaterial"
+							var CollisionGroup = "4e740859314e5515:DefaultGroup"
+							var Offset = Real3{0, 0, 0}
+							var Radius = 0.00100000005
+						}
+						IgnoreSpaceEffects 
+						{
+							var IgnoreDrag = true
+							var IgnoreFlow = true
+							var IgnoreForce = true
+							var IgnoreGravity = false
+							var IgnorePointForce = true
+							var IgnorePointGravity = true
+							var IgnoreThrust = true
+							var IgnoreVortex = true
+							var IgnoreWind = true
+							var IgnoreTorque = true
+							var IgnoreBuoyancy = true
+							var IgnoreCustom = true
+						}
+						StickJoint 
+						{
+							var Active = true
+							var SendsEvents = true
+							var AutoSnaps = false
+							var CollideConnected = true
+							var MaxImpulse = 0
+							var Length = 1
+							var LocalPointA = Real3{0, 0, 0}
+							var LocalPointB = Real3{0, 0, 0}
+						}
+					}
+					Cog [Id:0x5bc2d8aa3a138f93][ContextId:491]
+					{
+						var Name = "PT1"
+						Transform 
+						{
+							var Translation = Real3{-0.707106769, 0.768910408, -0.707106769}
+							var Scale = Real3{1, 1, 1}
+							var Rotation = Quaternion{0, 0, 0, 1}
+						}
+						RigidBody 
+						{
+							var Velocity = Real3{0, 0, 0}
+							var AngularVelocity = Real3{0, 0, 0}
+							var DynamicState = RigidBodyDynamicState.Dynamic
+							var AllowSleep = true
+							var Asleep = false
+							var RotationLocked = false
+							var Mode2D = Mode2DStates.InheritFromSpace
+						}
+						ObjectLink 
+						{
+							var ObjectAPath = CogPath
+							{
+								var Path = "."
+								var ErrorOnResolveToNull = false
+								var ErrorOnPathCantCompute = false
+								var ErrorOnDirectLinkFail = false
+								var UpdateCogOnPathChange = true
+								var UpdatePathOnCogChange = true
+								var UpdateCogOnInitialize = true
+								var ResolvedNullErrorOccurred = false
+								var Cog = 491
+								var PathPreference0 = CogPathPreference.CogRelative
+								var PathPreference1 = CogPathPreference.SpaceRelative
+								var PathPreference2 = CogPathPreference.Absolute
+							}
+							var ObjectBPath = CogPath
+							{
+								var Path = "../PT0"
+								var ErrorOnResolveToNull = false
+								var ErrorOnPathCantCompute = false
+								var ErrorOnDirectLinkFail = false
+								var UpdateCogOnPathChange = true
+								var UpdatePathOnCogChange = true
+								var UpdateCogOnInitialize = true
+								var ResolvedNullErrorOccurred = false
+								var Cog = 490
+								var PathPreference0 = CogPathPreference.CogRelative
+								var PathPreference1 = CogPathPreference.SpaceRelative
+								var PathPreference2 = CogPathPreference.Absolute
+							}
+							var LocalPointA = Real3{0, 0, 0}
+							var LocalPointB = Real3{0, 0, 0}
+						}
+						SphereCollider 
+						{
+							var Ghost = false
+							var SendsEvents = true
+							var Material = "4de020863e872da8:DefaultPhysicsMaterial"
+							var CollisionGroup = "4e740859314e5515:DefaultGroup"
+							var Offset = Real3{0, 0, 0}
+							var Radius = 0.00100000005
+						}
+						IgnoreSpaceEffects 
+						{
+							var IgnoreDrag = true
+							var IgnoreFlow = true
+							var IgnoreForce = true
+							var IgnoreGravity = false
+							var IgnorePointForce = true
+							var IgnorePointGravity = true
+							var IgnoreThrust = true
+							var IgnoreVortex = true
+							var IgnoreWind = true
+							var IgnoreTorque = true
+							var IgnoreBuoyancy = true
+							var IgnoreCustom = true
+						}
+						StickJoint 
+						{
+							var Active = true
+							var SendsEvents = true
+							var AutoSnaps = false
+							var CollideConnected = true
+							var MaxImpulse = 0
+							var Length = 1
+							var LocalPointA = Real3{0, 0, 0}
+							var LocalPointB = Real3{0, 0, 0}
+						}
+					}
+					Cog [Id:0x5bc2d8aa3a13983f][ContextId:492]
+					{
+						var Name = "PT2"
+						Transform 
+						{
+							var Translation = Real3{-1.41421354, 1.46878052, -1.41421354}
+							var Scale = Real3{1, 1, 1}
+							var Rotation = Quaternion{0, 0, 0, 1}
+						}
+						RigidBody 
+						{
+							var Velocity = Real3{0, 0, 0}
+							var AngularVelocity = Real3{0, 0, 0}
+							var DynamicState = RigidBodyDynamicState.Dynamic
+							var AllowSleep = true
+							var Asleep = false
+							var RotationLocked = false
+							var Mode2D = Mode2DStates.InheritFromSpace
+						}
+						ObjectLink 
+						{
+							var ObjectAPath = CogPath
+							{
+								var Path = "."
+								var ErrorOnResolveToNull = false
+								var ErrorOnPathCantCompute = false
+								var ErrorOnDirectLinkFail = false
+								var UpdateCogOnPathChange = true
+								var UpdatePathOnCogChange = true
+								var UpdateCogOnInitialize = true
+								var ResolvedNullErrorOccurred = false
+								var Cog = 492
+								var PathPreference0 = CogPathPreference.CogRelative
+								var PathPreference1 = CogPathPreference.SpaceRelative
+								var PathPreference2 = CogPathPreference.Absolute
+							}
+							var ObjectBPath = CogPath
+							{
+								var Path = "../PT1"
+								var ErrorOnResolveToNull = false
+								var ErrorOnPathCantCompute = false
+								var ErrorOnDirectLinkFail = false
+								var UpdateCogOnPathChange = true
+								var UpdatePathOnCogChange = true
+								var UpdateCogOnInitialize = true
+								var ResolvedNullErrorOccurred = false
+								var Cog = 491
+								var PathPreference0 = CogPathPreference.CogRelative
+								var PathPreference1 = CogPathPreference.SpaceRelative
+								var PathPreference2 = CogPathPreference.Absolute
+							}
+							var LocalPointA = Real3{0, 0, 0}
+							var LocalPointB = Real3{0, 0, 0}
+						}
+						SphereCollider 
+						{
+							var Ghost = false
+							var SendsEvents = true
+							var Material = "4de020863e872da8:DefaultPhysicsMaterial"
+							var CollisionGroup = "4e740859314e5515:DefaultGroup"
+							var Offset = Real3{0, 0, 0}
+							var Radius = 0.00100000005
+						}
+						IgnoreSpaceEffects 
+						{
+							var IgnoreDrag = true
+							var IgnoreFlow = true
+							var IgnoreForce = true
+							var IgnoreGravity = false
+							var IgnorePointForce = true
+							var IgnorePointGravity = true
+							var IgnoreThrust = true
+							var IgnoreVortex = true
+							var IgnoreWind = true
+							var IgnoreTorque = true
+							var IgnoreBuoyancy = true
+							var IgnoreCustom = true
+						}
+						StickJoint 
+						{
+							var Active = true
+							var SendsEvents = true
+							var AutoSnaps = false
+							var CollideConnected = true
+							var MaxImpulse = 0
+							var Length = 1
+							var LocalPointA = Real3{0, 0, 0}
+							var LocalPointB = Real3{0, 0, 0}
+						}
+					}
+					Cog [Id:0x5bc2d8aa3a13a1d9][ContextId:493]
+					{
+						var Name = "PT3"
+						Transform 
+						{
+							var Translation = Real3{-2.12132025, 2.16719818, -2.12132025}
+							var Scale = Real3{1, 1, 1}
+							var Rotation = Quaternion{0, 0, 0, 1}
+						}
+						RigidBody 
+						{
+							var Velocity = Real3{0, 0, 0}
+							var AngularVelocity = Real3{0, 0, 0}
+							var DynamicState = RigidBodyDynamicState.Dynamic
+							var AllowSleep = true
+							var Asleep = false
+							var RotationLocked = false
+							var Mode2D = Mode2DStates.InheritFromSpace
+						}
+						ObjectLink 
+						{
+							var ObjectAPath = CogPath
+							{
+								var Path = "."
+								var ErrorOnResolveToNull = false
+								var ErrorOnPathCantCompute = false
+								var ErrorOnDirectLinkFail = false
+								var UpdateCogOnPathChange = true
+								var UpdatePathOnCogChange = true
+								var UpdateCogOnInitialize = true
+								var ResolvedNullErrorOccurred = false
+								var Cog = 493
+								var PathPreference0 = CogPathPreference.CogRelative
+								var PathPreference1 = CogPathPreference.SpaceRelative
+								var PathPreference2 = CogPathPreference.Absolute
+							}
+							var ObjectBPath = CogPath
+							{
+								var Path = "../PT2"
+								var ErrorOnResolveToNull = false
+								var ErrorOnPathCantCompute = false
+								var ErrorOnDirectLinkFail = false
+								var UpdateCogOnPathChange = true
+								var UpdatePathOnCogChange = true
+								var UpdateCogOnInitialize = true
+								var ResolvedNullErrorOccurred = false
+								var Cog = 492
+								var PathPreference0 = CogPathPreference.CogRelative
+								var PathPreference1 = CogPathPreference.SpaceRelative
+								var PathPreference2 = CogPathPreference.Absolute
+							}
+							var LocalPointA = Real3{0, 0, 0}
+							var LocalPointB = Real3{0, 0, 0}
+						}
+						SphereCollider 
+						{
+							var Ghost = false
+							var SendsEvents = true
+							var Material = "4de020863e872da8:DefaultPhysicsMaterial"
+							var CollisionGroup = "4e740859314e5515:DefaultGroup"
+							var Offset = Real3{0, 0, 0}
+							var Radius = 0.00100000005
+						}
+						IgnoreSpaceEffects 
+						{
+							var IgnoreDrag = true
+							var IgnoreFlow = true
+							var IgnoreForce = true
+							var IgnoreGravity = false
+							var IgnorePointForce = true
+							var IgnorePointGravity = true
+							var IgnoreThrust = true
+							var IgnoreVortex = true
+							var IgnoreWind = true
+							var IgnoreTorque = true
+							var IgnoreBuoyancy = true
+							var IgnoreCustom = true
+						}
+						StickJoint 
+						{
+							var Active = true
+							var SendsEvents = true
+							var AutoSnaps = false
+							var CollideConnected = true
+							var MaxImpulse = 0
+							var Length = 1
+							var LocalPointA = Real3{0, 0, 0}
+							var LocalPointB = Real3{0, 0, 0}
+						}
+					}
+					Cog [Id:0x5bc2d8aa3a13ab1f][ContextId:494]
+					{
+						var Name = "PT4"
+						Transform 
+						{
+							var Translation = Real3{-2.82842708, 1.46878052, -2.82842708}
+							var Scale = Real3{1, 1, 1}
+							var Rotation = Quaternion{0, 0, 0, 1}
+						}
+						RigidBody 
+						{
+							var Velocity = Real3{0, 0, 0}
+							var AngularVelocity = Real3{0, 0, 0}
+							var DynamicState = RigidBodyDynamicState.Dynamic
+							var AllowSleep = true
+							var Asleep = false
+							var RotationLocked = false
+							var Mode2D = Mode2DStates.InheritFromSpace
+						}
+						ObjectLink 
+						{
+							var ObjectAPath = CogPath
+							{
+								var Path = "."
+								var ErrorOnResolveToNull = false
+								var ErrorOnPathCantCompute = false
+								var ErrorOnDirectLinkFail = false
+								var UpdateCogOnPathChange = true
+								var UpdatePathOnCogChange = true
+								var UpdateCogOnInitialize = true
+								var ResolvedNullErrorOccurred = false
+								var Cog = 494
+								var PathPreference0 = CogPathPreference.CogRelative
+								var PathPreference1 = CogPathPreference.SpaceRelative
+								var PathPreference2 = CogPathPreference.Absolute
+							}
+							var ObjectBPath = CogPath
+							{
+								var Path = "../PT3"
+								var ErrorOnResolveToNull = false
+								var ErrorOnPathCantCompute = false
+								var ErrorOnDirectLinkFail = false
+								var UpdateCogOnPathChange = true
+								var UpdatePathOnCogChange = true
+								var UpdateCogOnInitialize = true
+								var ResolvedNullErrorOccurred = false
+								var Cog = 493
+								var PathPreference0 = CogPathPreference.CogRelative
+								var PathPreference1 = CogPathPreference.SpaceRelative
+								var PathPreference2 = CogPathPreference.Absolute
+							}
+							var LocalPointA = Real3{0, 0, 0}
+							var LocalPointB = Real3{0, 0, 0}
+						}
+						SphereCollider 
+						{
+							var Ghost = false
+							var SendsEvents = true
+							var Material = "4de020863e872da8:DefaultPhysicsMaterial"
+							var CollisionGroup = "4e740859314e5515:DefaultGroup"
+							var Offset = Real3{0, 0, 0}
+							var Radius = 0.00100000005
+						}
+						IgnoreSpaceEffects 
+						{
+							var IgnoreDrag = true
+							var IgnoreFlow = true
+							var IgnoreForce = true
+							var IgnoreGravity = false
+							var IgnorePointForce = true
+							var IgnorePointGravity = true
+							var IgnoreThrust = true
+							var IgnoreVortex = true
+							var IgnoreWind = true
+							var IgnoreTorque = true
+							var IgnoreBuoyancy = true
+							var IgnoreCustom = true
+						}
+						StickJoint 
+						{
+							var Active = true
+							var SendsEvents = true
+							var AutoSnaps = false
+							var CollideConnected = true
+							var MaxImpulse = 0
+							var Length = 1
+							var LocalPointA = Real3{0, 0, 0}
+							var LocalPointB = Real3{0, 0, 0}
+						}
+					}
+					Cog [Id:0x5bc2d8aa3a13b457][ContextId:495]
+					{
+						var Name = "PT5"
+						Transform 
+						{
+							var Translation = Real3{-3.53553391, 0.768910408, -3.53553391}
+							var Scale = Real3{1, 1, 1}
+							var Rotation = Quaternion{0, 0, 0, 1}
+						}
+						RigidBody 
+						{
+							var Velocity = Real3{0, 0, 0}
+							var AngularVelocity = Real3{0, 0, 0}
+							var DynamicState = RigidBodyDynamicState.Dynamic
+							var AllowSleep = true
+							var Asleep = false
+							var RotationLocked = false
+							var Mode2D = Mode2DStates.InheritFromSpace
+						}
+						ObjectLink 
+						{
+							var ObjectAPath = CogPath
+							{
+								var Path = "."
+								var ErrorOnResolveToNull = false
+								var ErrorOnPathCantCompute = false
+								var ErrorOnDirectLinkFail = false
+								var UpdateCogOnPathChange = true
+								var UpdatePathOnCogChange = true
+								var UpdateCogOnInitialize = true
+								var ResolvedNullErrorOccurred = false
+								var Cog = 495
+								var PathPreference0 = CogPathPreference.CogRelative
+								var PathPreference1 = CogPathPreference.SpaceRelative
+								var PathPreference2 = CogPathPreference.Absolute
+							}
+							var ObjectBPath = CogPath
+							{
+								var Path = "../PT4"
+								var ErrorOnResolveToNull = false
+								var ErrorOnPathCantCompute = false
+								var ErrorOnDirectLinkFail = false
+								var UpdateCogOnPathChange = true
+								var UpdatePathOnCogChange = true
+								var UpdateCogOnInitialize = true
+								var ResolvedNullErrorOccurred = false
+								var Cog = 494
+								var PathPreference0 = CogPathPreference.CogRelative
+								var PathPreference1 = CogPathPreference.SpaceRelative
+								var PathPreference2 = CogPathPreference.Absolute
+							}
+							var LocalPointA = Real3{0, 0, 0}
+							var LocalPointB = Real3{0, 0, 0}
+						}
+						SphereCollider 
+						{
+							var Ghost = false
+							var SendsEvents = true
+							var Material = "4de020863e872da8:DefaultPhysicsMaterial"
+							var CollisionGroup = "4e740859314e5515:DefaultGroup"
+							var Offset = Real3{0, 0, 0}
+							var Radius = 0.00100000005
+						}
+						IgnoreSpaceEffects 
+						{
+							var IgnoreDrag = true
+							var IgnoreFlow = true
+							var IgnoreForce = true
+							var IgnoreGravity = false
+							var IgnorePointForce = true
+							var IgnorePointGravity = true
+							var IgnoreThrust = true
+							var IgnoreVortex = true
+							var IgnoreWind = true
+							var IgnoreTorque = true
+							var IgnoreBuoyancy = true
+							var IgnoreCustom = true
+						}
+						StickJoint 
+						{
+							var Active = true
+							var SendsEvents = true
+							var AutoSnaps = false
+							var CollideConnected = true
+							var MaxImpulse = 0
+							var Length = 1
+							var LocalPointA = Real3{0, 0, 0}
+							var LocalPointB = Real3{0, 0, 0}
+						}
+					}
+					Cog [Id:0x5bc2d8aa3a13bd49][ContextId:496]
+					{
+						var Name = "PT6"
+						Transform 
+						{
+							var Translation = Real3{-4.2426405, 0, -4.2426405}
+							var Scale = Real3{1, 1, 1}
+							var Rotation = Quaternion{0, 0, 0, 1}
+						}
+						RigidBody 
+						{
+							var Velocity = Real3{0, 0, 0}
+							var AngularVelocity = Real3{0, 0, 0}
+							var DynamicState = RigidBodyDynamicState.Dynamic
+							var AllowSleep = true
+							var Asleep = false
+							var RotationLocked = false
+							var Mode2D = Mode2DStates.InheritFromSpace
+						}
+						ObjectLink 
+						{
+							var ObjectAPath = CogPath
+							{
+								var Path = "."
+								var ErrorOnResolveToNull = false
+								var ErrorOnPathCantCompute = false
+								var ErrorOnDirectLinkFail = false
+								var UpdateCogOnPathChange = true
+								var UpdatePathOnCogChange = true
+								var UpdateCogOnInitialize = true
+								var ResolvedNullErrorOccurred = false
+								var Cog = 496
+								var PathPreference0 = CogPathPreference.CogRelative
+								var PathPreference1 = CogPathPreference.SpaceRelative
+								var PathPreference2 = CogPathPreference.Absolute
+							}
+							var ObjectBPath = CogPath
+							{
+								var Path = "../PT5"
+								var ErrorOnResolveToNull = false
+								var ErrorOnPathCantCompute = false
+								var ErrorOnDirectLinkFail = false
+								var UpdateCogOnPathChange = true
+								var UpdatePathOnCogChange = true
+								var UpdateCogOnInitialize = true
+								var ResolvedNullErrorOccurred = false
+								var Cog = 495
+								var PathPreference0 = CogPathPreference.CogRelative
+								var PathPreference1 = CogPathPreference.SpaceRelative
+								var PathPreference2 = CogPathPreference.Absolute
+							}
+							var LocalPointA = Real3{0, 0, 0}
+							var LocalPointB = Real3{0, 0, 0}
+						}
+						SphereCollider 
+						{
+							var Ghost = false
+							var SendsEvents = true
+							var Material = "4de020863e872da8:DefaultPhysicsMaterial"
+							var CollisionGroup = "4e740859314e5515:DefaultGroup"
+							var Offset = Real3{0, 0, 0}
+							var Radius = 0.00100000005
+						}
+						IgnoreSpaceEffects 
+						{
+							var IgnoreDrag = true
+							var IgnoreFlow = true
+							var IgnoreForce = true
+							var IgnoreGravity = false
+							var IgnorePointForce = true
+							var IgnorePointGravity = true
+							var IgnoreThrust = true
+							var IgnoreVortex = true
+							var IgnoreWind = true
+							var IgnoreTorque = true
+							var IgnoreBuoyancy = true
+							var IgnoreCustom = true
+						}
+						StickJoint 
+						{
+							var Active = true
+							var SendsEvents = true
+							var AutoSnaps = false
+							var CollideConnected = true
+							var MaxImpulse = 0
+							var Length = 1
+							var LocalPointA = Real3{0, 0, 0}
+							var LocalPointB = Real3{0, 0, 0}
+						}
+					}
+				}
+			}
+			Cog [Id:0x5bc2df16f2556b79][ContextId:497]
+			{
+				var Name = "ObjectPool"
+				Transform 
+				{
+					var Translation = Real3{55.8770142, -6.96577406, -17.9702396}
+					var Scale = Real3{1, 1, 1}
+					var Rotation = Quaternion{0, 0, 0, 1}
+				}
+				Hierarchy 
+				{
+					Cog [Id:0x5bc2d8f10aa9826a][InheritId:"5bc87562328112b4:ChainLink"][ContextId:498]
+					{
+					}
+					Cog [Id:0x5bc2d8f10aa9828e][InheritId:"5bc87562328112b4:ChainLink"][ContextId:499]
+					{
+					}
+					Cog [Id:0x5bc2d8f10aa982ab][InheritId:"5bc87562328112b4:ChainLink"][ContextId:500]
+					{
+					}
+					Cog [Id:0x5bc2d8f10aa982cf][InheritId:"5bc87562328112b4:ChainLink"][ContextId:501]
+					{
+					}
+					Cog [Id:0x5bc2d8f10aa982ec][InheritId:"5bc87562328112b4:ChainLink"][ContextId:502]
+					{
+					}
+					Cog [Id:0x5bc2d8f10aa98309][InheritId:"5bc87562328112b4:ChainLink"][ContextId:503]
+					{
+					}
+				}
+			}
+		}
+	}
+	Cog [ContextId:504]
+	{
+		var Name = "Transform"
+		Transform 
+		{
+			var Translation = Real3{-55.8770142, 6.96577406, 20.5645256}
+			var Scale = Real3{1, 1, 1}
+			var Rotation = Quaternion{0, 0, 0, 1}
+		}
+		PathVisuals 
+		{
+			var SplineType = SplineType.Linear
+			var Spacing = 5
+			var Closed = false
+			var RunSpeed = 0
+			var PathLink = "5bc87562328112b4:ChainLink"
+			var PathBegin = "null"
+			var PathEnd = "null"
+			var MaterialOverride = "null"
+			var Dynamic = true
+			var Dynamic_S = true
+			var COMMAND_Generate = false
+		}
+		Hierarchy 
+		{
+			Cog [Id:0x5bcc619025865d3d][ContextId:505]
+			{
+				var Name = "Points"
+				Transform 
+				{
+					var Translation = Real3{0, 0, 0}
+					var Scale = Real3{1, 1, 1}
+					var Rotation = Quaternion{0, 0, 0, 1}
+				}
+				HierarchySpline 
+				{
+					var Closed = false
+					var SplineType = SplineType.Linear
+					var Error = 5
+					var DebugDrawSpline = true
+					var SplineColor = Real4{0, 0, 0, 1}
+				}
+				ChainMaker 
+				{
+					var LinkObj = "5bcea03040e1d49a:Chain_Point"
+					var LinkCount = 7
+					var Direction = Real3{1, 0, 0}
+					var DistanceBetweenObjs = 1
+					var COMMAND_Generate = false
+				}
+				Hierarchy 
+				{
+					Cog [Id:0x5bc2d8458892f139][ContextId:506]
+					{
+						var Name = "PT0"
+						Transform 
+						{
+							var Translation = Real3{0, 0, 0}
+							var Scale = Real3{1, 1, 1}
+							var Rotation = Quaternion{0, 0, 0, 1}
+						}
+						RigidBody 
+						{
+							var Velocity = Real3{0, 0, 0}
+							var AngularVelocity = Real3{0, 0, 0}
+							var DynamicState = RigidBodyDynamicState.Static
+							var AllowSleep = true
+							var Asleep = false
+							var RotationLocked = false
+							var Mode2D = Mode2DStates.InheritFromSpace
+						}
+						ObjectLink 
+						{
+							var ObjectAPath = CogPath
+							{
+								var Path = "."
+								var ErrorOnResolveToNull = false
+								var ErrorOnPathCantCompute = false
+								var ErrorOnDirectLinkFail = false
+								var UpdateCogOnPathChange = true
+								var UpdatePathOnCogChange = true
+								var UpdateCogOnInitialize = true
+								var ResolvedNullErrorOccurred = false
+								var Cog = 506
+								var PathPreference0 = CogPathPreference.CogRelative
+								var PathPreference1 = CogPathPreference.SpaceRelative
+								var PathPreference2 = CogPathPreference.Absolute
+							}
+							var ObjectBPath = CogPath
+							{
+								var Path = "../PT1"
+								var ErrorOnResolveToNull = false
+								var ErrorOnPathCantCompute = false
+								var ErrorOnDirectLinkFail = false
+								var UpdateCogOnPathChange = true
+								var UpdatePathOnCogChange = true
+								var UpdateCogOnInitialize = true
+								var ResolvedNullErrorOccurred = false
+								var Cog = 507
+								var PathPreference0 = CogPathPreference.CogRelative
+								var PathPreference1 = CogPathPreference.SpaceRelative
+								var PathPreference2 = CogPathPreference.Absolute
+							}
+							var LocalPointA = Real3{0, 0, 0}
+							var LocalPointB = Real3{0, 0, 0}
+						}
+						SphereCollider 
+						{
+							var Ghost = false
+							var SendsEvents = true
+							var Material = "4de020863e872da8:DefaultPhysicsMaterial"
+							var CollisionGroup = "4e740859314e5515:DefaultGroup"
+							var Offset = Real3{0, 0, 0}
+							var Radius = 0.00100000005
+						}
+						IgnoreSpaceEffects 
+						{
+							var IgnoreDrag = true
+							var IgnoreFlow = true
+							var IgnoreForce = true
+							var IgnoreGravity = false
+							var IgnorePointForce = true
+							var IgnorePointGravity = true
+							var IgnoreThrust = true
+							var IgnoreVortex = true
+							var IgnoreWind = true
+							var IgnoreTorque = true
+							var IgnoreBuoyancy = true
+							var IgnoreCustom = true
+						}
+						StickJoint 
+						{
+							var Active = true
+							var SendsEvents = true
+							var AutoSnaps = false
+							var CollideConnected = true
+							var MaxImpulse = 0
+							var Length = 1
+							var LocalPointA = Real3{0, 0, 0}
+							var LocalPointB = Real3{0, 0, 0}
+						}
+					}
+					Cog [Id:0x5bc2d8458892fe3e][ContextId:507]
+					{
+						var Name = "PT1"
+						Transform 
+						{
+							var Translation = Real3{1, 0.565747261, 0}
+							var Scale = Real3{1, 1, 1}
+							var Rotation = Quaternion{0, 0, 0, 1}
+						}
+						RigidBody 
+						{
+							var Velocity = Real3{0, 0, 0}
+							var AngularVelocity = Real3{0, 0, 0}
+							var DynamicState = RigidBodyDynamicState.Dynamic
+							var AllowSleep = true
+							var Asleep = false
+							var RotationLocked = false
+							var Mode2D = Mode2DStates.InheritFromSpace
+						}
+						ObjectLink 
+						{
+							var ObjectAPath = CogPath
+							{
+								var Path = "."
+								var ErrorOnResolveToNull = false
+								var ErrorOnPathCantCompute = false
+								var ErrorOnDirectLinkFail = false
+								var UpdateCogOnPathChange = true
+								var UpdatePathOnCogChange = true
+								var UpdateCogOnInitialize = true
+								var ResolvedNullErrorOccurred = false
+								var Cog = 507
+								var PathPreference0 = CogPathPreference.CogRelative
+								var PathPreference1 = CogPathPreference.SpaceRelative
+								var PathPreference2 = CogPathPreference.Absolute
+							}
+							var ObjectBPath = CogPath
+							{
+								var Path = "../PT0"
+								var ErrorOnResolveToNull = false
+								var ErrorOnPathCantCompute = false
+								var ErrorOnDirectLinkFail = false
+								var UpdateCogOnPathChange = true
+								var UpdatePathOnCogChange = true
+								var UpdateCogOnInitialize = true
+								var ResolvedNullErrorOccurred = false
+								var Cog = 506
+								var PathPreference0 = CogPathPreference.CogRelative
+								var PathPreference1 = CogPathPreference.SpaceRelative
+								var PathPreference2 = CogPathPreference.Absolute
+							}
+							var LocalPointA = Real3{0, 0, 0}
+							var LocalPointB = Real3{0, 0, 0}
+						}
+						SphereCollider 
+						{
+							var Ghost = false
+							var SendsEvents = true
+							var Material = "4de020863e872da8:DefaultPhysicsMaterial"
+							var CollisionGroup = "4e740859314e5515:DefaultGroup"
+							var Offset = Real3{0, 0, 0}
+							var Radius = 0.00100000005
+						}
+						IgnoreSpaceEffects 
+						{
+							var IgnoreDrag = true
+							var IgnoreFlow = true
+							var IgnoreForce = true
+							var IgnoreGravity = false
+							var IgnorePointForce = true
+							var IgnorePointGravity = true
+							var IgnoreThrust = true
+							var IgnoreVortex = true
+							var IgnoreWind = true
+							var IgnoreTorque = true
+							var IgnoreBuoyancy = true
+							var IgnoreCustom = true
+						}
+						StickJoint 
+						{
+							var Active = true
+							var SendsEvents = true
+							var AutoSnaps = false
+							var CollideConnected = true
+							var MaxImpulse = 0
+							var Length = 1
+							var LocalPointA = Real3{0, 0, 0}
+							var LocalPointB = Real3{0, 0, 0}
+						}
+					}
+					Cog [Id:0x5bc2d84588ad085d][ContextId:508]
+					{
+						var Name = "PT2"
+						Transform 
+						{
+							var Translation = Real3{2, 1.16785812, 0}
+							var Scale = Real3{1, 1, 1}
+							var Rotation = Quaternion{0, 0, 0, 1}
+						}
+						RigidBody 
+						{
+							var Velocity = Real3{0, 0, 0}
+							var AngularVelocity = Real3{0, 0, 0}
+							var DynamicState = RigidBodyDynamicState.Dynamic
+							var AllowSleep = true
+							var Asleep = false
+							var RotationLocked = false
+							var Mode2D = Mode2DStates.InheritFromSpace
+						}
+						ObjectLink 
+						{
+							var ObjectAPath = CogPath
+							{
+								var Path = "."
+								var ErrorOnResolveToNull = false
+								var ErrorOnPathCantCompute = false
+								var ErrorOnDirectLinkFail = false
+								var UpdateCogOnPathChange = true
+								var UpdatePathOnCogChange = true
+								var UpdateCogOnInitialize = true
+								var ResolvedNullErrorOccurred = false
+								var Cog = 508
+								var PathPreference0 = CogPathPreference.CogRelative
+								var PathPreference1 = CogPathPreference.SpaceRelative
+								var PathPreference2 = CogPathPreference.Absolute
+							}
+							var ObjectBPath = CogPath
+							{
+								var Path = "../PT1"
+								var ErrorOnResolveToNull = false
+								var ErrorOnPathCantCompute = false
+								var ErrorOnDirectLinkFail = false
+								var UpdateCogOnPathChange = true
+								var UpdatePathOnCogChange = true
+								var UpdateCogOnInitialize = true
+								var ResolvedNullErrorOccurred = false
+								var Cog = 507
+								var PathPreference0 = CogPathPreference.CogRelative
+								var PathPreference1 = CogPathPreference.SpaceRelative
+								var PathPreference2 = CogPathPreference.Absolute
+							}
+							var LocalPointA = Real3{0, 0, 0}
+							var LocalPointB = Real3{0, 0, 0}
+						}
+						SphereCollider 
+						{
+							var Ghost = false
+							var SendsEvents = true
+							var Material = "4de020863e872da8:DefaultPhysicsMaterial"
+							var CollisionGroup = "4e740859314e5515:DefaultGroup"
+							var Offset = Real3{0, 0, 0}
+							var Radius = 0.00100000005
+						}
+						IgnoreSpaceEffects 
+						{
+							var IgnoreDrag = true
+							var IgnoreFlow = true
+							var IgnoreForce = true
+							var IgnoreGravity = false
+							var IgnorePointForce = true
+							var IgnorePointGravity = true
+							var IgnoreThrust = true
+							var IgnoreVortex = true
+							var IgnoreWind = true
+							var IgnoreTorque = true
+							var IgnoreBuoyancy = true
+							var IgnoreCustom = true
+						}
+						StickJoint 
+						{
+							var Active = true
+							var SendsEvents = true
+							var AutoSnaps = false
+							var CollideConnected = true
+							var MaxImpulse = 0
+							var Length = 1
+							var LocalPointA = Real3{0, 0, 0}
+							var LocalPointB = Real3{0, 0, 0}
+						}
+					}
+					Cog [Id:0x5bc2d84588ad1172][ContextId:509]
+					{
+						var Name = "PT3"
+						Transform 
+						{
+							var Translation = Real3{3.00928879, 1.90903378, 0}
+							var Scale = Real3{1, 1, 1}
+							var Rotation = Quaternion{0, 0, 0, 1}
+						}
+						RigidBody 
+						{
+							var Velocity = Real3{0, 0, 0}
+							var AngularVelocity = Real3{0, 0, 0}
+							var DynamicState = RigidBodyDynamicState.Dynamic
+							var AllowSleep = true
+							var Asleep = false
+							var RotationLocked = false
+							var Mode2D = Mode2DStates.InheritFromSpace
+						}
+						ObjectLink 
+						{
+							var ObjectAPath = CogPath
+							{
+								var Path = "."
+								var ErrorOnResolveToNull = false
+								var ErrorOnPathCantCompute = false
+								var ErrorOnDirectLinkFail = false
+								var UpdateCogOnPathChange = true
+								var UpdatePathOnCogChange = true
+								var UpdateCogOnInitialize = true
+								var ResolvedNullErrorOccurred = false
+								var Cog = 509
+								var PathPreference0 = CogPathPreference.CogRelative
+								var PathPreference1 = CogPathPreference.SpaceRelative
+								var PathPreference2 = CogPathPreference.Absolute
+							}
+							var ObjectBPath = CogPath
+							{
+								var Path = "../PT2"
+								var ErrorOnResolveToNull = false
+								var ErrorOnPathCantCompute = false
+								var ErrorOnDirectLinkFail = false
+								var UpdateCogOnPathChange = true
+								var UpdatePathOnCogChange = true
+								var UpdateCogOnInitialize = true
+								var ResolvedNullErrorOccurred = false
+								var Cog = 508
+								var PathPreference0 = CogPathPreference.CogRelative
+								var PathPreference1 = CogPathPreference.SpaceRelative
+								var PathPreference2 = CogPathPreference.Absolute
+							}
+							var LocalPointA = Real3{0, 0, 0}
+							var LocalPointB = Real3{0, 0, 0}
+						}
+						SphereCollider 
+						{
+							var Ghost = false
+							var SendsEvents = true
+							var Material = "4de020863e872da8:DefaultPhysicsMaterial"
+							var CollisionGroup = "4e740859314e5515:DefaultGroup"
+							var Offset = Real3{0, 0, 0}
+							var Radius = 0.00100000005
+						}
+						IgnoreSpaceEffects 
+						{
+							var IgnoreDrag = true
+							var IgnoreFlow = true
+							var IgnoreForce = true
+							var IgnoreGravity = false
+							var IgnorePointForce = true
+							var IgnorePointGravity = true
+							var IgnoreThrust = true
+							var IgnoreVortex = true
+							var IgnoreWind = true
+							var IgnoreTorque = true
+							var IgnoreBuoyancy = true
+							var IgnoreCustom = true
+						}
+						StickJoint 
+						{
+							var Active = true
+							var SendsEvents = true
+							var AutoSnaps = false
+							var CollideConnected = true
+							var MaxImpulse = 0
+							var Length = 1
+							var LocalPointA = Real3{0, 0, 0}
+							var LocalPointB = Real3{0, 0, 0}
+						}
+					}
+					Cog [Id:0x5bc2d84588ad1b13][ContextId:510]
+					{
+						var Name = "PT4"
+						Transform 
+						{
+							var Translation = Real3{4, 1.16785812, 0}
+							var Scale = Real3{1, 1, 1}
+							var Rotation = Quaternion{0, 0, 0, 1}
+						}
+						RigidBody 
+						{
+							var Velocity = Real3{0, 0, 0}
+							var AngularVelocity = Real3{0, 0, 0}
+							var DynamicState = RigidBodyDynamicState.Dynamic
+							var AllowSleep = true
+							var Asleep = false
+							var RotationLocked = false
+							var Mode2D = Mode2DStates.InheritFromSpace
+						}
+						ObjectLink 
+						{
+							var ObjectAPath = CogPath
+							{
+								var Path = "."
+								var ErrorOnResolveToNull = false
+								var ErrorOnPathCantCompute = false
+								var ErrorOnDirectLinkFail = false
+								var UpdateCogOnPathChange = true
+								var UpdatePathOnCogChange = true
+								var UpdateCogOnInitialize = true
+								var ResolvedNullErrorOccurred = false
+								var Cog = 510
+								var PathPreference0 = CogPathPreference.CogRelative
+								var PathPreference1 = CogPathPreference.SpaceRelative
+								var PathPreference2 = CogPathPreference.Absolute
+							}
+							var ObjectBPath = CogPath
+							{
+								var Path = "../PT3"
+								var ErrorOnResolveToNull = false
+								var ErrorOnPathCantCompute = false
+								var ErrorOnDirectLinkFail = false
+								var UpdateCogOnPathChange = true
+								var UpdatePathOnCogChange = true
+								var UpdateCogOnInitialize = true
+								var ResolvedNullErrorOccurred = false
+								var Cog = 509
+								var PathPreference0 = CogPathPreference.CogRelative
+								var PathPreference1 = CogPathPreference.SpaceRelative
+								var PathPreference2 = CogPathPreference.Absolute
+							}
+							var LocalPointA = Real3{0, 0, 0}
+							var LocalPointB = Real3{0, 0, 0}
+						}
+						SphereCollider 
+						{
+							var Ghost = false
+							var SendsEvents = true
+							var Material = "4de020863e872da8:DefaultPhysicsMaterial"
+							var CollisionGroup = "4e740859314e5515:DefaultGroup"
+							var Offset = Real3{0, 0, 0}
+							var Radius = 0.00100000005
+						}
+						IgnoreSpaceEffects 
+						{
+							var IgnoreDrag = true
+							var IgnoreFlow = true
+							var IgnoreForce = true
+							var IgnoreGravity = false
+							var IgnorePointForce = true
+							var IgnorePointGravity = true
+							var IgnoreThrust = true
+							var IgnoreVortex = true
+							var IgnoreWind = true
+							var IgnoreTorque = true
+							var IgnoreBuoyancy = true
+							var IgnoreCustom = true
+						}
+						StickJoint 
+						{
+							var Active = true
+							var SendsEvents = true
+							var AutoSnaps = false
+							var CollideConnected = true
+							var MaxImpulse = 0
+							var Length = 1
+							var LocalPointA = Real3{0, 0, 0}
+							var LocalPointB = Real3{0, 0, 0}
+						}
+					}
+					Cog [Id:0x5bc2d84588ad23cd][ContextId:511]
+					{
+						var Name = "PT5"
+						Transform 
+						{
+							var Translation = Real3{5, 0.565747261, 0}
+							var Scale = Real3{1, 1, 1}
+							var Rotation = Quaternion{0, 0, 0, 1}
+						}
+						RigidBody 
+						{
+							var Velocity = Real3{0, 0, 0}
+							var AngularVelocity = Real3{0, 0, 0}
+							var DynamicState = RigidBodyDynamicState.Dynamic
+							var AllowSleep = true
+							var Asleep = false
+							var RotationLocked = false
+							var Mode2D = Mode2DStates.InheritFromSpace
+						}
+						ObjectLink 
+						{
+							var ObjectAPath = CogPath
+							{
+								var Path = "."
+								var ErrorOnResolveToNull = false
+								var ErrorOnPathCantCompute = false
+								var ErrorOnDirectLinkFail = false
+								var UpdateCogOnPathChange = true
+								var UpdatePathOnCogChange = true
+								var UpdateCogOnInitialize = true
+								var ResolvedNullErrorOccurred = false
+								var Cog = 511
+								var PathPreference0 = CogPathPreference.CogRelative
+								var PathPreference1 = CogPathPreference.SpaceRelative
+								var PathPreference2 = CogPathPreference.Absolute
+							}
+							var ObjectBPath = CogPath
+							{
+								var Path = "../PT4"
+								var ErrorOnResolveToNull = false
+								var ErrorOnPathCantCompute = false
+								var ErrorOnDirectLinkFail = false
+								var UpdateCogOnPathChange = true
+								var UpdatePathOnCogChange = true
+								var UpdateCogOnInitialize = true
+								var ResolvedNullErrorOccurred = false
+								var Cog = 510
+								var PathPreference0 = CogPathPreference.CogRelative
+								var PathPreference1 = CogPathPreference.SpaceRelative
+								var PathPreference2 = CogPathPreference.Absolute
+							}
+							var LocalPointA = Real3{0, 0, 0}
+							var LocalPointB = Real3{0, 0, 0}
+						}
+						SphereCollider 
+						{
+							var Ghost = false
+							var SendsEvents = true
+							var Material = "4de020863e872da8:DefaultPhysicsMaterial"
+							var CollisionGroup = "4e740859314e5515:DefaultGroup"
+							var Offset = Real3{0, 0, 0}
+							var Radius = 0.00100000005
+						}
+						IgnoreSpaceEffects 
+						{
+							var IgnoreDrag = true
+							var IgnoreFlow = true
+							var IgnoreForce = true
+							var IgnoreGravity = false
+							var IgnorePointForce = true
+							var IgnorePointGravity = true
+							var IgnoreThrust = true
+							var IgnoreVortex = true
+							var IgnoreWind = true
+							var IgnoreTorque = true
+							var IgnoreBuoyancy = true
+							var IgnoreCustom = true
+						}
+						StickJoint 
+						{
+							var Active = true
+							var SendsEvents = true
+							var AutoSnaps = false
+							var CollideConnected = true
+							var MaxImpulse = 0
+							var Length = 1
+							var LocalPointA = Real3{0, 0, 0}
+							var LocalPointB = Real3{0, 0, 0}
+						}
+					}
+					Cog [Id:0x5bc2d84588ad2cbf][ContextId:512]
+					{
+						var Name = "PT6"
+						Transform 
+						{
+							var Translation = Real3{6, 0, 0}
+							var Scale = Real3{1, 1, 1}
+							var Rotation = Quaternion{0, 0, 0, 1}
+						}
+						RigidBody 
+						{
+							var Velocity = Real3{0, 0, 0}
+							var AngularVelocity = Real3{0, 0, 0}
+							var DynamicState = RigidBodyDynamicState.Dynamic
+							var AllowSleep = true
+							var Asleep = false
+							var RotationLocked = false
+							var Mode2D = Mode2DStates.InheritFromSpace
+						}
+						ObjectLink 
+						{
+							var ObjectAPath = CogPath
+							{
+								var Path = "."
+								var ErrorOnResolveToNull = false
+								var ErrorOnPathCantCompute = false
+								var ErrorOnDirectLinkFail = false
+								var UpdateCogOnPathChange = true
+								var UpdatePathOnCogChange = true
+								var UpdateCogOnInitialize = true
+								var ResolvedNullErrorOccurred = false
+								var Cog = 512
+								var PathPreference0 = CogPathPreference.CogRelative
+								var PathPreference1 = CogPathPreference.SpaceRelative
+								var PathPreference2 = CogPathPreference.Absolute
+							}
+							var ObjectBPath = CogPath
+							{
+								var Path = "../PT5"
+								var ErrorOnResolveToNull = false
+								var ErrorOnPathCantCompute = false
+								var ErrorOnDirectLinkFail = false
+								var UpdateCogOnPathChange = true
+								var UpdatePathOnCogChange = true
+								var UpdateCogOnInitialize = true
+								var ResolvedNullErrorOccurred = false
+								var Cog = 511
+								var PathPreference0 = CogPathPreference.CogRelative
+								var PathPreference1 = CogPathPreference.SpaceRelative
+								var PathPreference2 = CogPathPreference.Absolute
+							}
+							var LocalPointA = Real3{0, 0, 0}
+							var LocalPointB = Real3{0, 0, 0}
+						}
+						SphereCollider 
+						{
+							var Ghost = false
+							var SendsEvents = true
+							var Material = "4de020863e872da8:DefaultPhysicsMaterial"
+							var CollisionGroup = "4e740859314e5515:DefaultGroup"
+							var Offset = Real3{0, 0, 0}
+							var Radius = 0.00100000005
+						}
+						IgnoreSpaceEffects 
+						{
+							var IgnoreDrag = true
+							var IgnoreFlow = true
+							var IgnoreForce = true
+							var IgnoreGravity = false
+							var IgnorePointForce = true
+							var IgnorePointGravity = true
+							var IgnoreThrust = true
+							var IgnoreVortex = true
+							var IgnoreWind = true
+							var IgnoreTorque = true
+							var IgnoreBuoyancy = true
+							var IgnoreCustom = true
+						}
+						StickJoint 
+						{
+							var Active = true
+							var SendsEvents = true
+							var AutoSnaps = false
+							var CollideConnected = true
+							var MaxImpulse = 0
+							var Length = 1
+							var LocalPointA = Real3{0, 0, 0}
+							var LocalPointB = Real3{0, 0, 0}
+						}
+					}
+				}
+			}
+			Cog [Id:0x5bc2df16f2556b79][ContextId:513]
+			{
+				var Name = "ObjectPool"
+				Transform 
+				{
+					var Translation = Real3{55.8770142, -6.96577406, -20.5645256}
+					var Scale = Real3{1, 1, 1}
+					var Rotation = Quaternion{0, 0, 0, 1}
+				}
+				Hierarchy 
+				{
+					Cog [Id:0x5bc2d8f10aa9826a][InheritId:"5bc87562328112b4:ChainLink"][ContextId:514]
+					{
+					}
+					Cog [Id:0x5bc2d8f10aa9828e][InheritId:"5bc87562328112b4:ChainLink"][ContextId:515]
+					{
+					}
+					Cog [Id:0x5bc2d8f10aa982ab][InheritId:"5bc87562328112b4:ChainLink"][ContextId:516]
+					{
+					}
+					Cog [Id:0x5bc2d8f10aa982cf][InheritId:"5bc87562328112b4:ChainLink"][ContextId:517]
+					{
+					}
+					Cog [Id:0x5bc2d8f10aa982ec][InheritId:"5bc87562328112b4:ChainLink"][ContextId:518]
+					{
+					}
+					Cog [Id:0x5bc2d8f10aa98309][InheritId:"5bc87562328112b4:ChainLink"][ContextId:519]
+					{
+					}
+				}
+			}
+		}
+	}
+	Cog [ContextId:520]
+	{
+		var Name = "Transform"
+		Transform 
+		{
+			var Translation = Real3{-55.8770142, 6.96577406, 20.5697746}
+			var Scale = Real3{1, 1, 1}
+			var Rotation = Quaternion{0, 0, 0, 1}
+		}
+		PathVisuals 
+		{
+			var SplineType = SplineType.Linear
+			var Spacing = 5
+			var Closed = false
+			var RunSpeed = 0
+			var PathLink = "5bc87562328112b4:ChainLink"
+			var PathBegin = "null"
+			var PathEnd = "null"
+			var MaterialOverride = "null"
+			var Dynamic = true
+			var Dynamic_S = true
+			var COMMAND_Generate = false
+		}
+		Hierarchy 
+		{
+			Cog [Id:0x5bcc619025865d3d][ContextId:521]
+			{
+				var Name = "Points"
+				Transform 
+				{
+					var Translation = Real3{0, 0, 0}
+					var Scale = Real3{1, 1, 1}
+					var Rotation = Quaternion{0, 0, 0, 1}
+				}
+				HierarchySpline 
+				{
+					var Closed = false
+					var SplineType = SplineType.Linear
+					var Error = 5
+					var DebugDrawSpline = true
+					var SplineColor = Real4{0, 0, 0, 1}
+				}
+				ChainMaker 
+				{
+					var LinkObj = "5bcea03040e1d49a:Chain_Point"
+					var LinkCount = 7
+					var Direction = Real3{-1, 0, 0}
+					var DistanceBetweenObjs = 1
+					var COMMAND_Generate = false
+				}
+				Hierarchy 
+				{
+					Cog [Id:0x5bc2d84b8ffb15b9][ContextId:522]
+					{
+						var Name = "PT0"
+						Transform 
+						{
+							var Translation = Real3{0, 0, 0}
+							var Scale = Real3{1, 1, 1}
+							var Rotation = Quaternion{0, 0, 0, 1}
+						}
+						RigidBody 
+						{
+							var Velocity = Real3{0, 0, 0}
+							var AngularVelocity = Real3{0, 0, 0}
+							var DynamicState = RigidBodyDynamicState.Static
+							var AllowSleep = true
+							var Asleep = false
+							var RotationLocked = false
+							var Mode2D = Mode2DStates.InheritFromSpace
+						}
+						ObjectLink 
+						{
+							var ObjectAPath = CogPath
+							{
+								var Path = "."
+								var ErrorOnResolveToNull = false
+								var ErrorOnPathCantCompute = false
+								var ErrorOnDirectLinkFail = false
+								var UpdateCogOnPathChange = true
+								var UpdatePathOnCogChange = true
+								var UpdateCogOnInitialize = true
+								var ResolvedNullErrorOccurred = false
+								var Cog = 522
+								var PathPreference0 = CogPathPreference.CogRelative
+								var PathPreference1 = CogPathPreference.SpaceRelative
+								var PathPreference2 = CogPathPreference.Absolute
+							}
+							var ObjectBPath = CogPath
+							{
+								var Path = "../PT1"
+								var ErrorOnResolveToNull = false
+								var ErrorOnPathCantCompute = false
+								var ErrorOnDirectLinkFail = false
+								var UpdateCogOnPathChange = true
+								var UpdatePathOnCogChange = true
+								var UpdateCogOnInitialize = true
+								var ResolvedNullErrorOccurred = false
+								var Cog = 523
+								var PathPreference0 = CogPathPreference.CogRelative
+								var PathPreference1 = CogPathPreference.SpaceRelative
+								var PathPreference2 = CogPathPreference.Absolute
+							}
+							var LocalPointA = Real3{0, 0, 0}
+							var LocalPointB = Real3{0, 0, 0}
+						}
+						SphereCollider 
+						{
+							var Ghost = false
+							var SendsEvents = true
+							var Material = "4de020863e872da8:DefaultPhysicsMaterial"
+							var CollisionGroup = "4e740859314e5515:DefaultGroup"
+							var Offset = Real3{0, 0, 0}
+							var Radius = 0.00100000005
+						}
+						IgnoreSpaceEffects 
+						{
+							var IgnoreDrag = true
+							var IgnoreFlow = true
+							var IgnoreForce = true
+							var IgnoreGravity = false
+							var IgnorePointForce = true
+							var IgnorePointGravity = true
+							var IgnoreThrust = true
+							var IgnoreVortex = true
+							var IgnoreWind = true
+							var IgnoreTorque = true
+							var IgnoreBuoyancy = true
+							var IgnoreCustom = true
+						}
+						StickJoint 
+						{
+							var Active = true
+							var SendsEvents = true
+							var AutoSnaps = false
+							var CollideConnected = true
+							var MaxImpulse = 0
+							var Length = 1
+							var LocalPointA = Real3{0, 0, 0}
+							var LocalPointB = Real3{0, 0, 0}
+						}
+					}
+					Cog [Id:0x5bc2d84b8ffb2095][ContextId:523]
+					{
+						var Name = "PT1"
+						Transform 
+						{
+							var Translation = Real3{-1, 1.02051449, 0}
+							var Scale = Real3{1, 1, 1}
+							var Rotation = Quaternion{0, 0, 0, 1}
+						}
+						RigidBody 
+						{
+							var Velocity = Real3{0, 0, 0}
+							var AngularVelocity = Real3{0, 0, 0}
+							var DynamicState = RigidBodyDynamicState.Dynamic
+							var AllowSleep = true
+							var Asleep = false
+							var RotationLocked = false
+							var Mode2D = Mode2DStates.InheritFromSpace
+						}
+						ObjectLink 
+						{
+							var ObjectAPath = CogPath
+							{
+								var Path = "."
+								var ErrorOnResolveToNull = false
+								var ErrorOnPathCantCompute = false
+								var ErrorOnDirectLinkFail = false
+								var UpdateCogOnPathChange = true
+								var UpdatePathOnCogChange = true
+								var UpdateCogOnInitialize = true
+								var ResolvedNullErrorOccurred = false
+								var Cog = 523
+								var PathPreference0 = CogPathPreference.CogRelative
+								var PathPreference1 = CogPathPreference.SpaceRelative
+								var PathPreference2 = CogPathPreference.Absolute
+							}
+							var ObjectBPath = CogPath
+							{
+								var Path = "../PT0"
+								var ErrorOnResolveToNull = false
+								var ErrorOnPathCantCompute = false
+								var ErrorOnDirectLinkFail = false
+								var UpdateCogOnPathChange = true
+								var UpdatePathOnCogChange = true
+								var UpdateCogOnInitialize = true
+								var ResolvedNullErrorOccurred = false
+								var Cog = 522
+								var PathPreference0 = CogPathPreference.CogRelative
+								var PathPreference1 = CogPathPreference.SpaceRelative
+								var PathPreference2 = CogPathPreference.Absolute
+							}
+							var LocalPointA = Real3{0, 0, 0}
+							var LocalPointB = Real3{0, 0, 0}
+						}
+						SphereCollider 
+						{
+							var Ghost = false
+							var SendsEvents = true
+							var Material = "4de020863e872da8:DefaultPhysicsMaterial"
+							var CollisionGroup = "4e740859314e5515:DefaultGroup"
+							var Offset = Real3{0, 0, 0}
+							var Radius = 0.00100000005
+						}
+						IgnoreSpaceEffects 
+						{
+							var IgnoreDrag = true
+							var IgnoreFlow = true
+							var IgnoreForce = true
+							var IgnoreGravity = false
+							var IgnorePointForce = true
+							var IgnorePointGravity = true
+							var IgnoreThrust = true
+							var IgnoreVortex = true
+							var IgnoreWind = true
+							var IgnoreTorque = true
+							var IgnoreBuoyancy = true
+							var IgnoreCustom = true
+						}
+						StickJoint 
+						{
+							var Active = true
+							var SendsEvents = true
+							var AutoSnaps = false
+							var CollideConnected = true
+							var MaxImpulse = 0
+							var Length = 1
+							var LocalPointA = Real3{0, 0, 0}
+							var LocalPointB = Real3{0, 0, 0}
+						}
+					}
+					Cog [Id:0x5bc2d84b8ffb2b5c][ContextId:524]
+					{
+						var Name = "PT2"
+						Transform 
+						{
+							var Translation = Real3{-2, 1.77558422, 0}
+							var Scale = Real3{1, 1, 1}
+							var Rotation = Quaternion{0, 0, 0, 1}
+						}
+						RigidBody 
+						{
+							var Velocity = Real3{0, 0, 0}
+							var AngularVelocity = Real3{0, 0, 0}
+							var DynamicState = RigidBodyDynamicState.Dynamic
+							var AllowSleep = true
+							var Asleep = false
+							var RotationLocked = false
+							var Mode2D = Mode2DStates.InheritFromSpace
+						}
+						ObjectLink 
+						{
+							var ObjectAPath = CogPath
+							{
+								var Path = "."
+								var ErrorOnResolveToNull = false
+								var ErrorOnPathCantCompute = false
+								var ErrorOnDirectLinkFail = false
+								var UpdateCogOnPathChange = true
+								var UpdatePathOnCogChange = true
+								var UpdateCogOnInitialize = true
+								var ResolvedNullErrorOccurred = false
+								var Cog = 524
+								var PathPreference0 = CogPathPreference.CogRelative
+								var PathPreference1 = CogPathPreference.SpaceRelative
+								var PathPreference2 = CogPathPreference.Absolute
+							}
+							var ObjectBPath = CogPath
+							{
+								var Path = "../PT1"
+								var ErrorOnResolveToNull = false
+								var ErrorOnPathCantCompute = false
+								var ErrorOnDirectLinkFail = false
+								var UpdateCogOnPathChange = true
+								var UpdatePathOnCogChange = true
+								var UpdateCogOnInitialize = true
+								var ResolvedNullErrorOccurred = false
+								var Cog = 523
+								var PathPreference0 = CogPathPreference.CogRelative
+								var PathPreference1 = CogPathPreference.SpaceRelative
+								var PathPreference2 = CogPathPreference.Absolute
+							}
+							var LocalPointA = Real3{0, 0, 0}
+							var LocalPointB = Real3{0, 0, 0}
+						}
+						SphereCollider 
+						{
+							var Ghost = false
+							var SendsEvents = true
+							var Material = "4de020863e872da8:DefaultPhysicsMaterial"
+							var CollisionGroup = "4e740859314e5515:DefaultGroup"
+							var Offset = Real3{0, 0, 0}
+							var Radius = 0.00100000005
+						}
+						IgnoreSpaceEffects 
+						{
+							var IgnoreDrag = true
+							var IgnoreFlow = true
+							var IgnoreForce = true
+							var IgnoreGravity = false
+							var IgnorePointForce = true
+							var IgnorePointGravity = true
+							var IgnoreThrust = true
+							var IgnoreVortex = true
+							var IgnoreWind = true
+							var IgnoreTorque = true
+							var IgnoreBuoyancy = true
+							var IgnoreCustom = true
+						}
+						StickJoint 
+						{
+							var Active = true
+							var SendsEvents = true
+							var AutoSnaps = false
+							var CollideConnected = true
+							var MaxImpulse = 0
+							var Length = 1
+							var LocalPointA = Real3{0, 0, 0}
+							var LocalPointB = Real3{0, 0, 0}
+						}
+					}
+					Cog [Id:0x5bc2d84b8ffb3677][ContextId:525]
+					{
+						var Name = "PT3"
+						Transform 
+						{
+							var Translation = Real3{-2.95246124, 2.77251911, 0}
+							var Scale = Real3{1, 1, 1}
+							var Rotation = Quaternion{0, 0, 0, 1}
+						}
+						RigidBody 
+						{
+							var Velocity = Real3{0, 0, 0}
+							var AngularVelocity = Real3{0, 0, 0}
+							var DynamicState = RigidBodyDynamicState.Dynamic
+							var AllowSleep = true
+							var Asleep = false
+							var RotationLocked = false
+							var Mode2D = Mode2DStates.InheritFromSpace
+						}
+						ObjectLink 
+						{
+							var ObjectAPath = CogPath
+							{
+								var Path = "."
+								var ErrorOnResolveToNull = false
+								var ErrorOnPathCantCompute = false
+								var ErrorOnDirectLinkFail = false
+								var UpdateCogOnPathChange = true
+								var UpdatePathOnCogChange = true
+								var UpdateCogOnInitialize = true
+								var ResolvedNullErrorOccurred = false
+								var Cog = 525
+								var PathPreference0 = CogPathPreference.CogRelative
+								var PathPreference1 = CogPathPreference.SpaceRelative
+								var PathPreference2 = CogPathPreference.Absolute
+							}
+							var ObjectBPath = CogPath
+							{
+								var Path = "../PT2"
+								var ErrorOnResolveToNull = false
+								var ErrorOnPathCantCompute = false
+								var ErrorOnDirectLinkFail = false
+								var UpdateCogOnPathChange = true
+								var UpdatePathOnCogChange = true
+								var UpdateCogOnInitialize = true
+								var ResolvedNullErrorOccurred = false
+								var Cog = 524
+								var PathPreference0 = CogPathPreference.CogRelative
+								var PathPreference1 = CogPathPreference.SpaceRelative
+								var PathPreference2 = CogPathPreference.Absolute
+							}
+							var LocalPointA = Real3{0, 0, 0}
+							var LocalPointB = Real3{0, 0, 0}
+						}
+						SphereCollider 
+						{
+							var Ghost = false
+							var SendsEvents = true
+							var Material = "4de020863e872da8:DefaultPhysicsMaterial"
+							var CollisionGroup = "4e740859314e5515:DefaultGroup"
+							var Offset = Real3{0, 0, 0}
+							var Radius = 0.00100000005
+						}
+						IgnoreSpaceEffects 
+						{
+							var IgnoreDrag = true
+							var IgnoreFlow = true
+							var IgnoreForce = true
+							var IgnoreGravity = false
+							var IgnorePointForce = true
+							var IgnorePointGravity = true
+							var IgnoreThrust = true
+							var IgnoreVortex = true
+							var IgnoreWind = true
+							var IgnoreTorque = true
+							var IgnoreBuoyancy = true
+							var IgnoreCustom = true
+						}
+						StickJoint 
+						{
+							var Active = true
+							var SendsEvents = true
+							var AutoSnaps = false
+							var CollideConnected = true
+							var MaxImpulse = 0
+							var Length = 1
+							var LocalPointA = Real3{0, 0, 0}
+							var LocalPointB = Real3{0, 0, 0}
+						}
+					}
+					Cog [Id:0x5bc2d84b8ffb41d1][ContextId:526]
+					{
+						var Name = "PT4"
+						Transform 
+						{
+							var Translation = Real3{-4, 1.77558422, 0}
+							var Scale = Real3{1, 1, 1}
+							var Rotation = Quaternion{0, 0, 0, 1}
+						}
+						RigidBody 
+						{
+							var Velocity = Real3{0, 0, 0}
+							var AngularVelocity = Real3{0, 0, 0}
+							var DynamicState = RigidBodyDynamicState.Dynamic
+							var AllowSleep = true
+							var Asleep = false
+							var RotationLocked = false
+							var Mode2D = Mode2DStates.InheritFromSpace
+						}
+						ObjectLink 
+						{
+							var ObjectAPath = CogPath
+							{
+								var Path = "."
+								var ErrorOnResolveToNull = false
+								var ErrorOnPathCantCompute = false
+								var ErrorOnDirectLinkFail = false
+								var UpdateCogOnPathChange = true
+								var UpdatePathOnCogChange = true
+								var UpdateCogOnInitialize = true
+								var ResolvedNullErrorOccurred = false
+								var Cog = 526
+								var PathPreference0 = CogPathPreference.CogRelative
+								var PathPreference1 = CogPathPreference.SpaceRelative
+								var PathPreference2 = CogPathPreference.Absolute
+							}
+							var ObjectBPath = CogPath
+							{
+								var Path = "../PT3"
+								var ErrorOnResolveToNull = false
+								var ErrorOnPathCantCompute = false
+								var ErrorOnDirectLinkFail = false
+								var UpdateCogOnPathChange = true
+								var UpdatePathOnCogChange = true
+								var UpdateCogOnInitialize = true
+								var ResolvedNullErrorOccurred = false
+								var Cog = 525
+								var PathPreference0 = CogPathPreference.CogRelative
+								var PathPreference1 = CogPathPreference.SpaceRelative
+								var PathPreference2 = CogPathPreference.Absolute
+							}
+							var LocalPointA = Real3{0, 0, 0}
+							var LocalPointB = Real3{0, 0, 0}
+						}
+						SphereCollider 
+						{
+							var Ghost = false
+							var SendsEvents = true
+							var Material = "4de020863e872da8:DefaultPhysicsMaterial"
+							var CollisionGroup = "4e740859314e5515:DefaultGroup"
+							var Offset = Real3{0, 0, 0}
+							var Radius = 0.00100000005
+						}
+						IgnoreSpaceEffects 
+						{
+							var IgnoreDrag = true
+							var IgnoreFlow = true
+							var IgnoreForce = true
+							var IgnoreGravity = false
+							var IgnorePointForce = true
+							var IgnorePointGravity = true
+							var IgnoreThrust = true
+							var IgnoreVortex = true
+							var IgnoreWind = true
+							var IgnoreTorque = true
+							var IgnoreBuoyancy = true
+							var IgnoreCustom = true
+						}
+						StickJoint 
+						{
+							var Active = true
+							var SendsEvents = true
+							var AutoSnaps = false
+							var CollideConnected = true
+							var MaxImpulse = 0
+							var Length = 1
+							var LocalPointA = Real3{0, 0, 0}
+							var LocalPointB = Real3{0, 0, 0}
+						}
+					}
+					Cog [Id:0x5bc2d84b8ffb4d16][ContextId:527]
+					{
+						var Name = "PT5"
+						Transform 
+						{
+							var Translation = Real3{-5, 1.02051449, 0}
+							var Scale = Real3{1, 1, 1}
+							var Rotation = Quaternion{0, 0, 0, 1}
+						}
+						RigidBody 
+						{
+							var Velocity = Real3{0, 0, 0}
+							var AngularVelocity = Real3{0, 0, 0}
+							var DynamicState = RigidBodyDynamicState.Dynamic
+							var AllowSleep = true
+							var Asleep = false
+							var RotationLocked = false
+							var Mode2D = Mode2DStates.InheritFromSpace
+						}
+						ObjectLink 
+						{
+							var ObjectAPath = CogPath
+							{
+								var Path = "."
+								var ErrorOnResolveToNull = false
+								var ErrorOnPathCantCompute = false
+								var ErrorOnDirectLinkFail = false
+								var UpdateCogOnPathChange = true
+								var UpdatePathOnCogChange = true
+								var UpdateCogOnInitialize = true
+								var ResolvedNullErrorOccurred = false
+								var Cog = 527
+								var PathPreference0 = CogPathPreference.CogRelative
+								var PathPreference1 = CogPathPreference.SpaceRelative
+								var PathPreference2 = CogPathPreference.Absolute
+							}
+							var ObjectBPath = CogPath
+							{
+								var Path = "../PT4"
+								var ErrorOnResolveToNull = false
+								var ErrorOnPathCantCompute = false
+								var ErrorOnDirectLinkFail = false
+								var UpdateCogOnPathChange = true
+								var UpdatePathOnCogChange = true
+								var UpdateCogOnInitialize = true
+								var ResolvedNullErrorOccurred = false
+								var Cog = 526
+								var PathPreference0 = CogPathPreference.CogRelative
+								var PathPreference1 = CogPathPreference.SpaceRelative
+								var PathPreference2 = CogPathPreference.Absolute
+							}
+							var LocalPointA = Real3{0, 0, 0}
+							var LocalPointB = Real3{0, 0, 0}
+						}
+						SphereCollider 
+						{
+							var Ghost = false
+							var SendsEvents = true
+							var Material = "4de020863e872da8:DefaultPhysicsMaterial"
+							var CollisionGroup = "4e740859314e5515:DefaultGroup"
+							var Offset = Real3{0, 0, 0}
+							var Radius = 0.00100000005
+						}
+						IgnoreSpaceEffects 
+						{
+							var IgnoreDrag = true
+							var IgnoreFlow = true
+							var IgnoreForce = true
+							var IgnoreGravity = false
+							var IgnorePointForce = true
+							var IgnorePointGravity = true
+							var IgnoreThrust = true
+							var IgnoreVortex = true
+							var IgnoreWind = true
+							var IgnoreTorque = true
+							var IgnoreBuoyancy = true
+							var IgnoreCustom = true
+						}
+						StickJoint 
+						{
+							var Active = true
+							var SendsEvents = true
+							var AutoSnaps = false
+							var CollideConnected = true
+							var MaxImpulse = 0
+							var Length = 1
+							var LocalPointA = Real3{0, 0, 0}
+							var LocalPointB = Real3{0, 0, 0}
+						}
+					}
+					Cog [Id:0x5bc2d84b8ffb583f][ContextId:528]
+					{
+						var Name = "PT6"
+						Transform 
+						{
+							var Translation = Real3{-6, 0, 0}
+							var Scale = Real3{1, 1, 1}
+							var Rotation = Quaternion{0, 0, 0, 1}
+						}
+						RigidBody 
+						{
+							var Velocity = Real3{0, 0, 0}
+							var AngularVelocity = Real3{0, 0, 0}
+							var DynamicState = RigidBodyDynamicState.Dynamic
+							var AllowSleep = true
+							var Asleep = false
+							var RotationLocked = false
+							var Mode2D = Mode2DStates.InheritFromSpace
+						}
+						ObjectLink 
+						{
+							var ObjectAPath = CogPath
+							{
+								var Path = "."
+								var ErrorOnResolveToNull = false
+								var ErrorOnPathCantCompute = false
+								var ErrorOnDirectLinkFail = false
+								var UpdateCogOnPathChange = true
+								var UpdatePathOnCogChange = true
+								var UpdateCogOnInitialize = true
+								var ResolvedNullErrorOccurred = false
+								var Cog = 528
+								var PathPreference0 = CogPathPreference.CogRelative
+								var PathPreference1 = CogPathPreference.SpaceRelative
+								var PathPreference2 = CogPathPreference.Absolute
+							}
+							var ObjectBPath = CogPath
+							{
+								var Path = "../PT5"
+								var ErrorOnResolveToNull = false
+								var ErrorOnPathCantCompute = false
+								var ErrorOnDirectLinkFail = false
+								var UpdateCogOnPathChange = true
+								var UpdatePathOnCogChange = true
+								var UpdateCogOnInitialize = true
+								var ResolvedNullErrorOccurred = false
+								var Cog = 527
+								var PathPreference0 = CogPathPreference.CogRelative
+								var PathPreference1 = CogPathPreference.SpaceRelative
+								var PathPreference2 = CogPathPreference.Absolute
+							}
+							var LocalPointA = Real3{0, 0, 0}
+							var LocalPointB = Real3{0, 0, 0}
+						}
+						SphereCollider 
+						{
+							var Ghost = false
+							var SendsEvents = true
+							var Material = "4de020863e872da8:DefaultPhysicsMaterial"
+							var CollisionGroup = "4e740859314e5515:DefaultGroup"
+							var Offset = Real3{0, 0, 0}
+							var Radius = 0.00100000005
+						}
+						IgnoreSpaceEffects 
+						{
+							var IgnoreDrag = true
+							var IgnoreFlow = true
+							var IgnoreForce = true
+							var IgnoreGravity = false
+							var IgnorePointForce = true
+							var IgnorePointGravity = true
+							var IgnoreThrust = true
+							var IgnoreVortex = true
+							var IgnoreWind = true
+							var IgnoreTorque = true
+							var IgnoreBuoyancy = true
+							var IgnoreCustom = true
+						}
+						StickJoint 
+						{
+							var Active = true
+							var SendsEvents = true
+							var AutoSnaps = false
+							var CollideConnected = true
+							var MaxImpulse = 0
+							var Length = 1
+							var LocalPointA = Real3{0, 0, 0}
+							var LocalPointB = Real3{0, 0, 0}
+						}
+					}
+				}
+			}
+			Cog [Id:0x5bc2df16f2556b79][ContextId:529]
+			{
+				var Name = "ObjectPool"
+				Transform 
+				{
+					var Translation = Real3{55.8770142, -6.96577406, -20.5697746}
+					var Scale = Real3{1, 1, 1}
+					var Rotation = Quaternion{0, 0, 0, 1}
+				}
+				Hierarchy 
+				{
+					Cog [Id:0x5bc2d8f10aa9826a][InheritId:"5bc87562328112b4:ChainLink"][ContextId:530]
+					{
+					}
+					Cog [Id:0x5bc2d8f10aa9828e][InheritId:"5bc87562328112b4:ChainLink"][ContextId:531]
+					{
+					}
+					Cog [Id:0x5bc2d8f10aa982ab][InheritId:"5bc87562328112b4:ChainLink"][ContextId:532]
+					{
+					}
+					Cog [Id:0x5bc2d8f10aa982cf][InheritId:"5bc87562328112b4:ChainLink"][ContextId:533]
+					{
+					}
+					Cog [Id:0x5bc2d8f10aa982ec][InheritId:"5bc87562328112b4:ChainLink"][ContextId:534]
+					{
+					}
+					Cog [Id:0x5bc2d8f10aa98309][InheritId:"5bc87562328112b4:ChainLink"][ContextId:535]
+					{
+					}
+				}
+			}
+		}
+	}
+	Cog [ContextId:536]
+	{
+		var Name = "Transform"
+		Transform 
+		{
+			var Translation = Real3{-55.8770142, 6.96577406, 24.1725311}
+			var Scale = Real3{1, 1, 1}
+			var Rotation = Quaternion{0, 0, 0, 1}
+		}
+		PathVisuals 
+		{
+			var SplineType = SplineType.Linear
+			var Spacing = 5
+			var Closed = true
+			var RunSpeed = 0
+			var PathLink = "5bc87562328112b4:ChainLink"
+			var PathBegin = "null"
+			var PathEnd = "null"
+			var MaterialOverride = "null"
+			var Dynamic = true
+			var Dynamic_S = true
+			var COMMAND_Generate = false
+		}
+		Hierarchy 
+		{
+			Cog [Id:0x5bcc619025865d3d][ContextId:537]
+			{
+				var Name = "Points"
+				Transform 
+				{
+					var Translation = Real3{0, 0, 0}
+					var Scale = Real3{1, 1, 1}
+					var Rotation = Quaternion{0, -0.260538548, 0, 0.965463459}
+				}
+				HierarchySpline 
+				{
+					var Closed = true
+					var SplineType = SplineType.Linear
+					var Error = 5
+					var DebugDrawSpline = true
+					var SplineColor = Real4{0, 0, 0, 1}
+				}
+				ChainMaker 
+				{
+					var LinkObj = "5bcea03040e1d49a:Chain_Point"
+					var LinkCount = 7
+					var Direction = Real3{1, 0, 0}
+					var DistanceBetweenObjs = 1
+					var COMMAND_Generate = false
+				}
+				Hierarchy 
+				{
+					Cog [Id:0x5bc2dba2c5027f9c][ContextId:538]
+					{
+						var Name = "PT0"
+						Transform 
+						{
+							var Translation = Real3{0, 0, 0}
+							var Scale = Real3{1, 1, 1}
+							var Rotation = Quaternion{0, 0, 0, 1}
+						}
+						RigidBody 
+						{
+							var Velocity = Real3{0, 0, 0}
+							var AngularVelocity = Real3{0, 0, 0}
+							var DynamicState = RigidBodyDynamicState.Static
+							var AllowSleep = true
+							var Asleep = false
+							var RotationLocked = false
+							var Mode2D = Mode2DStates.InheritFromSpace
+						}
+						ObjectLink 
+						{
+							var ObjectAPath = CogPath
+							{
+								var Path = "."
+								var ErrorOnResolveToNull = false
+								var ErrorOnPathCantCompute = false
+								var ErrorOnDirectLinkFail = false
+								var UpdateCogOnPathChange = true
+								var UpdatePathOnCogChange = true
+								var UpdateCogOnInitialize = true
+								var ResolvedNullErrorOccurred = false
+								var Cog = 538
+								var PathPreference0 = CogPathPreference.CogRelative
+								var PathPreference1 = CogPathPreference.SpaceRelative
+								var PathPreference2 = CogPathPreference.Absolute
+							}
+							var ObjectBPath = CogPath
+							{
+								var Path = "../PT1"
+								var ErrorOnResolveToNull = false
+								var ErrorOnPathCantCompute = false
+								var ErrorOnDirectLinkFail = false
+								var UpdateCogOnPathChange = true
+								var UpdatePathOnCogChange = true
+								var UpdateCogOnInitialize = true
+								var ResolvedNullErrorOccurred = false
+								var Cog = 539
+								var PathPreference0 = CogPathPreference.CogRelative
+								var PathPreference1 = CogPathPreference.SpaceRelative
+								var PathPreference2 = CogPathPreference.Absolute
+							}
+							var LocalPointA = Real3{0, 0, 0}
+							var LocalPointB = Real3{0, 0, 0}
+						}
+						SphereCollider 
+						{
+							var Ghost = false
+							var SendsEvents = true
+							var Material = "4de020863e872da8:DefaultPhysicsMaterial"
+							var CollisionGroup = "4e740859314e5515:DefaultGroup"
+							var Offset = Real3{0, 0, 0}
+							var Radius = 0.00100000005
+						}
+						IgnoreSpaceEffects 
+						{
+							var IgnoreDrag = true
+							var IgnoreFlow = true
+							var IgnoreForce = true
+							var IgnoreGravity = false
+							var IgnorePointForce = true
+							var IgnorePointGravity = true
+							var IgnoreThrust = true
+							var IgnoreVortex = true
+							var IgnoreWind = true
+							var IgnoreTorque = true
+							var IgnoreBuoyancy = true
+							var IgnoreCustom = true
+						}
+						StickJoint 
+						{
+							var Active = true
+							var SendsEvents = true
+							var AutoSnaps = false
+							var CollideConnected = true
+							var MaxImpulse = 0
+							var Length = 1
+							var LocalPointA = Real3{0, 0, 0}
+							var LocalPointB = Real3{0, 0, 0}
+						}
+					}
+					Cog [Id:0x5bc2dba2c5028921][ContextId:539]
+					{
+						var Name = "PT1"
+						Transform 
+						{
+							var Translation = Real3{1.61965179, 1.21840715, 0}
+							var Scale = Real3{1, 1, 1}
+							var Rotation = Quaternion{0, 0, 0, 1}
+						}
+						RigidBody 
+						{
+							var Velocity = Real3{0, 0, 0}
+							var AngularVelocity = Real3{0, 0, 0}
+							var DynamicState = RigidBodyDynamicState.Dynamic
+							var AllowSleep = true
+							var Asleep = false
+							var RotationLocked = false
+							var Mode2D = Mode2DStates.InheritFromSpace
+						}
+						ObjectLink 
+						{
+							var ObjectAPath = CogPath
+							{
+								var Path = "."
+								var ErrorOnResolveToNull = false
+								var ErrorOnPathCantCompute = false
+								var ErrorOnDirectLinkFail = false
+								var UpdateCogOnPathChange = true
+								var UpdatePathOnCogChange = true
+								var UpdateCogOnInitialize = true
+								var ResolvedNullErrorOccurred = false
+								var Cog = 539
+								var PathPreference0 = CogPathPreference.CogRelative
+								var PathPreference1 = CogPathPreference.SpaceRelative
+								var PathPreference2 = CogPathPreference.Absolute
+							}
+							var ObjectBPath = CogPath
+							{
+								var Path = "../PT0"
+								var ErrorOnResolveToNull = false
+								var ErrorOnPathCantCompute = false
+								var ErrorOnDirectLinkFail = false
+								var UpdateCogOnPathChange = true
+								var UpdatePathOnCogChange = true
+								var UpdateCogOnInitialize = true
+								var ResolvedNullErrorOccurred = false
+								var Cog = 538
+								var PathPreference0 = CogPathPreference.CogRelative
+								var PathPreference1 = CogPathPreference.SpaceRelative
+								var PathPreference2 = CogPathPreference.Absolute
+							}
+							var LocalPointA = Real3{0, 0, 0}
+							var LocalPointB = Real3{0, 0, 0}
+						}
+						SphereCollider 
+						{
+							var Ghost = false
+							var SendsEvents = true
+							var Material = "4de020863e872da8:DefaultPhysicsMaterial"
+							var CollisionGroup = "4e740859314e5515:DefaultGroup"
+							var Offset = Real3{0, 0, 0}
+							var Radius = 0.00100000005
+						}
+						IgnoreSpaceEffects 
+						{
+							var IgnoreDrag = true
+							var IgnoreFlow = true
+							var IgnoreForce = true
+							var IgnoreGravity = false
+							var IgnorePointForce = true
+							var IgnorePointGravity = true
+							var IgnoreThrust = true
+							var IgnoreVortex = true
+							var IgnoreWind = true
+							var IgnoreTorque = true
+							var IgnoreBuoyancy = true
+							var IgnoreCustom = true
+						}
+						StickJoint 
+						{
+							var Active = true
+							var SendsEvents = true
+							var AutoSnaps = false
+							var CollideConnected = true
+							var MaxImpulse = 0
+							var Length = 1
+							var LocalPointA = Real3{0, 0, 0}
+							var LocalPointB = Real3{0, 0, 0}
+						}
+					}
+					Cog [Id:0x5bc2dba2c5029236][ContextId:540]
+					{
+						var Name = "PT2"
+						Transform 
+						{
+							var Translation = Real3{3.17298126, 0.862335205, 0}
+							var Scale = Real3{1, 1, 1}
+							var Rotation = Quaternion{0, 0, 0, 1}
+						}
+						RigidBody 
+						{
+							var Velocity = Real3{0, 0, 0}
+							var AngularVelocity = Real3{0, 0, 0}
+							var DynamicState = RigidBodyDynamicState.Dynamic
+							var AllowSleep = true
+							var Asleep = false
+							var RotationLocked = false
+							var Mode2D = Mode2DStates.InheritFromSpace
+						}
+						ObjectLink 
+						{
+							var ObjectAPath = CogPath
+							{
+								var Path = "."
+								var ErrorOnResolveToNull = false
+								var ErrorOnPathCantCompute = false
+								var ErrorOnDirectLinkFail = false
+								var UpdateCogOnPathChange = true
+								var UpdatePathOnCogChange = true
+								var UpdateCogOnInitialize = true
+								var ResolvedNullErrorOccurred = false
+								var Cog = 540
+								var PathPreference0 = CogPathPreference.CogRelative
+								var PathPreference1 = CogPathPreference.SpaceRelative
+								var PathPreference2 = CogPathPreference.Absolute
+							}
+							var ObjectBPath = CogPath
+							{
+								var Path = "../PT1"
+								var ErrorOnResolveToNull = false
+								var ErrorOnPathCantCompute = false
+								var ErrorOnDirectLinkFail = false
+								var UpdateCogOnPathChange = true
+								var UpdatePathOnCogChange = true
+								var UpdateCogOnInitialize = true
+								var ResolvedNullErrorOccurred = false
+								var Cog = 539
+								var PathPreference0 = CogPathPreference.CogRelative
+								var PathPreference1 = CogPathPreference.SpaceRelative
+								var PathPreference2 = CogPathPreference.Absolute
+							}
+							var LocalPointA = Real3{0, 0, 0}
+							var LocalPointB = Real3{0, 0, 0}
+						}
+						SphereCollider 
+						{
+							var Ghost = false
+							var SendsEvents = true
+							var Material = "4de020863e872da8:DefaultPhysicsMaterial"
+							var CollisionGroup = "4e740859314e5515:DefaultGroup"
+							var Offset = Real3{0, 0, 0}
+							var Radius = 0.00100000005
+						}
+						IgnoreSpaceEffects 
+						{
+							var IgnoreDrag = true
+							var IgnoreFlow = true
+							var IgnoreForce = true
+							var IgnoreGravity = false
+							var IgnorePointForce = true
+							var IgnorePointGravity = true
+							var IgnoreThrust = true
+							var IgnoreVortex = true
+							var IgnoreWind = true
+							var IgnoreTorque = true
+							var IgnoreBuoyancy = true
+							var IgnoreCustom = true
+						}
+						StickJoint 
+						{
+							var Active = true
+							var SendsEvents = true
+							var AutoSnaps = false
+							var CollideConnected = true
+							var MaxImpulse = 0
+							var Length = 1
+							var LocalPointA = Real3{0, 0, 0}
+							var LocalPointB = Real3{0, 0, 0}
+						}
+					}
+					Cog [Id:0x5bc2dba2c5029b3d][ContextId:541]
+					{
+						var Name = "PT3"
+						Transform 
+						{
+							var Translation = Real3{3.7461853, -1.27882385, 0}
+							var Scale = Real3{1, 1, 1}
+							var Rotation = Quaternion{0, 0, 0, 1}
+						}
+						RigidBody 
+						{
+							var Velocity = Real3{0, 0, 0}
+							var AngularVelocity = Real3{0, 0, 0}
+							var DynamicState = RigidBodyDynamicState.Dynamic
+							var AllowSleep = true
+							var Asleep = false
+							var RotationLocked = false
+							var Mode2D = Mode2DStates.InheritFromSpace
+						}
+						ObjectLink 
+						{
+							var ObjectAPath = CogPath
+							{
+								var Path = "."
+								var ErrorOnResolveToNull = false
+								var ErrorOnPathCantCompute = false
+								var ErrorOnDirectLinkFail = false
+								var UpdateCogOnPathChange = true
+								var UpdatePathOnCogChange = true
+								var UpdateCogOnInitialize = true
+								var ResolvedNullErrorOccurred = false
+								var Cog = 541
+								var PathPreference0 = CogPathPreference.CogRelative
+								var PathPreference1 = CogPathPreference.SpaceRelative
+								var PathPreference2 = CogPathPreference.Absolute
+							}
+							var ObjectBPath = CogPath
+							{
+								var Path = "../PT2"
+								var ErrorOnResolveToNull = false
+								var ErrorOnPathCantCompute = false
+								var ErrorOnDirectLinkFail = false
+								var UpdateCogOnPathChange = true
+								var UpdatePathOnCogChange = true
+								var UpdateCogOnInitialize = true
+								var ResolvedNullErrorOccurred = false
+								var Cog = 540
+								var PathPreference0 = CogPathPreference.CogRelative
+								var PathPreference1 = CogPathPreference.SpaceRelative
+								var PathPreference2 = CogPathPreference.Absolute
+							}
+							var LocalPointA = Real3{0, 0, 0}
+							var LocalPointB = Real3{0, 0, 0}
+						}
+						SphereCollider 
+						{
+							var Ghost = false
+							var SendsEvents = true
+							var Material = "4de020863e872da8:DefaultPhysicsMaterial"
+							var CollisionGroup = "4e740859314e5515:DefaultGroup"
+							var Offset = Real3{0, 0, 0}
+							var Radius = 0.00100000005
+						}
+						IgnoreSpaceEffects 
+						{
+							var IgnoreDrag = true
+							var IgnoreFlow = true
+							var IgnoreForce = true
+							var IgnoreGravity = false
+							var IgnorePointForce = true
+							var IgnorePointGravity = true
+							var IgnoreThrust = true
+							var IgnoreVortex = true
+							var IgnoreWind = true
+							var IgnoreTorque = true
+							var IgnoreBuoyancy = true
+							var IgnoreCustom = true
+						}
+						StickJoint 
+						{
+							var Active = true
+							var SendsEvents = true
+							var AutoSnaps = false
+							var CollideConnected = true
+							var MaxImpulse = 0
+							var Length = 1
+							var LocalPointA = Real3{0, 0, 0}
+							var LocalPointB = Real3{0, 0, 0}
+						}
+					}
+					Cog [Id:0x5bc2dba2c502a436][ContextId:542]
+					{
+						var Name = "PT4"
+						Transform 
+						{
+							var Translation = Real3{2.34558487, -2.77001476, 0}
+							var Scale = Real3{1, 1, 1}
+							var Rotation = Quaternion{0, 0, 0, 1}
+						}
+						RigidBody 
+						{
+							var Velocity = Real3{0, 0, 0}
+							var AngularVelocity = Real3{0, 0, 0}
+							var DynamicState = RigidBodyDynamicState.Dynamic
+							var AllowSleep = true
+							var Asleep = false
+							var RotationLocked = false
+							var Mode2D = Mode2DStates.InheritFromSpace
+						}
+						ObjectLink 
+						{
+							var ObjectAPath = CogPath
+							{
+								var Path = "."
+								var ErrorOnResolveToNull = false
+								var ErrorOnPathCantCompute = false
+								var ErrorOnDirectLinkFail = false
+								var UpdateCogOnPathChange = true
+								var UpdatePathOnCogChange = true
+								var UpdateCogOnInitialize = true
+								var ResolvedNullErrorOccurred = false
+								var Cog = 542
+								var PathPreference0 = CogPathPreference.CogRelative
+								var PathPreference1 = CogPathPreference.SpaceRelative
+								var PathPreference2 = CogPathPreference.Absolute
+							}
+							var ObjectBPath = CogPath
+							{
+								var Path = "../PT3"
+								var ErrorOnResolveToNull = false
+								var ErrorOnPathCantCompute = false
+								var ErrorOnDirectLinkFail = false
+								var UpdateCogOnPathChange = true
+								var UpdatePathOnCogChange = true
+								var UpdateCogOnInitialize = true
+								var ResolvedNullErrorOccurred = false
+								var Cog = 541
+								var PathPreference0 = CogPathPreference.CogRelative
+								var PathPreference1 = CogPathPreference.SpaceRelative
+								var PathPreference2 = CogPathPreference.Absolute
+							}
+							var LocalPointA = Real3{0, 0, 0}
+							var LocalPointB = Real3{0, 0, 0}
+						}
+						SphereCollider 
+						{
+							var Ghost = false
+							var SendsEvents = true
+							var Material = "4de020863e872da8:DefaultPhysicsMaterial"
+							var CollisionGroup = "4e740859314e5515:DefaultGroup"
+							var Offset = Real3{0, 0, 0}
+							var Radius = 0.00100000005
+						}
+						IgnoreSpaceEffects 
+						{
+							var IgnoreDrag = true
+							var IgnoreFlow = true
+							var IgnoreForce = true
+							var IgnoreGravity = false
+							var IgnorePointForce = true
+							var IgnorePointGravity = true
+							var IgnoreThrust = true
+							var IgnoreVortex = true
+							var IgnoreWind = true
+							var IgnoreTorque = true
+							var IgnoreBuoyancy = true
+							var IgnoreCustom = true
+						}
+						StickJoint 
+						{
+							var Active = true
+							var SendsEvents = true
+							var AutoSnaps = false
+							var CollideConnected = true
+							var MaxImpulse = 0
+							var Length = 1
+							var LocalPointA = Real3{0, 0, 0}
+							var LocalPointB = Real3{0, 0, 0}
+						}
+					}
+					Cog [Id:0x5bc2dba2c502accd][ContextId:543]
+					{
+						var Name = "PT5"
+						Transform 
+						{
+							var Translation = Real3{1.15855026, -2.59197235, 0}
+							var Scale = Real3{1, 1, 1}
+							var Rotation = Quaternion{0, 0, 0, 1}
+						}
+						RigidBody 
+						{
+							var Velocity = Real3{0, 0, 0}
+							var AngularVelocity = Real3{0, 0, 0}
+							var DynamicState = RigidBodyDynamicState.Dynamic
+							var AllowSleep = true
+							var Asleep = false
+							var RotationLocked = false
+							var Mode2D = Mode2DStates.InheritFromSpace
+						}
+						ObjectLink 
+						{
+							var ObjectAPath = CogPath
+							{
+								var Path = "."
+								var ErrorOnResolveToNull = false
+								var ErrorOnPathCantCompute = false
+								var ErrorOnDirectLinkFail = false
+								var UpdateCogOnPathChange = true
+								var UpdatePathOnCogChange = true
+								var UpdateCogOnInitialize = true
+								var ResolvedNullErrorOccurred = false
+								var Cog = 543
+								var PathPreference0 = CogPathPreference.CogRelative
+								var PathPreference1 = CogPathPreference.SpaceRelative
+								var PathPreference2 = CogPathPreference.Absolute
+							}
+							var ObjectBPath = CogPath
+							{
+								var Path = "../PT4"
+								var ErrorOnResolveToNull = false
+								var ErrorOnPathCantCompute = false
+								var ErrorOnDirectLinkFail = false
+								var UpdateCogOnPathChange = true
+								var UpdatePathOnCogChange = true
+								var UpdateCogOnInitialize = true
+								var ResolvedNullErrorOccurred = false
+								var Cog = 542
+								var PathPreference0 = CogPathPreference.CogRelative
+								var PathPreference1 = CogPathPreference.SpaceRelative
+								var PathPreference2 = CogPathPreference.Absolute
+							}
+							var LocalPointA = Real3{0, 0, 0}
+							var LocalPointB = Real3{0, 0, 0}
+						}
+						SphereCollider 
+						{
+							var Ghost = false
+							var SendsEvents = true
+							var Material = "4de020863e872da8:DefaultPhysicsMaterial"
+							var CollisionGroup = "4e740859314e5515:DefaultGroup"
+							var Offset = Real3{0, 0, 0}
+							var Radius = 0.00100000005
+						}
+						IgnoreSpaceEffects 
+						{
+							var IgnoreDrag = true
+							var IgnoreFlow = true
+							var IgnoreForce = true
+							var IgnoreGravity = false
+							var IgnorePointForce = true
+							var IgnorePointGravity = true
+							var IgnoreThrust = true
+							var IgnoreVortex = true
+							var IgnoreWind = true
+							var IgnoreTorque = true
+							var IgnoreBuoyancy = true
+							var IgnoreCustom = true
+						}
+						StickJoint 
+						{
+							var Active = true
+							var SendsEvents = true
+							var AutoSnaps = false
+							var CollideConnected = true
+							var MaxImpulse = 0
+							var Length = 1
+							var LocalPointA = Real3{0, 0, 0}
+							var LocalPointB = Real3{0, 0, 0}
+						}
+					}
+					Cog [Id:0x5bc2dba2c502b6a6][ContextId:544]
+					{
+						var Name = "PT6"
+						Transform 
+						{
+							var Translation = Real3{-0.0620689392, -1.61943722, 0}
+							var Scale = Real3{1, 1, 1}
+							var Rotation = Quaternion{0, 0, 0, 1}
+						}
+						RigidBody 
+						{
+							var Velocity = Real3{0, 0, 0}
+							var AngularVelocity = Real3{0, 0, 0}
+							var DynamicState = RigidBodyDynamicState.Dynamic
+							var AllowSleep = true
+							var Asleep = false
+							var RotationLocked = false
+							var Mode2D = Mode2DStates.InheritFromSpace
+						}
+						ObjectLink 
+						{
+							var ObjectAPath = CogPath
+							{
+								var Path = "."
+								var ErrorOnResolveToNull = false
+								var ErrorOnPathCantCompute = false
+								var ErrorOnDirectLinkFail = false
+								var UpdateCogOnPathChange = true
+								var UpdatePathOnCogChange = true
+								var UpdateCogOnInitialize = true
+								var ResolvedNullErrorOccurred = false
+								var Cog = 544
+								var PathPreference0 = CogPathPreference.CogRelative
+								var PathPreference1 = CogPathPreference.SpaceRelative
+								var PathPreference2 = CogPathPreference.Absolute
+							}
+							var ObjectBPath = CogPath
+							{
+								var Path = "../PT5"
+								var ErrorOnResolveToNull = false
+								var ErrorOnPathCantCompute = false
+								var ErrorOnDirectLinkFail = false
+								var UpdateCogOnPathChange = true
+								var UpdatePathOnCogChange = true
+								var UpdateCogOnInitialize = true
+								var ResolvedNullErrorOccurred = false
+								var Cog = 543
+								var PathPreference0 = CogPathPreference.CogRelative
+								var PathPreference1 = CogPathPreference.SpaceRelative
+								var PathPreference2 = CogPathPreference.Absolute
+							}
+							var LocalPointA = Real3{0, 0, 0}
+							var LocalPointB = Real3{0, 0, 0}
+						}
+						SphereCollider 
+						{
+							var Ghost = false
+							var SendsEvents = true
+							var Material = "4de020863e872da8:DefaultPhysicsMaterial"
+							var CollisionGroup = "4e740859314e5515:DefaultGroup"
+							var Offset = Real3{0, 0, 0}
+							var Radius = 0.00100000005
+						}
+						IgnoreSpaceEffects 
+						{
+							var IgnoreDrag = true
+							var IgnoreFlow = true
+							var IgnoreForce = true
+							var IgnoreGravity = false
+							var IgnorePointForce = true
+							var IgnorePointGravity = true
+							var IgnoreThrust = true
+							var IgnoreVortex = true
+							var IgnoreWind = true
+							var IgnoreTorque = true
+							var IgnoreBuoyancy = true
+							var IgnoreCustom = true
+						}
+						StickJoint 
+						{
+							var Active = true
+							var SendsEvents = true
+							var AutoSnaps = false
+							var CollideConnected = true
+							var MaxImpulse = 0
+							var Length = 1
+							var LocalPointA = Real3{0, 0, 0}
+							var LocalPointB = Real3{0, 0, 0}
+						}
+					}
+				}
+			}
+			Cog [Id:0x5bc2c4c282d02fee][ContextId:545]
+			{
+				var Name = "ObjectPool"
+				Transform 
+				{
+					var Translation = Real3{55.8770142, -6.96577406, -24.1725311}
+					var Scale = Real3{1, 1, 1}
+					var Rotation = Quaternion{0, 0, 0, 1}
+				}
+				Hierarchy 
+				{
+					Cog [Id:0x5bc2c4a8a23e13e3][InheritId:"5bc87562328112b4:ChainLink"][ContextId:546]
+					{
+					}
+					Cog [Id:0x5bc2c4a8a23e1415][InheritId:"5bc87562328112b4:ChainLink"][ContextId:547]
+					{
+					}
+					Cog [Id:0x5bc2c4a8a23e1432][InheritId:"5bc87562328112b4:ChainLink"][ContextId:548]
+					{
+					}
+					Cog [Id:0x5bc2c4a8a23e1456][InheritId:"5bc87562328112b4:ChainLink"][ContextId:549]
+					{
+					}
+					Cog [Id:0x5bc2c4a8a23e1473][InheritId:"5bc87562328112b4:ChainLink"][ContextId:550]
+					{
+					}
+					Cog [Id:0x5bc2c4a8a23e1497][InheritId:"5bc87562328112b4:ChainLink"][ContextId:551]
+					{
+					}
+					Cog [Id:0x5bc2c4a8a23e14bb][InheritId:"5bc87562328112b4:ChainLink"][ContextId:552]
 					{
 					}
 				}

@@ -175,9 +175,9 @@ Level
 		var Name = "EditorCamera"
 		Transform 
 		{
-			var Translation = Real3{22.7617569, 46.1271782, 15.0862322}
+			var Translation = Real3{1.264763, -0.697638512, -28.5779037}
 			var Scale = Real3{1, 1, 1}
-			var Rotation = Quaternion{-0.434513837, 0.411511421, 0.233295768, 0.766439438}
+			var Rotation = Quaternion{0.00180554856, 0.993826509, -0.109719418, 0.0163533669}
 		}
 		CameraViewport 
 		{
@@ -234,10 +234,10 @@ Level
 		{
 			var ControlMode = ControlMode.Orbit
 			var Previous3DMode = ControlMode.Orbit
-			var LookDistance = 53.1745377
-			var VerticalAngle = 1.03148866
-			var HorizontalAngle = 162.377335
-			var LookTarget = Real3{0, 0.5, 0}
+			var LookDistance = 39.3928185
+			var VerticalAngle = -0.219911397
+			var HorizontalAngle = 147.687759
+			var LookTarget = Real3{0, 7.89563465, 9.8453989}
 			var MoveSensitivity = 1
 		}
 	}
@@ -316,399 +316,107 @@ Level
 			var AttenuationScale = 1
 		}
 	}
-	Cog [ContextId:6]
+	Cog [InheritId:"5bc2f6d1ed387c56:ChainSetup"][ContextId:6]
 	{
-		var Name = "Chain"
 		Transform 
 		{
-			var Translation = Real3{-14.0773773, -7.62939453e-06, 9.29136562}
-			var Scale = Real3{1, 1, 1}
+			var Translation = Real3{21.138052, 1.90734863e-06, -24.8825626}
 			var Rotation = Quaternion{0, 0, 0, 1}
-		}
-		PathVisuals 
-		{
-			var SplineType = SplineType.BSpline
-			var Spacing = 0.5
-			var Closed = true
-			var PathLink = "5bc87562328112b4:ChainLink"
-			var PathBegin = "null"
-			var PathEnd = "null"
-			var Dynamic = false
-			var Dynamic_S = false
-			var COMMAND_Generate = false
-		}
-		Hierarchy 
-		{
-			Cog [Id:0x5bcb7e17c95457de][ContextId:7]
-			{
-				var Name = "Points"
-				Transform 
-				{
-					var Translation = Real3{0, 0, 5.73578453}
-					var Scale = Real3{1, 1, 1}
-					var Rotation = Quaternion{0, 0, 0, 1}
-				}
-				HierarchySpline 
-				{
-					var Closed = true
-					var SplineType = SplineType.BSpline
-					var Error = 0.5
-					var DebugDrawSpline = true
-					var SplineColor = Real4{0, 0, 0, 1}
-				}
-				Hierarchy 
-				{
-					Cog [Id:0x5bcb7fe0d1d0c9e4][ContextId:8]
-					{
-						var Name = "Transform"
-						Transform 
-						{
-							var Translation = Real3{-7.79370975, 6.21753216, -5.48276186}
-							var Scale = Real3{3.06856775, 1, 2.19579101}
-							var Rotation = Quaternion{0.049039159, -0.000997579773, 0.0203138348, 0.998589873}
-						}
-					}
-					Cog [Id:0x5bcb78f0b9d49d10][ContextId:9]
-					{
-						var Name = "Transform"
-						Transform 
-						{
-							var Translation = Real3{11.4477282, 1.8352021, -7.97360086}
-							var Scale = Real3{3.06856775, 1, 2.19579101}
-							var Rotation = Quaternion{0.049039159, -0.000997579773, 0.0203138348, 0.998589873}
-						}
-					}
-					Cog [Id:0x5bcb78f2bba9730b][ContextId:10]
-					{
-						var Name = "Transform"
-						Transform 
-						{
-							var Translation = Real3{20.6847992, -0.0299132913, 14.8077106}
-							var Scale = Real3{3.06856775, 1, 2.19579101}
-							var Rotation = Quaternion{0.049039159, -0.000997579773, 0.0203138348, 0.998589873}
-						}
-					}
-					Cog [Id:0x5bcb78f6bf941a65][ContextId:11]
-					{
-						var Name = "Transform"
-						Transform 
-						{
-							var Translation = Real3{-16.3317719, -2.61097026, 25.6465702}
-							var Scale = Real3{3.06856775, 1, 2.19579101}
-							var Rotation = Quaternion{0.049039159, -0.000997579773, 0.0203138348, 0.998589873}
-						}
-					}
-				}
-			}
-			Cog [Id:0x5bc9d01a9380d6a1][ContextId:12]
-			{
-				var Name = "ObjectPool"
-				Transform 
-				{
-					var Translation = Real3{30.4938946, 3.81469727e-06, -21.8044624}
-					var Scale = Real3{1, 1, 1}
-					var Rotation = Quaternion{0, 0, 0, 1}
-				}
-				Hierarchy 
-				{
-					Cog [Id:0x5bc9d1522e03baed][InheritId:"5bc87562328112b4:ChainLink"][ContextId:13]
-					{
-					}
-					Cog [Id:0x5bc9d1522e03bb11][InheritId:"5bc87562328112b4:ChainLink"][ContextId:14]
-					{
-					}
-					Cog [Id:0x5bc9d1522e03bb35][InheritId:"5bc87562328112b4:ChainLink"][ContextId:15]
-					{
-					}
-					Cog [Id:0x5bc9d1522e03bb52][InheritId:"5bc87562328112b4:ChainLink"][ContextId:16]
-					{
-					}
-					Cog [Id:0x5bc9d1522e03bb76][InheritId:"5bc87562328112b4:ChainLink"][ContextId:17]
-					{
-					}
-					Cog [Id:0x5bc9d1522e03bb93][InheritId:"5bc87562328112b4:ChainLink"][ContextId:18]
-					{
-					}
-					Cog [Id:0x5bc9d1522e03bbb0][InheritId:"5bc87562328112b4:ChainLink"][ContextId:19]
-					{
-					}
-					Cog [Id:0x5bc9d1522e03bbd4][InheritId:"5bc87562328112b4:ChainLink"][ContextId:20]
-					{
-					}
-					Cog [Id:0x5bc9d1522e03bbf1][InheritId:"5bc87562328112b4:ChainLink"][ContextId:21]
-					{
-					}
-					Cog [Id:0x5bc9d1522e03bc0e][InheritId:"5bc87562328112b4:ChainLink"][ContextId:22]
-					{
-					}
-					Cog [Id:0x5bc9d1522e03bc32][InheritId:"5bc87562328112b4:ChainLink"][ContextId:23]
-					{
-					}
-					Cog [Id:0x5bc9d1522e03bc4f][InheritId:"5bc87562328112b4:ChainLink"][ContextId:24]
-					{
-					}
-					Cog [Id:0x5bc9d1522e03bc73][InheritId:"5bc87562328112b4:ChainLink"][ContextId:25]
-					{
-					}
-					Cog [Id:0x5bc9d1522e03bc90][InheritId:"5bc87562328112b4:ChainLink"][ContextId:26]
-					{
-					}
-					Cog [Id:0x5bc9d1522e03bcad][InheritId:"5bc87562328112b4:ChainLink"][ContextId:27]
-					{
-					}
-					Cog [Id:0x5bc9d1522e03bcd1][InheritId:"5bc87562328112b4:ChainLink"][ContextId:28]
-					{
-					}
-					Cog [Id:0x5bc9d1522e03bcee][InheritId:"5bc87562328112b4:ChainLink"][ContextId:29]
-					{
-					}
-					Cog [Id:0x5bc9d1522e03bd0b][InheritId:"5bc87562328112b4:ChainLink"][ContextId:30]
-					{
-					}
-					Cog [Id:0x5bc9d1522e03bd28][InheritId:"5bc87562328112b4:ChainLink"][ContextId:31]
-					{
-					}
-					Cog [Id:0x5bc9d1522e03bd4c][InheritId:"5bc87562328112b4:ChainLink"][ContextId:32]
-					{
-					}
-					Cog [Id:0x5bc9d1522e03bd69][InheritId:"5bc87562328112b4:ChainLink"][ContextId:33]
-					{
-					}
-					Cog [Id:0x5bc9d1522e03bd8d][InheritId:"5bc87562328112b4:ChainLink"][ContextId:34]
-					{
-					}
-					Cog [Id:0x5bc9d1522e03bdaa][InheritId:"5bc87562328112b4:ChainLink"][ContextId:35]
-					{
-					}
-					Cog [Id:0x5bc9d1522e03bdc7][InheritId:"5bc87562328112b4:ChainLink"][ContextId:36]
-					{
-					}
-					Cog [Id:0x5bc9d1522e03bde4][InheritId:"5bc87562328112b4:ChainLink"][ContextId:37]
-					{
-					}
-					Cog [Id:0x5bc9d1522e03be08][InheritId:"5bc87562328112b4:ChainLink"][ContextId:38]
-					{
-					}
-					Cog [Id:0x5bc9d1522e03be25][InheritId:"5bc87562328112b4:ChainLink"][ContextId:39]
-					{
-					}
-					Cog [Id:0x5bc9d1522e03be42][InheritId:"5bc87562328112b4:ChainLink"][ContextId:40]
-					{
-					}
-					Cog [Id:0x5bc9d1522e03be66][InheritId:"5bc87562328112b4:ChainLink"][ContextId:41]
-					{
-					}
-					Cog [Id:0x5bc9d1522e03be83][InheritId:"5bc87562328112b4:ChainLink"][ContextId:42]
-					{
-					}
-					Cog [Id:0x5bc9d1522e03bea0][InheritId:"5bc87562328112b4:ChainLink"][ContextId:43]
-					{
-					}
-					Cog [Id:0x5bc9d1522e03bec4][InheritId:"5bc87562328112b4:ChainLink"][ContextId:44]
-					{
-					}
-					Cog [Id:0x5bc9d1522e03bee1][InheritId:"5bc87562328112b4:ChainLink"][ContextId:45]
-					{
-					}
-					Cog [Id:0x5bc9d1522e03befe][InheritId:"5bc87562328112b4:ChainLink"][ContextId:46]
-					{
-					}
-					Cog [Id:0x5bc9d1522e03bf22][InheritId:"5bc87562328112b4:ChainLink"][ContextId:47]
-					{
-					}
-					Cog [Id:0x5bc9d1522e03bf3f][InheritId:"5bc87562328112b4:ChainLink"][ContextId:48]
-					{
-					}
-					Cog [Id:0x5bc9d1522e03bf5c][InheritId:"5bc87562328112b4:ChainLink"][ContextId:49]
-					{
-					}
-					Cog [Id:0x5bc9d1522e03bf80][InheritId:"5bc87562328112b4:ChainLink"][ContextId:50]
-					{
-					}
-					Cog [Id:0x5bc9d1522e03bf9d][InheritId:"5bc87562328112b4:ChainLink"][ContextId:51]
-					{
-					}
-					Cog [Id:0x5bc9d1522e03bfba][InheritId:"5bc87562328112b4:ChainLink"][ContextId:52]
-					{
-					}
-					Cog [Id:0x5bc9d1522e03bfde][InheritId:"5bc87562328112b4:ChainLink"][ContextId:53]
-					{
-					}
-					Cog [Id:0x5bc9d1522e03bffb][InheritId:"5bc87562328112b4:ChainLink"][ContextId:54]
-					{
-					}
-					Cog [Id:0x5bc9d1522e03c018][InheritId:"5bc87562328112b4:ChainLink"][ContextId:55]
-					{
-					}
-					Cog [Id:0x5bc9d1522e03c03c][InheritId:"5bc87562328112b4:ChainLink"][ContextId:56]
-					{
-					}
-					Cog [Id:0x5bc9d1522e03c059][InheritId:"5bc87562328112b4:ChainLink"][ContextId:57]
-					{
-					}
-					Cog [Id:0x5bc9d1522e03c076][InheritId:"5bc87562328112b4:ChainLink"][ContextId:58]
-					{
-					}
-					Cog [Id:0x5bc9d1522e03c09a][InheritId:"5bc87562328112b4:ChainLink"][ContextId:59]
-					{
-					}
-					Cog [Id:0x5bc9d1522e03c0b7][InheritId:"5bc87562328112b4:ChainLink"][ContextId:60]
-					{
-					}
-					Cog [Id:0x5bc9d1522e03c0d4][InheritId:"5bc87562328112b4:ChainLink"][ContextId:61]
-					{
-					}
-					Cog [Id:0x5bc9d1522e03c0f8][InheritId:"5bc87562328112b4:ChainLink"][ContextId:62]
-					{
-					}
-					Cog [Id:0x5bc9d1522e03c11c][InheritId:"5bc87562328112b4:ChainLink"][ContextId:63]
-					{
-					}
-					Cog [Id:0x5bc9d1522e03c178][InheritId:"5bc87562328112b4:ChainLink"][ContextId:64]
-					{
-					}
-					Cog [Id:0x5bc9d1522e03c19c][InheritId:"5bc87562328112b4:ChainLink"][ContextId:65]
-					{
-					}
-					Cog [Id:0x5bc9d1522e03c1c0][InheritId:"5bc87562328112b4:ChainLink"][ContextId:66]
-					{
-					}
-				}
-			}
+			var Scale = Real3{1, 1, 1}
 		}
 	}
-	Cog [ContextId:67]
+	Cog [ContextId:7]
 	{
-		var Name = "Rope"
+		var Name = "Transform"
 		Transform 
 		{
 			var Translation = Real3{0, 0, 0}
 			var Scale = Real3{1, 1, 1}
 			var Rotation = Quaternion{0, 0, 0, 1}
 		}
-		PathVisuals 
+		ChainDisplay 
 		{
-			var SplineType = SplineType.CatmullRom
-			var Spacing = 50
-			var Closed = false
-			var PathLink = "5bc8961dc414ef4e:RopeLink"
-			var PathBegin = "null"
-			var PathEnd = "null"
-			var Dynamic = false
-			var Dynamic_S = false
+			var ChainBase = "5bc2f6d1ed387c56:ChainSetup"
+			var ChainCount = 25
+			var ChainScale = 8
 			var COMMAND_Generate = false
 		}
 		Hierarchy 
 		{
-			Cog [Id:0x5bcb7e17c95457de][ContextId:68]
+			Cog [Id:0x5bc2f2928f9cc149][InheritId:"5bc2f6d1ed387c56:ChainSetup"][ContextId:8]
 			{
-				var Name = "Points"
-				Transform 
-				{
-					var Translation = Real3{0, 0, 0}
-					var Scale = Real3{1, 1, 1}
-					var Rotation = Quaternion{0, 0, 0, 1}
-				}
-				HierarchySpline 
-				{
-					var Closed = false
-					var SplineType = SplineType.CatmullRom
-					var Error = 50
-					var DebugDrawSpline = true
-					var SplineColor = Real4{0, 0, 0, 1}
-				}
-				Hierarchy 
-				{
-					Cog [Id:0x5bcb7fe0d1d0c9e4][ContextId:69]
-					{
-						var Name = "Transform"
-						Transform 
-						{
-							var Translation = Real3{-2.48323536, 1.30845249, -24.6516819}
-							var Scale = Real3{3.06856775, 1, 2.19579101}
-							var Rotation = Quaternion{0.049039159, -0.000997579773, 0.0203138348, 0.998589873}
-						}
-					}
-					Cog [Id:0x5bcb78f0b9d49d10][ContextId:70]
-					{
-						var Name = "Transform"
-						Transform 
-						{
-							var Translation = Real3{16.7582016, 1.83519828, -27.1425209}
-							var Scale = Real3{3.06856775, 1, 2.19579101}
-							var Rotation = Quaternion{0.049039159, -0.000997579773, 0.0203138348, 0.998589873}
-						}
-					}
-					Cog [Id:0x5bcb78f2bba9730b][ContextId:71]
-					{
-						var Name = "Transform"
-						Transform 
-						{
-							var Translation = Real3{25.9952736, -0.029917106, -4.36120987}
-							var Scale = Real3{3.06856775, 1, 2.19579101}
-							var Rotation = Quaternion{0.049039159, -0.000997579773, 0.0203138348, 0.998589873}
-						}
-					}
-					Cog [Id:0x5bcb78f6bf941a65][ContextId:72]
-					{
-						var Name = "Transform"
-						Transform 
-						{
-							var Translation = Real3{-11.0212975, -2.61097407, 6.47764969}
-							var Scale = Real3{3.06856775, 1, 2.19579101}
-							var Rotation = Quaternion{0.049039159, -0.000997579773, 0.0203138348, 0.998589873}
-						}
-					}
-				}
 			}
-			Cog [Id:0x5bc9d08b19b4c6f3][ContextId:73]
+			Cog [Id:0x5bc2f2928f9e0188][InheritId:"5bc2f6d1ed387c56:ChainSetup"][ContextId:9]
 			{
-				var Name = "ObjectPool"
-				Transform 
-				{
-					var Translation = Real3{0, 0, 0}
-					var Scale = Real3{1, 1, 1}
-					var Rotation = Quaternion{0, 0, 0, 1}
-				}
-				Hierarchy 
-				{
-					Cog [Id:0x5bc9d1522e020f46][InheritId:"5bc8961dc414ef4e:RopeLink"][ContextId:74]
-					{
-					}
-					Cog [Id:0x5bc9d1522e020f6a][InheritId:"5bc8961dc414ef4e:RopeLink"][ContextId:75]
-					{
-					}
-					Cog [Id:0x5bc9d1522e020f87][InheritId:"5bc8961dc414ef4e:RopeLink"][ContextId:76]
-					{
-					}
-					Cog [Id:0x5bc9d1522e020fab][InheritId:"5bc8961dc414ef4e:RopeLink"][ContextId:77]
-					{
-					}
-					Cog [Id:0x5bc9d1522e020fc8][InheritId:"5bc8961dc414ef4e:RopeLink"][ContextId:78]
-					{
-					}
-					Cog [Id:0x5bc9d1522e020fe5][InheritId:"5bc8961dc414ef4e:RopeLink"][ContextId:79]
-					{
-					}
-					Cog [Id:0x5bc9d1522e021009][InheritId:"5bc8961dc414ef4e:RopeLink"][ContextId:80]
-					{
-					}
-					Cog [Id:0x5bc9d1522e021026][InheritId:"5bc8961dc414ef4e:RopeLink"][ContextId:81]
-					{
-					}
-					Cog [Id:0x5bc9d1522e021043][InheritId:"5bc8961dc414ef4e:RopeLink"][ContextId:82]
-					{
-					}
-					Cog [Id:0x5bc9d1522e021067][InheritId:"5bc8961dc414ef4e:RopeLink"][ContextId:83]
-					{
-					}
-					Cog [Id:0x5bc9d1522e021084][InheritId:"5bc8961dc414ef4e:RopeLink"][ContextId:84]
-					{
-					}
-					Cog [Id:0x5bc9d1522e0210a1][InheritId:"5bc8961dc414ef4e:RopeLink"][ContextId:85]
-					{
-					}
-				}
+			}
+			Cog [Id:0x5bc2f2928f993c80][InheritId:"5bc2f6d1ed387c56:ChainSetup"][ContextId:10]
+			{
+			}
+			Cog [Id:0x5bc2f2928f98716d][InheritId:"5bc2f6d1ed387c56:ChainSetup"][ContextId:11]
+			{
+			}
+			Cog [Id:0x5bc2f2928f9bb104][InheritId:"5bc2f6d1ed387c56:ChainSetup"][ContextId:12]
+			{
+			}
+			Cog [Id:0x5bc2f2928f9aed3e][InheritId:"5bc2f6d1ed387c56:ChainSetup"][ContextId:13]
+			{
+			}
+			Cog [Id:0x5bc2f2928f942af9][InheritId:"5bc2f6d1ed387c56:ChainSetup"][ContextId:14]
+			{
+			}
+			Cog [Id:0x5bc2f2928f976c57][InheritId:"5bc2f6d1ed387c56:ChainSetup"][ContextId:15]
+			{
+			}
+			Cog [Id:0x5bc2f2928f96b66e][InheritId:"5bc2f6d1ed387c56:ChainSetup"][ContextId:16]
+			{
+			}
+			Cog [Id:0x5bc2f2928f900452][InheritId:"5bc2f6d1ed387c56:ChainSetup"][ContextId:17]
+			{
+			}
+			Cog [Id:0x5bc2f2928f93449f][InheritId:"5bc2f6d1ed387c56:ChainSetup"][ContextId:18]
+			{
+			}
+			Cog [Id:0x5bc2f2928f928e00][InheritId:"5bc2f6d1ed387c56:ChainSetup"][ContextId:19]
+			{
+			}
+			Cog [Id:0x5bc2f2928fadcbe5][InheritId:"5bc2f6d1ed387c56:ChainSetup"][ContextId:20]
+			{
+			}
+			Cog [Id:0x5bc2f2928faf0b2f][InheritId:"5bc2f6d1ed387c56:ChainSetup"][ContextId:21]
+			{
+			}
+			Cog [Id:0x5bc2f2928fae56d5][InheritId:"5bc2f6d1ed387c56:ChainSetup"][ContextId:22]
+			{
+			}
+			Cog [Id:0x5bc2f2928fa998e9][InheritId:"5bc2f6d1ed387c56:ChainSetup"][ContextId:23]
+			{
+			}
+			Cog [Id:0x5bc2f2928fa8e5a7][InheritId:"5bc2f6d1ed387c56:ChainSetup"][ContextId:24]
+			{
+			}
+			Cog [Id:0x5bc2f2928faa2b42][InheritId:"5bc2f6d1ed387c56:ChainSetup"][ContextId:25]
+			{
+			}
+			Cog [Id:0x5bc2f2928fa56c61][InheritId:"5bc2f6d1ed387c56:ChainSetup"][ContextId:26]
+			{
+			}
+			Cog [Id:0x5bc2f2928fa4a9ac][InheritId:"5bc2f6d1ed387c56:ChainSetup"][ContextId:27]
+			{
+			}
+			Cog [Id:0x5bc2f2928fa7f4bf][InheritId:"5bc2f6d1ed387c56:ChainSetup"][ContextId:28]
+			{
+			}
+			Cog [Id:0x5bc2f2928fa1387e][InheritId:"5bc2f6d1ed387c56:ChainSetup"][ContextId:29]
+			{
+			}
+			Cog [Id:0x5bc2f2928fa07d01][InheritId:"5bc2f6d1ed387c56:ChainSetup"][ContextId:30]
+			{
+			}
+			Cog [Id:0x5bc2f2928fa3c088][InheritId:"5bc2f6d1ed387c56:ChainSetup"][ContextId:31]
+			{
+			}
+			Cog [Id:0x5bc2f2928fa2fd71][InheritId:"5bc2f6d1ed387c56:ChainSetup"][ContextId:32]
+			{
 			}
 		}
 	}

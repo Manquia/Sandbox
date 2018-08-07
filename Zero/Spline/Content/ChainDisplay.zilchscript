@@ -1,0 +1,75 @@
+[RunInEditor]
+class ChainDisplay : ZilchComponent
+{
+  
+  [Property] var ChainBase : Archetype = null;
+  [Property] var ChainCount : Integer = 8;
+  [Property] var ChainScale : Real = 5.0;
+  
+  [Property] var COMMAND_Generate : Boolean
+  {
+    get { return false; }
+    set { this.Generate(); }
+  }
+  
+  var Internal_Initialized : Boolean = false;
+  function Initialize(init : CogInitializer)
+  {
+    this.Internal_Initialized = true;
+  }
+  
+  function Generate()
+  {
+    if(this.Internal_Initialized == false)
+      return;
+      
+    // destroy Old Childeren
+    scope
+    {
+      var childernToDestroy = this.Owner.ChildrenArray;
+      for(var i = this.Owner.ChildCount - 1; i >= 0; --i)
+      {
+        childernToDestroy[i].Destroy();
+      }
+    }
+    
+    
+    var chains = Array[Cog]();
+    
+    for(var i = 0; i < this.ChainCount; ++i)
+    {
+      var chain = this.Space.CreateAtPosition(this.ChainBase, Real3(0,0,0));
+      chain.AttachToPreserveLocal(this.Owner);
+      chains.Add(chain);
+    }
+    
+    for(var chainIndex = 0; chainIndex < chains.Count; ++chainIndex)
+    {
+      var chain = chains[chainIndex];
+      var makerObj = chain.FindChildByName("Points");
+      var maker = makerObj.ChainMaker;
+      
+      maker.Generate();
+      
+      var childPts = makerObj.ChildrenArray;
+      for(var ptIndex = 0; ptIndex < makerObj.ChildCount; ++ptIndex)
+      {
+        var ptRot = Math.AxisAngle(Real3(1,0,0), ptIndex * (Math.Pi*2)/makerObj.ChildCount);
+        var ptOffset = Math.Multiply(ptRot, Real3(0,1,0));
+        
+        childPts[ptIndex].Transform.Translation = ptOffset;
+      }
+      
+      var makerRot = Math.AxisAngle(Real3(0,1,0), chainIndex * (Math.Pi*2)/ chains.Count);
+      var makerOffset = Math.Multiply(makerRot, Real3(0,0,1));
+      makerObj.Transform.Translation = makerOffset * this.ChainScale * 1.15;
+      makerObj.Transform.Rotation = makerRot;
+      makerObj.Transform.Scale = Real3(this.ChainScale,this.ChainScale,this.ChainScale);
+      makerObj.ClearArchetype();
+      
+      chain.PathVisuals.UpdateVisuals();
+    }
+    
+    
+  }
+}

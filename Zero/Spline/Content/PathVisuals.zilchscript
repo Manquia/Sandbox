@@ -92,6 +92,7 @@ class PathVisuals : ZilchComponent
     }
     
     this.GetOrMakePath();
+    this.Path.ForceRebuild();
     var pts = this.Path.Spline.BakedPoints;
     var ptMaxIndex = this.Path.Spline.BakedPoints.Count - 1;
     
