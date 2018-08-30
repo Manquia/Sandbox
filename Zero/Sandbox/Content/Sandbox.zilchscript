@@ -1,0 +1,29 @@
+class Sandbox : ZilchComponent
+{
+  [Property]var MeshBase : Mesh = null;
+  var Mesh : Mesh = null;
+  
+  
+  function Initialize(init : CogInitializer)
+  {
+    this.Mesh = this.MeshBase.RuntimeClone();
+    
+    var attributes = this.Mesh.Vertices.GetAttributes();
+    
+    for(var i = 0; i < this.Mesh.Vertices.VertexCount; ++i)
+    {
+      var atribRange = attributes.All.All.All;
+      foreach(var attrib in atribRange)
+      {
+        Console.WriteLine("`attrib`: `this.Mesh.Vertices.GetVertexData(i, attrib)`");
+      }
+      Console.WriteLine("\n");
+    }
+    
+    Zero.Connect(this.Space, Events.LogicUpdate, this.OnLogicUpdate);
+  }
+
+  function OnLogicUpdate(event : UpdateEvent)
+  {
+  }
+}

@@ -1,0 +1,9 @@
+[Version:1]
+TextContent 
+{
+	ZilchScriptBuilder 
+	{
+		var Name = "Sandbox"
+		var ResourceId = 0x5b2e7546550893c4
+	}
+}

@@ -1,0 +1,88 @@
+//
+//  Author: Micah Rust
+//
+//
+[Vertex]
+struct PipeWorldTransformer
+{
+  // Shader Inputs
+  [BuiltInInput] var LocalToView : Real4x4;
+  [BuiltInInput] var LocalToViewNormal : Real3x3;
+  [BuiltInInput] var LocalToPerspective : Real4x4;
+  
+  // Inputs
+  [StageInput] var LocalPosition : Real3;
+  [StageInput] var LocalTangent : Real3;
+  [StageInput] var LocalBitangent : Real3;
+  [StageInput] var LocalNormal : Real3;
+  
+  // Describe angle of the pipe world we are on
+  [Input] var AngleOffset : Real;
+  [Input] var Angle : Real;  // in radians
+  [Input] var Radius : Real;
+  
+  
+  // Note: if width > radius, you may get unexpected visual artefacts.
+  
+  // Shader output
+  [StageInput][Output] var Uv : Real2;
+  [Output] var ViewPosition : Real3;
+  [Output] var ViewNormal : Real3;
+  [Output] var ViewTangent : Real3;
+  [Output] var ViewBitangent : Real3;
+  [Output] var PerspectivePosition : Real4;
+  
+  function Main()
+  {
+    var mu = this.LocalPosition.Y * 0.1;
+    
+    var angle = mu * this.Angle + this.AngleOffset;
+    
+    var pos = Real3(
+      this.LocalPosition.X,
+      Math.Sin(angle) * (this.Radius + this.LocalPosition.Y),
+      Math.Cos(angle) * (this.Radius + this.LocalPosition.Z));
+    
+    var rotMat = Util.RotationMatrix(Real3(1,0,0), angle);
+    
+    var localToViewNormal = Math.Multiply(this.LocalToViewNormal, rotMat);
+    
+    this.ViewPosition =  Math.MultiplyPoint(this.LocalToView, pos);
+    this.ViewNormal =    Math.Normalize(Math.Multiply(localToViewNormal, this.LocalNormal));
+    this.ViewTangent =   Math.Normalize(Math.Multiply(localToViewNormal, this.LocalTangent));
+    this.ViewBitangent = Math.Normalize(Math.Multiply(localToViewNormal, this.LocalBitangent));
+    
+    // output perspective poin
+    this.PerspectivePosition = Math.Multiply(this.LocalToPerspective, Real4(pos, 1.0));
+  }
+}
+  
+  
+  
+  // Utility Function b/c Zero's shader library isn't very mature yet
+struct Util
+{
+  [Static]
+  function RotationMatrix(u : Real3, t : Real) : Real3x3
+  {
+    var m = Real3x3();
+    var sin = Math.Sin(t);
+    var cos = Math.Cos(t);
+    var cos_1 = 1 - cos;
+    
+    m.M00 = cos + u.X * u.X * cos_1;
+    m.M11 = cos + u.Y * u.Y * cos_1;
+    m.M22 = cos + u.Z * u.Z * cos_1;
+    
+    m.M01 = u.X * u.Y * cos_1 - u.Z * sin;
+    m.M02 = u.X * u.Z * cos_1 + u.Y * sin;
+    
+    m.M10 = u.Y * u.X * cos_1 + u.Z * sin;
+    m.M12 = u.Y * u.Z * cos_1 - u.X * sin;
+    
+    m.M20 = u.Z * u.X * cos_1 - u.Y * sin;
+    m.M21 = u.Z * u.Y * cos_1 - u.X * sin;
+    
+    return m;
+  }
+}
