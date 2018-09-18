@@ -1,0 +1,9 @@
+[Version:1]
+TextContent 
+{
+	ZilchFragmentBuilder 
+	{
+		var Name = "Annotated"
+		var ResourceId = 0x5b2d3dff896d0ca4
+	}
+}

@@ -223,7 +223,7 @@ Level
 		var Name = "InnerSpinner"
 		Transform 
 		{
-			var Translation = Real3{0, 0, 0}
+			var Translation = Real3{0, 0, -1}
 			var Scale = Real3{1, 1, 1}
 			var Rotation = Quaternion{0, 0, 0, 1}
 		}
@@ -335,7 +335,7 @@ Level
 		var Name = "OuterSpinner"
 		Transform 
 		{
-			var Translation = Real3{0, 0, 0}
+			var Translation = Real3{0, 0, 1}
 			var Scale = Real3{1, 1, 1}
 			var Rotation = Quaternion{0, 0, -0.1305262, 0.991444886}
 		}

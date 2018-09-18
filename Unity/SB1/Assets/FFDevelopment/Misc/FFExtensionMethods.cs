@@ -10,6 +10,10 @@ static class FFExtensionMethods
     {
         return new Color(_color.r, _color.g, _color.b, 0.0f);
     }
+    public static Color MakeOpaque(this Color _color)
+    {
+        return new Color(_color.r, _color.g, _color.b, 1.0f);
+    }
 
     #region Gameobject
     public static void Destroy(this GameObject _go)
@@ -85,6 +89,35 @@ static class FFExtensionMethods
     {
         return new FFRef<float>(() => cam.fieldOfView,
             (v) => { cam.fieldOfView = v; });
+    }
+    #endregion
+
+
+    #region Generic
+
+    // @TODO MOVE THIS ELSEWHERE @Make generic?
+    public static void Randomize<T>(this T[] objs)
+    {
+        int objCount = objs.Length;
+        T temp;
+        for (int i = 0; i < objCount; ++i)
+        {
+            int rand1 = UnityEngine.Random.Range(0, objCount);
+            int rand2 = UnityEngine.Random.Range(0, objCount);
+            temp = objs[rand1];
+            objs[rand1] = objs[rand2];
+            objs[rand2] = temp;
+        }
+    }
+
+    public static T SampleRandom<T>(this T[] objs, T notFoundValue)
+    {
+        int objCount = objs.Length;
+        if (objs == null || objs.Length == 0)
+            return notFoundValue;
+
+        int randomIndex = UnityEngine.Random.Range(0, objs.Length);
+        return objs[randomIndex];
     }
     #endregion
 }

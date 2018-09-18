@@ -75,7 +75,7 @@ namespace FFPrivate{
             if (system != null)
             {
                 system = null;
-                Debug.Log("FFMessageSystem Destroyed");
+                //Debug.Log("FFMessageSystem Destroyed");
             }
         }
         public static void GetReady()
@@ -83,7 +83,7 @@ namespace FFPrivate{
             if (system == null)
             {
                 system = new FFMessageSystem();
-                Debug.Log("FFMessageSystem Ready");
+                //Debug.Log("FFMessageSystem Ready");
             }
         }
         private static FFMessageSystem system = null;
