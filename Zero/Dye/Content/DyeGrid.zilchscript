@@ -1,0 +1,14 @@
+class DyeGrid : ZilchComponent
+{
+  [Property]var Length : Real4 = Real4(1,1,1,1);
+  [Property]var Dimensions : Integer = 2;
+  
+  function Initialize(init : CogInitializer)
+  {
+    //Zero.Connect(this.Space, Events.LogicUpdate, this.OnLogicUpdate);
+  }
+
+  function OnLogicUpdate(event : UpdateEvent)
+  {
+  }
+}
