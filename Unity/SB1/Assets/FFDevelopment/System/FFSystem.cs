@@ -25,24 +25,6 @@ using FFNetEvents;
 
 namespace FFLocalEvents
 {
-    public struct UpdateEvent
-    {
-        public float dt;
-        public double time;
-    }
-
-    public struct LateUpdateEvent
-    {
-        public float dt;
-        public double time;
-    }
-
-    public struct FixedUpdateEvent
-    {
-        public float dt;
-        public float fixedDt;
-        public double time;
-    }
 
     public struct TimeChangeEvent
     {
@@ -82,7 +64,7 @@ public class FFSystem : MonoBehaviour {
             //FFMessage<NetObjectDestroyedEvent>.Connect(OnNetObjectDestroyedEvent);
             //FFMessage<ClientConnectionReadyEvent>.Connect(OnClientConnectionReady);
             //FFMessage<GameObjectNetIdRecievedEvent>.Connect(OnGameObjectNetIdRecieved);
-            Debug.Log("FFSystem is awake!");
+            //Debug.Log("FFSystem is awake!");
 
             FFLocalEvents.TimeChangeEvent TCE;
             TCE.newCurrentTime = FFSystem.time;
@@ -120,6 +102,10 @@ public class FFSystem : MonoBehaviour {
     {
         //get { return FFClient.clientTime; }
         get { return timeCounter; }
+    }
+    public static float dt
+    {
+        get { return Time.unscaledDeltaTime; }
     }
     public static double clientWatchTime
     {
@@ -187,34 +173,17 @@ public class FFSystem : MonoBehaviour {
     {
         ExecuteMessages();
 
-        FFLocalEvents.UpdateEvent e;
-        e.dt = Time.deltaTime;
-        e.time = FFSystem.time;
-        FFMessage<FFLocalEvents.UpdateEvent>.SendToLocal(e);
-    }
 
-    static float timeCounter = 0.0f;
-    void FixedUpdate()
+        timeCounter += Time.unscaledDeltaTime;
+    }
+    static double timeCounter = 0.0f;
+    private void FixedUpdate()
     {
         ExecuteMessages();
-
-        timeCounter += Time.fixedDeltaTime;
-
-        FFLocalEvents.FixedUpdateEvent e;
-        e.dt = Time.fixedDeltaTime;
-        e.time = FFSystem.time;
-        e.fixedDt = Time.fixedDeltaTime;
-        FFMessage<FFLocalEvents.FixedUpdateEvent>.SendToLocal(e);
     }
-
     void LateUpdate()
     {
         ExecuteMessages();
-
-        FFLocalEvents.LateUpdateEvent e;
-        e.dt = Time.deltaTime;
-        e.time = FFSystem.time;
-        FFMessage<FFLocalEvents.LateUpdateEvent>.SendToLocal(e);
     }
 
     void ExecuteMessages()

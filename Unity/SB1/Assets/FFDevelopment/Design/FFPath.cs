@@ -37,7 +37,7 @@ public class FFPath : MonoBehaviour
 
     //////////////////// Stats when Unselected ////////////////////
     // point radius and color
-    private const float DebugPointsRadius = 0.1f;
+    private const float DebugPointsRadius = 0.25f;
     private Color DebugPointsColorUnselected = Color.blue;
     // Lower value to increase debug line precision
     private const float DebugLineLengthUnselected = 0.2f;
@@ -157,11 +157,13 @@ public class FFPath : MonoBehaviour
     void OnDrawGizmos() // unselected
     {
         Update();
+        SetupPointData();
         DrawDebugLinesGizmo(DebugLineColorUnselected, DebugLineLengthUnselected);
     }
     void OnDrawGizmosSelected()
     {
         Update();
+        SetupPointData();
         DrawDebugLinesGizmo(DebugLineColorSelected, DebugLineLengthSelected);
     }
     
@@ -233,7 +235,7 @@ public class FFPath : MonoBehaviour
             MakeDebugPoint(poolTrans, point);
         }
     }
-    public void UpdateModifyablePoints()
+    void UpdateModifyablePoints()
     {
         bool setupNeeded = false;
 
@@ -358,7 +360,7 @@ public class FFPath : MonoBehaviour
 
         return;
     }
-    public void TransferPointData()
+    void TransferPointData()
     {
         var pool = transform.Find(FFPathDebugPointsPoolName(gameObject.name));
 
@@ -389,7 +391,7 @@ public class FFPath : MonoBehaviour
             }
         }
     }
-    public void DestroyModifiablePoints()
+    void DestroyModifiablePoints()
     {
         var pool = transform.Find(FFPathDebugPointsPoolName(gameObject.name));
         if(pool != null)
@@ -398,7 +400,7 @@ public class FFPath : MonoBehaviour
             DestroyImmediate(pool.gameObject);
         }
     }
-    public void DrawDebugLinesGizmo(Color drawColor, float lineDensity)
+    void DrawDebugLinesGizmo(Color drawColor, float lineDensity)
     {
         if (points.Length > 1)
         {
@@ -474,7 +476,7 @@ public class FFPath : MonoBehaviour
     [SerializeField]
     public bool SmoothBetweenPoints = false;
     [SerializeField]
-    public bool ModifyAndDraw = true;
+    public bool ModifyAndDraw = false;
     [SerializeField]
     public Vector3[] points =
     { new Vector3(0, 0, 0), new Vector3(0,1,0), new Vector3(0,2,0) };
@@ -556,6 +558,12 @@ public class FFPath : MonoBehaviour
         return numberOfLoops * PathLength + linearDistanceAlongPath[currentPoint];
     }
 
+    public Vector3 PointAlongPathNorm(float distanceAlongPathNorm)
+    {
+        distanceAlongPathNorm -= Mathf.Floor(distanceAlongPathNorm);
+        return PointAlongPath(distanceAlongPathNorm * PathLength);
+    }
+
     /// <summary>
     /// Returns a Vector3 of the position which
     /// corresponds to the distance along the path
@@ -588,13 +596,13 @@ public class FFPath : MonoBehaviour
                         return transform.TransformPoint(InterpolateCatmullRomPositionAlongPath(distanceAlongPath));
                 default:
                     Debug.LogError("Unhandled Interpolation Type");
-                    return new Vector3(0, 0, 0);
+                    return transform.position;
             }
         }
         else
         {
-            Debug.LogError("PositionAlongLine failed");
-            return new Vector3(0, 0, 0);
+            Debug.Log("PositionAlongLine failed, Invalid Path");
+            return transform.position;
         }
     }
 
@@ -691,16 +699,10 @@ public class FFPath : MonoBehaviour
     /// </summary>
     public Vector3 NearestPoint(Vector3 givenPoint)
     {
-        Vector3 pos;
-        if (transform != null) { pos = transform.position; }
-        else { pos = new Vector3(0, 0, 0); }
-        
         if ((!DynamicPath && IsValidPath()) || (SetupPointData() && IsValidPath()))
         {
             // offset, rotate and scale point to get it in the same world space as path
-            givenPoint = FFMatrix3X3.ScaleBy(Quaternion.Inverse(transform.rotation) * (givenPoint - pos),
-                new Vector3(1.0f / transform.lossyScale.x, 1.0f / transform.lossyScale.y, 1.0f / transform.lossyScale.z));
-
+            givenPoint = transform.InverseTransformPoint(givenPoint);
             Vector3 nearestPoint = FFVector3.VecMaxValue;
             float nearestDist = float.MaxValue;
 
@@ -713,7 +715,7 @@ public class FFPath : MonoBehaviour
                     nearestPoint = point;
                 }
             }
-            return pos + (transform.rotation * FFMatrix3X3.ScaleBy(nearestPoint, transform.lossyScale));
+            return transform.TransformPoint(nearestPoint);
         }
         else
         {
@@ -726,7 +728,7 @@ public class FFPath : MonoBehaviour
     /// returns the nearest point to a distance along the path
     /// TODO: Mod Needed in end?
     /// </summary>
-    public Vector3 NearestPoint(float distanceAlongPath)
+    public Vector3 NearestPoint(float distanceAlongPath, out int indexOfNearest, out float vecToNearest)
     {
         float distmod = distanceAlongPath % PathLength;
         float distNegEqualZero = (distmod + PathLength) % PathLength;
@@ -736,12 +738,67 @@ public class FFPath : MonoBehaviour
             distanceAlongPath = distNegEqualZero;
         else   // given positive distance
             distanceAlongPath = distPos;
+        
+        if ((!DynamicPath && IsValidPath()) || (SetupPointData() && IsValidPath()))
+        {
+            int i = 0;
+            int first = 1;
+            int middle = PointCount / 2;
+            int last = PointCount - 1;
 
-        Vector3 pos; // TODO: not sure if this is an edge case or not
-        if (transform != null) { pos = transform.position; }
-        else { pos = new Vector3(0, 0, 0); }
 
+            while (first <= last)
+            {
+                if (distanceAlongPath > (linearDistanceAlongPath[middle])) // greater than
+                {
+                    first = middle + 1;
+                }
+                else if (distanceAlongPath >= (linearDistanceAlongPath[middle - 1]) // equal to
+                    && distanceAlongPath <= (linearDistanceAlongPath[middle]))
+                {
+                    i = middle;
+                    break;
+                }
+                else // less than (dist < linearDistanceAlongPath[middle - 1])
+                {
+                    last = middle - 1;
+                }
 
+                middle = (first + last) / 2;
+            }
+            var distOnLineBetweenPoints = distanceAlongPath - linearDistanceAlongPath[i - 1];
+            float lengthBetweenPoints = (linearDistanceAlongPath[i] - linearDistanceAlongPath[i - 1]);
+            float halfLengthBetweenPoints = lengthBetweenPoints / 2.0f;
+            if (distOnLineBetweenPoints > halfLengthBetweenPoints)
+            {
+                vecToNearest = distOnLineBetweenPoints - lengthBetweenPoints;
+                indexOfNearest = i % points.Length;
+                return transform.TransformPoint(points[indexOfNearest]); // if we are more than halfway through line
+            }
+            else
+            {
+                vecToNearest = distOnLineBetweenPoints;
+                indexOfNearest = i - 1;
+                return transform.TransformPoint(points[indexOfNearest]);  // if we less than or equal to than halfway through line
+            }
+        }
+
+        Debug.LogError("Error, Path failed to setup");
+        vecToNearest = -1.0f;
+        indexOfNearest = -1;
+        return new FFVector3(0, 0, 0);
+    }
+
+    public void NearestPoints(float distanceAlongPath, out int indexofPrevPoint, out float vecToPrevPoint, out int indexOfNextPt, out float vecToNextPoint)
+    {
+        float distmod = distanceAlongPath % PathLength;
+        float distNegEqualZero = (distmod + PathLength) % PathLength;
+        float distPos = distmod > 0 ? distPos = distmod : distPos = PathLength;
+
+        if (distanceAlongPath <= 0) // given negative/zero distance
+            distanceAlongPath = distNegEqualZero;
+        else   // given positive distance
+            distanceAlongPath = distPos;
 
         if ((!DynamicPath && IsValidPath()) || (SetupPointData() && IsValidPath()))
         {
@@ -770,21 +827,26 @@ public class FFPath : MonoBehaviour
 
                 middle = (first + last) / 2;
             }
-            distanceAlongPath -= linearDistanceAlongPath[i - 1];
-            float halfLengthBetweenPoints = (linearDistanceAlongPath[i] - linearDistanceAlongPath[i - 1])/2;
-            if (distanceAlongPath > halfLengthBetweenPoints)
-                return pos + (transform.rotation * FFMatrix3X3.ScaleBy(points[i % points.Length], transform.lossyScale)); // if we are more than halfway through line
-            else
-                return pos + (transform.rotation * FFMatrix3X3.ScaleBy(points[i - 1], transform.lossyScale));  // if we less than or equal to than halfway through line
+            var distOnLineBetweenPoints = distanceAlongPath - linearDistanceAlongPath[i - 1];
+            float lengthBetweenPoints = (linearDistanceAlongPath[i] - linearDistanceAlongPath[i - 1]);
+            
+            vecToNextPoint = distOnLineBetweenPoints - lengthBetweenPoints;
+            indexOfNextPt = i % points.Length;
+            vecToPrevPoint = distOnLineBetweenPoints;
+            indexofPrevPoint = i - 1;
+            return;
         }
-        Debug.LogError("Error, Path failed to setup");
-        return new FFVector3(0, 0, 0);
-    }
 
+        Debug.LogError("Error, Path failed to setup");
+        indexofPrevPoint = -1;
+        vecToPrevPoint = 0.0f;
+        indexOfNextPt = -1;
+        vecToNextPoint = 0.0f;
+    }
     /// <summary>
     /// returns the next point in the Path
     /// </summary>
-    public Vector3 NextPoint(float distanceAlongPath, out int indexNextPoint)
+    public Vector3 NextPoint(float distanceAlongPath, out int indexOfNextPt)
     {
         float distmod = distanceAlongPath % PathLength;
         float distNegEqualZero = (distmod + PathLength) % PathLength;
@@ -794,12 +856,7 @@ public class FFPath : MonoBehaviour
             distanceAlongPath = distNegEqualZero;
         else   // given positive distance
             distanceAlongPath = distPos;
-
-        Vector3 pos; // TODO: not sure if this is an edge case or not
-        if (transform != null) { pos = transform.position; }
-        else { pos = new Vector3(0, 0, 0); }
-
-
+        
         if ((!DynamicPath && IsValidPath()) || (SetupPointData() && IsValidPath()))
         {
             int i = 0;
@@ -830,12 +887,12 @@ public class FFPath : MonoBehaviour
 
                 middle = (first + last) / 2;
             }
-            indexNextPoint = i % points.Length;
-            return transform.TransformPoint(points[indexNextPoint]);
+            indexOfNextPt = i % points.Length;
+            return transform.TransformPoint(points[indexOfNextPt]);
         }
 
         Debug.LogError("Error, Path failed to setup");
-        indexNextPoint = -1;
+        indexOfNextPt = -1;
         return new FFVector3(0, 0, 0);
     }
     
@@ -843,7 +900,7 @@ public class FFPath : MonoBehaviour
     /// Returns the previous point on the path relative to the 
     /// given distance along the path
     /// </summary>
-    public Vector3 PrevPoint(float distanceAlongPath)
+    public Vector3 PrevPoint(float distanceAlongPath, out int indexOfNextPt)
     {
         float distmod = distanceAlongPath % PathLength;
         float distNegEqualZero = (distmod + PathLength) % PathLength;
@@ -853,11 +910,7 @@ public class FFPath : MonoBehaviour
             distanceAlongPath = distNegEqualZero;
         else   // given positive distance
             distanceAlongPath = distPos;
-
-        Vector3 pos; // TODO: not sure if this is an edge case or not
-        if (transform != null) { pos = transform.position; }
-        else { pos = new Vector3(0, 0, 0); }
-
+        
         if ((!DynamicPath && IsValidPath()) || (SetupPointData() && IsValidPath()))
         {
             int i = 0;
@@ -888,10 +941,12 @@ public class FFPath : MonoBehaviour
 
                 middle = (first + last) / 2;
             }
-            return pos + (transform.rotation * FFMatrix3X3.ScaleBy(points[i - 1], transform.lossyScale));
+            indexOfNextPt = i -1;
+            return transform.TransformPoint(points[indexOfNextPt]);
         }
 
         Debug.LogError("Error, Path failed to setup");
+        indexOfNextPt = -1;
         return new FFVector3(0, 0, 0);
     }
 
@@ -969,7 +1024,7 @@ public class FFPath : MonoBehaviour
         n1 = p1;
         mu = 0;
     }
-    private void GetData(float dist, out float mu, out FFVector3 n1, out FFVector3 n2, out FFVector3 p1, out FFVector3 p2)
+    private void GetData(float dist, out float mu, out FFVector3 P0, out FFVector3 P1, out FFVector3 P2, out FFVector3 P3)
     {
         dist = Mathf.Abs(dist);
         if (points.Length > 1)
@@ -1004,8 +1059,6 @@ public class FFPath : MonoBehaviour
             }
 
 
-
-
             if (Circuit) // line loops back to first point from the last point
             {
                 int n2Index = i - 2 < 0 ? points.Length - 1 : i - 2;
@@ -1013,21 +1066,21 @@ public class FFPath : MonoBehaviour
                 int p1Index = i % points.Length;
                 int p2Index = (i + 1) % points.Length;
 
-                n2.x = points[n2Index].x;
-                n2.y = points[n2Index].y;
-                n2.z = points[n2Index].z;
+                P0.x = points[n2Index].x;
+                P0.y = points[n2Index].y;
+                P0.z = points[n2Index].z;
 
-                n1.x = points[n1Index].x;
-                n1.y = points[n1Index].y;
-                n1.z = points[n1Index].z;
+                P1.x = points[n1Index].x;
+                P1.y = points[n1Index].y;
+                P1.z = points[n1Index].z;
 
-                p1.x = points[p1Index].x;
-                p1.y = points[p1Index].y;
-                p1.z = points[p1Index].z;
+                P2.x = points[p1Index].x;
+                P2.y = points[p1Index].y;
+                P2.z = points[p1Index].z;
 
-                p2.x = points[p2Index].x;
-                p2.y = points[p2Index].y;
-                p2.z = points[p2Index].z;
+                P3.x = points[p2Index].x;
+                P3.y = points[p2Index].y;
+                P3.z = points[p2Index].z;
 
 
                 mu = (dist - linearDistanceAlongPath[i - 1]) // dist's length into Interval of points
@@ -1042,21 +1095,21 @@ public class FFPath : MonoBehaviour
                 int p1Index = i;
                 int p2Index = (i + 1) % points.Length;
 
-                n2.x = points[n2Index].x;
-                n2.y = points[n2Index].y;
-                n2.z = points[n2Index].z;
+                P0.x = points[n2Index].x;
+                P0.y = points[n2Index].y;
+                P0.z = points[n2Index].z;
 
-                n1.x = points[n1Index].x;
-                n1.y = points[n1Index].y;
-                n1.z = points[n1Index].z;
+                P1.x = points[n1Index].x;
+                P1.y = points[n1Index].y;
+                P1.z = points[n1Index].z;
 
-                p1.x = points[p1Index].x;
-                p1.y = points[p1Index].y;
-                p1.z = points[p1Index].z;
+                P2.x = points[p1Index].x;
+                P2.y = points[p1Index].y;
+                P2.z = points[p1Index].z;
 
-                p2.x = points[p2Index].x;
-                p2.y = points[p2Index].y;
-                p2.z = points[p2Index].z;
+                P3.x = points[p2Index].x;
+                P3.y = points[p2Index].y;
+                P3.z = points[p2Index].z;
 
 
                 float lengthBetweenPoints = linearDistanceAlongPath[i] - linearDistanceAlongPath[i - 1];
@@ -1074,10 +1127,10 @@ public class FFPath : MonoBehaviour
             }
         }
 
-        p1.x = -0.1f;
-        p1.y = -0.1f;
-        p1.z = -0.1f;
-        n1 = n2 = p2 = p1;
+        P2.x = -0.1f;
+        P2.y = -0.1f;
+        P2.z = -0.1f;
+        P1 = P0 = P3 = P2;
         mu = 0;
     }
         
@@ -1113,32 +1166,32 @@ public class FFPath : MonoBehaviour
     private Vector3 InterpolateCatmullRomPositionAlongPath(float dist)
     {
         float mu;
-        FFVector3 n2, n1, p1, p2;
-        GetData(dist, out mu, out n1, out n2, out p1, out p2);
+        FFVector3 PT0, PT1, PT2, PT3;
+        GetData(dist, out mu, out PT0, out PT1, out PT2, out PT3);
         //PrintData(dist, mu, n1, n2, p1, p2);
 
         //Catmull-Rom Splines
-#region Catmull-Rom Splines
+        #region Catmull-Rom Splines
 
         FFVector3 a0, a1, a2, a3;
         float mu2;
 
         mu2 = mu * mu;
-        a0.x = (-0.5f * n2.x) + (1.5f * n1.x) + (-1.5f * p1.x) + (0.5f * p2.x);
-        a0.y = (-0.5f * n2.y) + (1.5f * n1.y) + (-1.5f * p1.y) + (0.5f * p2.y);
-        a0.z = (-0.5f * n2.z) + (1.5f * n1.z) + (-1.5f * p1.z) + (0.5f * p2.z);
+        a0.x = (-0.5f * PT0.x) + (1.5f * PT1.x) + (-1.5f * PT2.x) + (0.5f * PT3.x);
+        a0.y = (-0.5f * PT0.y) + (1.5f * PT1.y) + (-1.5f * PT2.y) + (0.5f * PT3.y);
+        a0.z = (-0.5f * PT0.z) + (1.5f * PT1.z) + (-1.5f * PT2.z) + (0.5f * PT3.z);
 
-        a1.x = (n2.x) + (-2.5f * n1.x) + (2.0f * p1.x) + (-0.5f * p2.x);
-        a1.y = (n2.y) + (-2.5f * n1.y) + (2.0f * p1.y) + (-0.5f * p2.y);
-        a1.z = (n2.z) + (-2.5f * n1.z) + (2.0f * p1.z) + (-0.5f * p2.z);
+        a1.x = (PT0.x) + (-2.5f * PT1.x) + (2.0f * PT2.x) + (-0.5f * PT3.x);
+        a1.y = (PT0.y) + (-2.5f * PT1.y) + (2.0f * PT2.y) + (-0.5f * PT3.y);
+        a1.z = (PT0.z) + (-2.5f * PT1.z) + (2.0f * PT2.z) + (-0.5f * PT3.z);
 
-        a2.x = (-0.5f * n2.x) + (0.5f * p1.x);
-        a2.y = (-0.5f * n2.y) + (0.5f * p1.y);
-        a2.z = (-0.5f * n2.z) + (0.5f * p1.z);
+        a2.x = (-0.5f * PT0.x) + (0.5f * PT2.x);
+        a2.y = (-0.5f * PT0.y) + (0.5f * PT2.y);
+        a2.z = (-0.5f * PT0.z) + (0.5f * PT2.z);
 
-        a3.x = n1.x;
-        a3.y = n1.y;
-        a3.z = n1.z;
+        a3.x = PT1.x;
+        a3.y = PT1.y;
+        a3.z = PT1.z;
 
         return new Vector3((a0.x * mu * mu2) + (a1.x * mu2) + (a2.x * mu) + (a3.x),
                             (a0.y * mu * mu2) + (a1.y * mu2) + (a2.y * mu) + (a3.y),
@@ -1181,8 +1234,8 @@ public class FFPath : MonoBehaviour
     private Vector3 InterpolateCatmullRomSmoothPositionAlongPath(float dist)
     {
         float mu;
-        FFVector3 n2, n1, p1, p2;
-        GetData(dist, out mu, out n1, out n2, out p1, out p2);
+        FFVector3 PT0, PT1, PT2, PT3;
+        GetData(dist, out mu, out PT0, out PT1, out PT2, out PT3);
 
         mu = -(mu * mu) * (mu - 1.5f) * 2;
         //PrintData(dist, mu, n1, n2, p1, p2);
@@ -1194,21 +1247,21 @@ public class FFPath : MonoBehaviour
         float mu2;
 
         mu2 = mu * mu;
-        a0.x = (-0.5f * n2.x) + (1.5f * n1.x) + (-1.5f * p1.x) + (0.5f * p2.x);
-        a0.y = (-0.5f * n2.y) + (1.5f * n1.y) + (-1.5f * p1.y) + (0.5f * p2.y);
-        a0.z = (-0.5f * n2.z) + (1.5f * n1.z) + (-1.5f * p1.z) + (0.5f * p2.z);
+        a0.x = (-0.5f * PT0.x) + (1.5f * PT1.x) + (-1.5f * PT2.x) + (0.5f * PT3.x);
+        a0.y = (-0.5f * PT0.y) + (1.5f * PT1.y) + (-1.5f * PT2.y) + (0.5f * PT3.y);
+        a0.z = (-0.5f * PT0.z) + (1.5f * PT1.z) + (-1.5f * PT2.z) + (0.5f * PT3.z);
 
-        a1.x = (n2.x) + (-2.5f * n1.x) + (2.0f * p1.x) + (-0.5f * p2.x);
-        a1.y = (n2.y) + (-2.5f * n1.y) + (2.0f * p1.y) + (-0.5f * p2.y);
-        a1.z = (n2.z) + (-2.5f * n1.z) + (2.0f * p1.z) + (-0.5f * p2.z);
+        a1.x = (PT0.x) + (-2.5f * PT1.x) + (2.0f * PT2.x) + (-0.5f * PT3.x);
+        a1.y = (PT0.y) + (-2.5f * PT1.y) + (2.0f * PT2.y) + (-0.5f * PT3.y);
+        a1.z = (PT0.z) + (-2.5f * PT1.z) + (2.0f * PT2.z) + (-0.5f * PT3.z);
 
-        a2.x = (-0.5f * n2.x) + (0.5f * p1.x);
-        a2.y = (-0.5f * n2.y) + (0.5f * p1.y);
-        a2.z = (-0.5f * n2.z) + (0.5f * p1.z);
+        a2.x = (-0.5f * PT0.x) + (0.5f * PT2.x);
+        a2.y = (-0.5f * PT0.y) + (0.5f * PT2.y);
+        a2.z = (-0.5f * PT0.z) + (0.5f * PT2.z);
 
-        a3.x = n1.x;
-        a3.y = n1.y;
-        a3.z = n1.z;
+        a3.x = PT1.x;
+        a3.y = PT1.y;
+        a3.z = PT1.z;
 
         return new Vector3((a0.x * mu * mu2) + (a1.x * mu2) + (a2.x * mu) + (a3.x),
                             (a0.y * mu * mu2) + (a1.y * mu2) + (a2.y * mu) + (a3.y),

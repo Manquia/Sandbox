@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
+// Needs to be updated to the new event system signature
+/*
+ *
 public class Worm : FFComponent
 {
     #region Properties
@@ -992,3 +995,5 @@ public class Worm : FFComponent
     }
     #endregion helpers
 }
+
+*/
