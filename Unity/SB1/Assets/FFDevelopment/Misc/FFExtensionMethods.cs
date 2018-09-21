@@ -119,5 +119,10 @@ static class FFExtensionMethods
         int randomIndex = UnityEngine.Random.Range(0, objs.Length);
         return objs[randomIndex];
     }
+
+    public static Vector3 Abs(this Vector3 v)
+    {
+        return new Vector3(Mathf.Abs(v.x), Mathf.Abs(v.y), Mathf.Abs(v.z));
+    }
     #endregion
 }
