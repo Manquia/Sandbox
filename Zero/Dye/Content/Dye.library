@@ -1,0 +1,8 @@
+[Version:1]
+ContentLibrary 
+{
+	var Name = "Dye"
+	var LibraryId = 0x5bb9b03d73a81c3a
+	var SourceControlType = ""
+	var ReadOnly = false
+}

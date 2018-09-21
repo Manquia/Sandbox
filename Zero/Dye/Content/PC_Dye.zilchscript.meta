@@ -1,0 +1,9 @@
+[Version:1]
+TextContent 
+{
+	ZilchScriptBuilder 
+	{
+		var Name = "PC_Dye"
+		var ResourceId = 0x5bb9b523f57602a5
+	}
+}
