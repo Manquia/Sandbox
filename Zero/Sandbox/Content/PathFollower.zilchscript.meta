@@ -1,0 +1,9 @@
+[Version:1]
+TextContent 
+{
+	ZilchScriptBuilder 
+	{
+		var Name = "PathFollower"
+		var ResourceId = 0x5b7dd3ffae384978
+	}
+}

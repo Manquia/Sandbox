@@ -175,9 +175,9 @@ Level
 		var Name = "EditorCamera"
 		Transform 
 		{
-			var Translation = Real3{-2.03070164, 11.865221, 25.8017521}
+			var Translation = Real3{2.59566259, 5.64620924, 0.0951842368}
 			var Scale = Real3{1, 1, 1}
-			var Rotation = Quaternion{-0.154591784, -0.0387882628, -0.00607411005, 0.987197995}
+			var Rotation = Quaternion{-0.00816781539, 0.693984926, 0.00787378754, 0.719900191}
 		}
 		CameraViewport 
 		{
@@ -234,10 +234,10 @@ Level
 		{
 			var ControlMode = ControlMode.Orbit
 			var Previous3DMode = ControlMode.Orbit
-			var LookDistance = 27.1828117
-			var VerticalAngle = 0.310670018
-			var HorizontalAngle = 0.0785421133
-			var LookTarget = Real3{0, 3.55552673, 0}
+			var LookDistance = 2.59807611
+			var VerticalAngle = 0.0226905476
+			var HorizontalAngle = -1.53414226
+			var LookTarget = Real3{0, 5.58726263, 0}
 			var MoveSensitivity = 1
 		}
 	}
@@ -319,32 +319,11 @@ Level
 	Cog [ContextId:6]
 	{
 		var Name = "Cube"
-		Transform 
+		RotorTest 
 		{
-			var Translation = Real3{0, 0, 0}
-			var Scale = Real3{20, 1, 20}
-			var Rotation = Quaternion{0, 0, 0, 1}
-		}
-		Model 
-		{
-			var Visible = true
-			var ViewCulling = true
-			var VisibilityEvents = true
-			var OverrideBoundingBox = false
-			var LocalAabbCenter = Real3{0, 0, 0}
-			var LocalAabbHalfExtents = Real3{1, 1, 1}
-			var GroupSortValue = 0
-			var Material = "583afb5e7bf75e18:ZeroMaterial"
-			var Mesh = "4de0354322b345ae:Cube"
-		}
-		BoxCollider 
-		{
-			var Ghost = false
-			var SendsEvents = true
-			var Material = "4de020863e872da8:DefaultPhysicsMaterial"
-			var CollisionGroup = "4e740859314e5515:DefaultGroup"
-			var Offset = Real3{0, 0, 0}
-			var HalfSize = Real3{0.5, 0.5, 0.5}
+			var P0 = Real3{0, 0, 0}
+			var V0 = Real3{1, 1, 0}
+			var V1 = Real3{1, -1, 0}
 		}
 	}
 	Cog [ContextId:7]
@@ -431,6 +410,204 @@ Level
 			var CollisionGroup = "4e740859314e5515:DefaultGroup"
 			var Offset = Real3{0, 0, 0}
 			var HalfSize = Real3{0.5, 0.5, 0.5}
+		}
+	}
+	Cog [ContextId:9]
+	{
+		var Name = "Transform"
+		Transform 
+		{
+			var Translation = Real3{0, 3.55552673, 0}
+			var Scale = Real3{1, 1, 1}
+			var Rotation = Quaternion{0, 0, 0, 1}
+		}
+		HierarchySpline 
+		{
+			var Closed = false
+			var SplineType = SplineType.CatmullRom
+			var Error = 0.00999999978
+			var DebugDrawSpline = true
+			var SplineColor = Real4{0, 0, 0, 1}
+		}
+	}
+	Cog [ContextId:10]
+	{
+		var Name = "Cube"
+		Transform 
+		{
+			var Translation = Real3{0, 3.55552673, 0}
+			var Scale = Real3{1, 1, 1}
+			var Rotation = Quaternion{0, 0, 0, 1}
+		}
+		Model 
+		{
+			var Visible = true
+			var ViewCulling = true
+			var VisibilityEvents = true
+			var OverrideBoundingBox = false
+			var LocalAabbCenter = Real3{0, 0, 0}
+			var LocalAabbHalfExtents = Real3{1, 1, 1}
+			var GroupSortValue = 0
+			var Material = "583afb5e7bf75e18:ZeroMaterial"
+			var Mesh = "4de0354322b345ae:Cube"
+		}
+		RigidBody 
+		{
+			var Velocity = Real3{0, 0, 0}
+			var AngularVelocity = Real3{0, 0, 0}
+			var DynamicState = RigidBodyDynamicState.Dynamic
+			var AllowSleep = true
+			var Asleep = false
+			var RotationLocked = false
+			var Mode2D = Mode2DStates.InheritFromSpace
+		}
+		BoxCollider 
+		{
+			var Ghost = false
+			var SendsEvents = true
+			var Material = "4de020863e872da8:DefaultPhysicsMaterial"
+			var CollisionGroup = "4e740859314e5515:DefaultGroup"
+			var Offset = Real3{0, 0, 0}
+			var HalfSize = Real3{0.5, 0.5, 0.5}
+		}
+		PathFollower 
+		{
+			var Spline = CogPath
+			{
+				var Path = ":/UniquelyNamedPath"
+				var ErrorOnResolveToNull = false
+				var ErrorOnPathCantCompute = false
+				var ErrorOnDirectLinkFail = false
+				var UpdateCogOnPathChange = true
+				var UpdatePathOnCogChange = true
+				var UpdateCogOnInitialize = true
+				var ResolvedNullErrorOccurred = false
+				var Cog = 11
+				var PathPreference0 = CogPathPreference.CogRelative
+				var PathPreference1 = CogPathPreference.SpaceRelative
+				var PathPreference2 = CogPathPreference.Absolute
+			}
+			var Speed = 5
+		}
+	}
+	Cog [ContextId:11]
+	{
+		var Name = "UniquelyNamedPath"
+		Transform 
+		{
+			var Translation = Real3{0, 3.55552673, 0}
+			var Scale = Real3{1, 1, 1}
+			var Rotation = Quaternion{0, 0, 0, 1}
+		}
+		HierarchySpline 
+		{
+			var Closed = false
+			var SplineType = SplineType.CatmullRom
+			var Error = 0.00999999978
+			var DebugDrawSpline = true
+			var SplineColor = Real4{0, 0, 0, 1}
+		}
+		Hierarchy 
+		{
+			Cog [Id:0x5b7dddc36983c447][ContextId:12]
+			{
+				var Name = "Transform"
+				Transform 
+				{
+					var Translation = Real3{3.61122513, 0, 0}
+					var Scale = Real3{1, 1, 1}
+					var Rotation = Quaternion{0, 0, 0, 1}
+				}
+			}
+			Cog [Id:0x5b7dddc66bc3551d][ContextId:13]
+			{
+				var Name = "Transform"
+				Transform 
+				{
+					var Translation = Real3{-2.97367668, 0, 0}
+					var Scale = Real3{1, 1, 1}
+					var Rotation = Quaternion{0, 0, 0, 1}
+				}
+			}
+			Cog [Id:0x5b7dddc76abd9015][ContextId:14]
+			{
+				var Name = "Transform"
+				Transform 
+				{
+					var Translation = Real3{-10.0877438, 0, 0}
+					var Scale = Real3{1, 1, 1}
+					var Rotation = Quaternion{0, 0, 0, 1}
+				}
+			}
+			Cog [Id:0x5b7dddc86a712e76][ContextId:15]
+			{
+				var Name = "Transform"
+				Transform 
+				{
+					var Translation = Real3{-17.3199711, 0, 0}
+					var Scale = Real3{1, 1, 1}
+					var Rotation = Quaternion{0, 0, 0, 1}
+				}
+			}
+			Cog [Id:0x5b7dddc96d5bba59][ContextId:16]
+			{
+				var Name = "Transform"
+				Transform 
+				{
+					var Translation = Real3{-17.3199711, 0, -11.0913849}
+					var Scale = Real3{1, 1, 1}
+					var Rotation = Quaternion{0, 0, 0, 1}
+				}
+			}
+			Cog [Id:0x5b7dddc96c043e27][ContextId:17]
+			{
+				var Name = "Transform"
+				Transform 
+				{
+					var Translation = Real3{-10.5591755, 0, -11.0913849}
+					var Scale = Real3{1, 1, 1}
+					var Rotation = Quaternion{0, 0, 0, 1}
+				}
+			}
+			Cog [Id:0x5b7dddca6fb9610d][ContextId:18]
+			{
+				var Name = "Transform"
+				Transform 
+				{
+					var Translation = Real3{-1.91539001, 0, -11.0913849}
+					var Scale = Real3{1, 1, 1}
+					var Rotation = Quaternion{0, 0, 0, 1}
+				}
+			}
+			Cog [Id:0x5b7dddcb6f56e1be][ContextId:19]
+			{
+				var Name = "Transform"
+				Transform 
+				{
+					var Translation = Real3{5.99205685, 0, -11.0913849}
+					var Scale = Real3{1, 1, 1}
+					var Rotation = Quaternion{0, 0, 0, 1}
+				}
+			}
+			Cog [Id:0x5b7dddcc6ef8652b][ContextId:20]
+			{
+				var Name = "Transform"
+				Transform 
+				{
+					var Translation = Real3{5.99205685, 0, -6.98008728}
+					var Scale = Real3{1, 1, 1}
+					var Rotation = Quaternion{0, 0, 0, 1}
+				}
+			}
+		}
+	}
+	Cog [InheritId:"5b740d8cd226c998:ColorSphere"][ContextId:21]
+	{
+		Transform 
+		{
+			var Translation = Real3{0, 5.58726263, 0}
+			var Rotation = Quaternion{0, 0, 0, 1}
+			var Scale = Real3{1, 1, 1}
 		}
 	}
 }

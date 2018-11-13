@@ -1,0 +1,25 @@
+class PathFollower : ZilchComponent
+{
+  function Initialize(init : CogInitializer)
+  {
+    Zero.Connect(this.Space, Events.LogicUpdate, this.OnLogicUpdate);
+  }
+  
+  [Property] var Spline : CogPath = CogPath();
+  [Property] var Speed : Real = 5;
+  var DistAlongPath : Real = 0;
+  function OnLogicUpdate(event : UpdateEvent)
+  {
+    // increase sample distance along the path
+    this.DistAlongPath += event.Dt * this.Speed;
+    
+    // sample Heirarchical Spline
+    var sample0 = this.Spline.Cog.HierarchySpline.Spline.SampleDistance(this.DistAlongPath);
+    var sample1 = this.Spline.Cog.HierarchySpline.Spline.SampleDistance(this.DistAlongPath + 0.1);    
+    var forwardVec = Math.Normalize(sample0.WorldPoint - sample1.WorldPoint);
+    
+    // set position to position and look in the direction of forward
+    this.Owner.Transform.WorldTranslation = sample0.WorldPoint;
+    this.Owner.Transform.WorldRotation = Math.ToQuaternion(forwardVec, Real3.YAxis);
+  }
+}

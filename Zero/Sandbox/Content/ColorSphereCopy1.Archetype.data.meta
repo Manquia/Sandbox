@@ -1,0 +1,11 @@
+[Version:1]
+DataContent 
+{
+	DataBuilder 
+	{
+		var Name = "ColorSphereCopy1"
+		var ResourceId = 0x5b740f3de896b467
+		var LoaderType = "Cog"
+		var Version = 0
+	}
+}

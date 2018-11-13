@@ -28,8 +28,8 @@ Cog
 		var ExperimentalBranchName = ""
 		var MajorVersion = 1
 		var MinorVersion = 4
-		var PatchVersion = 0
-		var RevisionId = 1220
-		var ShortChangeSet = "42f1d45a539b"
+		var PatchVersion = 2
+		var RevisionId = 1273
+		var ShortChangeSet = "c041c4b11edb"
 	}
 }

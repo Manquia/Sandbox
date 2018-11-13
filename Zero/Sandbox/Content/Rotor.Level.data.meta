@@ -1,0 +1,11 @@
+[Version:1]
+DataContent 
+{
+	DataBuilder 
+	{
+		var Name = "Rotor"
+		var ResourceId = 0x5b740e6dcbfd1121
+		var LoaderType = "Level"
+		var Version = 0
+	}
+}

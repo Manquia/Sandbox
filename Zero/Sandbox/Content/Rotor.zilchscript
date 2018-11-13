@@ -1,0 +1,94 @@
+class RotorTest : ZilchComponent
+{
+  function Initialize(init : CogInitializer)
+  {
+    
+    Zero.Connect(this.Space, Events.LogicUpdate, this.OnLogicUpdate);
+    
+    this.Spheres.Add(this.Space.Create(this.SphereArch).Transform);
+    this.Spheres.Add(this.Space.Create(this.SphereArch).Transform);
+    this.Spheres.Add(this.Space.Create(this.SphereArch).Transform);
+    
+    
+    
+    foreach(var s in this.Spheres)
+    {
+      s.Owner.Model.Material = s.Owner.Model.Material.RuntimeClone();
+      this.Boxes.Add(this.Space.Create(Archetype.ColorBox).Transform);
+      this.Boxes.Add(this.Space.Create(Archetype.ColorBox).Transform);
+    }
+    
+    foreach(var b in this.Boxes)
+    {
+      b.Owner.Model.Material = b.Owner.Model.Material.RuntimeClone();
+    }
+  }
+  
+  
+  [Property] var P0 : Real3 = Real3(0,0,0);
+  [Property] var V0 : Real3 = Real3(1,1,0);
+  [Property] var V1 : Real3 = Real3(1,-1,0);
+  
+  var SphereArch : Archetype = Archetype.ColorSphere;
+  var Spheres : Array[Transform] =  Array[Transform]();
+  var Boxes : Array[Transform] = Array[Transform]();
+
+  function OnLogicUpdate(event : UpdateEvent)
+  {
+      var green = Real4(0,1,0,1);
+      var red = Real4(1,0,0,1);
+      var blue = Real4(0,0,1,0);
+      
+      this.V0 = Math.Normalize(this.V0);
+      this.V1 = Math.Normalize(this.V1);
+      
+      
+      var origin = Real3(0,1,0);
+      
+      var p0Ref0 = Math.ReflectAcrossPlane(this.P0, this.V0);
+      var p0Ref1 = Math.ReflectAcrossPlane(p0Ref0, this.V1);
+      
+      this.PlaceSphereWithColor(this.P0, 0, red);
+      this.PlaceSphereWithColor(p0Ref0, 1, green);
+      this.PlaceSphereWithColor(p0Ref1, 2, blue);
+      
+      this.DrawLineBetweenSphere(0,1, red);
+      this.DrawLineBetweenSphere(1,2, green);
+      
+      this.Spin(event.Dt);
+  }
+  
+  
+  function PlaceSphereWithColor(pos : Real3, ind : Integer, col : Real4)
+  {
+    var sphere = this.Spheres[ind];
+    
+    sphere.WorldTranslation = pos;
+    sphere.Owner.Model.Material.AlbedoValue.AlbedoValue = col;
+  }
+  
+  function DrawLineBetweenSphere(ind0 : Integer, ind1 : Integer, col : Real4)
+  {
+    var from = this.Spheres[ind0].WorldTranslation;
+    var to = this.Spheres[ind1].WorldTranslation;
+    var box = this.Boxes[ind0];
+    
+    box.WorldTranslation = from + (to - from)/2;
+    box.WorldRotation = Math.ToQuaternion(to - from, Real3(0,1,0));
+    box.Scale = Real3(0.1,0.1, Math.Length(from - to));
+    box.Owner.Model.Material.AlbedoValue.AlbedoValue = col;
+  }
+  
+  [Property]var SpinDelta : Real3 = Real3(0,0,0);
+  function Spin(dt : Real)
+  {
+    this.V1 = Math.Multiply(Math.ToQuaternion(this.SpinDelta * dt), this.V1);
+  }
+}
+
+
+class Rotor
+{
+  
+  
+}
