@@ -9,5 +9,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 073b21398394b7a46b21dc257b39f44d, type: 3}
-  m_Name: Game
+  m_Name: BasicGameSettings
   m_EditorClassIdentifier: 
+  prefabs:
+    VisualDot: {fileID: 1054313257108690, guid: 3818c72f93354d949aa3e0d0affe9f6c,
+      type: 2}
+    VisualLine: {fileID: 0}
+    LevelRoot: {fileID: 1993884469977990, guid: bea53418b6abb1d48a0a6edb9cd31431,
+      type: 2}
