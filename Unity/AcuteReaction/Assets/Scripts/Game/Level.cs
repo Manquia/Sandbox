@@ -10,6 +10,7 @@ public class Level : MonoBehaviour
     {
         internal Transform LevelRoot;
         internal Dictionary<int, Annal<Touch>> Touches;
+        
     }
     internal Instance instance;
 
@@ -62,18 +63,13 @@ public class Level : MonoBehaviour
 
     }
 
-    private void DrawLines(float dt)
-    {
-
-    }
-
     void UpdateInput()
     {
         // Remove any touches no longer in use
-        foreach(var kvp in instance.Touches)
+        foreach (var kvp in instance.Touches)
         {
             var phase = kvp.Value.Recall(0).phase;
-            if(phase == TouchPhase.Canceled || phase == TouchPhase.Ended)
+            if (phase == TouchPhase.Canceled || phase == TouchPhase.Ended)
             {
                 instance.Touches.Remove(kvp.Key);
             }
@@ -88,7 +84,7 @@ public class Level : MonoBehaviour
                 // Construct a ray from the current touch coordinates
                 var touch = Input.GetTouch(i);
 
-                if(instance.Touches.ContainsKey(touch.fingerId))
+                if (instance.Touches.ContainsKey(touch.fingerId))
                 {
                     var record = instance.Touches[touch.fingerId];
                     record.Record(touch);
@@ -101,6 +97,16 @@ public class Level : MonoBehaviour
                 instance.Touches[touchIndex].Record(touch);
                 ++touchIndex;
             }
+        }
+    }
+
+    private void DrawLines(float dt)
+    {
+        var unclaimedTouches = new List<Touch>(4);
+        // find new touches not claimed
+        foreach(var kvp in instance.Touches)
+        {
+
         }
     }
 
