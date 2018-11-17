@@ -13,6 +13,29 @@ public class Annal<Type>
     public delegate Type constructor();
     private Type[] data;
     private int[] frameMarks;
+
+    // The Time.frameCount that we last recorded on
+    public int lastFrameRecorded { get { return frameMarks[index]; } }
+    // Annal changed this frame
+    public bool changed { get {  return Time.frameCount == frameMarks[index]; } }
+    // The number of records recorded this frame
+    public int recordCount
+    {
+        get
+        {
+            int frameCount = Time.frameCount;
+            int recordIndex = index;
+            int recordCount = 0;
+
+            while(frameMarks[recordIndex] == frameCount && recordCount < size)
+            {
+                ++recordCount;
+                recordIndex = (recordIndex - 1) < 0 ? size - 1 : recordIndex - 1;
+            }
+
+            return recordCount;
+        }
+    }
     // Index of the most recent record
     public int index { get; private set; }
     // Total Records in the Annal
@@ -42,16 +65,16 @@ public class Annal<Type>
     }
     public void Record(Type annal)
     {
-        index = ++index % size;
+        index = (index + 1) % size;
         data[index] = annal;
         frameMarks[index] = Time.frameCount;
     }
 
-    public int RecallFrame(uint recallOffset)
+    public int RecallFrame(int recallOffset)
     {
         return frameMarks[(size + index - recallOffset) % size];
     }
-    public Type Recall(uint recordOffset)
+    public Type Recall(int recordOffset)
     {
         return data[(size + index - recordOffset) % size];
     }
@@ -64,7 +87,7 @@ public class Annal<Type>
     }
     public bool Contains(System.Predicate<Type> pred)
     {
-        for (uint i = 0; i < size; ++i)
+        for (int i = 0; i < size; ++i)
         {
             if (pred(Recall(i)))
                 return true;

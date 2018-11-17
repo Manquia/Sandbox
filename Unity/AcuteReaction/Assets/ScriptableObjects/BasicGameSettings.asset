@@ -12,8 +12,7 @@ MonoBehaviour:
   m_Name: BasicGameSettings
   m_EditorClassIdentifier: 
   prefabs:
-    VisualDot: {fileID: 1054313257108690, guid: 3818c72f93354d949aa3e0d0affe9f6c,
-      type: 2}
-    VisualLine: {fileID: 0}
-    LevelRoot: {fileID: 1993884469977990, guid: bea53418b6abb1d48a0a6edb9cd31431,
+    dot: {fileID: 1054313257108690, guid: 3818c72f93354d949aa3e0d0affe9f6c, type: 2}
+    line: {fileID: 1635056302068602, guid: caa4cf9e1cc65b14ba8a17ed191f4828, type: 2}
+    levelRoot: {fileID: 1993884469977990, guid: bea53418b6abb1d48a0a6edb9cd31431,
       type: 2}

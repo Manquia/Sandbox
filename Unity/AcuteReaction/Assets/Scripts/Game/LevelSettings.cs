@@ -8,9 +8,9 @@ public class LevelSettings : ScriptableObject
     [System.Serializable]
     public struct Prefabs
     {
-        public GameObject VisualDot;
-        public GameObject VisualLine;
-        public GameObject LevelRoot;
+        public GameObject dot;
+        public GameObject line;
+        public GameObject levelRoot;
     }
     public Prefabs prefabs;
 
