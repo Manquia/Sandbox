@@ -16,7 +16,7 @@ public class PlacedLine : MonoBehaviour {
 		
 	}
 
-    internal GameObject[] Setup(Level.SetupInstance instance)
+    internal GameObject[] Setup(Level.LevelInstance instance)
     {
         return null;
     }
