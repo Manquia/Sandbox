@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
+using System;
 
 public class Level : MonoBehaviour
 {
@@ -89,6 +90,7 @@ public class Level : MonoBehaviour
 
     private void Awake()
     {
+        transform.position = Vector3.zero;
         CreateLevel();
     }
 
@@ -102,6 +104,7 @@ public class Level : MonoBehaviour
         // Create dots so that players can see them
         {
             var root = instance.levelRoot;
+            root.position = Vector3.zero;
             var rot = Quaternion.AngleAxis(90.0f, Vector3.right);
 
             const int height = 50; // @ make dynamic?
@@ -130,6 +133,17 @@ public class Level : MonoBehaviour
         
         UpdateInput();
         HandleInput(dt);
+
+        DeveloperCheats();
+    }
+
+    private void DeveloperCheats()
+    {
+#if UNITY_EDITOR
+        if (Input.GetKeyDown(KeyCode.P))
+            UnityEditor.EditorApplication.isPaused = !UnityEditor.EditorApplication.isPaused;
+#endif
+
     }
 
     void UpdateInput()
@@ -203,7 +217,8 @@ public class Level : MonoBehaviour
         // find new touches not claimed
         foreach(var kvp in instance.drawingLines)
         {
-            var annal = kvp.Value.input;
+            var dl = kvp.Value;
+            var annal = dl.input;
 
             // no changes to the touch
             if (annal.changed == false)
@@ -223,17 +238,20 @@ public class Level : MonoBehaviour
                 switch (inputData.phase)
                 {
                     case InputData.Phase.Begin:
-                        BeginUnsetLine(inputId);
+                        MakeUnsetLine(inputId);
+                        BeginUnsetLine(i, dl);
                         break;
                     case InputData.Phase.Update:
-                        MoveUnsetLine(inputId);
+                        MoveUnsetLine(i, dl);
                         break;
                     case InputData.Phase.Ended:
-                        EndUnsetLine(inputId);
+                        MoveUnsetLine(i, dl);
+                        EndUnsetLine(i, dl);
+                        CancelUnsetLine(dl, inputId);
                         i = 0; // Stop processing Input, we are ending the line
                         break;
                     case InputData.Phase.Canceled:
-                        CancelUnsetLine(inputId);
+                        CancelUnsetLine(dl, inputId);
                         i = 0; // Stop processing Input, we are canceling the line
                         break;
                     case InputData.Phase.None:
@@ -265,8 +283,10 @@ public class Level : MonoBehaviour
             CancelUnsetLine(dl, inputId);
         }
     }
+
     void CancelUnsetLine(SetupInstance.DrawingLine dl, int id)
     {
+        Debug.Log("CancelUnsetLine");
         // Record to have the Unset line taken out of our records at the begining of next update
         InputData inData = new InputData(Vector2.zero, InputData.Phase.Canceled, id);
         dl.input.Record(inData);
@@ -277,19 +297,14 @@ public class Level : MonoBehaviour
         }
     }
 
-    void EndUnsetLine(int inputId)
+    // Place line if possible
+    void EndUnsetLine(int recalloffset, SetupInstance.DrawingLine dl)
     {
-        PlaceUnsetLine(inputId);
-        CancelUnsetLine(inputId);
-    }
-
-    void PlaceUnsetLine(int inputId)
-    {
-        GameObject unsetLine = SnapUnsetLine(inputId);
+        Debug.Log("EndUnsetLine");
+        GameObject unsetLine = dl.go;
 
         // Setup line
         GameObject[] placedLines = unsetLine.GetComponent<PlacedLine>().Setup(instance);
-
 
         // Record Place History
         LineHistory lh;
@@ -297,27 +312,47 @@ public class Level : MonoBehaviour
         lh.cmd = LineHistory.Command.Place;
         lh.moveDelta = Vector2Int.zero;
         instance.history.Record(lh);
-
-        // Destroy the Unset Line
-        CancelUnsetLine(inputId);
-    }
-    void MoveUnsetLine(int inputId)
-    {
-        SnapUnsetLine(inputId);
     }
 
-    void BeginUnsetLine(int inputId)
+    void MoveUnsetLine(int recalloffset, SetupInstance.DrawingLine dl)
     {
-        GameObject line = MakeUnsetLine(inputId);
-        SnapUnsetLine(inputId);
+        Debug.Log("MoveUnsetLine");
+        GameObject line = dl.go;
+        var rend = line.GetComponent<LineRenderer>();
+        var ptCount = rend.positionCount;
 
+        rend.SetPosition(ptCount - 1, Camera.main.ScreenToWorldPoint(dl.input.Recall(recalloffset).pos));
+
+        SnapUnsetLine(line);
     }
 
-    GameObject SnapUnsetLine(int inputId)
+    void BeginUnsetLine(int recalloffset, SetupInstance.DrawingLine dl)
     {
-        var unsetLine = GetUnsetLine(inputId);
+        Debug.Log("BeginUnsetLine");
+        GameObject line = dl.go;
+        var rend = line.GetComponent<LineRenderer>();
+        var ptCount = rend.positionCount;
 
+        rend.SetPosition(0, Camera.main.ScreenToWorldPoint(dl.input.Recall(recalloffset).pos));
+        rend.SetPosition(1, Camera.main.ScreenToWorldPoint(dl.input.Recall(recalloffset).pos));
+
+        SnapUnsetLine(line);
+    }
+
+    GameObject SnapUnsetLine(GameObject unsetLine)
+    {
+        var rend = unsetLine.GetComponent<LineRenderer>();
+        int ptCount = rend.positionCount;
+
+        for(int i = 0; i < ptCount; ++i)
+        {
+            rend.SetPosition(i, Snap(rend.GetPosition(i), settings.variables.DrawingLineYOffset));
+        }
         return unsetLine;
+    }
+    static Vector3 Snap(Vector3 vec, float yOffset)
+    {
+        return new Vector3(Mathf.Floor(vec.x + 0.5f), yOffset, Mathf.Floor(vec.z + 0.5f));
     }
 
 

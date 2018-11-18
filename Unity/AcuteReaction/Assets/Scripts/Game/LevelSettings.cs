@@ -15,8 +15,9 @@ public class LevelSettings : ScriptableObject
     public Prefabs prefabs;
 
     [System.Serializable]
-    public struct Variables
+    public class Variables
     {
+        public float DrawingLineYOffset = 0.1f;
     }
     public Variables variables;
 }
