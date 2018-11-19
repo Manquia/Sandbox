@@ -7,7 +7,7 @@ using System;
 
 public class Level : MonoBehaviour
 {
-    public struct LineHistory
+    public struct LineCommand
     {
         internal GameObject[] gos;
         internal Command cmd;
@@ -43,9 +43,9 @@ public class Level : MonoBehaviour
         */
 
         public Vector2Int moveDelta;
-        public static LineHistory ConstructDefault()
+        public static LineCommand ConstructDefault()
         {
-            LineHistory lh;
+            LineCommand lh;
             lh.cmd = Command.None;
             lh.gos = null;
             lh.moveDelta = Vector2Int.zero;
@@ -69,11 +69,10 @@ public class Level : MonoBehaviour
                 return dl;
             }
         }
-        internal Transform levelRoot;
         internal Dictionary<int, DrawingLine> drawingLines = new Dictionary<int, DrawingLine>();
 
         internal Dictionary<int, GameObject> lines      = new Dictionary<int, GameObject>();
-        internal Annal<LineHistory> history             = new Annal<LineHistory>(120, LineHistory.ConstructDefault());
+        internal Annal<LineCommand> history             = new Annal<LineCommand>(120, LineCommand.ConstructDefault());
 
         internal int id = 0;
         internal int GetUniqueLineId()
@@ -89,31 +88,42 @@ public class Level : MonoBehaviour
             [System.Flags]
             public enum Flags
             {
-                // Directional
-                none = 0,
-                up = 1,
-                down = 2,
-                right = 4,
-                left = 8,
+                // Directions
+                None = 0,
 
-                posZ = up,
-                negZ = down,
-                posX = right,
-                negX = left,
+                W = 1,
+                SW = 2,
+                S = 4,
+                SE = 8,
+                E = 16,
+                NE = 32,
+                N = 64,
+                NW = 128,
 
                 // State
                 isStatic = 256,
             }
 
             public Flags flags;
+            public GameObject[] gos;
             public int orderNumber;
         }
 
         internal GridVertex [,]grid;
+
+        private int orderIndex = 0;
+        public int GetOrderindex()
+        {
+            return ++orderIndex;
+        }
     }
 
     internal SetupInstance setupInstance = new SetupInstance();
     internal LevelInstance levelInstance = new LevelInstance();
+
+    public GameObject levelRoot   { get; private set; }
+    public GameObject setupRoot   { get; private set; } 
+    public GameObject runtimeRoot { get; private set; }
 
 
 
@@ -126,17 +136,24 @@ public class Level : MonoBehaviour
     }
 
 
-#region LevelStartup
+    public const float diagonalOffsetDist = 1.41421356237f; // (2)^.5
+    public const float cardinalOffsetDist = 1.0f;
+    public int height = 50; // @ make dynamic?
+    public int width = 50; // @ make dynamic?
+
+    #region LevelStartup
     void CreateLevel()
     {
-        const int height = 50; // @ make dynamic?
-        const int width = 50; // @ make dynamic?
-
         // Create Root of level
-        setupInstance.levelRoot = Instantiate(settings.prefabs.levelRoot).transform;
+        levelRoot = Instantiate(settings.prefabs.levelRoot);
+        setupRoot = Instantiate(settings.prefabs.setupRoot);
+        setupRoot.transform.SetParent(levelRoot.transform);
+        runtimeRoot = Instantiate(settings.prefabs.runtimeRoot);
+        runtimeRoot.transform.SetParent(levelRoot.transform);
+
         // Create dots so that players can see them
         {
-            var root = setupInstance.levelRoot;
+            var root = setupRoot.transform;
             root.position = Vector3.zero;
             var rot = Quaternion.AngleAxis(90.0f, Vector3.right);
 
@@ -341,15 +358,24 @@ public class Level : MonoBehaviour
         Debug.Log("EndUnsetLine");
         GameObject unsetLine = dl.go;
 
+        // validate line
+        {
+            var rend = unsetLine.GetComponent<LineRenderer>();
+            var pt0 = rend.GetPosition(0);
+            var pt1 = rend.GetPosition(1);
+
+            if ((pt0 - pt1).magnitude < 0.001f) // line does not exist
+            {
+                Debug.Log("Drawn line unsetLine was malformed, rejecting Set");
+                return;
+            }
+        }
+
         // Setup line
-        GameObject[] placedLines = unsetLine.GetComponent<PlacedLine>().Setup(levelInstance);
+        LineCommand lc = unsetLine.GetComponent<UnsetLine>().Set(this, LineCommand.Command.Place);
 
         // Record Place History
-        LineHistory lh;
-        lh.gos = placedLines;
-        lh.cmd = LineHistory.Command.Place;
-        lh.moveDelta = Vector2Int.zero;
-        setupInstance.history.Record(lh);
+        setupInstance.history.Record(lc);
     }
 
     void MoveUnsetLine(int recalloffset, SetupInstance.DrawingLine dl)
@@ -415,7 +441,7 @@ public class Level : MonoBehaviour
 
     GameObject MakeUnsetLine(int inputId)
     {
-        var line = Instantiate(settings.prefabs.line);
+        var line = Instantiate(settings.prefabs.unsetLine);
         setupInstance.drawingLines[inputId].go = line;
         return line;
     }

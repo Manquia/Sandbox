@@ -9,8 +9,12 @@ public class LevelSettings : ScriptableObject
     public struct Prefabs
     {
         public GameObject dot;
-        public GameObject line;
+        public GameObject unsetLine;
+        public GameObject setLine;
+
         public GameObject levelRoot;
+        public GameObject setupRoot;
+        public GameObject runtimeRoot;
     }
     public Prefabs prefabs;
 
