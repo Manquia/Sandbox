@@ -1,57 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using System.Collections.Generic;
-using System.Runtime.InteropServices;
 using System;
 
 public class Level : MonoBehaviour
 {
-    public struct LineCommand
-    {
-        internal GameObject[] gos;
-        internal Command cmd;
-
-        public enum Command
-        {
-            None    = 0,
-            Place   = 1,
-            Destroy = 2,
-            Move    = 3,
-        }
-
-        /*
-        [StructLayout(LayoutKind.Explicit)]
-        public struct Data
-        {
-            public struct Place
-            {
-            }
-            public struct Destroy
-            {
-            }
-            public struct Move
-            {
-                public Vector2Int delta;
-            }
-
-            [FieldOffset(0)] public Place   place;
-            [FieldOffset(0)] public Destroy destroy;
-            [FieldOffset(0)] public Move    move;
-        }
-        Data data;
-        */
-
-        public Vector2Int moveDelta;
-        public static LineCommand ConstructDefault()
-        {
-            LineCommand lh;
-            lh.cmd = Command.None;
-            lh.gos = null;
-            lh.moveDelta = Vector2Int.zero;
-            return lh;
-        }
-    }
     public class SetupInstance
     {
         public class DrawingLine
@@ -72,7 +25,10 @@ public class Level : MonoBehaviour
         internal Dictionary<int, DrawingLine> drawingLines = new Dictionary<int, DrawingLine>();
 
         internal Dictionary<int, GameObject> lines      = new Dictionary<int, GameObject>();
+
         internal Annal<LineCommand> history             = new Annal<LineCommand>(120, LineCommand.ConstructDefault());
+        internal int totalHistoriesRecorded = 0;
+        internal int historyBacktraceOffset = 0;
 
         internal int id = 0;
         internal int GetUniqueLineId()
@@ -81,42 +37,7 @@ public class Level : MonoBehaviour
         }
 
     }
-    public class LevelInstance
-    {
-        public struct GridVertex
-        {
-            [System.Flags]
-            public enum Flags
-            {
-                // Directions
-                None = 0,
-
-                W = 1,
-                SW = 2,
-                S = 4,
-                SE = 8,
-                E = 16,
-                NE = 32,
-                N = 64,
-                NW = 128,
-
-                // State
-                isStatic = 256,
-            }
-
-            public Flags flags;
-            public GameObject[] gos;
-            public int orderNumber;
-        }
-
-        internal GridVertex [,]grid;
-
-        private int orderIndex = 0;
-        public int GetOrderindex()
-        {
-            return ++orderIndex;
-        }
-    }
+    
 
     internal SetupInstance setupInstance = new SetupInstance();
     internal LevelInstance levelInstance = new LevelInstance();
@@ -171,7 +92,7 @@ public class Level : MonoBehaviour
 
         // allocate grid
         {
-            levelInstance.grid = new LevelInstance.GridVertex[height,width];
+            levelInstance.grid = new GameVertex[height,width];
         }
 
 
@@ -320,6 +241,29 @@ public class Level : MonoBehaviour
         // Process Cancel drawing
         if (Input.GetKeyDown(KeyCode.Escape))
             CancelUnsetLines();
+
+        // undo/redo
+        {
+            int count = 1;
+            bool shiftHeld = (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift));
+#if UNITY_EDITOR
+            bool ctrlHeld = true;
+#else
+            bool ctrlHeld = (Input.GetKey(KeyCode.LeftControl) || Input.GetKey(KeyCode.RightControl));
+#endif
+
+            if (shiftHeld)
+                count = 5;
+
+            // Undo
+            if (ctrlHeld && Input.GetKeyDown(KeyCode.Z))
+                UndoLineCommand(count);
+
+            // Redo
+            if (ctrlHeld && Input.GetKeyDown(KeyCode.Y))
+                RedoLineCommand(count);
+        }
+
     }
 
     void CancelUnsetLines()
@@ -332,7 +276,6 @@ public class Level : MonoBehaviour
     void CancelUnsetLine(int inputId)
     {
         SetupInstance.DrawingLine dl;
-        GameObject go;
         if (setupInstance.drawingLines.TryGetValue(inputId, out dl))
         {
             CancelUnsetLine(dl, inputId);
@@ -355,7 +298,7 @@ public class Level : MonoBehaviour
     // Place line if possible
     void EndUnsetLine(int recalloffset, SetupInstance.DrawingLine dl)
     {
-        Debug.Log("EndUnsetLine");
+        //Debug.Log("EndUnsetLine");
         GameObject unsetLine = dl.go;
 
         // validate line
@@ -375,12 +318,12 @@ public class Level : MonoBehaviour
         LineCommand lc = unsetLine.GetComponent<UnsetLine>().Set(this, LineCommand.Command.Place);
 
         // Record Place History
-        setupInstance.history.Record(lc);
+        RecordLineCommand(lc);
     }
 
     void MoveUnsetLine(int recalloffset, SetupInstance.DrawingLine dl)
     {
-        Debug.Log("MoveUnsetLine");
+        //Debug.Log("MoveUnsetLine");
         GameObject line = dl.go;
         var rend = line.GetComponent<LineRenderer>();
         var ptCount = rend.positionCount;
@@ -392,7 +335,7 @@ public class Level : MonoBehaviour
 
     void BeginUnsetLine(int recalloffset, SetupInstance.DrawingLine dl)
     {
-        Debug.Log("BeginUnsetLine");
+        //Debug.Log("BeginUnsetLine");
         GameObject line = dl.go;
         var rend = line.GetComponent<LineRenderer>();
         var ptCount = rend.positionCount;
@@ -455,6 +398,84 @@ public class Level : MonoBehaviour
     #endregion
 
     #region Helpers
+
+    // record a single line command
+    void RecordLineCommand(LineCommand lc)
+    {
+        Debug.Log("RecordLineCommand");
+
+        // Forget history to remove backtrace
+        setupInstance.history.Forget(setupInstance.historyBacktraceOffset);
+        setupInstance.totalHistoriesRecorded -= setupInstance.historyBacktraceOffset;
+        setupInstance.historyBacktraceOffset = 0;
+
+        // record command at front of annal
+        setupInstance.history.Record(lc);
+        ++setupInstance.totalHistoriesRecorded;
+    }
+    // count: number of commands to undo
+    void UndoLineCommand(int count)
+    {
+        for (int i = 0; i < count; ++i)
+            UndoLineCommand();
+    }
+    void UndoLineCommand()
+    {
+        Debug.Log("UndoLineCommmand");
+        // If we have recorded the history AND have a record going back that far.
+        if (setupInstance.totalHistoriesRecorded > setupInstance.historyBacktraceOffset &&
+            setupInstance.history.size > setupInstance.historyBacktraceOffset)
+        {
+            // execute inverted co*mmand up to count times
+            LineCommand lc = setupInstance.history.Recall(setupInstance.historyBacktraceOffset);
+            lc.Invert();
+            ApplyCommand(ref lc);
+
+            // pull back historyOffset+1
+            ++setupInstance.historyBacktraceOffset;
+        }
+    }
+
+    // count: number of Commands to Redo
+    void RedoLineCommand(int count)
+    {
+        for (int i = 0; i < count; ++i)
+            RedoLineCommand();
+    }
+    void RedoLineCommand()
+    {
+        Debug.Log("RedoLineCommand");
+        // have some commands to redo
+        if (setupInstance.historyBacktraceOffset > 0)
+        {
+            // move offset up 1
+            --setupInstance.historyBacktraceOffset;
+
+            // execute linecommands in annal up to count times
+            LineCommand lc = setupInstance.history.Recall(setupInstance.historyBacktraceOffset);
+            ApplyCommand(ref lc);
+        }
+    }
+
+    void ApplyCommand(ref LineCommand lineCommand)
+    {
+        foreach (var go in lineCommand.gos)
+        {
+            // @TODO @FIX
+            if (go != null)
+            {
+                var setLine = go.GetComponent<SetLine>();
+                setLine.RunCommand(this, lineCommand);
+            }
+            else
+            {
+                Debug.LogWarning("Saving null objects because they can't be added to grid or something, fix this!");
+            }
+            
+        }
+    }
+
+
     Vector2 TouchToPos(Touch touch)
     {
         return Camera.main.ScreenToWorldPoint(touch.position);

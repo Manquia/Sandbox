@@ -95,6 +95,13 @@ public class Annal<Type>
         return false;
     }
 
+    public void Forget(int count)
+    {
+        index -= count;
+        if (index < 0)
+            index += size;
+    }
+
 }
 
 public struct KeyState

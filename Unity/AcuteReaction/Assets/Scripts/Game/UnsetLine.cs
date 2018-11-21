@@ -4,11 +4,10 @@ using UnityEngine;
 
 public class UnsetLine : MonoBehaviour
 {
-    internal Level.LineCommand Set(Level level, Level.LineCommand.Command cmd)
+    internal LineCommand Set(Level level, LineCommand.Command cmd)
     {
         var lvlInstance = level.levelInstance;
         var rend = GetComponent<LineRenderer>();
-        Level.LineCommand lc;
 
         Vector3 pt0 = rend.GetPosition(0);
         Vector3 pt1 = rend.GetPosition(1);
@@ -22,8 +21,6 @@ public class UnsetLine : MonoBehaviour
         int xOffset = 0;
         int yOffset = 0;
         float offsetDist = 0;
-        // directional flags
-        Level.LevelInstance.GridVertex.Flags flags = (Level.LevelInstance.GridVertex.Flags)(1 << snappedDir);
 
         if (snappedDir % 2 == 1)
         {
@@ -58,55 +55,56 @@ public class UnsetLine : MonoBehaviour
         int startX = Mathf.FloorToInt(pt0.x + 0.5f) + Mathf.FloorToInt(level.width  / 2);
         int startY = Mathf.FloorToInt(pt0.z + 0.5f) + Mathf.FloorToInt(level.height / 2);
 
+        int maxX = level.width / 2;
+        int maxY = level.height / 2;
 
+
+        // directional flags
+        GameVertex.Direction directionFlags = (GameVertex.Direction)(1 << snappedDir);
+
+        // make line command to run and record
+        LineCommand lc;
         lc.gos = new GameObject[lineCountToAdd];
         lc.cmd = cmd;
         lc.moveDelta = Vector2Int.zero;
+        lc.flags = GameVertex.Flags.none;
+
+        // @TEMP @TODO @REPLACE
+        lc.flags.AddToAll(directionFlags);
 
         for (int i = 0; i < lineCountToAdd; ++i)
         {
             int y = startY + (i * yOffset);
             int x = startX + (i * xOffset);
-            switch (cmd)
+
+            if ((x < 0 || x >= level.width) ||
+                (y < 0 || y >= level.height))
             {
-                case Level.LineCommand.Command.None:
-                    break;
-                case Level.LineCommand.Command.Place:
-                    {
-                        // Add array if not already added
-                        if (lvlInstance.grid[y,x].gos == null)
-                            lvlInstance.grid[y,x].gos = new GameObject[8];
-
-                        // Create Objects
-                        var go = Instantiate(level.settings.prefabs.setLine);
-                        go.GetComponent<SetLine>().Setup(level, snappedDir, y, x);
-                        lvlInstance.grid[y,x].gos[snappedDir] = go;
-                        lc.gos[i] = go;
-
-                        // Set flags (addative)
-                        lvlInstance.grid[y,x].flags |= flags;
-                        break;
-                    }
-                case Level.LineCommand.Command.Destroy:
-                    {
-                        // Destroy objects
-                        if (lvlInstance.grid[y, x].gos != null && lvlInstance.grid[y,x].gos[snappedDir] != null)
-                        {
-                            var go = lvlInstance.grid[y, x].gos[snappedDir];
-                            Destroy(go);
-                        }
-
-                        // Set flags (negative)
-                        lvlInstance.grid[y,x].flags &= ~flags;
-                        break;
-                    }
-                case Level.LineCommand.Command.Move:
-                    // @ TODO
-                    break;
+                Debug.LogWarning("Unset line tried to play a line outside the bounds. This may be expected");
+                break;
             }
+                
+
+            // Add array if not already added
+            if (lvlInstance.grid[y, x].gos == null)
+                lvlInstance.grid[y, x].gos = new GameObject[8];
+
+            
+            GameObject go = lvlInstance.grid[y, x].gos[snappedDir];
+            if (go == null)
+            {
+                go = Instantiate(level.settings.prefabs.setLine);
+                lvlInstance.grid[y, x].gos[snappedDir] = go;
+                go.GetComponent<SetLine>().Setup(level, snappedDir, y, x);
+            }
+            lc.gos[i] = go;
+
+            SetLine setLine = go.GetComponent<SetLine>();
+            setLine.RunCommand(level, lc);
         }
 
 
         return lc;
     }
+
 }
