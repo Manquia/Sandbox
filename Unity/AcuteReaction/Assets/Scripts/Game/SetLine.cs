@@ -48,7 +48,7 @@ public class SetLine : MonoBehaviour
         var lvlInstance = level.levelInstance;
         var rend = GetComponent<LineRenderer>();
 
-        lvlInstance.grid[y, x].flags = GameVertex.Lines.none;
+        lvlInstance.grid[y, x].lines = GameVertex.Edge.none;
         lvlInstance.grid[y, x].gos[snappedDir] = null;
     }
 
@@ -69,30 +69,33 @@ public class SetLine : MonoBehaviour
         }
     }
 
-    internal void Remove(Level level, GameVertex.Lines flagDelta)
+    internal void Remove(Level level, GameVertex.Edge flagDelta)
     {
         var lvlInstance = level.levelInstance;
         var rend = GetComponent<LineRenderer>();
 
         // complete removal?
-        if (flagDelta == lvlInstance.grid[y, x].flags)
+        if (flagDelta == lvlInstance.grid[y, x].lines)
         {
             gameObject.SetActive(false);
         }
 
-        lvlInstance.grid[y, x].flags &= ~flagDelta;
+        // TODO: Fix this for the new format
+        // lvlInstance.grid[y, x].flags &= ~flagDelta;
     }
 
-    internal void Place(Level level, GameVertex.Lines flagDelta)
+    internal void Place(Level level, GameVertex.Edge flagDelta)
     {
         var lvlInstance = level.levelInstance;
 
         // Adding in line?
-        if(lvlInstance.grid[y,x].flags == GameVertex.Lines.none)
+        if(lvlInstance.grid[y,x].lines == GameVertex.Edge.none)
         {
             gameObject.SetActive(true);
         }
-        lvlInstance.grid[y, x].flags |= flagDelta;
+
+        // TODO: Fix this for the new format
+        // lvlInstance.grid[y, x].flags |= flagDelta;
 
     }
 

@@ -7,17 +7,18 @@ public struct GameVertex
 {
 
     [System.Flags]
-    public enum EdgeType : byte
+    public enum Type : byte
     {
-        solid,
-        conveyer,
-        transform,
-        magnet,
-        weld,
-        laser,
-        ice,
-        spring,
-    }
+        None,
+        solid,          // places a solid object with friction
+        conveyer,       // directional
+        transform,      // directional, Ordered
+        magnet,         // directional? "<->" = levatate/ice, "->" and "<-" spring? Bounce?
+        weld,           
+        laser,          // destroys anything it touches to create special shapes (grinder)
+        ice,            // objects untill stopping, but once stopped they remain still
+        spring,         // directional + magnitude ( "<-" = 3up,1 left, "->" = 3up, 1 right, "<->"= 6 up
+    }                   
     [System.Flags]
     public enum Direction : byte
     {
@@ -35,139 +36,111 @@ public struct GameVertex
 
         All = W | SW | S | SE | E | NE | N | NW,
     }
-    public struct Lines
+    public struct Edge
     {
-        public Direction solid;       // places a solid object with friction
-        public Direction conveyer;    // directional
-        public Direction transform;   // directional, Ordered
-        public Direction magnet;      // directional? "<->" = levatate/ice, "->" and "<-" spring? Bounce?
+        [System.Flags]
+        public enum Type : byte
+        {
+            None,
+            solid,          // places a solid object with friction
+            conveyer,       // directional
+            transform,      // directional, Ordered
+            magnet,         // directional? "<->" = levatate/ice, "->" and "<-" spring? Bounce?
+            weld,
+            laser,          // destroys anything it touches to create special shapes (grinder)
+            ice,            // objects untill stopping, but once stopped they remain still
+            spring,         // directional + magnitude ( "<-" = 3up,1 left, "->" = 3up, 1 right, "<->"= 6 up
+        }
 
-        public Direction weld;
-        public Direction laser;       // destroys anything it touches to create special shapes (grinder)
-        public Direction ice;         // objects untill stopping, but once stopped they remain still
-        public Direction spring;      // directional + magnitude ( "<-" = 3up,1 left, "->" = 3up, 1 right, "<->"= 6 up
+        // Data
+        public Direction dirs;       
+        public Type edgeW;
+        public Type edgeSW;
+        public Type edgeS;
+        public Type edgeSE;
+        public Type edgeE;
+        public Type edgeNE;
+        public Type edgeN;
+        public Type edgeNW;
 
-        internal static Lines none {
+
+        // Helpers
+        internal static Edge none {
         get {
-                Lines f;
-                f.solid = 0;
-                f.conveyer = 0;
-                f.transform = 0;
-                f.magnet = 0;
-                f.weld = 0;
-                f.laser = 0;
-                f.ice = 0;
-                f.spring = 0;
+                Edge f;
+                f.edgeW  = Type.None;
+                f.edgeSW = Type.None;
+                f.edgeS  = Type.None;
+                f.edgeSE = Type.None;
+                f.edgeE  = Type.None;
+                f.edgeNE = Type.None;
+                f.edgeN  = Type.None;
+                f.edgeNW = Type.None;
+                f.dirs   = Direction.None;
                 return f;
             }
         }
 
         // @PERF, use 8 byte int, union?
-        public static bool operator==(Lines f0, Lines f1)
+        public static bool operator==(Edge f0, Edge f1)
         {
             return
-                f0.solid     == f1.solid &&
-                f0.conveyer  == f1.conveyer &&
-                f0.transform == f1.transform &&
-                f0.magnet    == f1.magnet &&
-                f0.weld      == f1.weld &&
-                f0.laser     == f1.laser &&
-                f0.ice       == f1.ice &&
-                f0.spring    == f1.spring;
+                f0.edgeW  == f1.edgeW  &&
+                f0.edgeSW == f1.edgeSW &&
+                f0.edgeS  == f1.edgeS  &&
+                f0.edgeSE == f1.edgeSE &&
+                f0.edgeE  == f1.edgeE  &&
+                f0.edgeNE == f1.edgeNE &&
+                f0.edgeN  == f1.edgeN  &&
+                f0.edgeNW == f1.edgeNW &&
+                f0.dirs   == f1.dirs  ;
         }
         // @PERF, use 8 byte int, union?
-        public static bool operator!=(Lines f0, Lines f1)
+        public static bool operator!=(Edge f0, Edge f1)
         {
             return
-                f0.solid     != f1.solid ||
-                f0.conveyer  != f1.conveyer ||
-                f0.transform != f1.transform ||
-                f0.magnet    != f1.magnet ||
-                f0.weld      != f1.weld ||
-                f0.laser     != f1.laser ||
-                f0.ice       != f1.ice ||
-                f0.spring    != f1.spring;
+                f0.edgeW  != f1.edgeW  ||
+                f0.edgeSW != f1.edgeSW ||
+                f0.edgeS  != f1.edgeS  ||
+                f0.edgeSE != f1.edgeSE ||
+                f0.edgeE  != f1.edgeE  ||
+                f0.edgeNE != f1.edgeNE ||
+                f0.edgeN  != f1.edgeN  ||
+                f0.edgeNW != f1.edgeNW ||
+                f0.dirs   != f1.dirs  ;
         }
-        // @PERF, use 8 byte int, union?
-        public static Lines operator~(Lines f)
+        
+        public void Set(Direction dir, Type type)
         {
-            f.solid     = ~f.solid    ;
-            f.conveyer  = ~f.conveyer ;
-            f.transform = ~f.transform;
-            f.magnet    = ~f.magnet   ;
-            f.weld      = ~f.weld     ;
-            f.laser     = ~f.laser    ;
-            f.ice       = ~f.ice      ;
-            f.spring    = ~f.spring   ;
-            return f;
-        }
-        // @PERF, use 8 byte int, union?
-        public static Lines operator&(Lines f0, Lines f1)
-        {
-            f0.solid     &= f1.solid    ;
-            f0.conveyer  &= f1.conveyer ;
-            f0.transform &= f1.transform;
-            f0.magnet    &= f1.magnet   ;
-            f0.weld      &= f1.weld     ;
-            f0.laser     &= f1.laser    ;
-            f0.ice       &= f1.ice      ;
-            f0.spring    &= f1.spring   ;
-            return f0;
-        }
-        // @PERF, use 8 byte int, union?
-        public static Lines operator|(Lines f0, Lines f1)
-        {
-            f0.solid     |= f1.solid    ;
-            f0.conveyer  |= f1.conveyer ;
-            f0.transform |= f1.transform;
-            f0.magnet    |= f1.magnet   ;
-            f0.weld      |= f1.weld     ;
-            f0.laser     |= f1.laser    ;
-            f0.ice       |= f1.ice      ;
-            f0.spring    |= f1.spring   ;
-            return f0;
-        }
+            dirs |= dir;
+            switch (dir)
+            {
+                case Direction.W:   edgeW = type;       break;
+                case Direction.SW: edgeSW = type;       break;
+                case Direction.S:   edgeS = type;       break;
+                case Direction.SE: edgeSE = type;       break;
+                case Direction.E:   edgeE = type;       break;
+                case Direction.NE: edgeNE = type;       break;
+                case Direction.N:   edgeN = type;       break;
+                case Direction.NW: edgeNW = type;       break;
 
-        public void AddToAll(Direction f)
-        {
-            solid     |= f;
-            conveyer  |= f;
-            transform |= f;
-            magnet    |= f;
-            weld      |= f;
-            laser     |= f;
-            ice       |= f;
-            spring    |= f;
+                case Direction.None:
+                case Direction.All:
+                default: Debug.LogWarning("Warning Called Set on GameVertex.Line with a dir not set to a single direction"); break;
+            }
+
         }
         public Direction AllToOne()
         {
-            Direction d = GameVertex.Direction.None;
-            d |= solid    ;
-            d |= conveyer ;
-            d |= transform;
-            d |= magnet   ;
-            d |= weld     ;
-            d |= laser    ;
-            d |= ice      ;
-            d |= spring   ;
-            return d;
+            return dirs;
         }
         public Direction AllToOne(Direction mask)
         {
-            Direction d = GameVertex.Direction.None;
-            d |= solid;
-            d |= conveyer;
-            d |= transform;
-            d |= magnet;
-            d |= weld;
-            d |= laser;
-            d |= ice;
-            d |= spring;
-            return d & mask;
+            return dirs & mask;
         }
     }
     public GameObject[] gos;
-    public Lines flags;
+    public Edge lines;
 
     public int converyOrder; // @TODO for transform blocks
 }

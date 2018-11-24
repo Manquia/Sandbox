@@ -22,35 +22,8 @@ public class UnsetLine : MonoBehaviour
         int xOffset = 0;
         int yOffset = 0;
         float offsetDist = 0;
-        
-        if (snappedDir % 2 == 1)
-        {
-            offsetDist = Level.diagonalOffsetDist;
 
-            // right or left
-            // pos = 3 or 5
-            // neg = 1 or 7
-            xOffset = -Mathf.Abs((snappedDir - 4) / 3) + Mathf.Abs(snappedDir -4) % 3;
-
-            // up or down
-            // pos = 5 or 7
-            // neg = 1 or 3
-            yOffset = (snappedDir - 4) % 2;
-        }
-        else
-        {
-            offsetDist = Level.cardinalOffsetDist;
-
-            // right or left
-            // pos = 4
-            // neg = 0
-            xOffset = ((snappedDir - 2) / 2) % 2;
-
-            // up or down
-            // pos = 6
-            // neg = 2
-            yOffset = ((snappedDir - 4) / 2) % 2;
-        }
+        ARUtil.SnapToOffset(snappedDir, out yOffset, out xOffset);
         
         int lineCountToAdd = Mathf.FloorToInt((lineVec.magnitude + (0.5f * offsetDist)) / offsetDist);
         int startX = Mathf.FloorToInt(pt0.x + 0.5f) + Mathf.FloorToInt(level.width  / 2);
@@ -68,10 +41,10 @@ public class UnsetLine : MonoBehaviour
         lc.gos = new GameObject[lineCountToAdd];
         lc.cmd = cmd;
         lc.moveDelta = Vector2Int.zero;
-        lc.flags = GameVertex.Lines.none;
+        lc.flags = GameVertex.Edge.none;
 
         // @TEMP @TODO @REPLACE
-        lc.flags.AddToAll(directionFlags);
+        lc.flags.Set(directionFlags, GameVertex.Edge.Type.solid);
 
         for (int i = 0; i < lineCountToAdd; ++i)
         {
