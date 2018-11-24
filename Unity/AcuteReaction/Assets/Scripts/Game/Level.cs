@@ -210,9 +210,16 @@ public class Level : MonoBehaviour
         {
             foreach(var line in cluster)
             {
-                int xOffset;
-                int yOffset;
-                ARUtil.SnapToOffset(line.dir, out yOffset, out xOffset);
+                // Make cluster root
+
+                // Create lines with behaviors which are indexable from  LevelRUNTIME or something!
+                {
+                    int xLineEnd;
+                    int yLineEnd;
+                    ARUtil.SnapToOffset(line.dir, out yLineEnd, out xLineEnd);
+                }
+
+
 
 
 
