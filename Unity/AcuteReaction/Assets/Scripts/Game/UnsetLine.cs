@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class UnsetLine : MonoBehaviour
 {
+
     internal LineCommand Set(Level level, LineCommand.Command cmd)
     {
         var lvlInstance = level.levelInstance;
@@ -21,7 +22,7 @@ public class UnsetLine : MonoBehaviour
         int xOffset = 0;
         int yOffset = 0;
         float offsetDist = 0;
-
+        
         if (snappedDir % 2 == 1)
         {
             offsetDist = Level.diagonalOffsetDist;
@@ -50,7 +51,7 @@ public class UnsetLine : MonoBehaviour
             // neg = 2
             yOffset = ((snappedDir - 4) / 2) % 2;
         }
-
+        
         int lineCountToAdd = Mathf.FloorToInt((lineVec.magnitude + (0.5f * offsetDist)) / offsetDist);
         int startX = Mathf.FloorToInt(pt0.x + 0.5f) + Mathf.FloorToInt(level.width  / 2);
         int startY = Mathf.FloorToInt(pt0.z + 0.5f) + Mathf.FloorToInt(level.height / 2);
@@ -67,7 +68,7 @@ public class UnsetLine : MonoBehaviour
         lc.gos = new GameObject[lineCountToAdd];
         lc.cmd = cmd;
         lc.moveDelta = Vector2Int.zero;
-        lc.flags = GameVertex.Flags.none;
+        lc.flags = GameVertex.Lines.none;
 
         // @TEMP @TODO @REPLACE
         lc.flags.AddToAll(directionFlags);

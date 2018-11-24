@@ -48,7 +48,7 @@ public class SetLine : MonoBehaviour
         var lvlInstance = level.levelInstance;
         var rend = GetComponent<LineRenderer>();
 
-        lvlInstance.grid[y, x].flags = GameVertex.Flags.none;
+        lvlInstance.grid[y, x].flags = GameVertex.Lines.none;
         lvlInstance.grid[y, x].gos[snappedDir] = null;
     }
 
@@ -69,7 +69,7 @@ public class SetLine : MonoBehaviour
         }
     }
 
-    internal void Remove(Level level, GameVertex.Flags flagDelta)
+    internal void Remove(Level level, GameVertex.Lines flagDelta)
     {
         var lvlInstance = level.levelInstance;
         var rend = GetComponent<LineRenderer>();
@@ -83,12 +83,12 @@ public class SetLine : MonoBehaviour
         lvlInstance.grid[y, x].flags &= ~flagDelta;
     }
 
-    internal void Place(Level level, GameVertex.Flags flagDelta)
+    internal void Place(Level level, GameVertex.Lines flagDelta)
     {
         var lvlInstance = level.levelInstance;
 
         // Adding in line?
-        if(lvlInstance.grid[y,x].flags == GameVertex.Flags.none)
+        if(lvlInstance.grid[y,x].flags == GameVertex.Lines.none)
         {
             gameObject.SetActive(true);
         }

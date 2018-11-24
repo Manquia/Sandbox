@@ -7,7 +7,7 @@ public struct LineCommand
 {
     internal GameObject[] gos;
     internal Command cmd;
-    internal GameVertex.Flags flags;
+    internal GameVertex.Lines flags;
 
     public enum Command
     {
@@ -46,7 +46,7 @@ public struct LineCommand
         lh.cmd = Command.None;
         lh.gos = null;
         lh.moveDelta = Vector2Int.zero;
-        lh.flags = GameVertex.Flags.none;
+        lh.flags = GameVertex.Lines.none;
         return lh;
     }
 

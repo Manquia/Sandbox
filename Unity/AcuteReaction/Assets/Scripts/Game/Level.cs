@@ -5,6 +5,12 @@ using System;
 
 public class Level : MonoBehaviour
 {
+    public enum InputMode
+    {
+        Menu,
+        Setup,
+        Run,
+    }
     public class SetupInstance
     {
         public class DrawingLine
@@ -45,8 +51,7 @@ public class Level : MonoBehaviour
     public GameObject levelRoot   { get; private set; }
     public GameObject setupRoot   { get; private set; } 
     public GameObject runtimeRoot { get; private set; }
-
-
+    public InputMode inputMode { get; private set; }
 
     public LevelSettings settings;
 
@@ -62,7 +67,7 @@ public class Level : MonoBehaviour
     public int height = 50; // @ make dynamic?
     public int width = 50; // @ make dynamic?
 
-    #region LevelStartup
+    #region Creation
     void CreateLevel()
     {
         // Create Root of level
@@ -98,6 +103,113 @@ public class Level : MonoBehaviour
 
     }
 
+
+    public struct LineVec
+    {
+        public int x;
+        public int y;
+        public int dir;
+
+    }
+    
+    // Takes a level Instance and creates its runtime equivalent
+    void InvokeLevel(LevelInstance inst)
+    {
+        List<HashSet<Vector2Int>> clusters = new List<HashSet<Vector2Int>>(4);
+        // Generate index lists for each cluster of lines
+        {
+            // Get a new traversal index
+            char traversalIndex = LevelInstance.GetNewTraversalIndex();
+            // on looping around we don't use 0 since it is our reset value
+            if (traversalIndex == 0) traversalIndex = LevelInstance.GetNewTraversalIndex();
+
+            // Is index grid valid?
+            if(LevelInstance.gridIndex == null ||
+               LevelInstance.gridIndex.GetLength(0) < inst.grid.GetLength(0) ||
+               LevelInstance.gridIndex.GetLength(1) < inst.grid.GetLength(1) ||
+               traversalIndex == 1) // looped around, reset gridIndexes to 0 always
+            {
+                LevelInstance.gridIndex = new char[inst.grid.GetLength(0), inst.grid.GetLength(1)];
+            }
+
+            Vector2Int max = Vector2Int.zero;
+            max.y = inst.grid.GetLength(0);
+            max.x = inst.grid.GetLength(1);
+
+            int clusterIndex = -1;
+            Queue<Vector2Int> SearchList = new Queue<Vector2Int>(16);
+            for (int y = 0; y < max.y; ++y)
+            {
+                for(int x = 0; x < max.x; ++x)
+                {
+                    // have we visited this space before?
+                    if (LevelInstance.gridIndex[y, x] == traversalIndex)
+                        continue;
+
+                    // Any out bound connections means this is a part of a new cluster
+                    if (inst.grid[y, x].flags.AllToOne() != GameVertex.Direction.None)
+                    {
+                        ++clusterIndex;
+                        if (clusters.Count == clusterIndex)
+                            clusters.Add(new HashSet<Vector2Int>());
+
+                        // Add point to search through
+                        SearchList.Enqueue(new Vector2Int(x, y));
+                    }
+
+                    // traverse cluster
+                    while (SearchList.Count > 0)
+                    {
+                        // Get next item on the
+                        Vector2Int look = SearchList.Dequeue();
+
+                        // already looked at item?
+                        if (LevelInstance.gridIndex[look.y, look.x] == traversalIndex)
+                            continue;
+
+                        // Mark node as looked at
+                        LevelInstance.gridIndex[look.y, look.x] = traversalIndex;
+
+                        // Get inbound Connections and enqueue them to add them to the cluster
+                        Vector2Int c = Vector2Int.zero;
+                        c.y=y  ; c.x=x-1; if (ValidPoint(c, max, inst.grid, traversalIndex, GameVertex.Direction.E )) SearchList.Enqueue(c);
+                        c.y=y-1; c.x=x-1; if (ValidPoint(c, max, inst.grid, traversalIndex, GameVertex.Direction.NE)) SearchList.Enqueue(c);
+                        c.y=y-1; c.x=x  ; if (ValidPoint(c, max, inst.grid, traversalIndex, GameVertex.Direction.N )) SearchList.Enqueue(c);
+                        c.y=y-1; c.x=x+1; if (ValidPoint(c, max, inst.grid, traversalIndex, GameVertex.Direction.NW)) SearchList.Enqueue(c);
+                        c.y=y  ; c.x=x+1; if (ValidPoint(c, max, inst.grid, traversalIndex, GameVertex.Direction.W )) SearchList.Enqueue(c);
+                        c.y=y+1; c.x=x+1; if (ValidPoint(c, max, inst.grid, traversalIndex, GameVertex.Direction.SW)) SearchList.Enqueue(c);
+                        c.y=y+1; c.x=x  ; if (ValidPoint(c, max, inst.grid, traversalIndex, GameVertex.Direction.S )) SearchList.Enqueue(c);
+                        c.y=y+1; c.x=x-1; if (ValidPoint(c, max, inst.grid, traversalIndex, GameVertex.Direction.SE)) SearchList.Enqueue(c);
+
+                        // Get outbound connections
+                        GameVertex.Direction outDirs = inst.grid[look.y, look.x].flags.AllToOne();
+                        // Get hashset for cluster
+                        var cluster = clusters[clusterIndex];
+                        c.y=y  ; c.x=x  ; if (!cluster.Contains(c)) cluster.Add(c);
+                        c.y=y  ; c.x=x-1; if ((outDirs & GameVertex.Direction.W ) == GameVertex.Direction.W  && !cluster.Contains(c)) cluster.Add(c);
+                        c.y=y-1; c.x=x-1; if ((outDirs & GameVertex.Direction.SW) == GameVertex.Direction.SW && !cluster.Contains(c)) cluster.Add(c);
+                        c.y=y-1; c.x=x  ; if ((outDirs & GameVertex.Direction.S ) == GameVertex.Direction.S  && !cluster.Contains(c)) cluster.Add(c);
+                        c.y=y-1; c.x=x+1; if ((outDirs & GameVertex.Direction.SE) == GameVertex.Direction.SE && !cluster.Contains(c)) cluster.Add(c);
+                        c.y=y  ; c.x=x+1; if ((outDirs & GameVertex.Direction.E ) == GameVertex.Direction.E  && !cluster.Contains(c)) cluster.Add(c);
+                        c.y=y+1; c.x=x+1; if ((outDirs & GameVertex.Direction.NE) == GameVertex.Direction.NE && !cluster.Contains(c)) cluster.Add(c);
+                        c.y=y+1; c.x=x  ; if ((outDirs & GameVertex.Direction.N ) == GameVertex.Direction.N  && !cluster.Contains(c)) cluster.Add(c);
+                        c.y=y+1; c.x=x-1; if ((outDirs & GameVertex.Direction.NW) == GameVertex.Direction.NW && !cluster.Contains(c)) cluster.Add(c);
+
+
+                    }
+                }
+            }
+        }
+
+        // resolve the clusters into blocks
+        foreach(var cluster in clusters)
+        {
+            foreach(var pt in cluster)
+            {
+
+            }
+        }
+    }
     #endregion
 
 
@@ -190,80 +302,87 @@ public class Level : MonoBehaviour
 
     void HandleInput(float dt)
     {
-        // find new touches not claimed
-        foreach(var kvp in setupInstance.drawingLines)
+        if (inputMode == InputMode.Setup)
         {
-            var dl = kvp.Value;
-            var annal = dl.input;
-
-            // no changes to the touch
-            if (annal.changed == false)
-                continue;
-
-            var inputId = kvp.Key;
-            // Debug.Log("Handling inputId: " + inputId);
-            int frame = Time.frameCount;
-            int framesToRun = annal.recordCount;
-            if (framesToRun == annal.size) Debug.LogWarning("Input Annal possible loss of input information!!!");
-
-            // Process touch events in the order they were recieved
-            for(int i = framesToRun - 1; i >= 0; --i)
+            // find new touches not claimed
+            foreach (var kvp in setupInstance.drawingLines)
             {
-                var inputData = annal.Recall(i);
+                var dl = kvp.Value;
+                var annal = dl.input;
 
-                switch (inputData.phase)
+                // no changes to the touch
+                if (annal.changed == false)
+                    continue;
+
+                var inputId = kvp.Key;
+                // Debug.Log("Handling inputId: " + inputId);
+                int frame = Time.frameCount;
+                int framesToRun = annal.recordCount;
+                if (framesToRun == annal.size) Debug.LogWarning("Input Annal possible loss of input information!!!");
+
+                // Process touch events in the order they were recieved
+                for (int i = framesToRun - 1; i >= 0; --i)
                 {
-                    case InputData.Phase.Begin:
-                        MakeUnsetLine(inputId);
-                        BeginUnsetLine(i, dl);
-                        break;
-                    case InputData.Phase.Update:
-                        MoveUnsetLine(i, dl);
-                        break;
-                    case InputData.Phase.Ended:
-                        MoveUnsetLine(i, dl);
-                        EndUnsetLine(i, dl);
-                        CancelUnsetLine(dl, inputId);
-                        i = 0; // Stop processing Input, we are ending the line
-                        break;
-                    case InputData.Phase.Canceled:
-                        CancelUnsetLine(dl, inputId);
-                        i = 0; // Stop processing Input, we are canceling the line
-                        break;
-                    case InputData.Phase.None:
-                        Debug.LogWarning("Input phase of type None found! (Input Id: " + inputId + " )");
-                        break;
+                    var inputData = annal.Recall(i);
+
+                    switch (inputData.phase)
+                    {
+                        case InputData.Phase.Begin:
+                            MakeUnsetLine(inputId);
+                            BeginUnsetLine(i, dl);
+                            break;
+                        case InputData.Phase.Update:
+                            MoveUnsetLine(i, dl);
+                            break;
+                        case InputData.Phase.Ended:
+                            MoveUnsetLine(i, dl);
+                            EndUnsetLine(i, dl);
+                            CancelUnsetLine(dl, inputId);
+                            i = 0; // Stop processing Input, we are ending the line
+                            break;
+                        case InputData.Phase.Canceled:
+                            CancelUnsetLine(dl, inputId);
+                            i = 0; // Stop processing Input, we are canceling the line
+                            break;
+                        case InputData.Phase.None:
+                            Debug.LogWarning("Input phase of type None found! (Input Id: " + inputId + " )");
+                            break;
+                    }
                 }
             }
-        }
 
 
-        // Process Cancel drawing
-        if (Input.GetKeyDown(KeyCode.Escape))
-            CancelUnsetLines();
+            // Process Cancel drawing
+            if (Input.GetKeyDown(KeyCode.Escape))
+                CancelUnsetLines();
 
-        // undo/redo
-        {
-            int count = 1;
-            bool shiftHeld = (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift));
+            // undo/redo
+            {
+                int count = 1;
+                bool shiftHeld = (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift));
 #if UNITY_EDITOR
-            bool ctrlHeld = true;
+                bool ctrlHeld = true;
 #else
             bool ctrlHeld = (Input.GetKey(KeyCode.LeftControl) || Input.GetKey(KeyCode.RightControl));
 #endif
 
-            if (shiftHeld)
-                count = 5;
+                if (shiftHeld)
+                    count = 5;
 
-            // Undo
-            if (ctrlHeld && Input.GetKeyDown(KeyCode.Z))
-                UndoLineCommand(count);
+                // Undo
+                if (ctrlHeld && Input.GetKeyDown(KeyCode.Z))
+                    UndoLineCommand(count);
 
-            // Redo
-            if (ctrlHeld && Input.GetKeyDown(KeyCode.Y))
-                RedoLineCommand(count);
+                // Redo
+                if (ctrlHeld && Input.GetKeyDown(KeyCode.Y))
+                    RedoLineCommand(count);
+            }
         }
 
+        if(inputMode == InputMode.Run)
+        {
+            // Handle Input
+        }
     }
 
     void CancelUnsetLines()
@@ -397,6 +516,32 @@ public class Level : MonoBehaviour
 
     #endregion
 
+    #region Run
+    void StartRunLevel()
+    {
+        // if level is being run, Reset it!
+
+        // Build Level from setupInstance
+
+        // start Entity component creation/simulation
+
+        // Enter Input mode for running
+        inputMode = InputMode.Run;
+    }
+
+    void StopRunLevel()
+    {
+        // If level is being run, erase it, stop ECS creation/simulation
+
+
+        // Enter Inputmode for setup
+        inputMode = InputMode.Setup;
+    }
+
+    #endregion
+
+
+
     #region Helpers
 
     // record a single line command
@@ -475,18 +620,16 @@ public class Level : MonoBehaviour
         }
     }
 
-
     Vector2 TouchToPos(Touch touch)
     {
         return Camera.main.ScreenToWorldPoint(touch.position);
     }
-    #endregion
-    // Use this for initialization
-    void Start ()
+    static bool ValidPoint(Vector2Int c, Vector2Int max, GameVertex[,] grid, char traversalIndex, GameVertex.Direction mask)
     {
-		
-	}
-
-
+        return c.y > 0 && c.y < max.y && c.x > 0 && c.x < max.x &&              // Bounds
+               LevelInstance.gridIndex[c.y,c.x] != traversalIndex &&            // traversal Index
+               grid[c.y,c.x].flags.AllToOne(mask) != GameVertex.Direction.None; // direction maks
+    }
+    #endregion
 
 }

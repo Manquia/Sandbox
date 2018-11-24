@@ -5,6 +5,19 @@ using UnityEngine;
 
 public struct GameVertex
 {
+
+    [System.Flags]
+    public enum EdgeType : byte
+    {
+        solid,
+        conveyer,
+        transform,
+        magnet,
+        weld,
+        laser,
+        ice,
+        spring,
+    }
     [System.Flags]
     public enum Direction : byte
     {
@@ -19,8 +32,10 @@ public struct GameVertex
         NE = 32,
         N = 64,
         NW = 128,
+
+        All = W | SW | S | SE | E | NE | N | NW,
     }
-    public struct Flags
+    public struct Lines
     {
         public Direction solid;       // places a solid object with friction
         public Direction conveyer;    // directional
@@ -32,9 +47,9 @@ public struct GameVertex
         public Direction ice;         // objects untill stopping, but once stopped they remain still
         public Direction spring;      // directional + magnitude ( "<-" = 3up,1 left, "->" = 3up, 1 right, "<->"= 6 up
 
-        internal static Flags none {
+        internal static Lines none {
         get {
-                Flags f;
+                Lines f;
                 f.solid = 0;
                 f.conveyer = 0;
                 f.transform = 0;
@@ -48,7 +63,7 @@ public struct GameVertex
         }
 
         // @PERF, use 8 byte int, union?
-        public static bool operator==(Flags f0, Flags f1)
+        public static bool operator==(Lines f0, Lines f1)
         {
             return
                 f0.solid     == f1.solid &&
@@ -61,7 +76,7 @@ public struct GameVertex
                 f0.spring    == f1.spring;
         }
         // @PERF, use 8 byte int, union?
-        public static bool operator!=(Flags f0, Flags f1)
+        public static bool operator!=(Lines f0, Lines f1)
         {
             return
                 f0.solid     != f1.solid ||
@@ -74,7 +89,7 @@ public struct GameVertex
                 f0.spring    != f1.spring;
         }
         // @PERF, use 8 byte int, union?
-        public static Flags operator~(Flags f)
+        public static Lines operator~(Lines f)
         {
             f.solid     = ~f.solid    ;
             f.conveyer  = ~f.conveyer ;
@@ -87,7 +102,7 @@ public struct GameVertex
             return f;
         }
         // @PERF, use 8 byte int, union?
-        public static Flags operator&(Flags f0, Flags f1)
+        public static Lines operator&(Lines f0, Lines f1)
         {
             f0.solid     &= f1.solid    ;
             f0.conveyer  &= f1.conveyer ;
@@ -100,7 +115,7 @@ public struct GameVertex
             return f0;
         }
         // @PERF, use 8 byte int, union?
-        public static Flags operator|(Flags f0, Flags f1)
+        public static Lines operator|(Lines f0, Lines f1)
         {
             f0.solid     |= f1.solid    ;
             f0.conveyer  |= f1.conveyer ;
@@ -124,9 +139,35 @@ public struct GameVertex
             ice       |= f;
             spring    |= f;
         }
+        public Direction AllToOne()
+        {
+            Direction d = GameVertex.Direction.None;
+            d |= solid    ;
+            d |= conveyer ;
+            d |= transform;
+            d |= magnet   ;
+            d |= weld     ;
+            d |= laser    ;
+            d |= ice      ;
+            d |= spring   ;
+            return d;
+        }
+        public Direction AllToOne(Direction mask)
+        {
+            Direction d = GameVertex.Direction.None;
+            d |= solid;
+            d |= conveyer;
+            d |= transform;
+            d |= magnet;
+            d |= weld;
+            d |= laser;
+            d |= ice;
+            d |= spring;
+            return d & mask;
+        }
     }
     public GameObject[] gos;
-    public Flags flags;
+    public Lines flags;
 
     public int converyOrder; // @TODO for transform blocks
 }
