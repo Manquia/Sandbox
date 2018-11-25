@@ -36,6 +36,9 @@ public struct GameVertex
             laser,          // destroys anything it touches to create special shapes (grinder)
             ice,            // objects untill stopping, but once stopped they remain still
             spring,         // directional + magnitude ( "<-" = 3up,1 left, "->" = 3up, 1 right, "<->"= 6 up
+
+            InboundConveyer, // Moves along the Z axis into the screen
+            OutboutConveyer, // Move along the Z axis out of the screen
         }
 
         // Data
