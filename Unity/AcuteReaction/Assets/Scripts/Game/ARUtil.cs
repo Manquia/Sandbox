@@ -31,4 +31,38 @@ public class ARUtil
             yOffset = ((snappedDir - 4) / 2) % 2;
         }
     }
+    public static GameVertex.Edge.Type SnapToType(int snappedDir, ref GameVertex.Edge vert)
+    {
+        switch (snappedDir)
+        {
+            case 0: return vert.edgeW; 
+            case 1: return vert.edgeSW;
+            case 2: return vert.edgeS; 
+            case 3: return vert.edgeSE; 
+            case 4: return vert.edgeE; 
+            case 5: return vert.edgeNE; 
+            case 6: return vert.edgeN; 
+            case 7: return vert.edgeNW; 
+            default: Debug.LogWarning("Warning! Unexpected snappedDir given to SnapToType"); return GameVertex.Edge.Type.None;
+        }
+    }
+
+    public static GameObject TypeToPrefab(Level level, GameVertex.Edge.Type type)
+    {
+        switch (type)
+        {
+            case GameVertex.Edge.Type.solid:     return level.settings.prefabs.solidLine;
+            case GameVertex.Edge.Type.conveyer:  return level.settings.prefabs.conveyerLine;
+            //case GameVertex.Edge.Type.transform: return level.settings.prefabs.solidLine;
+            //case GameVertex.Edge.Type.magnet:    return level.settings.prefabs.solidLine;
+            //case GameVertex.Edge.Type.weld:      return level.settings.prefabs.solidLine;
+            //case GameVertex.Edge.Type.laser:     return level.settings.prefabs.solidLine;
+            //case GameVertex.Edge.Type.ice:       return level.settings.prefabs.solidLine;
+            //case GameVertex.Edge.Type.spring:    return level.settings.prefabs.solidLine;
+
+
+            case GameVertex.Edge.Type.None:
+            default: Debug.LogError("Error: Unexpected type given to TypeToPrefab!"); return null;
+        }
+    }
 }

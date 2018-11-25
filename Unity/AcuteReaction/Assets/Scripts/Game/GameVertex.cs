@@ -4,21 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public struct GameVertex
-{
-
-    [System.Flags]
-    public enum Type : byte
-    {
-        None,
-        solid,          // places a solid object with friction
-        conveyer,       // directional
-        transform,      // directional, Ordered
-        magnet,         // directional? "<->" = levatate/ice, "->" and "<-" spring? Bounce?
-        weld,           
-        laser,          // destroys anything it touches to create special shapes (grinder)
-        ice,            // objects untill stopping, but once stopped they remain still
-        spring,         // directional + magnitude ( "<-" = 3up,1 left, "->" = 3up, 1 right, "<->"= 6 up
-    }                   
+{               
     [System.Flags]
     public enum Direction : byte
     {

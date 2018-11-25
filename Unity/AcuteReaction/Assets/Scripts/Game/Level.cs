@@ -208,22 +208,25 @@ public class Level : MonoBehaviour
         // resolve the clusters into blocks
         foreach(var cluster in clusters)
         {
-            foreach(var line in cluster)
+            // @TODO make exception for lines on the static cluster to use that cluster!
+
+            // Make cluster root
+            var clusterRoot = Instantiate(settings.prefabs.clusterRoot);
+            var clusterRootTrans = clusterRoot.transform;
+            clusterRootTrans.SetParent(runtimeRoot.transform);
+
+            foreach (var line in cluster)
             {
-                // Make cluster root
 
                 // Create lines with behaviors which are indexable from  LevelRUNTIME or something!
-                {
-                    int xLineEnd;
-                    int yLineEnd;
-                    ARUtil.SnapToOffset(line.dir, out yLineEnd, out xLineEnd);
-                }
+                int xLineEnd;
+                int yLineEnd;
+                ARUtil.SnapToOffset(line.dir, out yLineEnd, out xLineEnd);
+                GameVertex.Edge.Type type = ARUtil.SnapToType(line.dir, ref inst.grid[line.y, line.x].lines);
+                GameObject typePrefab = ARUtil.TypeToPrefab(this, type);
 
-
-
-
-
-
+                // Lets use ECS!!!
+                var lineGo = Instantiate(typePrefab);
             }
         }
     }

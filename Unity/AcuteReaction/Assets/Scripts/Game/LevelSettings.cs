@@ -15,6 +15,10 @@ public class LevelSettings : ScriptableObject
         public GameObject levelRoot;
         public GameObject setupRoot;
         public GameObject runtimeRoot;
+
+        public GameObject clusterRoot;
+        public GameObject solidLine;
+        public GameObject conveyerLine;
     }
     public Prefabs prefabs;
 
