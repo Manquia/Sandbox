@@ -17,14 +17,11 @@ public class UnsetLine : MonoBehaviour
 
         float angle = Mathf.Rad2Deg * Mathf.Atan2(lineVecNorm.z, lineVecNorm.x) + 180.0f;
         // range: (0,7) even = W,S,E,N odd = SW, SE, NE, NW
-        int snappedDir = Mathf.FloorToInt((angle / 45.0f) + 0.5f) % 8;
+        GameVertex.Direction snappedDir = (GameVertex.Direction)(Mathf.FloorToInt((angle / 45.0f) + 0.5f) % 8);
 
-        int xOffset = 0;
-        int yOffset = 0;
-        float offsetDist = 0;
+        float offsetDist = ARUtil.DirToDist(snappedDir);
+        Vector2Int offset =  ARUtil.DirToOffset(snappedDir);
 
-        ARUtil.SnapToOffset(snappedDir, out yOffset, out xOffset);
-        
         int lineCountToAdd = Mathf.FloorToInt((lineVec.magnitude + (0.5f * offsetDist)) / offsetDist);
         int startX = Mathf.FloorToInt(pt0.x + 0.5f) + Mathf.FloorToInt(level.width  / 2);
         int startY = Mathf.FloorToInt(pt0.z + 0.5f) + Mathf.FloorToInt(level.height / 2);
@@ -34,7 +31,7 @@ public class UnsetLine : MonoBehaviour
 
 
         // directional flags
-        GameVertex.Direction directionFlags = (GameVertex.Direction)(1 << snappedDir);
+        GameVertex.DirectionFlags directionFlags = (GameVertex.DirectionFlags)(1 << (int)snappedDir);
 
         // make line command to run and record
         LineCommand lc;
@@ -48,8 +45,8 @@ public class UnsetLine : MonoBehaviour
 
         for (int i = 0; i < lineCountToAdd; ++i)
         {
-            int y = startY + (i * yOffset);
-            int x = startX + (i * xOffset);
+            int y = startY + (i * offset.y);
+            int x = startX + (i * offset.x);
 
             if ((x < 0 || x >= level.width) ||
                 (y < 0 || y >= level.height))
@@ -64,11 +61,11 @@ public class UnsetLine : MonoBehaviour
                 lvlInstance.grid[y, x].gos = new GameObject[8];
 
             
-            GameObject go = lvlInstance.grid[y, x].gos[snappedDir];
+            GameObject go = lvlInstance.grid[y, x].gos[(int)snappedDir];
             if (go == null)
             {
                 go = Instantiate(level.settings.prefabs.setLine);
-                lvlInstance.grid[y, x].gos[snappedDir] = go;
+                lvlInstance.grid[y, x].gos[(int)snappedDir] = go;
                 go.GetComponent<SetLine>().Setup(level, snappedDir, y, x);
             }
             lc.gos[i] = go;

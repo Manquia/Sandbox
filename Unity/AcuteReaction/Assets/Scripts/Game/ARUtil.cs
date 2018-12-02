@@ -4,45 +4,65 @@ using UnityEngine;
 
 public class ARUtil
 {
-    public static void SnapToOffset(int snappedDir, out int yOffset, out int xOffset)
+    // dir 
+    //  7  6  5
+    //    \|/
+    //  0--+--4
+    //    /|\
+    //  1  2  3
+
+    public static Vector2Int DirToOffset(GameVertex.Direction dir)
     {
-        if (snappedDir % 2 == 1)
+        Vector2Int offset = Vector2Int.zero;
+        if ((int)dir % 2 == 1)
         {
             // right or left
             // pos = 3 or 5
             // neg = 1 or 7
-            xOffset = -Mathf.Abs((snappedDir - 4) / 3) + Mathf.Abs(snappedDir -4) % 3;
+            offset.x = -Mathf.Abs(((int)dir - 4) / 3) + Mathf.Abs((int)dir -4) % 3;
 
             // up or down
             // pos = 5 or 7
             // neg = 1 or 3
-            yOffset = (snappedDir - 4) % 2;
+            offset.y = ((int)dir - 4) % 2;
         }
         else
         {
             // right or left
             // pos = 4
             // neg = 0
-            xOffset = ((snappedDir - 2) / 2) % 2;
+            offset.x = (((int)dir - 2) / 2) % 2;
 
             // up or down
             // pos = 6
             // neg = 2
-            yOffset = ((snappedDir - 4) / 2) % 2;
+            offset.y = (((int)dir - 4) / 2) % 2;
+        }
+        return offset;
+    }
+    public static float DirToDist(GameVertex.Direction dir)
+    {
+        if ((int)dir % 2 == 1)
+        {
+            return Level.diagonalOffsetDist;
+        }
+        else
+        {
+            return Level.cardinalOffsetDist;
         }
     }
-    public static GameVertex.Edge.Type SnapToType(int snappedDir, ref GameVertex.Edge vert)
+    public static GameVertex.Edge.Type SnapToType(GameVertex.Direction snappedDir, ref GameVertex.Edge vert)
     {
         switch (snappedDir)
         {
-            case 0: return vert.edgeW; 
-            case 1: return vert.edgeSW;
-            case 2: return vert.edgeS; 
-            case 3: return vert.edgeSE; 
-            case 4: return vert.edgeE; 
-            case 5: return vert.edgeNE; 
-            case 6: return vert.edgeN; 
-            case 7: return vert.edgeNW; 
+            case GameVertex.Direction.W: return vert.edgeW; 
+            case GameVertex.Direction.SW: return vert.edgeSW;
+            case GameVertex.Direction.S: return vert.edgeS; 
+            case GameVertex.Direction.SE: return vert.edgeSE; 
+            case GameVertex.Direction.E: return vert.edgeE; 
+            case GameVertex.Direction.NE: return vert.edgeNE; 
+            case GameVertex.Direction.N: return vert.edgeN; 
+            case GameVertex.Direction.NW: return vert.edgeNW; 
             default: Debug.LogWarning("Warning! Unexpected snappedDir given to SnapToType"); return GameVertex.Edge.Type.None;
         }
     }
@@ -65,4 +85,5 @@ public class ARUtil
             default: Debug.LogError("Error: Unexpected type given to TypeToPrefab!"); return null;
         }
     }
+
 }

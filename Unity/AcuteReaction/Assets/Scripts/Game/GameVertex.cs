@@ -6,7 +6,7 @@ using UnityEngine;
 public struct GameVertex
 {               
     [System.Flags]
-    public enum Direction : byte
+    public enum DirectionFlags : byte
     {
         // Directions
         None = 0,
@@ -22,9 +22,19 @@ public struct GameVertex
 
         All = W | SW | S | SE | E | NE | N | NW,
     }
+    public enum Direction : byte
+    {
+        W  = 0,
+        SW = 1,
+        S  = 2,
+        SE = 3,
+        E  = 4,
+        NE = 5,
+        N  = 6,
+        NW = 7,
+    }
     public struct Edge
     {
-        [System.Flags]
         public enum Type : byte
         {
             None,
@@ -42,7 +52,7 @@ public struct GameVertex
         }
 
         // Data
-        public Direction dirs;       
+        public DirectionFlags dirs;       
         public Type edgeW;
         public Type edgeSW;
         public Type edgeS;
@@ -65,7 +75,7 @@ public struct GameVertex
                 f.edgeNE = Type.None;
                 f.edgeN  = Type.None;
                 f.edgeNW = Type.None;
-                f.dirs   = Direction.None;
+                f.dirs   = DirectionFlags.None;
                 return f;
             }
         }
@@ -99,31 +109,31 @@ public struct GameVertex
                 f0.dirs   != f1.dirs  ;
         }
         
-        public void Set(Direction dir, Type type)
+        public void Set(DirectionFlags dir, Type type)
         {
             dirs |= dir;
             switch (dir)
             {
-                case Direction.W:   edgeW = type;       break;
-                case Direction.SW: edgeSW = type;       break;
-                case Direction.S:   edgeS = type;       break;
-                case Direction.SE: edgeSE = type;       break;
-                case Direction.E:   edgeE = type;       break;
-                case Direction.NE: edgeNE = type;       break;
-                case Direction.N:   edgeN = type;       break;
-                case Direction.NW: edgeNW = type;       break;
+                case DirectionFlags.W:   edgeW = type;       break;
+                case DirectionFlags.SW: edgeSW = type;       break;
+                case DirectionFlags.S:   edgeS = type;       break;
+                case DirectionFlags.SE: edgeSE = type;       break;
+                case DirectionFlags.E:   edgeE = type;       break;
+                case DirectionFlags.NE: edgeNE = type;       break;
+                case DirectionFlags.N:   edgeN = type;       break;
+                case DirectionFlags.NW: edgeNW = type;       break;
 
-                case Direction.None:
-                case Direction.All:
+                case DirectionFlags.None:
+                case DirectionFlags.All:
                 default: Debug.LogWarning("Warning Called Set on GameVertex.Line with a dir not set to a single direction"); break;
             }
 
         }
-        public Direction AllToOne()
+        public DirectionFlags AllToOne()
         {
             return dirs;
         }
-        public Direction AllToOne(Direction mask)
+        public DirectionFlags AllToOne(DirectionFlags mask)
         {
             return dirs & mask;
         }

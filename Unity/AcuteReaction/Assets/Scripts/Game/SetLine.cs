@@ -5,17 +5,16 @@ using UnityEngine;
 
 public class SetLine : MonoBehaviour
 {
-    public int x;
-    public int y;
-    public int snappedDir;
+    public Vector2Int pos;
+    public GameVertex.Direction snappedDir;
 
-    internal void Setup(Level level, int givenSnappedDir, int givenY, int givenX)
+    internal void Setup(Level level, GameVertex.Direction givenSnappedDir, int givenY, int givenX)
     {
         var lvlInstance = level.levelInstance;
-        lvlInstance.grid[givenY, givenX].gos[givenSnappedDir] = gameObject;
+        lvlInstance.grid[givenY, givenX].gos[(int)givenSnappedDir] = gameObject;
 
         var rend = GetComponent<LineRenderer>();
-        float angle = Mathf.Deg2Rad * (givenSnappedDir * 45.0f);
+        float angle = Mathf.Deg2Rad * ((int)givenSnappedDir * 45.0f);
 
         Vector3 pt0 = rend.GetPosition(0);
         Vector3 pt1 = rend.GetPosition(1);
@@ -25,7 +24,7 @@ public class SetLine : MonoBehaviour
         pt1 = pt1.normalized;
 
         // Is diagonal line?
-        if (givenSnappedDir % 2 == 1)
+        if ((int)givenSnappedDir % 2 == 1)
             pt1 = pt0 + pt1 * Level.diagonalOffsetDist;
         else
             pt1 = pt0 + pt1 * Level.cardinalOffsetDist;
@@ -37,8 +36,8 @@ public class SetLine : MonoBehaviour
         transform.SetParent(level.setupRoot.transform);
 
         // record data about setline
-        x = givenX;
-        y = givenY;
+        pos.x = givenX;
+        pos.y = givenY;
         snappedDir = givenSnappedDir;
     }
 
@@ -48,8 +47,8 @@ public class SetLine : MonoBehaviour
         var lvlInstance = level.levelInstance;
         var rend = GetComponent<LineRenderer>();
 
-        lvlInstance.grid[y, x].lines = GameVertex.Edge.none;
-        lvlInstance.grid[y, x].gos[snappedDir] = null;
+        lvlInstance.grid[pos.y, pos.x].lines = GameVertex.Edge.none;
+        lvlInstance.grid[pos.y, pos.x].gos[(int)snappedDir] = null;
     }
 
     internal void RunCommand(Level level, LineCommand lineCommand)
@@ -75,7 +74,7 @@ public class SetLine : MonoBehaviour
         var rend = GetComponent<LineRenderer>();
 
         // complete removal?
-        if (flagDelta == lvlInstance.grid[y, x].lines)
+        if (flagDelta == lvlInstance.grid[pos.y, pos.x].lines)
         {
             gameObject.SetActive(false);
         }
@@ -89,7 +88,7 @@ public class SetLine : MonoBehaviour
         var lvlInstance = level.levelInstance;
 
         // Adding in line?
-        if(lvlInstance.grid[y,x].lines == GameVertex.Edge.none)
+        if(lvlInstance.grid[pos.y,pos.x].lines == GameVertex.Edge.none)
         {
             gameObject.SetActive(true);
         }

@@ -59,13 +59,14 @@ public class Level : MonoBehaviour
     {
         transform.position = Vector3.zero;
         CreateLevel();
+        StartSetup();
     }
 
 
     public const float diagonalOffsetDist = 1.41421356237f; // (2)^.5
     public const float cardinalOffsetDist = 1.0f;
-    public int height = 50; // @ make dynamic?
-    public int width = 50; // @ make dynamic?
+    public int height = 10; // @ make dynamic?
+    public int width =  10; // @ make dynamic?
 
     #region Creation
     void CreateLevel()
@@ -106,9 +107,8 @@ public class Level : MonoBehaviour
 
     public struct LineVec
     {
-        public int x;
-        public int y;
-        public int dir;
+        public Vector2Int pos;
+        public GameVertex.Direction dir;
     }
     
     // Takes a level Instance and creates its runtime equivalent
@@ -146,7 +146,7 @@ public class Level : MonoBehaviour
                         continue;
 
                     // Any out bound connections means this is a part of a new cluster
-                    if (inst.grid[y, x].lines.AllToOne() != GameVertex.Direction.None)
+                    if (inst.grid[y, x].lines.AllToOne() != GameVertex.DirectionFlags.None)
                     {
                         ++clusterIndex;
                         if (clusters.Count == clusterIndex)
@@ -172,33 +172,33 @@ public class Level : MonoBehaviour
                         // Get inbound Connections and enqueue them to add them to the cluster
                         { 
                             Vector2Int c = Vector2Int.zero;
-                            c.y=y  ; c.x=x-1; if (ValidPoint(c, max, inst.grid, traversalIndex, GameVertex.Direction.E )) SearchList.Enqueue(c);
-                            c.y=y-1; c.x=x-1; if (ValidPoint(c, max, inst.grid, traversalIndex, GameVertex.Direction.NE)) SearchList.Enqueue(c);
-                            c.y=y-1; c.x=x  ; if (ValidPoint(c, max, inst.grid, traversalIndex, GameVertex.Direction.N )) SearchList.Enqueue(c);
-                            c.y=y-1; c.x=x+1; if (ValidPoint(c, max, inst.grid, traversalIndex, GameVertex.Direction.NW)) SearchList.Enqueue(c);
-                            c.y=y  ; c.x=x+1; if (ValidPoint(c, max, inst.grid, traversalIndex, GameVertex.Direction.W )) SearchList.Enqueue(c);
-                            c.y=y+1; c.x=x+1; if (ValidPoint(c, max, inst.grid, traversalIndex, GameVertex.Direction.SW)) SearchList.Enqueue(c);
-                            c.y=y+1; c.x=x  ; if (ValidPoint(c, max, inst.grid, traversalIndex, GameVertex.Direction.S )) SearchList.Enqueue(c);
-                            c.y=y+1; c.x=x-1; if (ValidPoint(c, max, inst.grid, traversalIndex, GameVertex.Direction.SE)) SearchList.Enqueue(c);
+                            c.y=y  ; c.x=x-1; if (ValidPoint(c, max, inst.grid, traversalIndex, GameVertex.DirectionFlags.E )) SearchList.Enqueue(c);
+                            c.y=y-1; c.x=x-1; if (ValidPoint(c, max, inst.grid, traversalIndex, GameVertex.DirectionFlags.NE)) SearchList.Enqueue(c);
+                            c.y=y-1; c.x=x  ; if (ValidPoint(c, max, inst.grid, traversalIndex, GameVertex.DirectionFlags.N )) SearchList.Enqueue(c);
+                            c.y=y-1; c.x=x+1; if (ValidPoint(c, max, inst.grid, traversalIndex, GameVertex.DirectionFlags.NW)) SearchList.Enqueue(c);
+                            c.y=y  ; c.x=x+1; if (ValidPoint(c, max, inst.grid, traversalIndex, GameVertex.DirectionFlags.W )) SearchList.Enqueue(c);
+                            c.y=y+1; c.x=x+1; if (ValidPoint(c, max, inst.grid, traversalIndex, GameVertex.DirectionFlags.SW)) SearchList.Enqueue(c);
+                            c.y=y+1; c.x=x  ; if (ValidPoint(c, max, inst.grid, traversalIndex, GameVertex.DirectionFlags.S )) SearchList.Enqueue(c);
+                            c.y=y+1; c.x=x-1; if (ValidPoint(c, max, inst.grid, traversalIndex, GameVertex.DirectionFlags.SE)) SearchList.Enqueue(c);
                         }
 
                         // Add outbound connections from the GridVertex
                         {
                             var cluster = clusters[clusterIndex];
-                            GameVertex.Direction outDirs = inst.grid[look.y, look.x].lines.AllToOne();
-                            LineVec lv;
-                            lv.y = y;
-                            lv.x = x;
+                            GameVertex.DirectionFlags outDirs = inst.grid[look.y, look.x].lines.AllToOne();
+                            LineVec lv; lv.pos = Vector2Int.zero;
+                            lv.pos.y = y;
+                            lv.pos.x = x;
 
                             // Add connections to the cluster
-                            lv.dir = 0; if ((outDirs & GameVertex.Direction.W ) == GameVertex.Direction.W  && !cluster.Contains(lv)) cluster.Add(lv);
-                            lv.dir = 1; if ((outDirs & GameVertex.Direction.SW) == GameVertex.Direction.SW && !cluster.Contains(lv)) cluster.Add(lv);
-                            lv.dir = 2; if ((outDirs & GameVertex.Direction.S ) == GameVertex.Direction.S  && !cluster.Contains(lv)) cluster.Add(lv);
-                            lv.dir = 3; if ((outDirs & GameVertex.Direction.SE) == GameVertex.Direction.SE && !cluster.Contains(lv)) cluster.Add(lv);
-                            lv.dir = 4; if ((outDirs & GameVertex.Direction.E ) == GameVertex.Direction.E  && !cluster.Contains(lv)) cluster.Add(lv);
-                            lv.dir = 5; if ((outDirs & GameVertex.Direction.NE) == GameVertex.Direction.NE && !cluster.Contains(lv)) cluster.Add(lv);
-                            lv.dir = 6; if ((outDirs & GameVertex.Direction.N ) == GameVertex.Direction.N  && !cluster.Contains(lv)) cluster.Add(lv);
-                            lv.dir = 7; if ((outDirs & GameVertex.Direction.NW) == GameVertex.Direction.NW && !cluster.Contains(lv)) cluster.Add(lv);
+                            lv.dir = (GameVertex.Direction)0; if ((outDirs & GameVertex.DirectionFlags.W ) == GameVertex.DirectionFlags.W  && !cluster.Contains(lv)) cluster.Add(lv);
+                            lv.dir = (GameVertex.Direction)1; if ((outDirs & GameVertex.DirectionFlags.SW) == GameVertex.DirectionFlags.SW && !cluster.Contains(lv)) cluster.Add(lv);
+                            lv.dir = (GameVertex.Direction)2; if ((outDirs & GameVertex.DirectionFlags.S ) == GameVertex.DirectionFlags.S  && !cluster.Contains(lv)) cluster.Add(lv);
+                            lv.dir = (GameVertex.Direction)3; if ((outDirs & GameVertex.DirectionFlags.SE) == GameVertex.DirectionFlags.SE && !cluster.Contains(lv)) cluster.Add(lv);
+                            lv.dir = (GameVertex.Direction)4; if ((outDirs & GameVertex.DirectionFlags.E ) == GameVertex.DirectionFlags.E  && !cluster.Contains(lv)) cluster.Add(lv);
+                            lv.dir = (GameVertex.Direction)5; if ((outDirs & GameVertex.DirectionFlags.NE) == GameVertex.DirectionFlags.NE && !cluster.Contains(lv)) cluster.Add(lv);
+                            lv.dir = (GameVertex.Direction)6; if ((outDirs & GameVertex.DirectionFlags.N ) == GameVertex.DirectionFlags.N  && !cluster.Contains(lv)) cluster.Add(lv);
+                            lv.dir = (GameVertex.Direction)7; if ((outDirs & GameVertex.DirectionFlags.NW) == GameVertex.DirectionFlags.NW && !cluster.Contains(lv)) cluster.Add(lv);
                         }
                     }
                 }
@@ -219,14 +219,12 @@ public class Level : MonoBehaviour
             {
 
                 // Create lines with behaviors which are indexable from  LevelRUNTIME or something!
-                int xLineEnd;
-                int yLineEnd;
-                ARUtil.SnapToOffset(line.dir, out yLineEnd, out xLineEnd);
-                GameVertex.Edge.Type type = ARUtil.SnapToType(line.dir, ref inst.grid[line.y, line.x].lines);
+                Vector2Int end = ARUtil.DirToOffset(line.dir);
+                GameVertex.Edge.Type type = ARUtil.SnapToType(line.dir, ref inst.grid[line.pos.y, line.pos.x].lines);
                 GameObject typePrefab = ARUtil.TypeToPrefab(this, type);
 
-                // Lets use ECS!!!
-                var lineGo = Instantiate(typePrefab);
+                GameObject lineGo = Instantiate(typePrefab);
+                //FFMessageBoard<InitLine>.SendToLocal()
             }
         }
     }
@@ -437,7 +435,7 @@ public class Level : MonoBehaviour
     // Place line if possible
     void EndUnsetLine(int recalloffset, SetupInstance.DrawingLine dl)
     {
-        //Debug.Log("EndUnsetLine");
+        Debug.Log("EndUnsetLine");
         GameObject unsetLine = dl.go;
 
         // validate line
@@ -537,6 +535,11 @@ public class Level : MonoBehaviour
     #endregion
 
     #region Run
+
+    void StartSetup()
+    {
+        inputMode = InputMode.Setup;
+    }
     void StartRunLevel()
     {
         // if level is being run, Reset it!
@@ -644,11 +647,11 @@ public class Level : MonoBehaviour
     {
         return Camera.main.ScreenToWorldPoint(touch.position);
     }
-    static bool ValidPoint(Vector2Int c, Vector2Int max, GameVertex[,] grid, char traversalIndex, GameVertex.Direction mask)
+    static bool ValidPoint(Vector2Int c, Vector2Int max, GameVertex[,] grid, char traversalIndex, GameVertex.DirectionFlags mask)
     {
         return c.y > 0 && c.y < max.y && c.x > 0 && c.x < max.x &&              // Bounds
                LevelInstance.gridIndex[c.y,c.x] != traversalIndex &&            // traversal Index
-               grid[c.y,c.x].lines.AllToOne(mask) != GameVertex.Direction.None; // direction maks
+               grid[c.y,c.x].lines.AllToOne(mask) != GameVertex.DirectionFlags.None; // direction maks
     }
     #endregion
 
