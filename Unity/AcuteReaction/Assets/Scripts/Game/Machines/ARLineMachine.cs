@@ -90,51 +90,61 @@ public class ARLineMachine : MonoBehaviour
     public Vector3 WorldStart { get { Vector2Int start = Start; return new Vector3(start.x - level.width / 2, 0, start.y - level.height / 2); } }
     public Vector3 WorldEnd   { get { Vector2Int end = End;     return new Vector3(end.x - level.width / 2, 0, end.y - level.height / 2); } }
 
-    public Slot In0()
+    public Slot[] Input()
     {
-        Slot s;
+        Slot[] s = new Slot[2];
         switch (type)
         {
             case GameVertex.Edge.Type.solid:
                 {
-                    s.pos = DirAffectPosIn(dir,pos);
-                    s.space = Slot.Space.full;
+                    s[0].pos = DirAffectPos(dir,pos);
+                    s[0].space = Slot.Space.None;
+                }
+                break;
+            case GameVertex.Edge.Type.conveyer:
+                {
+                    s[0].pos = DirAffectPos(dir, pos);
+                    s[0].space = Slot.Space.h_0;
                 }
                 break;
 
 
             case GameVertex.Edge.Type.None:
             default:
-                s.pos = pos;
-                s.space = Slot.Space.full;
+                s[0].pos = pos;
+                s[0].space = Slot.Space.full;
                 Debug.LogError("Error, unhandled type used to get Input in In0!");
                 break;
         }
-
-
+        s[1] = DirMirrorSlot(dir, s[0]);
         return s;
     }
-
-    public Slot In1()
+    public Slot[] Blocking()
     {
-        Slot s = In0();
-        s = DirMirrorSlot(dir, s);
-        return s;
+
     }
 
+    /// NEEED TO WORK ON THIS!!!
 
+    // assumes input is not mirrored AND is aligned to point West
+    static Slot.Space DirAffectSpace(GameVertex.Direction dir, Slot.Space space)
+    {
+
+    }
     // dir 
     //  7  6  5
     //    \|/
     //  0--+--4
     //    /|\
     //  1  2  3
-    public static Vector2Int DirAffectPosIn(GameVertex.Direction dir, Vector2Int in0)
+    public static Vector2Int DirAffectPos(GameVertex.Direction dir, Vector2Int in0)
     {
         switch (dir)
         {
-            case GameVertex.Direction.W: in0.x -= 1; break;
-            case GameVertex.Direction.S: in0.y -= 1; break;
+            case GameVertex.Direction.W: in0.x -= 1;            break;
+            case GameVertex.Direction.S: in0.x -= 1; in0.y -= 1; break;
+            case GameVertex.Direction.E: in0.x -= 1; break;
+            case GameVertex.Direction.N: in0.x -= 1; break;
             default: break;
         }
         return in0;

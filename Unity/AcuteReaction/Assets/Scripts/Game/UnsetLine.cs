@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class UnsetLine : MonoBehaviour
 {
-
     internal LineCommand Set(Level level, LineCommand.Command cmd)
     {
         var lvlInstance = level.levelInstance;
